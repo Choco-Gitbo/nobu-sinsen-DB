@@ -56,11 +56,6 @@ function renderList(list) {
  * 詳細表示
  **********************/
 function showDetail(id) {
-  console.log(
-  "勢力=[" + item.faction + "]",
-  "trim=[" + faction + "]",
-  "color=", factionColors[faction]
-);
 const item = data.find(d => d.id === id);
   if (!item) return;
 
@@ -110,6 +105,13 @@ const item = data.find(d => d.id === id);
     [color, "rgba(180,180,180,0.35)"],
     100
   );
+
+  console.log(
+  "勢力=[" + item.faction + "]",
+  "trim=[" + faction + "]",
+  "color=", factionColors[faction]
+);
+
 }
 
 /**********************
