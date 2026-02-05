@@ -105,39 +105,25 @@ function showDetail(id) {
   const item = data.find(d => d.id === id);
   if (!item) return;
 
-
   const mainColor =
     factionColors[item.faction] || "rgba(120,120,120,0.4)";
 
   document.body.innerHTML = `
     <h1>${item.name}</h1>
-
-    <div class="container">
-      <div class="card">
-        <p style="font-size:13px; margin-bottom:6px;">
-          勢力：<strong>${item.faction}</strong>
-        </p>
-
-        <canvas id="statusChart" width="280" height="280"></canvas>
-
-        <p style="font-size:12px; color:#666; margin-top:8px;">
-          <span style="color:${mainColor};">■</span> Lv50　
-          <span style="color:rgba(150,150,150,0.4);">■</span> Lv1
-        </p>
-      </div>
+    <div class="card">
+      <p>勢力：${item.faction}</p>
+      <canvas id="statusChart" width="280" height="280"></canvas>
     </div>
-
-    <a class="back" href="index.html">← 一覧に戻る</a>
+    <a href="index.html">← 戻る</a>
   `;
 
-  // 仮ステータス
   const statsLv50 = {
-    武力: item.power,
-    知力: item.power,
-    統率: item.power,
-    速度: item.power,
-    防御: item.power,
-    攻撃: item.power
+    武力: Number(item.power),
+    知力: Number(item.power),
+    統率: Number(item.power),
+    速度: Number(item.power),
+    防御: Number(item.power),
+    攻撃: Number(item.power)
   };
 
   const statsLv1 = {
