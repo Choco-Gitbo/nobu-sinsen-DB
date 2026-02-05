@@ -28,6 +28,8 @@
 <ul id="list"></ul>
 
 <script>
+const params = new URLSearchParams(location.search);
+const selectedId = params.get('id');
 let data = [];
 
 fetch('data/busho.csv?ver=' + Date.now())
@@ -38,7 +40,12 @@ fetch('data/busho.csv?ver=' + Date.now())
       const [id, name, power] = row.split(',');
       return { id, name, power: Number(power) };
     });
-    render(data);
+
+    if (selectedId) {
+      showDetail(selectedId);
+    } else {
+      render(data);
+    }
   });
 
 function render(listData) {
@@ -76,6 +83,22 @@ function applyFilter() {
   });
 }
 }
+
+function showDetail(id) {
+  const item = data.find(d => d.id === id);
+  if (!item) return;
+
+  document.body.innerHTML = `
+    <h1>${item.name}</h1>
+
+    <p><strong>武力：</strong>${item.power}</p>
+
+    <p>
+      <a href="index.html">← 一覧に戻る</a>
+    </p>
+  `;
+}
+
 
 document.getElementById('search').addEventListener('input', applyFilter);
 document.getElementById('minPower').addEventListener('input', applyFilter);
