@@ -35,6 +35,15 @@ let data = [];
 const params = new URLSearchParams(location.search);
 const selectedId = params.get('id');
 
+  const factionColors = {
+    "織田":   "rgba(33,150,243,0.45)",   // 青
+    "豊臣":   "rgba(255,193,7,0.45)",    // 金
+    "徳川":   "rgba(76,175,80,0.45)",    // 緑
+    "武田":   "rgba(244,67,54,0.45)",    // 赤
+    "上杉":   "rgba(156,39,176,0.45)",   // 紫
+    "群":     "rgba(255,152,0,0.40)"     // 薄オレンジ
+  };
+
 // CSV読み込み
 fetch('data/busho.csv?ver=' + Date.now())
   .then(res => res.text())
@@ -94,14 +103,6 @@ function showDetail(id) {
   const item = data.find(d => d.id === id);
   if (!item) return;
 
-  const factionColors = {
-    "織田":   "rgba(33,150,243,0.45)",   // 青
-    "豊臣":   "rgba(255,193,7,0.45)",    // 金
-    "徳川":   "rgba(76,175,80,0.45)",    // 緑
-    "武田":   "rgba(244,67,54,0.45)",    // 赤
-    "上杉":   "rgba(156,39,176,0.45)",   // 紫
-    "群":     "rgba(255,152,0,0.40)"     // 薄オレンジ
-  };
 
   const mainColor =
     factionColors[item.faction] || "rgba(120,120,120,0.4)";
