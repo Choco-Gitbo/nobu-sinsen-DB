@@ -61,7 +61,20 @@ function applyFilter() {
     item.power >= minPower
   );
 
-  render(filtered);
+  function render(listData) {
+  const list = document.getElementById('list');
+  list.innerHTML = '';
+
+  listData.forEach(item => {
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <a href="?id=${item.id}" style="text-decoration:none; color:inherit;">
+        ${item.name}（武力 ${item.power}）
+      </a>
+    `;
+    list.appendChild(li);
+  });
+}
 }
 
 document.getElementById('search').addEventListener('input', applyFilter);
