@@ -15,7 +15,7 @@ let data = [];
 /**********************
  * CSV読み込み
  **********************/
-fetch('data/busho.csv')
+fetch('busho.csv')
   .then(res => res.text())
   .then(text => {
     data = parseCSV(text);
