@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>武将一覧</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>武将一覧</h1>
+
+<ul id="list"></ul>
+
+<script>
+fetch('data/busho.csv')
+  .then(res => res.text())
+  .then(text => {
+    const rows = text.trim().split('\n').slice(1);
+    const list = document.getElementById('list');
+
+    rows.forEach(row => {
+      const [id, name, power] = row.split(',');
+      const li = document.createElement('li');
+      li.textContent = `${name}（武力 ${power}）`;
+      list.appendChild(li);
+    });
+  });
+</script>
+
+</body>
+</html>

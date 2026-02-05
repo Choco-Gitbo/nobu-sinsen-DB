@@ -1,0 +1,9 @@
+body {
+  font-family: system-ui, sans-serif;
+  margin: 16px;
+}
+
+li {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
