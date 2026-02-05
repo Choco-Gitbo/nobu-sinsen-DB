@@ -13,7 +13,7 @@
 <ul id="list"></ul>
 
 <script>
-fetch('data/busho.csv')
+fetch('data/busho.csv?ver=' + Date.now())
   .then(res => res.text())
   .then(text => {
     const rows = text.trim().split('\n').slice(1);
