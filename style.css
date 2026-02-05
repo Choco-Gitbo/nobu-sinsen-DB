@@ -1,55 +1,38 @@
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   background: #f5f6f8;
   color: #333;
 }
 
 h1 {
-  font-size: 22px;
   margin: 16px;
+  font-size: 22px;
 }
 
 .container {
   padding: 16px;
 }
 
+.list-item {
+  background: #fff;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  cursor: pointer;
+}
+
 .card {
   background: #fff;
-  border-radius: 12px;
   padding: 16px;
-  margin-bottom: 16px;
+  border-radius: 12px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-}
-
-.label {
-  font-size: 13px;
-  color: #666;
-  margin-bottom: 4px;
-}
-
-.value {
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.bar-wrap {
-  background: #e0e0e0;
-  border-radius: 8px;
-  overflow: hidden;
-  height: 12px;
-  margin-top: 6px;
-}
-
-.bar {
-  height: 100%;
-  background: #4caf50;
 }
 
 .back {
   display: block;
   margin: 16px;
-  text-decoration: none;
   color: #1976d2;
-  font-weight: 500;
+  text-decoration: none;
 }
