@@ -10,22 +10,48 @@
 
 <h1>武将一覧</h1>
 
+<input
+  type="text"
+  id="search"
+  placeholder="武将名で検索"
+  style="width:100%; padding:10px; font-size:16px; margin-bottom:12px;"
+>
+
+
 <ul id="list"></ul>
 
 <script>
+let data = [];
+
 fetch('data/busho.csv?ver=' + Date.now())
   .then(res => res.text())
   .then(text => {
     const rows = text.trim().split('\n').slice(1);
-    const list = document.getElementById('list');
-
-    rows.forEach(row => {
+    data = rows.map(row => {
       const [id, name, power] = row.split(',');
-      const li = document.createElement('li');
-      li.textContent = `${name}（武力 ${power}）`;
-      list.appendChild(li);
+      return { id, name, power };
     });
+    render(data);
   });
+
+function render(listData) {
+  const list = document.getElementById('list');
+  list.innerHTML = '';
+
+  listData.forEach(item => {
+    const li = document.createElement('li');
+    li.textContent = `${item.name}（武力 ${item.power}）`;
+    list.appendChild(li);
+  });
+}
+
+document.getElementById('search').addEventListener('input', e => {
+  const keyword = e.target.value;
+  const filtered = data.filter(item =>
+    item.name.includes(keyword)
+  );
+  render(filtered);
+});
 </script>
 
 </body>
