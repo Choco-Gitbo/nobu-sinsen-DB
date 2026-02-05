@@ -17,6 +17,13 @@
   style="width:100%; padding:10px; font-size:16px; margin-bottom:12px;"
 >
 
+<input
+  type="number"
+  id="minPower"
+  placeholder="武力 下限"
+  style="width:100%; padding:10px; font-size:16px; margin-bottom:12px;"
+>
+
 
 <ul id="list"></ul>
 
@@ -29,7 +36,7 @@ fetch('data/busho.csv?ver=' + Date.now())
     const rows = text.trim().split('\n').slice(1);
     data = rows.map(row => {
       const [id, name, power] = row.split(',');
-      return { id, name, power };
+      return { id, name, power: Number(power) };
     });
     render(data);
   });
@@ -45,13 +52,20 @@ function render(listData) {
   });
 }
 
-document.getElementById('search').addEventListener('input', e => {
-  const keyword = e.target.value;
+function applyFilter() {
+  const keyword = document.getElementById('search').value;
+  const minPower = Number(document.getElementById('minPower').value || 0);
+
   const filtered = data.filter(item =>
-    item.name.includes(keyword)
+    item.name.includes(keyword) &&
+    item.power >= minPower
   );
+
   render(filtered);
-});
+}
+
+document.getElementById('search').addEventListener('input', applyFilter);
+document.getElementById('minPower').addEventListener('input', applyFilter);
 </script>
 
 </body>
