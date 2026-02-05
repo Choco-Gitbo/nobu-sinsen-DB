@@ -107,6 +107,11 @@ const color =
     100
   );
 
+console.log(
+  "勢力=[" + item.faction + "]",
+  "trim=[" + faction + "]",
+  "color=", factionColors[faction]
+);
 
 }
 
