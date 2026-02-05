@@ -100,14 +100,27 @@ function showDetail(id) {
     <div class="container">
       <div class="card">
         <canvas id="statusChart" width="280" height="280"></canvas>
+        <p style="font-size:12px; color:#666; margin-top:8px;">
+          <span style="color:#4caf50;">■</span> Lv50　
+          <span style="color:#2196f3;">■</span> Lv1
+        </p>
       </div>
     </div>
 
     <a class="back" href="index.html">← 一覧に戻る</a>
   `;
 
-  // 仮ステータス（後で正式項目に差し替え）
-  const stats = {
+  // 仮データ（後でCSV正式化）
+  const statsLv1 = {
+    武力: item.power - 20,
+    知力: item.power - 25,
+    統率: item.power - 22,
+    速度: item.power - 18,
+    防御: item.power - 20,
+    攻撃: item.power - 15
+  };
+
+  const statsLv50 = {
     武力: item.power,
     知力: item.power,
     統率: item.power,
@@ -116,15 +129,22 @@ function showDetail(id) {
     攻撃: item.power
   };
 
-  drawRadarChart('statusChart', stats, 100);
+  drawRadarChartMulti(
+    'statusChart',
+    [statsLv50, statsLv1],
+    [
+      'rgba(76,175,80,0.45)',   // Lv50
+      'rgba(33,150,243,0.35)'   // Lv1
+    ],
+    100
+  );
 }
 
-function drawRadarChart(canvasId, stats, maxValue) {
+function drawRadarChartMulti(canvasId, statsList, colors, maxValue) {
   const canvas = document.getElementById(canvasId);
   const ctx = canvas.getContext('2d');
 
-  const labels = Object.keys(stats);
-  const values = Object.values(stats);
+  const labels = Object.keys(statsList[0]);
   const count = labels.length;
 
   const centerX = canvas.width / 2;
@@ -133,7 +153,7 @@ function drawRadarChart(canvasId, stats, maxValue) {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // ガイド（六角形）
+  // ガイド
   ctx.strokeStyle = '#ccc';
   for (let level = 1; level <= 5; level++) {
     ctx.beginPath();
@@ -148,7 +168,7 @@ function drawRadarChart(canvasId, stats, maxValue) {
     ctx.stroke();
   }
 
-  // 軸
+  // 軸＋ラベル
   labels.forEach((label, i) => {
     const angle = (Math.PI * 2 / count) * i - Math.PI / 2;
     const x = centerX + radius * Math.cos(angle);
@@ -164,21 +184,25 @@ function drawRadarChart(canvasId, stats, maxValue) {
     ctx.fillText(label, x - 10, y - 4);
   });
 
-  // ステータス塗り
-  ctx.beginPath();
-  values.forEach((value, i) => {
-    const angle = (Math.PI * 2 / count) * i - Math.PI / 2;
-    const r = radius * (value / maxValue);
-    const x = centerX + r * Math.cos(angle);
-    const y = centerY + r * Math.sin(angle);
-    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-  });
-  ctx.closePath();
+  // ステータスを重ね描き
+  statsList.forEach((stats, idx) => {
+    const values = Object.values(stats);
 
-  ctx.fillStyle = 'rgba(76, 175, 80, 0.4)';
-  ctx.strokeStyle = '#4caf50';
-  ctx.fill();
-  ctx.stroke();
+    ctx.beginPath();
+    values.forEach((value, i) => {
+      const angle = (Math.PI * 2 / count) * i - Math.PI / 2;
+      const r = radius * (value / maxValue);
+      const x = centerX + r * Math.cos(angle);
+      const y = centerY + r * Math.sin(angle);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    });
+    ctx.closePath();
+
+    ctx.fillStyle = colors[idx];
+    ctx.strokeStyle = colors[idx].replace('0.', '1.');
+    ctx.fill();
+    ctx.stroke();
+  });
 }
 
 
