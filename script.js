@@ -59,8 +59,9 @@ function showDetail(id) {
 const item = data.find(d => d.id === id);
   if (!item) return;
 
-  const color =
-    factionColors[item.faction] || "rgba(120,120,120,0.4)";
+const faction = item.faction ? item.faction.trim() : "";
+const color =
+  factionColors[faction] || "rgba(120,120,120,0.4)";
 
   document.body.innerHTML = `
     <h1>${item.name}</h1>
@@ -106,11 +107,6 @@ const item = data.find(d => d.id === id);
     100
   );
 
-  console.log(
-  "勢力=[" + item.faction + "]",
-  "trim=[" + faction + "]",
-  "color=", factionColors[faction]
-);
 
 }
 
