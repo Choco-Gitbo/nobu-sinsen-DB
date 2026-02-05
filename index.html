@@ -10,13 +10,15 @@
 
 <h1>武将一覧</h1>
 
+<!-- 検索 -->
 <input
   type="text"
   id="search"
   placeholder="武将名で検索"
-  style="width:100%; padding:10px; font-size:16px; margin-bottom:12px;"
+  style="width:100%; padding:10px; font-size:16px; margin-bottom:8px;"
 >
 
+<!-- 武力フィルタ -->
 <input
   type="number"
   id="minPower"
@@ -24,21 +26,27 @@
   style="width:100%; padding:10px; font-size:16px; margin-bottom:12px;"
 >
 
-
 <ul id="list"></ul>
 
 <script>
-const params = new URLSearchParams(location.search);
-const selectedId = params.get('id');
 let data = [];
 
+// URLパラメータ取得（詳細表示用）
+const params = new URLSearchParams(location.search);
+const selectedId = params.get('id');
+
+// CSV読み込み
 fetch('data/busho.csv?ver=' + Date.now())
   .then(res => res.text())
   .then(text => {
     const rows = text.trim().split('\n').slice(1);
     data = rows.map(row => {
       const [id, name, power] = row.split(',');
-      return { id, name, power: Number(power) };
+      return {
+        id,
+        name,
+        power: Number(power)
+      };
     });
 
     if (selectedId) {
@@ -48,27 +56,8 @@ fetch('data/busho.csv?ver=' + Date.now())
     }
   });
 
+// 一覧表示
 function render(listData) {
-  const list = document.getElementById('list');
-  list.innerHTML = '';
-
-  listData.forEach(item => {
-    const li = document.createElement('li');
-    li.textContent = `${item.name}（武力 ${item.power}）`;
-    list.appendChild(li);
-  });
-}
-
-function applyFilter() {
-  const keyword = document.getElementById('search').value;
-  const minPower = Number(document.getElementById('minPower').value || 0);
-
-  const filtered = data.filter(item =>
-    item.name.includes(keyword) &&
-    item.power >= minPower
-  );
-
-  function render(listData) {
   const list = document.getElementById('list');
   list.innerHTML = '';
 
@@ -82,11 +71,31 @@ function applyFilter() {
     list.appendChild(li);
   });
 }
+
+// 検索・フィルタ適用
+function applyFilter() {
+  const keyword = document.getElementById('search').value;
+  const minPower = Number(document.getElementById('minPower').value || 0);
+
+  const filtered = data.filter(item =>
+    item.name.includes(keyword) &&
+    item.power >= minPower
+  );
+
+  render(filtered);
 }
 
+// イベント登録
+document.getElementById('search').addEventListener('input', applyFilter);
+document.getElementById('minPower').addEventListener('input', applyFilter);
+
+// 詳細表示
 function showDetail(id) {
   const item = data.find(d => d.id === id);
-  if (!item) return;
+  if (!item) {
+    document.body.innerHTML = '<p>データが見つかりません</p>';
+    return;
+  }
 
   document.body.innerHTML = `
     <h1>${item.name}</h1>
@@ -98,10 +107,6 @@ function showDetail(id) {
     </p>
   `;
 }
-
-
-document.getElementById('search').addEventListener('input', applyFilter);
-document.getElementById('minPower').addEventListener('input', applyFilter);
 </script>
 
 </body>
