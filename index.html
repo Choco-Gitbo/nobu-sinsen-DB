@@ -100,11 +100,19 @@ function showDetail(id) {
   document.body.innerHTML = `
     <h1>${item.name}</h1>
 
-    <p><strong>武力：</strong>${item.power}</p>
+    <div class="container">
 
-    <p>
-      <a href="index.html">← 一覧に戻る</a>
-    </p>
+      <div class="card">
+        <div class="label">武力</div>
+        <div class="value">${item.power}</div>
+        <div class="bar-wrap">
+          <div class="bar" style="width:${item.power}%;"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <a class="back" href="index.html">← 一覧に戻る</a>
   `;
 }
 </script>
