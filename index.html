@@ -94,15 +94,23 @@ function showDetail(id) {
   const item = data.find(d => d.id === id);
   if (!item) return;
 
+  const mainColor =
+    factionColors[item.faction] || "rgba(120,120,120,0.4)";
+
   document.body.innerHTML = `
     <h1>${item.name}</h1>
 
     <div class="container">
       <div class="card">
+        <p style="font-size:13px; margin-bottom:6px;">
+          勢力：<strong>${item.faction}</strong>
+        </p>
+
         <canvas id="statusChart" width="280" height="280"></canvas>
+
         <p style="font-size:12px; color:#666; margin-top:8px;">
-          <span style="color:#4caf50;">■</span> Lv50　
-          <span style="color:#2196f3;">■</span> Lv1
+          <span style="color:${mainColor};">■</span> Lv50　
+          <span style="color:rgba(150,150,150,0.4);">■</span> Lv1
         </p>
       </div>
     </div>
@@ -110,16 +118,7 @@ function showDetail(id) {
     <a class="back" href="index.html">← 一覧に戻る</a>
   `;
 
-  // 仮データ（後でCSV正式化）
-  const statsLv1 = {
-    武力: item.power - 20,
-    知力: item.power - 25,
-    統率: item.power - 22,
-    速度: item.power - 18,
-    防御: item.power - 20,
-    攻撃: item.power - 15
-  };
-
+  // 仮ステータス
   const statsLv50 = {
     武力: item.power,
     知力: item.power,
@@ -129,13 +128,19 @@ function showDetail(id) {
     攻撃: item.power
   };
 
+  const statsLv1 = {
+    武力: item.power - 20,
+    知力: item.power - 25,
+    統率: item.power - 22,
+    速度: item.power - 18,
+    防御: item.power - 20,
+    攻撃: item.power - 15
+  };
+
   drawRadarChartMulti(
-    'statusChart',
+    "statusChart",
     [statsLv50, statsLv1],
-    [
-      'rgba(76,175,80,0.45)',   // Lv50
-      'rgba(33,150,243,0.35)'   // Lv1
-    ],
+    [mainColor, "rgba(180,180,180,0.35)"],
     100
   );
 }
@@ -150,6 +155,15 @@ function drawRadarChartMulti(canvasId, statsList, colors, maxValue) {
   const centerX = canvas.width / 2;
   const centerY = canvas.height / 2;
   const radius = 100;
+
+  const factionColors = {
+    "織田":   "rgba(33,150,243,0.45)",   // 青
+    "豊臣":   "rgba(255,193,7,0.45)",    // 金
+    "徳川":   "rgba(76,175,80,0.45)",    // 緑
+    "武田":   "rgba(244,67,54,0.45)",    // 赤
+    "上杉":   "rgba(156,39,176,0.45)",   // 紫
+    "群":     "rgba(255,152,0,0.40)"     // 薄オレンジ
+  };
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
