@@ -100,6 +100,9 @@ function renderList(data) {
   });
 }
 
+console.log(allBusho[0]);
+
+
 /* イベント */
 [nameInput, factionSelect, clanSelect, costSelect]
   .forEach(el => el.addEventListener("input", applyFilters));
