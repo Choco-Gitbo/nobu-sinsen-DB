@@ -15,29 +15,6 @@ h1 {
 }
 
 .list-item {
-  background: #fff;
-  padding: 12px 16px;
-  margin-bottom: 10px;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
-  cursor: pointer;
-}
-
-.card {
-  background: #fff;
-  padding: 16px;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-}
-
-.back {
-  display: block;
-  margin: 16px;
-  color: #1976d2;
-  text-decoration: none;
-}
-
-.list-item {
   display: flex;
   align-items: center;
   background: #fff;
@@ -57,3 +34,18 @@ h1 {
   padding: 12px 16px;
   font-weight: 500;
 }
+
+.card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.back {
+  display: block;
+  margin: 16px;
+  color: #1976d2;
+  text-decoration: none;
+}
+
