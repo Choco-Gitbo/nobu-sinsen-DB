@@ -9,6 +9,13 @@ const factionColors = {
   "上杉":   "rgba(156,39,176,0.45)",
   "群":     "rgba(255,152,0,0.40)"
 };
+const rarityColors = {
+  5: "#fbc02d", // 金
+  4: "#7e57c2", // 紫
+  3: "#42a5f5", // 青
+  2: "#66bb6a", // 緑
+  1: "#424242"  // 黒
+};
 
 let data = [];
 
@@ -49,9 +56,17 @@ function renderList(list) {
   app.innerHTML = '';
 
   list.forEach(item => {
+    const rarity = Number(item.rarity) || 1;
+    const color = rarityColors[rarity] || "#999";
+
     const div = document.createElement('div');
     div.className = 'list-item';
-    div.textContent = item.name;
+
+    div.innerHTML = `
+      <span class="rarity-bar" style="background:${color};"></span>
+      <span class="name">${item.name}</span>
+    `;
+
     div.onclick = () => showDetail(item.id);
     app.appendChild(div);
   });
