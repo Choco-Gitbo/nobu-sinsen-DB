@@ -16,7 +16,7 @@ h1 {
 
 .list-item {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   background: #fff;
   margin-bottom: 10px;
   border-radius: 10px;
@@ -27,9 +27,7 @@ h1 {
 
 .rarity-bar {
   width: 8px;
-  height: 100%;
 }
-
 .name {
   padding: 12px 16px;
   font-weight: 500;
