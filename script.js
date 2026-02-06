@@ -51,6 +51,23 @@ function parseCSV(text) {
 /**********************
  * 一覧表示
  **********************/
+function applyFilters() {
+  const name = nameInput.value.trim();
+  const faction = factionSelect.value;
+  const clan = clanSelect.value;
+  const cost = costSelect.value;
+
+  const filtered = allBusho.filter(b => {
+    if (name && !b.name.includes(name)) return false;
+    if (faction && b.faction !== faction) return false;
+    if (clan && b.clan !== clan) return false;
+    if (cost && String(b.cost) !== cost) return false;
+    return true;
+  });
+
+  renderList(filtered);
+}
+
 function renderList(list) {
   const app = document.getElementById('app');
   app.innerHTML = '';
@@ -70,22 +87,6 @@ function renderList(list) {
     div.onclick = () => showDetail(item.id);
     app.appendChild(div);
   });
-}
-function applyFilters() {
-  const name = nameInput.value.trim();
-  const faction = factionSelect.value;
-  const clan = clanSelect.value;
-  const cost = costSelect.value;
-
-  const filtered = allBusho.filter(b => {
-    if (name && !b.name.includes(name)) return false;
-    if (faction && b.faction !== faction) return false;
-    if (clan && b.clan !== clan) return false;
-    if (cost && String(b.cost) !== cost) return false;
-    return true;
-  });
-
-  renderList(filtered);
 }
 
 /**********************
