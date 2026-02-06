@@ -46,54 +46,89 @@ function renderDetail(b) {
 }
 
 function drawHexChart(b) {
+
   const canvas = document.getElementById("statusChart");
   const ctx = canvas.getContext("2d");
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  const centerX = canvas.width / 2;
-  const centerY = canvas.height / 2;
+  const cx = canvas.width / 2;
+  const cy = canvas.height / 2;
   const maxRadius = 120;
 
-  // 仮の能力値（あとでCSVに置き換える）
-  const stats = [
-    80, // 武力
-    70, // 統率
-    60, // 知略
-    75, // 政治
-    65, // 速度
-    85  // 魅力
-  ];
-
-  const maxValue = 100;
   const angleStep = (Math.PI * 2) / 6;
 
-  /* ガイド線（薄グレー） */
-  ctx.strokeStyle = "#ccc";
+  /* 能力ラベル（固定順） */
+  const labels = ["知略","武勇","魅力","政務","速度","統率"];
+
+  /* ★ 仮能力値（あとでCSV化可能） */
+
+  const statsLv1 = [50,55,48,60,52,58];
+  const statsLv50 = [85,90,80,88,82,86];
+
+  const maxValue = 100;
+
+  const color = factionColors[b.faction] || "#999";
+
+  /* ---- ガイド六角形 ---- */
+
+  ctx.strokeStyle = "#ddd";
   ctx.lineWidth = 1;
 
   for (let i = 1; i <= 5; i++) {
-    const r = (maxRadius / 5) * i;
-    drawPolygon(ctx, centerX, centerY, r, angleStep);
+    drawPolygon(ctx, cx, cy, (maxRadius/5)*i);
   }
 
-  /* 勢力色 */
-  const color = factionColors[b.faction] || "#999";
+  /* ---- ラベル描画 ---- */
 
-  /* 能力値六角形 */
-  ctx.beginPath();
-  stats.forEach((value, i) => {
-    const angle = angleStep * i - Math.PI / 2;
-    const r = (value / maxValue) * maxRadius;
-    const x = centerX + Math.cos(angle) * r;
-    const y = centerY + Math.sin(angle) * r;
+  ctx.fillStyle = "#333";
+  ctx.font = "14px sans-serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
 
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
+  labels.forEach((label, i) => {
+
+    const angle = angleStep * i - Math.PI/2;
+
+    const x = cx + Math.cos(angle) * (maxRadius + 20);
+    const y = cy + Math.sin(angle) * (maxRadius + 20);
+
+    ctx.fillText(label, x, y);
   });
+
+  /* ---- Lv50（外側） ---- */
+
+  drawStatShape(ctx, statsLv50, color, 0.25, cx, cy, maxRadius);
+
+  /* ---- Lv1（内側） ---- */
+
+  drawStatShape(ctx, statsLv1, color, 0.65, cx, cy, maxRadius);
+}
+
+
+function drawStatShape(ctx, stats, color, alpha, cx, cy, maxRadius){
+
+  const maxValue = 100;
+  const step = (Math.PI * 2) / 6;
+
+  ctx.beginPath();
+
+  stats.forEach((value,i)=>{
+
+    const angle = step*i - Math.PI/2;
+    const r = (value/maxValue) * maxRadius;
+
+    const x = cx + Math.cos(angle)*r;
+    const y = cy + Math.sin(angle)*r;
+
+    if(i===0) ctx.moveTo(x,y);
+    else ctx.lineTo(x,y);
+
+  });
+
   ctx.closePath();
 
-  ctx.fillStyle = hexToRGBA(color, 0.4);
+  ctx.fillStyle = hexToRGBA(color,alpha);
   ctx.strokeStyle = color;
   ctx.lineWidth = 2;
 
@@ -101,23 +136,32 @@ function drawHexChart(b) {
   ctx.stroke();
 }
 
-function drawPolygon(ctx, cx, cy, r, angleStep) {
+function drawPolygon(ctx, cx, cy, r){
+
+  const step = (Math.PI*2)/6;
+
   ctx.beginPath();
-  for (let i = 0; i < 6; i++) {
-    const angle = angleStep * i - Math.PI / 2;
-    const x = cx + Math.cos(angle) * r;
-    const y = cy + Math.sin(angle) * r;
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
+
+  for(let i=0;i<6;i++){
+
+    const angle = step*i - Math.PI/2;
+
+    const x = cx + Math.cos(angle)*r;
+    const y = cy + Math.sin(angle)*r;
+
+    if(i===0) ctx.moveTo(x,y);
+    else ctx.lineTo(x,y);
   }
+
   ctx.closePath();
   ctx.stroke();
 }
 
-function hexToRGBA(hex, alpha) {
-  const r = parseInt(hex.slice(1, 3), 16);
-  const g = parseInt(hex.slice(3, 5), 16);
-  const b = parseInt(hex.slice(5, 7), 16);
+function hexToRGBA(hex, alpha){
+
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+
   return `rgba(${r},${g},${b},${alpha})`;
 }
-
