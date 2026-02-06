@@ -26,6 +26,8 @@ fetch("data/busho.csv")
 
 /* CSVパース */
 function parseCSV(text) {
+  // ★ BOM除去
+  text = text.replace(/^\uFEFF/, "");
   const lines = text.trim().split("\n");
   const headers = lines.shift().split(",");
 
