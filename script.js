@@ -26,15 +26,20 @@ fetch("data/busho.csv")
 
 /* CSVパース */
 function parseCSV(text) {
-  // ★ BOM除去
+  // BOM除去
   text = text.replace(/^\uFEFF/, "");
+
   const lines = text.trim().split("\n");
-  const headers = lines.shift().split(",");
+  const headers = lines.shift().split(",").map(h => h.trim());
 
   return lines.map(line => {
-    const values = line.split(",");
+    const values = line.split(",").map(v => v.trim());
     const obj = {};
-    headers.forEach((h, i) => obj[h] = values[i]);
+
+    headers.forEach((h, i) => {
+      obj[h] = values[i] ?? "";
+    });
+
     return obj;
   });
 }
