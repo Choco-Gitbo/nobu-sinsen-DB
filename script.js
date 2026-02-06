@@ -87,6 +87,11 @@ function renderList(data) {
     const row = document.createElement("div");
     row.className = "busho-row";
 
+    // ★ クリックで詳細へ
+    row.addEventListener("click", () => {
+      location.href = `detail.html?id=${b.id}`;
+    });
+
     const bar = document.createElement("div");
     bar.className = "rarity-bar";
     bar.style.background =
@@ -105,7 +110,6 @@ function renderList(data) {
   });
 }
 
-console.log(allBusho[0]);
 
 
 /* イベント */
