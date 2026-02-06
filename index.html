@@ -2,31 +2,32 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>武将データベース</title>
+  <title>武将一覧</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h1>武将一覧</h1>
-  <div id="app" class="container"></div>
+<h1>武将一覧</h1>
 
-  <script src="script.js"></script>
+<div class="filters">
+  <input type="text" id="nameSearch" placeholder="名前検索">
 
-<input type="text" id="nameSearch" placeholder="名前検索">
+  <select id="factionFilter">
+    <option value="">勢力（全て）</option>
+  </select>
 
-<select id="factionFilter">
-  <option value="">勢力（全て）</option>
-</select>
+  <select id="clanFilter">
+    <option value="">家門（全て）</option>
+  </select>
 
-<select id="clanFilter">
-  <option value="">家門（全て）</option>
-</select>
+  <select id="costFilter">
+    <option value="">コスト（全て）</option>
+  </select>
+</div>
 
-<select id="costFilter">
-  <option value="">コスト（全て）</option>
-</select>
+<div id="bushoList" class="busho-list"></div>
 
-
+<script src="script.js"></script>
 </body>
 </html>
