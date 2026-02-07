@@ -1,7 +1,2 @@
-﻿id,name,faction,clan,cost,rarity
-1,織田信長,織田,織田,6,5
-2,豊臣秀吉,豊臣,木下,5,5
-3,徳川家康,徳川,松平,6,5
-4,武田信玄,武田,武田,6,5
-5,上杉謙信,上杉,上杉,6,5
-6,前田利家,織田,前田,4,4
+﻿id,name,faction,clan,cost,rarity,int_base,int_growth,pow_base,pow_growth,cha_base,cha_growth,adm_base,adm_growth,spd_base,spd_growth,ldr_base,ldr_growth,_reserved
+1,織田信長,織田,織田,6,5,180,6,220,7,200,6,210,6,190,5,230,7,_

@@ -1,0 +1,10 @@
+busho.csv 仕様 v1.0
+- id        : string
+- name      : string
+- faction   : string
+- clan      : string
+- cost      : number
+- rarity    : number
+- _reserved : 空
+
+データを追加するときは、_reservedの上に！

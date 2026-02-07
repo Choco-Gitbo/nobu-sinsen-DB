@@ -50,118 +50,123 @@ function drawHexChart(b) {
   const canvas = document.getElementById("statusChart");
   const ctx = canvas.getContext("2d");
 
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0,0,canvas.width,canvas.height);
 
-  const cx = canvas.width / 2;
-  const cy = canvas.height / 2;
+  const cx = canvas.width/2;
+  const cy = canvas.height/2;
   const maxRadius = 120;
+  const maxValue = 500;
+  const step = (Math.PI*2)/6;
 
-  const angleStep = (Math.PI * 2) / 6;
-
-  /* 能力ラベル（固定順） */
   const labels = ["知略","武勇","魅力","政務","速度","統率"];
 
-  /* ★ 仮能力値（あとでCSV化可能） */
+  const bases = [
+    +b.int_base,
+    +b.pow_base,
+    +b.cha_base,
+    +b.adm_base,
+    +b.spd_base,
+    +b.ldr_base
+  ];
 
-  const statsLv1 = [50,55,48,60,52,58];
-  const statsLv50 = [85,90,80,88,82,86];
+  const growths = [
+    +b.int_growth,
+    +b.pow_growth,
+    +b.cha_growth,
+    +b.adm_growth,
+    +b.spd_growth,
+    +b.ldr_growth
+  ];
 
-  const maxValue = 100;
+  const lv1 = bases;
+  const lv50 = bases.map((v,i)=>v + 49*growths[i]);
 
   const color = factionColors[b.faction] || "#999";
 
-  /* ---- ガイド六角形 ---- */
-
+  /* ガイド */
   ctx.strokeStyle = "#ddd";
-  ctx.lineWidth = 1;
-
-  for (let i = 1; i <= 5; i++) {
-    drawPolygon(ctx, cx, cy, (maxRadius/5)*i);
+  for(let i=1;i<=5;i++){
+    drawPolygon(ctx,cx,cy,(maxRadius/5)*i);
   }
 
-  /* ---- ラベル描画 ---- */
-
+  /* ラベル */
   ctx.fillStyle = "#333";
   ctx.font = "14px sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
 
-  labels.forEach((label, i) => {
-
-    const angle = angleStep * i - Math.PI/2;
-
-    const x = cx + Math.cos(angle) * (maxRadius + 20);
-    const y = cy + Math.sin(angle) * (maxRadius + 20);
-
-    ctx.fillText(label, x, y);
-  });
-
-  /* ---- Lv50（外側） ---- */
-
-  drawStatShape(ctx, statsLv50, color, 0.25, cx, cy, maxRadius);
-
-  /* ---- Lv1（内側） ---- */
-
-  drawStatShape(ctx, statsLv1, color, 0.65, cx, cy, maxRadius);
-}
-
-
-function drawStatShape(ctx, stats, color, alpha, cx, cy, maxRadius){
-
-  const maxValue = 100;
-  const step = (Math.PI * 2) / 6;
-
-  ctx.beginPath();
-
-  stats.forEach((value,i)=>{
-
+  labels.forEach((l,i)=>{
     const angle = step*i - Math.PI/2;
-    const r = (value/maxValue) * maxRadius;
-
-    const x = cx + Math.cos(angle)*r;
-    const y = cy + Math.sin(angle)*r;
-
-    if(i===0) ctx.moveTo(x,y);
-    else ctx.lineTo(x,y);
-
+    ctx.fillText(
+      l,
+      cx + Math.cos(angle)*(maxRadius+22),
+      cy + Math.sin(angle)*(maxRadius+22)
+    );
   });
 
-  ctx.closePath();
+  /* Lv50（外） */
+  drawStat(ctx,lv50,color,0.25,cx,cy,maxRadius,maxValue);
 
-  ctx.fillStyle = hexToRGBA(color,alpha);
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 2;
+  /* Lv1（内） */
+  drawStat(ctx,lv1,color,0.6,cx,cy,maxRadius,maxValue);
 
-  ctx.fill();
-  ctx.stroke();
+  /* 数値表示（Lv50） */
+  ctx.fillStyle = color;
+  ctx.font = "12px sans-serif";
+
+  lv50.forEach((v,i)=>{
+    const angle = step*i - Math.PI/2;
+    const r = (v/maxValue)*maxRadius + 12;
+    ctx.fillText(
+      Math.round(v),
+      cx + Math.cos(angle)*r,
+      cy + Math.sin(angle)*r
+    );
+  });
 }
 
-function drawPolygon(ctx, cx, cy, r){
+
+
+function drawStat(ctx,stats,color,alpha,cx,cy,maxRadius,maxValue){
 
   const step = (Math.PI*2)/6;
 
   ctx.beginPath();
 
-  for(let i=0;i<6;i++){
-
+  stats.forEach((v,i)=>{
     const angle = step*i - Math.PI/2;
-
+    const r = (v/maxValue)*maxRadius;
     const x = cx + Math.cos(angle)*r;
     const y = cy + Math.sin(angle)*r;
+    if(i===0) ctx.moveTo(x,y);
+    else ctx.lineTo(x,y);
+  });
 
+  ctx.closePath();
+  ctx.fillStyle = hexToRGBA(color,alpha);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2;
+  ctx.fill();
+  ctx.stroke();
+}
+
+function drawPolygon(ctx,cx,cy,r){
+  const step=(Math.PI*2)/6;
+  ctx.beginPath();
+  for(let i=0;i<6;i++){
+    const a=step*i-Math.PI/2;
+    const x=cx+Math.cos(a)*r;
+    const y=cy+Math.sin(a)*r;
     if(i===0) ctx.moveTo(x,y);
     else ctx.lineTo(x,y);
   }
-
   ctx.closePath();
   ctx.stroke();
 }
 
-function hexToRGBA(hex, alpha){
-
-  const r = parseInt(hex.slice(1,3),16);
-  const g = parseInt(hex.slice(3,5),16);
-  const b = parseInt(hex.slice(5,7),16);
-
-  return `rgba(${r},${g},${b},${alpha})`;
+function hexToRGBA(hex,a){
+  const r=parseInt(hex.slice(1,3),16);
+  const g=parseInt(hex.slice(3,5),16);
+  const b=parseInt(hex.slice(5,7),16);
+  return `rgba(${r},${g},${b},${a})`;
 }
