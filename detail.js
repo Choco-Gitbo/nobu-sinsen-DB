@@ -181,6 +181,27 @@ function hexToRGBA(hex,a){
   return `rgba(${r},${g},${b},${a})`;
 }
 
+  const senpoArea = document.getElementById("senpoArea");
+  senpoArea.innerHTML = "";
+
+  /* 固有戦法 */
+  if (busho.unique_senpo) {
+    const senpo = senpoList.find(s => s.id === busho.unique_senpo);
+    const states = senpoStates.filter(st => st.senpo_id === senpo.id);
+
+    const card = createSenpoCard(senpo, states);
+    senpoArea.appendChild(card);
+  }
+
+  /* 伝授戦法 */
+  if (busho.teach_senpo) {
+    const senpo = senpoList.find(s => s.id === busho.teach_senpo);
+    const states = senpoStates.filter(st => st.senpo_id === senpo.id);
+
+    const card = createSenpoCard(senpo, states);
+    senpoArea.appendChild(card);
+  }
+}
 function createSenpoCard(senpo, states) {
   const card = document.createElement("div");
   card.className = "senpo-card";
