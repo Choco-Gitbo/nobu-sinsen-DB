@@ -201,7 +201,7 @@ function hexToRGBA(hex,a){
     const card = createSenpoCard(senpo, states);
     senpoArea.appendChild(card);
   }
-}
+
 function createSenpoCard(senpo, states) {
   const card = document.createElement("div");
   card.className = "senpo-card";
