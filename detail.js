@@ -198,10 +198,42 @@ function hexToRGBA(hex,a){
   return `rgba(${r},${g},${b},${a})`;
 }
 
-const typeTag = document.createElement("span");
-typeTag.className = "senpo-type";
-typeTag.textContent = senpo.type;
+function createSenpoCard(senpo, states) {
+  const card = document.createElement("div");
+  card.className = "senpo-card";
 
-const type = senpo.type?.trim();
-typeTag.style.backgroundColor =
-  SENPO_TYPE_COLOR[type] ?? "#ccc";
+  /* ヘッダー */
+  const header = document.createElement("div");
+  header.className = "senpo-header";
+
+  const title = document.createElement("span");
+  title.className = "senpo-title";
+  title.textContent = senpo.name;
+
+  const typeTag = document.createElement("span");
+  typeTag.className = "senpo-type";
+  typeTag.textContent = senpo.type;
+
+  const type = senpo.type?.trim();
+  typeTag.style.backgroundColor =
+    SENPO_TYPE_COLOR[type] ?? "#ccc";
+
+  header.appendChild(title);
+  header.appendChild(typeTag);
+
+  /* 状態タグ */
+  const stateWrap = document.createElement("div");
+  stateWrap.className = "senpo-states";
+
+  states.forEach(st => {
+    const tag = document.createElement("span");
+    tag.className = "state-tag";
+    tag.textContent = st.label;
+    stateWrap.appendChild(tag);
+  });
+
+  card.appendChild(header);
+  card.appendChild(stateWrap);
+
+  return card;
+}
