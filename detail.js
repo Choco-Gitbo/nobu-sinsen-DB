@@ -29,23 +29,6 @@ fetch("data/busho.csv")
     if (busho) renderDetail(busho);
   });
 
-/* CSV読み込み(戦法) */
-fetch("data/senpo.csv")
-  .then(res => res.text())
-  .then(text => {
-    const data = parseCSV(text);
-    const senpo = senpoList.find(s => s.id === busho.unique_senpo);
-    if (senpo) renderDetail(senpo);
-  });
-
-/* CSV読み込み(戦法状態) */
-fetch("data/senpo_state.csv")
-  .then(res => res.text())
-  .then(text => {
-    const data = parseCSV(text);
-    const states = senpoStates.filter(st => st.senpo_id === senpo.id);
-    if (states) renderDetail(states);
-  });
 
 /* CSVパース（一覧と同じ） */
 function parseCSV(text) {
