@@ -202,5 +202,6 @@ const typeTag = document.createElement("span");
 typeTag.className = "senpo-type";
 typeTag.textContent = senpo.type;
 
+const type = senpo.type?.trim();
 typeTag.style.backgroundColor =
-  SENPO_TYPE_COLOR[senpo.type] ?? "#ccc";
+  SENPO_TYPE_COLOR[type] ?? "#ccc";
