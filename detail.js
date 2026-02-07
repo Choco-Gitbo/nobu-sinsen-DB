@@ -7,17 +7,44 @@ const factionColors = {
   "群":   "#f4a261"    // 薄オレンジ
 };
 
+const SENPO_TYPE_COLOR = {
+  "指揮": "#6ec6ff",   // 水色
+  "能動": "#ffb3b3",   // 薄赤
+  "突撃": "#ffd966",   // 黄
+  "受動": "#9be29b",   // 緑
+  "兵種": "#d6c9f0"    // 薄紫
+};
+
+
 /* URLから id を取得 */
 const params = new URLSearchParams(location.search);
 const bushoId = params.get("id");
 
-/* CSV読み込み */
+/* CSV読み込み(武将) */
 fetch("data/busho.csv")
   .then(res => res.text())
   .then(text => {
     const data = parseCSV(text);
     const busho = data.find(b => b.id === bushoId);
     if (busho) renderDetail(busho);
+  });
+
+/* CSV読み込み(戦法) */
+fetch("data/senpo.csv")
+  .then(res => res.text())
+  .then(text => {
+    const data = parseCSV(text);
+    const senpo = senpoList.find(s => s.id === busho.unique_senpo);
+    if (senpo) renderDetail(senpo);
+  });
+
+/* CSV読み込み(戦法状態) */
+fetch("data/senpo_state.csv")
+  .then(res => res.text())
+  .then(text => {
+    const data = parseCSV(text);
+    const states = senpoStates.filter(st => st.senpo_id === senpo.id);
+    if (states) renderDetail(states);
   });
 
 /* CSVパース（一覧と同じ） */
@@ -170,3 +197,10 @@ function hexToRGBA(hex,a){
   const b=parseInt(hex.slice(5,7),16);
   return `rgba(${r},${g},${b},${a})`;
 }
+
+const typeTag = document.createElement("span");
+typeTag.className = "senpo-type";
+typeTag.textContent = senpo.type;
+
+typeTag.style.backgroundColor =
+  SENPO_TYPE_COLOR[senpo.type] ?? "#ccc";
