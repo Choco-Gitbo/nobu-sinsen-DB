@@ -101,7 +101,7 @@ function createSenpoCard(senpo, states, label) {
   nameEl.textContent = senpo.name;
 
   const typeTag = document.createElement("span");
-  typeTag.className = `type-tag type-${senpo.type}`;
+  typeTag.className = "senpo-type"; //`type-tag type-${senpo.type}`;
   
   const type = senpo.type?.trim();
   typeTag.textContent = type;
