@@ -7,53 +7,118 @@ const factionColors = {
   "群":   "#f4a261"    // 薄オレンジ
 };
 
-const SENPO_TYPE_COLOR = {
-  "指揮": "#6ec6ff",   // 水色
-  "能動": "#ffb3b3",   // 薄赤
-  "突撃": "#ffd966",   // 黄
-  "受動": "#9be29b",   // 緑
-  "兵種": "#d6c9f0"    // 薄紫
-};
-
-
-/* URLから id を取得 */
-const params = new URLSearchParams(location.search);
-const bushoId = params.get("id");
-
-/* CSV読み込み(武将) */
-fetch("data/busho.csv")
-  .then(res => res.text())
-  .then(text => {
-    const data = parseCSV(text);
-    const busho = data.find(b => b.id === bushoId);
-    if (busho) renderDetail(busho);
-  });
-
-
-/* CSVパース（一覧と同じ） */
+/* =========================
+   CSVパース（BOM対策）
+========================= */
 function parseCSV(text) {
   text = text.replace(/^\uFEFF/, "");
   const lines = text.trim().split("\n");
-  const headers = lines.shift().split(",").map(h => h.trim());
+  const headers = lines[0].split(",");
 
-  return lines.map(line => {
-    const values = line.split(",").map(v => v.trim());
+  return lines.slice(1).map(line => {
+    const values = line.split(",");
     const obj = {};
-    headers.forEach((h, i) => obj[h] = values[i] ?? "");
+    headers.forEach((h, i) => {
+      obj[h.trim()] = values[i]?.trim();
+    });
     return obj;
   });
 }
 
-/* 詳細描画 */
-function renderDetail(b) {
-  document.getElementById("name").textContent = b.name;
-  document.getElementById("faction").textContent = b.faction;
-  document.getElementById("clan").textContent = b.clan;
-  document.getElementById("cost").textContent = b.cost;
-  document.getElementById("rarity").textContent = "★".repeat(b.rarity);
+/* =========================
+   URLパラメータ取得
+========================= */
+const params = new URLSearchParams(location.search);
+const bushoId = params.get("id");
 
-  drawHexChart(b);
+/* =========================
+   データ格納
+========================= */
+let bushoList = [];
+let senpoList = [];
+let senpoStates = [];
+
+/* =========================
+   読み込み
+========================= */
+Promise.all([
+  fetch("data/busho.csv").then(r => r.text()),
+  fetch("data/senpo.csv").then(r => r.text()),
+  fetch("data/senpo_state.csv").then(r => r.text())
+]).then(([bushoText, senpoText, stateText]) => {
+
+  bushoList = parseCSV(bushoText);
+  senpoList = parseCSV(senpoText);
+  senpoStates = parseCSV(stateText);
+
+  const busho = bushoList.find(b => b.id === bushoId);
+  if (!busho) return;
+
+  renderBushoDetail(busho);
+});
+
+/* =========================
+   種類タグ色
+========================= */
+const SENPO_TYPE_COLOR = {
+  "指揮": "#6ec6ff",
+  "能動": "#ffb3b3",
+  "突撃": "#ffd966",
+  "受動": "#9be29b",
+  "兵種": "#d6c9f0"
+};
+
+/* =========================
+   戦法カード生成
+========================= */
+function createSenpoCard(senpo, states, label) {
+  const card = document.createElement("div");
+  card.className = "senpo-card";
+
+  const titleRow = document.createElement("div");
+  titleRow.className = "senpo-header";
+
+  const labelSpan = document.createElement("span");
+  labelSpan.className = "senpo-label";
+  labelSpan.textContent = label;
+
+  const title = document.createElement("span");
+  title.className = "senpo-title";
+  title.textContent = senpo.name;
+
+  const typeTag = document.createElement("span");
+  typeTag.className = "senpo-type";
+  const type = senpo.type?.trim();
+  typeTag.textContent = type;
+  typeTag.style.backgroundColor =
+    SENPO_TYPE_COLOR[type] ?? "#ccc";
+
+  titleRow.appendChild(labelSpan);
+  titleRow.appendChild(title);
+  titleRow.appendChild(typeTag);
+
+  const stateWrap = document.createElement("div");
+  stateWrap.className = "senpo-states";
+
+  states.forEach(st => {
+    const tag = document.createElement("span");
+    tag.className = "state-tag";
+    tag.textContent = st.label;
+    stateWrap.appendChild(tag);
+  });
+
+  card.appendChild(titleRow);
+  card.appendChild(stateWrap);
+
+  return card;
 }
+
+/* =========================
+   詳細描画
+========================= */
+function renderBushoDetail(busho) {
+
+  console.log("renderBushoDetail:", busho);
 
 function drawHexChart(b) {
 
@@ -187,57 +252,22 @@ function hexToRGBA(hex,a){
   /* 固有戦法 */
   if (busho.unique_senpo) {
     const senpo = senpoList.find(s => s.id === busho.unique_senpo);
-    const states = senpoStates.filter(st => st.senpo_id === senpo.id);
-
-    const card = createSenpoCard(senpo, states);
-    senpoArea.appendChild(card);
+    if (senpo) {
+      const states = senpoStates.filter(st => st.senpo_id === senpo.id);
+      senpoArea.appendChild(
+        createSenpoCard(senpo, states, "固有戦法")
+      );
+    }
   }
 
   /* 伝授戦法 */
   if (busho.teach_senpo) {
     const senpo = senpoList.find(s => s.id === busho.teach_senpo);
-    const states = senpoStates.filter(st => st.senpo_id === senpo.id);
-
-    const card = createSenpoCard(senpo, states);
-    senpoArea.appendChild(card);
+    if (senpo) {
+      const states = senpoStates.filter(st => st.senpo_id === senpo.id);
+      senpoArea.appendChild(
+        createSenpoCard(senpo, states, "伝授戦法")
+      );
+    }
   }
-
-function createSenpoCard(senpo, states) {
-  const card = document.createElement("div");
-  card.className = "senpo-card";
-
-  /* ヘッダー */
-  const header = document.createElement("div");
-  header.className = "senpo-header";
-
-  const title = document.createElement("span");
-  title.className = "senpo-title";
-  title.textContent = senpo.name;
-
-  const typeTag = document.createElement("span");
-  typeTag.className = "senpo-type";
-  typeTag.textContent = senpo.type;
-
-  const type = senpo.type?.trim();
-  typeTag.style.backgroundColor =
-    SENPO_TYPE_COLOR[type] ?? "#ccc";
-
-  header.appendChild(title);
-  header.appendChild(typeTag);
-
-  /* 状態タグ */
-  const stateWrap = document.createElement("div");
-  stateWrap.className = "senpo-states";
-
-  states.forEach(st => {
-    const tag = document.createElement("span");
-    tag.className = "state-tag";
-    tag.textContent = st.label;
-    stateWrap.appendChild(tag);
-  });
-
-  card.appendChild(header);
-  card.appendChild(stateWrap);
-
-  return card;
 }
