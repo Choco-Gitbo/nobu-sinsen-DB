@@ -120,6 +120,14 @@ function renderBushoDetail(busho) {
 
   console.log("renderBushoDetail:", busho);
 
+  document.getElementById("name").textContent = b.name;
+  document.getElementById("faction").textContent = b.faction;
+  document.getElementById("clan").textContent = b.clan;
+  document.getElementById("cost").textContent = b.cost;
+  document.getElementById("rarity").textContent = "★".repeat(b.rarity);
+
+  drawHexChart(b);
+
 function drawHexChart(b) {
 
   const canvas = document.getElementById("statusChart");
