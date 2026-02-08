@@ -141,7 +141,7 @@ function createSenpoCard(senpo, states, label) {
 
   card.appendChild(titleRow);  // 戦法名＋種類
   card.appendChild(descEl);    // ← 戦法説明
-  card.appendChild(stateArea); // 状態タグ群
+  card.appendChild(stateWrap); // 状態タグ群
 
   return card;
 }
