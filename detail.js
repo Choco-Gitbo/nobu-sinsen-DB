@@ -69,6 +69,24 @@ const SENPO_TYPE_COLOR = {
 };
 
 /* =========================
+   状態タグ色
+========================= */
+const STATE_COLOR_RULES = [
+  {
+    match: ["上昇", "増加", "強化"],
+    color: "#cce4ff"   // バフ（青）
+  },
+  {
+    match: ["低下", "減少", "混乱", "麻痺"],
+    color: "#ffd6d6"   // デバフ（赤）
+  },
+  {
+    match: ["ダメージ", "損害"],
+    color: "#ffe0b2"   // ダメージ（橙）
+  }
+];
+
+/* =========================
    戦法カード生成
 ========================= */
 function createSenpoCard(senpo, states, label) {
@@ -104,6 +122,14 @@ function createSenpoCard(senpo, states, label) {
     const tag = document.createElement("span");
     tag.className = "state-tag";
     tag.textContent = st.label;
+
+    const rule = STATE_COLOR_RULES.find(r =>
+      r.match.some(word => st.label.includes(word))
+    );
+
+    if (rule) {
+      tag.style.backgroundColor = rule.color;
+    }
     stateWrap.appendChild(tag);
   });
 
