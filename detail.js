@@ -120,13 +120,13 @@ function renderBushoDetail(busho) {
 
   console.log("renderBushoDetail:", busho);
 
-  document.getElementById("name").textContent = b.name;
-  document.getElementById("faction").textContent = b.faction;
-  document.getElementById("clan").textContent = b.clan;
-  document.getElementById("cost").textContent = b.cost;
-  document.getElementById("rarity").textContent = "★".repeat(b.rarity);
+  document.getElementById("name").textContent = busho.name;
+  document.getElementById("faction").textContent = busho.faction;
+  document.getElementById("clan").textContent = busho.clan;
+  document.getElementById("cost").textContent = busho.cost;
+  document.getElementById("rarity").textContent = "★".repeat(busho.rarity);
 
-  drawHexChart(b);
+  drawHexChart(busho);
 
 function drawHexChart(b) {
 
