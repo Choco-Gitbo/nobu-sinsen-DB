@@ -70,10 +70,24 @@ h1 {
   gap: 8px;
 }
 
-.senpo-title {
-  margin-right: 6px;
+.senpo-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.senpo-name {
   font-weight: bold;
-  color: #555;
+}
+
+.senpo-desc {
+  margin: 6px 0 8px;
+  padding: 6px 10px;
+  font-size: 14px;
+  background: #fafafa;
+  border-left: 4px solid #ccc;
+  line-height: 1.6;
 }
 
 .senpo-type {

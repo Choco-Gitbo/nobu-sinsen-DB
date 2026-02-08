@@ -94,26 +94,32 @@ function createSenpoCard(senpo, states, label) {
   card.className = "senpo-card";
 
   const titleRow = document.createElement("div");
-  titleRow.className = "senpo-header";
+  titleRow.className = "senpo-title-row";
 
-  const labelSpan = document.createElement("span");
-  labelSpan.className = "senpo-label";
-  labelSpan.textContent = label;
-
-  const title = document.createElement("span");
-  title.className = "senpo-title";
-  title.textContent = senpo.name;
+  const nameEl = document.createElement("span");
+  nameEl.className = "senpo-name";
+  nameEl.textContent = senpo.name;
 
   const typeTag = document.createElement("span");
-  typeTag.className = "senpo-type";
+  typeTag.className = `type-tag type-${senpo.type}`;
+  
   const type = senpo.type?.trim();
   typeTag.textContent = type;
   typeTag.style.backgroundColor =
     SENPO_TYPE_COLOR[type] ?? "#ccc";
 
-  titleRow.appendChild(labelSpan);
-  titleRow.appendChild(title);
+  titleRow.appendChild(nameEl);
   titleRow.appendChild(typeTag);
+
+  const descEl = document.createElement("div");
+  descEl.className = "senpo-desc";
+  descEl.textContent = senpo.description;
+  descEl.style.display = "none";  
+
+  titleRow.addEventListener("click", () => {
+    const isOpen = descEl.style.display === "block";
+    descEl.style.display = isOpen ? "none" : "block";
+  });  
 
   const stateWrap = document.createElement("div");
   stateWrap.className = "senpo-states";
@@ -133,8 +139,9 @@ function createSenpoCard(senpo, states, label) {
     stateWrap.appendChild(tag);
   });
 
-  card.appendChild(titleRow);
-  card.appendChild(stateWrap);
+  card.appendChild(titleRow);  // 戦法名＋種類
+  card.appendChild(descEl);    // ← 戦法説明
+  card.appendChild(stateArea); // 状態タグ群
 
   return card;
 }
