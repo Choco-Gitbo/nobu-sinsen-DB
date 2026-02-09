@@ -356,4 +356,17 @@ function hexToRGBA(hex,a){
       );
     }
   }
+  const tokuseiArea = document.getElementById("tokuseiArea");
+  tokuseiArea.innerHTML = "";
+
+  /* 特性 */
+  if (busho.unique_tokusei) {
+    const tokusei = tokuseiList.find(s => s.id === busho.unique_tokusei);
+    if (tokusei) {
+      /* const states = tokuseiStates.filter(st => st.tokusei_id === tokusei.id); */
+      tokuseiArea.appendChild(
+        createtokuseiCard(tokusei, states, "固有特性")
+      );
+    }
+  }
  }
