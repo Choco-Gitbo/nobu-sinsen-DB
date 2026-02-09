@@ -117,6 +117,28 @@ h1 {
   margin-bottom: 20px;
 }
 
+.toggle-card {
+  margin-top: 10px;
+}
+
+.toggle-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.toggle-desc {
+  margin: 6px 0 0 18px;
+  padding: 6px 10px;
+  background: #fafafa;
+  border-left: 4px solid #bbb;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+
 canvas {
   margin-bottom: 24px;
 }

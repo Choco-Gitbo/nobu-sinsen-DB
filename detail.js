@@ -51,6 +51,11 @@ Promise.all([
   senpoList = parseCSV(senpoText);
   senpoStates = parseCSV(stateText);
 
+  const tokuseiMap = {};
+  tokuseiList.forEach(t => {
+    tokuseiMap[t.id] = t;
+  });
+
   const busho = bushoList.find(b => b.id === bushoId);
   if (!busho) return;
 
@@ -145,6 +150,47 @@ function createSenpoCard(senpo, states, label) {
 
   return card;
 }
+
+/* =========================
+   特性カード生成
+========================= */
+
+function createToggleCard(title, name, description) {
+  const card = document.createElement("div");
+  card.className = "toggle-card";
+
+  const header = document.createElement("div");
+  header.className = "toggle-header";
+
+  const arrow = document.createElement("span");
+  arrow.textContent = "▸";
+  arrow.className = "toggle-arrow";
+
+  const titleEl = document.createElement("span");
+  titleEl.className = "toggle-title";
+  titleEl.textContent = title;
+
+  const nameEl = document.createElement("span");
+  nameEl.className = "toggle-name";
+  nameEl.textContent = name;
+
+  header.append(arrow, titleEl, nameEl);
+
+  const desc = document.createElement("div");
+  desc.className = "toggle-desc";
+  desc.textContent = description;
+  desc.style.display = "none";
+
+  header.addEventListener("click", () => {
+    const open = desc.style.display === "block";
+    desc.style.display = open ? "none" : "block";
+    arrow.textContent = open ? "▸" : "▾";
+  });
+
+  card.append(header, desc);
+  return card;
+}
+
 
 /* =========================
    詳細描画
@@ -311,4 +357,28 @@ function hexToRGBA(hex,a){
       );
     }
   }
+
+function renderTokusei(busho, tokuseiMap) {
+  const area = document.getElementById("tokusei-area");
+  area.innerHTML = "";
+
+  const list = [
+    ["固有特性", busho.unique_tokusei],
+    ["特性（1凸）", busho.tokusei_1],
+    ["特性（3凸）", busho.tokusei_3],
+    ["特性（5凸）", busho.tokusei_5],
+  ];
+
+  list.forEach(([label, id]) => {
+    if (!id) return;
+
+    const t = tokuseiMap[id];
+    if (!t) return;
+
+    const card = createToggleCard(label, t.name, t.description);
+    area.appendChild(card);
+  });
+}
+
+
 }
