@@ -1,2 +1,2 @@
-﻿id,name,faction,clan,cost,rarity,int_base,int_growth,pow_base,pow_growth,cha_base,cha_growth,adm_base,adm_growth,spd_base,spd_growth,ldr_base,ldr_growth,unique_senpo,teach_senpo,_reserved
-B001,織田信長,織田,織田,6,5,180,6,220,7,200,6,210,6,190,5,230,7,S001,S002,_
+﻿id,name,faction,clan,cost,rarity,int_base,int_growth,pow_base,pow_growth,cha_base,cha_growth,adm_base,adm_growth,spd_base,spd_growth,ldr_base,ldr_growth,unique_senpo,teach_senpo,unique_tokusei,tokusei_1,tokusei_3,tokusei_5,_reserved
+B001,織田信長,織田,織田,6,5,180,6,220,7,200,6,210,6,190,5,230,7,S001,S002,T001,T002,T003,T004,_
