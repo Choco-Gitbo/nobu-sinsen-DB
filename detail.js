@@ -154,7 +154,7 @@ function createSenpoCard(senpo, states, label) {
    特性カード生成
 ========================= */
 
-function createtokuseiCard(title, name, description) {
+function createTokuseiCard(tokusei,label) {
   const card = document.createElement("div");
   card.className = "toggle-card";
 
@@ -167,17 +167,17 @@ function createtokuseiCard(title, name, description) {
 
   const titleEl = document.createElement("span");
   titleEl.className = "toggle-title";
-  titleEl.textContent = title;
+  titleEl.textContent = label;
 
   const nameEl = document.createElement("span");
   nameEl.className = "toggle-name";
-  nameEl.textContent = name;
+  nameEl.textContent = tokusei.name;
 
   header.append(arrow, titleEl, nameEl);
 
   const desc = document.createElement("div");
   desc.className = "toggle-desc";
-  desc.textContent = description;
+  desc.textContent = tokusei.description;
   desc.style.display = "none";
 
   header.addEventListener("click", () => {
@@ -365,7 +365,7 @@ function hexToRGBA(hex,a){
     if (tokusei) {
       /* const states = tokuseiStates.filter(st => st.tokusei_id === tokusei.id); */
       tokuseiArea.append(
-        createtokuseiCard(tokusei,  "固有特性")
+        createTokuseiCard(tokusei,  "固有特性")
       );
     }
   }
