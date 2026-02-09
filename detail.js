@@ -383,4 +383,4 @@ function hexToRGBA(hex,a){
     area.appendChild(card);
    }
   );
-/* } */
+ }
