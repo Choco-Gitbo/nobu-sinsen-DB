@@ -161,10 +161,10 @@ function createTokuseiCard(tokusei,label) {
   const header = document.createElement("div");
   header.className = "toggle-header";
 
- /*  const arrow = document.createElement("span");
-  arrow.textContent = "▸";
+  const arrow = document.createElement("span");
+  arrow.textContent = "";
   arrow.className = "toggle-arrow";
- */
+ 
 
   const titleEl = document.createElement("span");
   titleEl.className = "toggle-title";
@@ -181,11 +181,11 @@ function createTokuseiCard(tokusei,label) {
   desc.textContent = tokusei.description;
   desc.style.display = "none";
 
-  /* header.addEventListener("click", () => {
+  header.addEventListener("click", () => {
     const open = desc.style.display === "block";
     desc.style.display = open ? "none" : "block";
-    arrow.textContent = open ? "▸" : "▾";
-  }); */
+    arrow.textContent = open ? "" : "";
+  }); 
 
   card.append(header, desc);
   return card;
