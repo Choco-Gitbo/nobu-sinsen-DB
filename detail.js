@@ -364,7 +364,7 @@ function hexToRGBA(hex,a){
     const tokusei = tokuseiList.find(s => s.id === busho.unique_tokusei);
     if (tokusei) {
       /* const states = tokuseiStates.filter(st => st.tokusei_id === tokusei.id); */
-      tokuseiArea.appendChild(
+      tokuseiArea.append(
         createtokuseiCard(tokusei,  "固有特性")
       );
     }
