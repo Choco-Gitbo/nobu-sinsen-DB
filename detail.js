@@ -381,7 +381,7 @@ function hexToRGBA(hex,a){
 
     const card = createToggleCard(label, t.name, t.description);
     area.appendChild(card);
-  /* } */
+   }
   );
 }
 
