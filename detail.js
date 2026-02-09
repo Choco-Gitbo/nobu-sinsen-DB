@@ -358,10 +358,10 @@ function hexToRGBA(hex,a){
   }
 
   /* 特性 */
-/ renderTokusei(busho,tokuseiList); /
+/* renderTokusei(busho,tokuseiList); */
 
 
-/ function renderTokusei(busho, tokuseiMap) { /
+/* function renderTokusei(busho, tokuseiMap) { */
   const area = document.getElementById("tokusei-area");
   area.innerHTML = "";
 
@@ -375,13 +375,13 @@ function hexToRGBA(hex,a){
   list.forEach(([label, id]) => {
     if (!id) return;
 
-    /const t = tokuseiMap[id]; /
+    /* const t = tokuseiMap[id]; */
     const t = tokuseiList[id];
     if (!t) return;
 
     const card = createToggleCard(label, t.name, t.description);
     area.appendChild(card);
-  / }
+  /* } */
   );
 }
 
