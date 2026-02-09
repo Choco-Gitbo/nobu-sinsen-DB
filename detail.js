@@ -44,17 +44,15 @@ let senpoStates = [];
 Promise.all([
   fetch("data/busho.csv").then(r => r.text()),
   fetch("data/senpo.csv").then(r => r.text()),
-  fetch("data/senpo_state.csv").then(r => r.text())
-]).then(([bushoText, senpoText, stateText]) => {
+  fetch("data/senpo_state.csv").then(r => r.text()),
+  fetch("data/tokusei.csv").then(r => r.text())
+]).then(([bushoText, senpoText, stateText,tokuseiText]) => {
 
   bushoList = parseCSV(bushoText);
   senpoList = parseCSV(senpoText);
   senpoStates = parseCSV(stateText);
+  tokuseiList = parseCSV(tokuseiText);
 
-  const tokuseiMap = {};
-  tokuseiList.forEach(t => {
-    tokuseiMap[t.id] = t;
-  });
 
   const busho = bushoList.find(b => b.id === bushoId);
   if (!busho) return;
