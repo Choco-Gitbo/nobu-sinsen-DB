@@ -161,9 +161,10 @@ function createTokuseiCard(tokusei,label) {
   const header = document.createElement("div");
   header.className = "toggle-header";
 
-  const arrow = document.createElement("span");
+ /*  const arrow = document.createElement("span");
   arrow.textContent = "▸";
   arrow.className = "toggle-arrow";
+ */
 
   const titleEl = document.createElement("span");
   titleEl.className = "toggle-title";
@@ -180,11 +181,11 @@ function createTokuseiCard(tokusei,label) {
   desc.textContent = tokusei.description;
   desc.style.display = "none";
 
-  header.addEventListener("click", () => {
+  /* header.addEventListener("click", () => {
     const open = desc.style.display === "block";
     desc.style.display = open ? "none" : "block";
     arrow.textContent = open ? "▸" : "▾";
-  });
+  }); */
 
   card.append(header, desc);
   return card;
@@ -359,7 +360,7 @@ function hexToRGBA(hex,a){
   const tokuseiArea = document.getElementById("tokuseiArea");
   tokuseiArea.innerHTML = "";
 
-  /* 特性 */
+  /* 固有特性 */
   if (busho.unique_tokusei) {
     const tokusei = tokuseiList.find(s => s.id === busho.unique_tokusei);
     if (tokusei) {
@@ -369,4 +370,34 @@ function hexToRGBA(hex,a){
       );
     }
   }
- }
+  /* 特性1凸 */
+  if (busho.tokusei_1) {
+    const tokusei = tokuseiList.find(s => s.id === busho.tokusei_1);
+    if (tokusei) {
+      /* const states = tokuseiStates.filter(st => st.tokusei_id === tokusei.id); */
+      tokuseiArea.append(
+        createTokuseiCard(tokusei,  "特性(1凸)")
+      );
+    }
+  } 
+    /* 特性3凸 */
+  if (busho.tokusei_3) {
+    const tokusei = tokuseiList.find(s => s.id === busho.tokusei_3);
+    if (tokusei) {
+      /* const states = tokuseiStates.filter(st => st.tokusei_id === tokusei.id); */
+      tokuseiArea.append(
+        createTokuseiCard(tokusei,  "特性(3凸)")
+      );
+    }
+  } 
+    /* 特性5凸 */
+  if (busho.tokusei_1) {
+    const tokusei = tokuseiList.find(s => s.id === busho.tokusei_5);
+    if (tokusei) {
+      /* const states = tokuseiStates.filter(st => st.tokusei_id === tokusei.id); */
+      tokuseiArea.append(
+        createTokuseiCard(tokusei,  "特性(5凸)")
+      );
+    }
+  } 
+}
