@@ -37,6 +37,7 @@ const bushoId = params.get("id");
 let bushoList = [];
 let senpoList = [];
 let senpoStates = [];
+let tokuseiList = [];
 
 /* =========================
    読み込み
