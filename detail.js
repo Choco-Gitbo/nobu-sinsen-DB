@@ -356,31 +356,4 @@ function hexToRGBA(hex,a){
       );
     }
   }
-
-  /* 特性 */
-/* renderTokusei(busho,tokuseiList); */
-
-
-/* function renderTokusei(busho, tokuseiMap) { */
-  const area = document.getElementById("tokusei-area");
-  area.innerHTML = "";
-
-  const list = [
-    ["固有特性", busho.unique_tokusei],
-    ["特性（1凸）", busho.tokusei_1],
-    ["特性（3凸）", busho.tokusei_3],
-    ["特性（5凸）", busho.tokusei_5],
-  ];
-
-  list.forEach(([label, id]) => {
-    if (!id) return;
-
-    /* const t = tokuseiMap[id]; */
-    const t = tokuseiList[id];
-    if (!t) return;
-
-    const card = createToggleCard(label, t.name, t.description);
-    area.appendChild(card);
-   }
-  );
  }
