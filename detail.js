@@ -365,7 +365,7 @@ function hexToRGBA(hex,a){
     if (tokusei) {
       /* const states = tokuseiStates.filter(st => st.tokusei_id === tokusei.id); */
       tokuseiArea.appendChild(
-        createtokuseiCard(tokusei, states, "固有特性")
+        createtokuseiCard(tokusei,  "固有特性")
       );
     }
   }
