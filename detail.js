@@ -357,6 +357,10 @@ function hexToRGBA(hex,a){
     }
   }
 
+  /* 特性 */
+renderTokusei(busho,tokuseiList);
+
+
 function renderTokusei(busho, tokuseiMap) {
   const area = document.getElementById("tokusei-area");
   area.innerHTML = "";
