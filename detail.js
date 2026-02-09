@@ -154,7 +154,7 @@ function createSenpoCard(senpo, states, label) {
    特性カード生成
 ========================= */
 
-function createToggleCard(title, name, description) {
+function createtokuseiCard(title, name, description) {
   const card = document.createElement("div");
   card.className = "toggle-card";
 
