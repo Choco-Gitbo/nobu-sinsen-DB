@@ -260,7 +260,7 @@ function drawHexChart(b) {
 
   /* ラベル */
   ctx.fillStyle = "#333";
-  ctx.font = "14px sans-serif";
+  ctx.font = "12px sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
 
@@ -268,8 +268,8 @@ function drawHexChart(b) {
     const angle = step*i - Math.PI/2;
     ctx.fillText(
       l,
-      cx + Math.cos(angle)*(maxRadius+15),
-      cy + Math.sin(angle)*(maxRadius+15)
+      cx + Math.cos(angle)*(maxRadius+12),
+      cy + Math.sin(angle)*(maxRadius+12)
     );
   });
 
