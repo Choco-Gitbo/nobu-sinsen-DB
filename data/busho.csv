@@ -1,2 +1,2 @@
 ﻿id,name,faction,clan,cost,rarity,int_base,int_growth,pow_base,pow_growth,cha_base,cha_growth,adm_base,adm_growth,spd_base,spd_growth,ldr_base,ldr_growth,unique_senpo,teach_senpo,unique_tokusei,tokusei_1,tokusei_3,tokusei_5,_reserved
-B001,織田信長,織田,織田,6,5,180,6,220,7,200,6,210,6,190,5,230,7,S001,S002,T001,T002,T003,T004,_
+B001,織田信長,織田,長宗我部,6,5,87,1.32,91,1.97,83,1.98,89,2.03,51,0.92,89,2.01,S001,S002,T001,T002,T003,T004,_

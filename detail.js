@@ -224,7 +224,7 @@ function drawHexChart(b) {
   
   const maxRadius = Math.min(cx, cy) * 0.8;
 
-  const maxValue = 500;
+  const maxValue = 300;
   const step = (Math.PI*2)/6;
 
   const labels = ["知略","武勇","魅力","政務","速度","統率"];

@@ -63,6 +63,10 @@ h1 {
   flex: 1 1 60%;;
 }
 
+.clan {
+  white-space: nowrap;
+}
+
 .busho-chart {
   flex: 0 0 160px;
 }
