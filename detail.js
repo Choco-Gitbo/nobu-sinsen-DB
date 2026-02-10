@@ -209,7 +209,7 @@ function renderBushoDetail(busho) {
 
 function drawHexChart(b) {
 
-  const canvas = document.getElementById("statusChart");
+  const canvas = document.getElementById("radarChart");
   const ctx = canvas.getContext("2d");
 
   ctx.clearRect(0,0,canvas.width,canvas.height);
