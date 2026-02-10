@@ -268,8 +268,8 @@ function drawHexChart(b) {
     const angle = step*i - Math.PI/2;
     ctx.fillText(
       l,
-      cx + Math.cos(angle)*(maxRadius+10),
-      cy + Math.sin(angle)*(maxRadius+10)
+      cx + Math.cos(angle)*(maxRadius+15),
+      cy + Math.sin(angle)*(maxRadius+15)
     );
   });
 

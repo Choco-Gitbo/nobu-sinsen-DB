@@ -57,7 +57,7 @@ h1 {
 
 .busho-header {
   display: flex;
-  gap: 16px;
+  gap: 1px;
   align-items: flex-start;
 }
 
