@@ -53,6 +53,8 @@ h1 {
   color: #555;
 }
 
+
+
 .busho-header {
   display: flex;
   gap: 16px;
@@ -60,10 +62,7 @@ h1 {
 }
 
 .busho-info {
-  flex: 1 1 90%;;
-}
-
-.clan {
+  flex: 1 1 60%;
   white-space: nowrap;
 }
 
