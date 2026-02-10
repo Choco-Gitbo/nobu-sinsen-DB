@@ -1,4 +1,4 @@
-new radarChart(ctx, {
+new Chart(ctx, {
   type: "radar",
   data,
   options: {
