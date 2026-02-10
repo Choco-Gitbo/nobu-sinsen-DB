@@ -159,14 +159,13 @@ h1 {
   line-height: 1.6;
 }
 
+canvas {
+  margin-bottom: 24px;
+}
+
 @media (max-width: 600px) {
   .busho-chart {
     width: 150px;
     height: 150px;
   }
-}
-
-
-canvas {
-  margin-bottom: 24px;
 }
