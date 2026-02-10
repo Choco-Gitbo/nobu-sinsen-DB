@@ -65,12 +65,12 @@ h1 {
 
 /* 詳細画面 */
 .busho-chart {
-  display: flex;
+  /* display: flex; */
   gap: 16px;
   width: 180px;   /* ← チャートのサイズ */
   height: 180px;
   position: relative;
-  align-items: flex-start;
+  /* align-items: flex-start; */
   margin-bottom: 12px;
 }
 
