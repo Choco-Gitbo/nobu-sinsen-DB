@@ -209,14 +209,19 @@ function renderBushoDetail(busho) {
 
 function drawHexChart(b) {
 
-  const canvas = document.getElementById("statusChart");
-  const ctx = canvas.getContext("2d");
+  const canvas = document.getElementById("radarChart");
+  
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+
+    const ctx = canvas.getContext("2d");
 
   ctx.clearRect(0,0,canvas.width,canvas.height);
 
   const cx = canvas.width/2;
   const cy = canvas.height/2;
-  const maxRadius = 120;
+  const maxRadius = Math.min(cx, cy) - 20;
   const maxValue = 500;
   const step = (Math.PI*2)/6;
 
