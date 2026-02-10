@@ -67,6 +67,9 @@ h1 {
 .busho-chart {
   display: flex;
   gap: 16px;
+  width: 180px;   /* ← チャートのサイズ */
+  height: 180px;
+  position: relative;
   align-items: flex-start;
   margin-bottom: 12px;
 }
@@ -76,12 +79,6 @@ h1 {
   min-width: 0;
 }
 
-.busho-chart {
-  width: 180px;   /* ← チャートのサイズ */
-  height: 180px;
-  position: relative;
-  /* flex-shrink: 0; */
-}
 
 .busho-chart canvas {
   width: 100% !important;
