@@ -79,7 +79,8 @@ h1 {
 .busho-chart {
   width: 180px;   /* ← チャートのサイズ */
   height: 180px;
-  flex-shrink: 0;
+  position: relative;
+  /* flex-shrink: 0; */
 }
 
 .busho-chart canvas {
