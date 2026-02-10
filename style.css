@@ -60,17 +60,11 @@ h1 {
 }
 
 .busho-info {
-  flex: 1;
+  flex: 1 1 60%;;
 }
 
-.busho-chart.dummy {
-  width: 160px;
-  height: 160px;
-  background: #ddd;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #666;
+.busho-chart {
+  flex: 0 0 160px;
 }
 
 
