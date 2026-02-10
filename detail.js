@@ -222,7 +222,7 @@ function drawHexChart(b) {
   const cx = canvas.width/2;
   const cy = canvas.height/2;
   
-  const maxRadius = Math.min(cx, cy) * 0.8;
+  const maxRadius = Math.min(cx, cy) * 1;
 
   const maxValue = 300;
   const step = (Math.PI*2)/6;
