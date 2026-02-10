@@ -213,7 +213,7 @@ function drawHexChart(b) {
   
     const rect = canvas.getBoundingClientRect();
     canvas.width = rect.width;
-    canvas.height = rect.height + 50;
+    canvas.height = rect.height;
 
     const ctx = canvas.getContext("2d");
 
