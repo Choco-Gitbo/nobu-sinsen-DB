@@ -60,7 +60,7 @@ h1 {
 }
 
 .busho-info {
-  flex: 1 1 60%;;
+  flex: 1 1 90%;;
 }
 
 .clan {
@@ -68,7 +68,7 @@ h1 {
 }
 
 .busho-chart {
-  flex: 0 0 160px;
+  flex: 0 0 120px;
 }
 
 
