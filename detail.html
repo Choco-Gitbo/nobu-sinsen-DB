@@ -10,17 +10,18 @@
 
 <a href="index.html">← 一覧へ戻る</a>
 
-<h1 id="name"></h1>
+<div class="busho-header">
+  <div class="busho-info">
+    <h1 id="name"></h1>
+    <div>勢力：<span id="faction"></span></div>
+    <div>家門：<span id="clan"></span></div>
+    <div>コスト：<span id="cost"></span></div>
+    <div>レアリティ：<span id="rarity"></span></div>
+  </div>
 
-<div class="detail-box">
-  <div>勢力：<span id="faction"></span></div>
-  <div>家門：<span id="clan"></span></div>
-  <div>コスト：<span id="cost"></span></div>
-  <div>レアリティ：<span id="rarity"></span></div>
-</div>
-
-<div id="chartArea">
-  <canvas id="statusChart" width="300" height="300"></canvas>
+  <div id="busho-chart">
+    <canvas id="radarChart"></canvas>
+  </div>  
 </div>
 
 <div id="senpoArea"></div>
