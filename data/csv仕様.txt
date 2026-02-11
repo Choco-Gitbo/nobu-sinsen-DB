@@ -8,3 +8,24 @@ busho.csv 仕様 v1.0
 - _reserved : 空
 
 データを追加するときは、_reservedの上に！
+
+senpo.csv 仕様 v1.0
+- id        	: string
+- name      	: string
+- type		: string
+- description	: string
+
+idの重複はしない
+id:000番台～	:S固有戦法
+id:400番台～	:S伝授戦法
+id:700番台	:A戦法
+id:800番台	:B戦法
+id:900番台	:事件戦法
+
+
+senpo.state.csv 仕様 v1.0
+- senpo_id	: string
+- label		: string
+
+senpo_idに付属する状態を全て記述する
+一つのsenpo_idに複数の状態がある場合は、同じsenpo_idで記述する
