@@ -117,6 +117,6 @@ function renderList(data) {
 
 
 /* イベント */
-[nameInput, factionSelect, clanSelect, costSelect]
+[nameInput, factionSelect, clanSelect, costSelect,sexSelect]
   .forEach(el => el.addEventListener("input", applyFilters));
 
