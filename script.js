@@ -3,6 +3,7 @@ const nameInput = document.getElementById("nameSearch");
 const factionSelect = document.getElementById("factionFilter");
 const clanSelect = document.getElementById("clanFilter");
 const costSelect = document.getElementById("costFilter");
+const sexSelect = document.getElementById("sexFilter");
 
 let allBusho = [];
 
@@ -49,6 +50,7 @@ function setupFilters(data) {
   createOptions(factionSelect, data.map(b => b.faction));
   createOptions(clanSelect, data.map(b => b.clan));
   createOptions(costSelect, data.map(b => b.cost));
+  createOptions(sexSelect, data.map(b => b.sex));
 }
 
 /* option生成 */
@@ -67,12 +69,14 @@ function applyFilters() {
   const faction = factionSelect.value;
   const clan = clanSelect.value;
   const cost = costSelect.value;
+  const sex = sexSelect.value;
 
   const filtered = allBusho.filter(b => {
     if (name && !b.name.includes(name)) return false;
     if (faction && b.faction !== faction) return false;
     if (clan && b.clan !== clan) return false;
     if (cost && b.cost !== cost) return false;
+    if (sex && b.sex !== sex) return false;
     return true;
   });
 
