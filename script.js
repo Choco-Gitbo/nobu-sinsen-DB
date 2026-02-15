@@ -4,6 +4,7 @@ const factionSelect = document.getElementById("factionFilter");
 const clanSelect = document.getElementById("clanFilter");
 const costSelect = document.getElementById("costFilter");
 const sexSelect = document.getElementById("sexFilter");
+const tagSelect = document.getElementById("tagFilter");
 
 let allBusho = [];
 
@@ -51,6 +52,11 @@ function setupFilters(data) {
   createOptions(clanSelect, data.map(b => b.clan));
   createOptions(costSelect, data.map(b => b.cost));
   createOptions(sexSelect, data.map(b => b.sex));
+
+  const allTags = data
+    .flatMap(b => b.tags ? b.tags.split("|") : []);
+  createOptions(tagSelect, allTags);
+
 }
 
 /* option生成 */
@@ -70,6 +76,7 @@ function applyFilters() {
   const clan = clanSelect.value;
   const cost = costSelect.value;
   const sex = sexSelect.value;
+  const tag = tagSelect.value;
 
   const filtered = allBusho.filter(b => {
     if (name && !b.name.includes(name)) return false;
@@ -77,6 +84,13 @@ function applyFilters() {
     if (clan && b.clan !== clan) return false;
     if (cost && b.cost !== cost) return false;
     if (sex && b.sex !== sex) return false;
+
+    if (tag) {
+      if (!b.tags) return false;
+      const tags = b.tags.split("|");
+      if (!tags.includes(tag)) return false;
+    }
+
     return true;
   });
 
@@ -117,6 +131,6 @@ function renderList(data) {
 
 
 /* イベント */
-[nameInput, factionSelect, clanSelect, costSelect,sexSelect]
+[nameInput, factionSelect, clanSelect, costSelect,sexSelect,tagSelect]
   .forEach(el => el.addEventListener("input", applyFilters));
 
