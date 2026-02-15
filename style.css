@@ -90,6 +90,7 @@ h1 {
 
 .senpo-title-row {
   display: flex;
+  margin-bottom: 8px;
   align-items: center;
   gap: 8px;
   cursor: pointer;
