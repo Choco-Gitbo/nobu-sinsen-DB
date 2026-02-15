@@ -228,7 +228,7 @@ function renderBushoDetail(busho) {
   document.getElementById("clan").textContent = busho.clan;
   document.getElementById("cost").textContent = busho.cost;
   document.getElementById("rarity").textContent = "★".repeat(busho.rarity);
-
+  document.getElementById("sex").textContent = busho.sex;
   drawHexChart(busho);
 
 function drawHexChart(b) {
