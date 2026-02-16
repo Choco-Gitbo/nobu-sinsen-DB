@@ -229,6 +229,20 @@ function renderBushoDetail(busho) {
   document.getElementById("cost").textContent = busho.cost;
   document.getElementById("rarity").textContent = "★".repeat(busho.rarity);
   document.getElementById("sex").textContent = busho.sex;
+  /* =========================
+    タグ表示
+  ========================= */
+  const tagArea = document.getElementById("tagArea");
+  tagArea.innerHTML = "";
+
+  if (busho.tags) {
+    busho.tags.split("|").forEach(tag => {
+      const span = document.createElement("span");
+      span.className = "busho-tag";
+      span.textContent = tag;
+      tagArea.appendChild(span);
+    });
+  }
   drawHexChart(busho);
 
 function drawHexChart(b) {

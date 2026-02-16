@@ -66,6 +66,22 @@ h1 {
    white-space: nowrap; 
 }
 
+.busho-tags {
+  margin: 8px 0 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.busho-tag {
+  padding: 2px 8px;
+  font-size: 12px;
+  border-radius: 12px;
+  background: #e0e0e0;
+  white-space: nowrap;
+}
+
+
 .busho-chart {
   flex: 0 0 100px;
 }
