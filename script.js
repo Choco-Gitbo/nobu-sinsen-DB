@@ -289,7 +289,7 @@ function createSenpoCard(s){
   get.className = "senpo-get";
   get.textContent = s.get;
 
-  titleRow.append(name,type);
+  titleRow.append(name,type,get);
 
   const desc = document.createElement("div");
   desc.className = "senpo-desc";
