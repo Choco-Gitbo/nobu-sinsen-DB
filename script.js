@@ -6,6 +6,10 @@ const costSelect = document.getElementById("costFilter");
 const sexSelect = document.getElementById("sexFilter");
 const tagSelect = document.getElementById("tagFilter");
 
+const senpoNameInput = document.getElementById("senpoNameSearch");
+const senpoTypeSelect = document.getElementById("senpoTypeFilter");
+const senpoGetSelect = document.getElementById("senpoGetFilter");
+
 let allBusho = [];
 
 /* レアリティ → 色 */
