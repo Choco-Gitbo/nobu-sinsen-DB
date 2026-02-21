@@ -285,6 +285,10 @@ function createSenpoCard(s){
   type.className = "senpo-type";
   type.textContent = s.type;
 
+  const get = document.createElement("span");
+  get.className = "senpo-get";
+  get.textContent = s.get;
+
   titleRow.append(name,type);
 
   const desc = document.createElement("div");

@@ -133,6 +133,11 @@ h1 {
   font-weight: bold;
 }
 
+.senpo-get {
+  font-size: 14px;
+  color: #555;
+}
+
 .senpo-desc {
   margin: 6px 0 8px;
   padding: 6px 10px;
