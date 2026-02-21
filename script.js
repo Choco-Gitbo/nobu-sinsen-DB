@@ -25,15 +25,48 @@ const rarityColors = {
   1: "#000000"  // 黒
 };
 
-/* CSV読み込み */
-/* fetch("data/busho.csv")
-  .then(res => res.text())
-  .then(text => {
-    allBusho = parseCSV(text);
-    setupFilters(allBusho);
-    renderList(allBusho);
-  });
-*/ 
+/* =========================
+   状態タグ色
+========================= */
+const STATE_COLOR_RULES = [
+  {
+    match: ["兵刃ダメ", "計略ダメ"],
+    color: "#ffd5cc"   // バフ（赤）
+  },  
+  {
+    match: ["連撃", "回避", "鉄壁", "乱舞", "反撃", "援護", "肩代り", "耐性", "洞察", "先攻", "必中", "破陣", "離反", "心攻", "襲撃"],
+    color: "#cce4ff"   // バフ（青）
+  },
+  {
+    match: ["与兵刃増", "与計略増", "被兵刃減", "被計略減", "与通攻増", "被通攻減"],
+    color: "#cce4ff"   // バフ（青）
+  }, 
+  {
+    match: ["武勇増", "知略増", "統率増", "速度増", "能動増", "突撃増", "会心", "奇策"],
+    color: "#cce4ff"   // バフ（青）
+  },  
+  {
+    match: ["威圧", "無策", "封撃", "混乱", "疲弊", "回復不可", "挑発", "牽制", "麻痺","強化解除"],
+    color: "#f7d6ff"   // デバフ（赤）
+  },
+  {
+    match: ["与兵刃減", "与計略減", "被兵刃増", "被計略増", "与通攻減", "被通攻増"],
+    color: "#f7d6ff"   // デバフ（赤）
+  },
+  {
+    match: ["武勇減", "知略減", "統率減", "速度減", "能動減", "突撃減"],
+    color: "#f7d6ff"   // デバフ（赤）
+  },
+  {
+    match: ["火傷", "水攻め", "中毒", "潰走", "消沈", "乱兵", "撹乱"],
+    color: "#ffe0b2"   // ダメージ（橙）
+  },
+  {
+    match: ["回復", "休養", "回生","浄化"],
+    color: "#9be29b"   // ダメージ（緑）
+  }  
+];
+
 
 /* =========================
    読み込み
@@ -200,25 +233,16 @@ function renderSenpoList(data){
 
   data.forEach(s=>{
 
-    const row = document.createElement("div");
-    row.className = "senpo-row";
+    const card = createSenpoCard(s);
 
     const bar = document.createElement("div");
     bar.className = "rarity-bar";
     bar.style.background =
       rarityColors[s.rarity] || "#999";
 
-    row.appendChild(bar);
+    card.prepend(bar);
 
-    row.innerHTML += `
-      <div class="senpo-name">${s.name}</div>
-      <div class="senpo-sub">
-        タイプ:${s.type} / 入手方法:${s.get}
-      </div>
-      <div class="senpo-desc">${s.description.split("|").join("<br>")}</div>
-    `;
-
-    list.appendChild(row); 
+    list.appendChild(card); 
   });
 }
 /* 戦法一覧フィルター */
@@ -242,7 +266,62 @@ function applySenpoFilters(){
 
   renderSenpoList(filtered);
 }
+/* =========================
+   戦法カード生成
+========================= */
+function createSenpoCard(s){
 
+  const card = document.createElement("div");
+  card.className = "senpo-card";
+
+  const titleRow = document.createElement("div");
+  titleRow.className = "senpo-title-row";
+
+  const name = document.createElement("span");
+  name.className = "senpo-name";
+  name.textContent = s.name;
+
+  const type = document.createElement("span");
+  type.className = "senpo-type";
+  type.textContent = s.type;
+
+  titleRow.append(name,type);
+
+  const desc = document.createElement("div");
+  desc.className = "senpo-desc";
+  desc.innerHTML = (s.description || "").replace(/\|/g,"<br>");
+  desc.style.display = "none";
+
+  titleRow.onclick = () =>{
+    desc.style.display =
+      desc.style.display === "none" ? "block" : "none";
+  };
+
+  /* 状態タグ */
+  const statesWrap = document.createElement("div");
+  statesWrap.className = "senpo-states";
+
+  const states = senpoStates.filter(st => st.senpo_id === s.id);
+
+  states.forEach(st=>{
+
+    const tag = document.createElement("span");
+    tag.className = "state-tag";
+    tag.textContent = st.label;
+
+    const rule = STATE_COLOR_RULES.find(r =>
+      r.match.some(w => st.label.includes(w))
+    );
+
+    if(rule) tag.style.background = rule.color;
+
+    statesWrap.appendChild(tag);
+  });
+
+  card.append(titleRow,desc,statesWrap);
+
+  return card;
+}
   
 /* イベント */
 [nameInput, factionSelect, clanSelect, costSelect,sexSelect,tagSelect]
