@@ -287,7 +287,7 @@ function createSenpoCard(s){
 
   const get = document.createElement("span");
   get.className = "senpo-get";
-  get.textContent = s.get;
+  get.textContent = "入手方法：" + s.get;
 
   titleRow.append(name,type,get);
 
