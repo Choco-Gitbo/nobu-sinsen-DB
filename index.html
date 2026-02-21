@@ -43,10 +43,24 @@
 </div>
 
 <div id="senpoPage" style="display:none;">
-  <h1>戦法一覧</h1>
-  <div id="senpoList" class="senpo-list"></div>
+
+<h1>戦法一覧</h1>
+
+<div class="filters">
+  <input type="text" id="senpoNameSearch" placeholder="戦法名検索">
+
+  <select id="senpoTypeFilter">
+    <option value="">タイプ（全て）</option>
+  </select>
+
+  <select id="senpoGetFilter">
+    <option value="">入手方法（全て）</option>
+  </select>
 </div>
 
+<div id="senpoList" class="senpo-list"></div>
+
+</div>
 <script src="script.js"></script>
 </body>
 </html>

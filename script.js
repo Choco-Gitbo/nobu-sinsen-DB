@@ -135,9 +135,12 @@ fetch("data/senpo.csv")
   .then(r=>r.text())
   .then(t=>{
     allSenpo = parseCSV(t);
+
+    createOptions(senpoTypeSelect, allSenpo.map(s=>s.type));
+    createOptions(senpoGetSelect, allSenpo.map(s=>s.get));
+
     renderSenpoList(allSenpo);
   });
-
 function renderSenpoList(data){
 
   const list = document.getElementById("senpoList");
@@ -172,12 +175,33 @@ function renderSenpoList(data){
     list.appendChild(row); 
   });
 }
+/* 戦法一覧フィルター */
+function applySenpoFilters(){
+
+  const name = senpoNameInput.value.trim();
+  const type = senpoTypeSelect.value;
+  const get = senpoGetSelect.value;
+
+  const filtered = allSenpo.filter(s=>{
+
+    if(name && !s.name.includes(name)) return false;
+    if(type && s.type !== type) return false;
+    if(get && s.get !== get) return false;
+
+    return true;
+  });
+
+  renderSenpoList(filtered);
+}
 
   
 /* イベント */
 [nameInput, factionSelect, clanSelect, costSelect,sexSelect,tagSelect]
   .forEach(el => el.addEventListener("input", applyFilters));
 
+  [senpoNameInput, senpoTypeSelect, senpoGetSelect]
+  .forEach(el => el.addEventListener("input", applySenpoFilters));
+  
 const tabBusho = document.getElementById("tabBusho");
 const tabSenpo = document.getElementById("tabSenpo");
 
