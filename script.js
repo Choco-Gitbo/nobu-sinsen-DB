@@ -11,6 +11,9 @@ const senpoTypeSelect = document.getElementById("senpoTypeFilter");
 const senpoGetSelect = document.getElementById("senpoGetFilter");
 
 let allBusho = [];
+let allSenpo = [];
+let senpoStates = [];
+
 
 /* レアリティ → 色 */
 const rarityColors = {
@@ -22,13 +25,14 @@ const rarityColors = {
 };
 
 /* CSV読み込み */
-fetch("data/busho.csv")
+/* fetch("data/busho.csv")
   .then(res => res.text())
   .then(text => {
     allBusho = parseCSV(text);
     setupFilters(allBusho);
     renderList(allBusho);
   });
+*/ 
 
 /* =========================
    読み込み
@@ -38,7 +42,13 @@ Promise.all([
   fetch("data/senpo.csv").then(r => r.text()),
   fetch("data/senpo_state.csv").then(r => r.text()),
   fetch("data/tokusei.csv").then(r => r.text())
-])
+]).then(([bushoText, senpoText, stateText,tokuseiText]) => {
+
+  allBusho = parseCSV(bushoText);
+  allSenpo = parseCSV(senpoText);
+  senpoStates = parseCSV(stateText);
+  /* tokuseiList = parseCSV(tokuseiText) */
+
 const stateMap = {};
 
 senpoStates.forEach(st => {
@@ -50,6 +60,10 @@ senpoStates.forEach(st => {
 
 allSenpo.forEach(s => {
   s.states = stateMap[s.id] || [];
+});
+
+    setupFilters(allBusho);
+    renderList(allBusho);
 });
 
   /* CSVパース */
@@ -154,12 +168,12 @@ function renderList(data) {
 }
 
 /* 戦法一覧 */
-let allSenpo = [];
+/* let allSenpo = [];
 
 fetch("data/senpo.csv")
   .then(r=>r.text())
   .then(t=>{
-    allSenpo = parseCSV(t);
+    allSenpo = parseCSV(t); */
 
     createOptions(senpoTypeSelect, allSenpo.map(s=>s.type));
     createOptions(senpoGetSelect, allSenpo.map(s=>s.get));
@@ -181,7 +195,7 @@ fetch("data/senpo.csv")
     createOptions(stateSelect, allStates);
 
     renderSenpoList(allSenpo);
-  });
+  /* }); */
 function renderSenpoList(data){
 
   const list = document.getElementById("senpoList");
