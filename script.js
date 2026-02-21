@@ -128,8 +128,37 @@ function renderList(data) {
   });
 }
 
+/* 戦法一覧 */
+let allSenpo = [];
 
+fetch("data/senpo.csv")
+  .then(r=>r.text())
+  .then(t=>{
+    allSenpo = parseCSV(t);
+    renderSenpoList(allSenpo);
+  });
 
+function renderSenpoList(data){
+
+  const list = document.getElementById("senpoList");
+  list.innerHTML = "";
+
+  data.forEach(s=>{
+
+    const row = document.createElement("div");
+    row.className = "senpo-row";
+
+    row.innerHTML = `
+      <div class="senpo-name">${s.name}</div>
+      <div class="senpo-type">${s.type}</div>
+      <div class="senpo-desc">${s.description}</div>
+    `;
+
+    list.appendChild(row);
+  });
+}
+
+  
 /* イベント */
 [nameInput, factionSelect, clanSelect, costSelect,sexSelect,tagSelect]
   .forEach(el => el.addEventListener("input", applyFilters));
