@@ -215,7 +215,7 @@ function renderSenpoList(data){
       <div class="senpo-sub">
         タイプ:${s.type} / 入手方法:${s.get}
       </div>
-      <div class="senpo-desc">${s.description}</div>
+      <div class="senpo-desc">${s.description.split("|").join("<br>")}</div>
     `;
 
     list.appendChild(row); 
