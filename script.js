@@ -271,5 +271,5 @@ tabSenpo.onclick = () => {
   tabSenpo.classList.add("active");
 };
 
-[senpoNameInput, senpoTypeSelect, senpoGetSelect]
+[senpoNameInput, senpoTypeSelect, senpoGetSelect, stateSelect]
   .forEach(el => el.addEventListener("input", applySenpoFilters));
