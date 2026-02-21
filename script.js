@@ -56,8 +56,6 @@ function setupFilters(data) {
   createOptions(clanSelect, data.map(b => b.clan));
   createOptions(costSelect, data.map(b => b.cost));
   createOptions(sexSelect, data.map(b => b.sex));
-  const allStates = senpoStates.map(s=>s.label);
-  createOptions(stateSelect, allStates);
   const allTags = data
     .flatMap(b => b.tags ? b.tags.split("|") : []);
   createOptions(tagSelect, allTags);
@@ -143,7 +141,9 @@ fetch("data/senpo.csv")
 
     createOptions(senpoTypeSelect, allSenpo.map(s=>s.type));
     createOptions(senpoGetSelect, allSenpo.map(s=>s.get));
-    
+    const allStates = senpoStates.map(s=>s.label);
+    createOptions(stateSelect, allStates);
+
     const stateMap = {};
 
     senpoStates.forEach(st => {
