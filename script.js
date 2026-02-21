@@ -42,7 +42,7 @@ const STATE_COLOR_RULES = [
     color: "#cce4ff"   // バフ（青）
   }, 
   {
-    match: ["武勇増", "知略増", "統率増", "速度増", "能動増", "突撃増", ,"発動増","会心", "奇策"],
+    match: ["武勇増", "知略増", "統率増", "速度増", "能動増", "突撃増" ,"発動増","会心", "奇策"],
     color: "#cce4ff"   // バフ（青）
   },  
   {
@@ -96,6 +96,39 @@ Promise.all([
     s.states = stateMap[s.id] || [];
   });
 
+  const senpoOwners = {};
+  const senpoTeachers = {};
+
+  allBusho.forEach(b => {
+
+    /* 固有戦法 */
+    if (b.unique_senpo) {
+      if (!senpoOwners[b.unique_senpo]) {
+        senpoOwners[b.unique_senpo] = [];
+      }
+      senpoOwners[b.unique_senpo].push(b.name);
+    }
+
+    /* 伝授戦法（複数ありえる） */
+    if (b.teach_senpo) {
+
+      const ids = b.teach_senpo.split("|");
+
+      ids.forEach(id => {
+        if (!senpoTeachers[id]) {
+          senpoTeachers[id] = [];
+        }
+        senpoTeachers[id].push(b.name);
+      });
+    }
+  });
+
+  allSenpo.forEach(s => {
+
+    s.owner = senpoOwners[s.id] || [];
+    s.teacher = senpoTeachers[s.id] || [];
+
+  });  
     setupFilters(allBusho);
     renderList(allBusho);
     setupSenpoFilters(allSenpo);
@@ -287,7 +320,15 @@ function createSenpoCard(s){
 
   const get = document.createElement("span");
   get.className = "senpo-get";
-  get.textContent = "入手方法：" + s.get;
+  let text = "入手方法：" + s.get;
+  if (s.owner.length) {
+    text = "固有：" + s.owner.join(" / ");
+  }
+
+  if (s.teacher.length) {
+    text = "伝授：" + s.teacher.join(" / ");
+  }
+  get.textContent = text;
 
   titleRow.append(name,type,get);
 
