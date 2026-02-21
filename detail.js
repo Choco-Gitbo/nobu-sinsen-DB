@@ -141,7 +141,7 @@ function createSenpoCard(senpo, states, label) {
 
   const descEl = document.createElement("div");
   descEl.className = "senpo-desc";
-  descEl.textContent = senpo.description;
+  descEl.textContent = senpo.description.split("|").join("<br>");
   descEl.style.display = "none";  
 
   titleRow.addEventListener("click", () => {
