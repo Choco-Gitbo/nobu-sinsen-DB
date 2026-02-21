@@ -117,7 +117,12 @@ h1 {
   color: #555;
 }
 
-
+.senpo-row {
+  position: relative;
+  padding: 12px;
+  border-radius: 6px;
+  background: #f5f5f5;
+}
 .senpo-name {
   font-weight: bold;
 }
