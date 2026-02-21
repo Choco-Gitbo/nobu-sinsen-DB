@@ -134,3 +134,24 @@ function renderList(data) {
 [nameInput, factionSelect, clanSelect, costSelect,sexSelect,tagSelect]
   .forEach(el => el.addEventListener("input", applyFilters));
 
+const tabBusho = document.getElementById("tabBusho");
+const tabSenpo = document.getElementById("tabSenpo");
+
+const bushoPage = document.getElementById("bushoPage");
+const senpoPage = document.getElementById("senpoPage");
+
+tabBusho.onclick = () => {
+  bushoPage.style.display = "";
+  senpoPage.style.display = "none";
+
+  tabBusho.classList.add("active");
+  tabSenpo.classList.remove("active");
+};
+
+tabSenpo.onclick = () => {
+  bushoPage.style.display = "none";
+  senpoPage.style.display = "";
+
+  tabBusho.classList.remove("active");
+  tabSenpo.classList.add("active");
+};

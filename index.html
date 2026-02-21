@@ -8,31 +8,42 @@
 </head>
 <body>
 
-<h1>武将一覧</h1>
-
-<div class="filters">
-  <input type="text" id="nameSearch" placeholder="名前検索">
-
-  <select id="factionFilter">
-    <option value="">勢力（全て）</option>
-  </select>
-
-  <select id="clanFilter">
-    <option value="">家門（全て）</option>
-  </select>
-
-  <select id="costFilter">
-    <option value="">コスト（全て）</option>
-  </select>
-  <select id="sexFilter">
-    <option value="">性別（全て）</option>
-  </select>
-  <select id="tagFilter">
-    <option value="">タグ（全て）</option>
-  </select>  
+<div class="top-tabs">
+  <button id="tabBusho" class="active">武将</button>
+  <button id="tabSenpo">戦法</button>
 </div>
 
-<div id="bushoList" class="busho-list"></div>
+<h1>武将一覧</h1>
+
+<div id="bushoPage">
+  <div class="filters">
+    <input type="text" id="nameSearch" placeholder="名前検索">
+
+    <select id="factionFilter">
+      <option value="">勢力（全て）</option>
+    </select>
+
+    <select id="clanFilter">
+      <option value="">家門（全て）</option>
+    </select>
+
+    <select id="costFilter">
+      <option value="">コスト（全て）</option>
+    </select>
+    <select id="sexFilter">
+      <option value="">性別（全て）</option>
+    </select>
+    <select id="tagFilter">
+      <option value="">タグ（全て）</option>
+    </select>  
+  </div>
+
+  <div id="bushoList" class="busho-list"></div>
+</div>
+
+<div id="senpoPage" style="display:none;">
+  <div id="senpoList"></div>
+</div>
 
 <script src="script.js"></script>
 </body>
