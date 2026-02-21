@@ -199,8 +199,6 @@ function applySenpoFilters(){
 [nameInput, factionSelect, clanSelect, costSelect,sexSelect,tagSelect]
   .forEach(el => el.addEventListener("input", applyFilters));
 
-  [senpoNameInput, senpoTypeSelect, senpoGetSelect]
-  .forEach(el => el.addEventListener("input", applySenpoFilters));
   
 const tabBusho = document.getElementById("tabBusho");
 const tabSenpo = document.getElementById("tabSenpo");
@@ -223,3 +221,6 @@ tabSenpo.onclick = () => {
   tabBusho.classList.remove("active");
   tabSenpo.classList.add("active");
 };
+
+[senpoNameInput, senpoTypeSelect, senpoGetSelect]
+  .forEach(el => el.addEventListener("input", applySenpoFilters));
