@@ -30,7 +30,29 @@ fetch("data/busho.csv")
     renderList(allBusho);
   });
 
-/* CSVパース */
+/* =========================
+   読み込み
+========================= */
+Promise.all([
+  fetch("data/busho.csv").then(r => r.text()),
+  fetch("data/senpo.csv").then(r => r.text()),
+  fetch("data/senpo_state.csv").then(r => r.text()),
+  fetch("data/tokusei.csv").then(r => r.text())
+])
+const stateMap = {};
+
+senpoStates.forEach(st => {
+  if (!stateMap[st.senpo_id]) {
+    stateMap[st.senpo_id] = [];
+  }
+  stateMap[st.senpo_id].push(st.label);
+});
+
+allSenpo.forEach(s => {
+  s.states = stateMap[s.id] || [];
+});
+
+  /* CSVパース */
 function parseCSV(text) {
   // BOM除去
   text = text.replace(/^\uFEFF/, "");
