@@ -141,8 +141,6 @@ fetch("data/senpo.csv")
 
     createOptions(senpoTypeSelect, allSenpo.map(s=>s.type));
     createOptions(senpoGetSelect, allSenpo.map(s=>s.get));
-    const allStates = senpoStates.map(s=>s.label);
-    createOptions(stateSelect, allStates);
 
     const stateMap = {};
 
@@ -156,6 +154,9 @@ fetch("data/senpo.csv")
     allSenpo.forEach(s => {
       s.states = stateMap[s.id] || [];
     });
+
+    const allStates = senpoStates.map(s=>s.label);
+    createOptions(stateSelect, allStates);
 
     renderSenpoList(allSenpo);
   });
