@@ -164,7 +164,7 @@ function renderSenpoList(data){
     row.innerHTML += `
       <div class="senpo-name">${s.name}</div>
       <div class="senpo-sub">
-        タイプ:${s.type} 
+        タイプ:${s.type} / 入手方法:${s.get}
       </div>
       <div class="senpo-desc">${s.description}</div>
     `;
