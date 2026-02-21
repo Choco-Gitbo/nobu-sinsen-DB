@@ -9,6 +9,7 @@ const tagSelect = document.getElementById("tagFilter");
 const senpoNameInput = document.getElementById("senpoNameSearch");
 const senpoTypeSelect = document.getElementById("senpoTypeFilter");
 const senpoGetSelect = document.getElementById("senpoGetFilter");
+const stateSelect = document.getElementById("stateFilter");
 
 let allBusho = [];
 let allSenpo = [];
