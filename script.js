@@ -50,21 +50,23 @@ Promise.all([
   senpoStates = parseCSV(stateText);
   /* tokuseiList = parseCSV(tokuseiText) */
 
-const stateMap = {};
+  const stateMap = {};
 
-senpoStates.forEach(st => {
-  if (!stateMap[st.senpo_id]) {
-    stateMap[st.senpo_id] = [];
-  }
-  stateMap[st.senpo_id].push(st.label);
-});
+  senpoStates.forEach(st => {
+    if (!stateMap[st.senpo_id]) {
+      stateMap[st.senpo_id] = [];
+    }
+    stateMap[st.senpo_id].push(st.label);
+  });
 
-allSenpo.forEach(s => {
-  s.states = stateMap[s.id] || [];
-});
+  allSenpo.forEach(s => {
+    s.states = stateMap[s.id] || [];
+  });
 
     setupFilters(allBusho);
     renderList(allBusho);
+    setupSenpoFilters(allSenpo);
+    renderSenpoList(allSenpo);
 });
 
   /* CSVパース */
@@ -169,13 +171,8 @@ function renderList(data) {
 }
 
 /* 戦法一覧 */
-/* let allSenpo = [];
-
-fetch("data/senpo.csv")
-  .then(r=>r.text())
-  .then(t=>{
-    allSenpo = parseCSV(t); */
-
+  /* フィルター選択肢生成 */
+function setupSenpoFilters(data) {
     createOptions(senpoTypeSelect, allSenpo.map(s=>s.type));
     createOptions(senpoGetSelect, allSenpo.map(s=>s.get));
 
@@ -194,9 +191,8 @@ fetch("data/senpo.csv")
 
     const allStates = senpoStates.map(s=>s.label);
     createOptions(stateSelect, allStates);
-
-    renderSenpoList(allSenpo);
-  /* }); */
+  }
+    
 function renderSenpoList(data){
 
   const list = document.getElementById("senpoList");
@@ -206,12 +202,6 @@ function renderSenpoList(data){
 
     const row = document.createElement("div");
     row.className = "senpo-row";
-
-    /* row.innerHTML = `
-      <div class="senpo-name">${s.name}</div>
-      <div class="senpo-type">${s.type}</div>
-      <div class="senpo-desc">${s.description}</div>
-    `; */
 
     const bar = document.createElement("div");
     bar.className = "rarity-bar";
