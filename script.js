@@ -56,7 +56,8 @@ function setupFilters(data) {
   createOptions(clanSelect, data.map(b => b.clan));
   createOptions(costSelect, data.map(b => b.cost));
   createOptions(sexSelect, data.map(b => b.sex));
-
+  const allStates = senpoStates.map(s=>s.label);
+  createOptions(stateSelect, allStates);
   const allTags = data
     .flatMap(b => b.tags ? b.tags.split("|") : []);
   createOptions(tagSelect, allTags);
@@ -142,6 +143,19 @@ fetch("data/senpo.csv")
 
     createOptions(senpoTypeSelect, allSenpo.map(s=>s.type));
     createOptions(senpoGetSelect, allSenpo.map(s=>s.get));
+    
+    const stateMap = {};
+
+    senpoStates.forEach(st => {
+      if (!stateMap[st.senpo_id]) {
+        stateMap[st.senpo_id] = [];
+      }
+      stateMap[st.senpo_id].push(st.label);
+    });
+
+    allSenpo.forEach(s => {
+      s.states = stateMap[s.id] || [];
+    });
 
     renderSenpoList(allSenpo);
   });
@@ -185,13 +199,16 @@ function applySenpoFilters(){
   const name = senpoNameInput.value.trim();
   const type = senpoTypeSelect.value;
   const get = senpoGetSelect.value;
+  const state = stateSelect.value;
 
   const filtered = allSenpo.filter(s=>{
 
     if(name && !s.name.includes(name)) return false;
     if(type && s.type !== type) return false;
     if(get && s.get !== get) return false;
-
+    if(state){
+      if(!s.states.includes(state)) return false;
+}
     return true;
   });
 
