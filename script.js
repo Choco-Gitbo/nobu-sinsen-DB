@@ -148,13 +148,28 @@ function renderSenpoList(data){
     const row = document.createElement("div");
     row.className = "senpo-row";
 
-    row.innerHTML = `
+    /* row.innerHTML = `
       <div class="senpo-name">${s.name}</div>
       <div class="senpo-type">${s.type}</div>
       <div class="senpo-desc">${s.description}</div>
+    `; */
+
+    const bar = document.createElement("div");
+    bar.className = "rarity-bar";
+    bar.style.background =
+      rarityColors[b.rarity] || "#999";
+
+    row.appendChild(bar);
+
+    row.innerHTML += `
+      <div class="senpo-name">${s.name}</div>
+      <div class="senpo-sub">
+        タイプ:${s.type} 
+      </div>
+      <div class="senpo-desc">${s.description}</div>
     `;
 
-    list.appendChild(row);
+    list.appendChild(row); 
   });
 }
 
