@@ -112,6 +112,12 @@ h1 {
   cursor: pointer;
 }
 
+.senpo-sub {
+  font-size: 14px;
+  color: #555;
+}
+
+
 .senpo-name {
   font-weight: bold;
 }
