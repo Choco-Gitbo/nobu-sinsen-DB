@@ -140,7 +140,7 @@ fetch("data/senpo.csv")
 
 function renderSenpoList(data){
 
-  const list = document.getElementById("senpo-list");
+  const list = document.getElementById("senpoList");
   list.innerHTML = "";
 
   data.forEach(s=>{
