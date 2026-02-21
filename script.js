@@ -157,7 +157,7 @@ function renderSenpoList(data){
     const bar = document.createElement("div");
     bar.className = "rarity-bar";
     bar.style.background =
-      rarityColors[b.rarity] || "#999";
+      rarityColors[s.rarity] || "#999";
 
     row.appendChild(bar);
 
