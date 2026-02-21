@@ -119,10 +119,16 @@ h1 {
 
 .senpo-row {
   position: relative;
-  padding: 12px;
+  padding: 12px 12px 12px 14px;
   border-radius: 6px;
   background: #f5f5f5;
 }
+
+.senpo-list {
+  display: grid;
+  gap: 8px;
+}
+
 .senpo-name {
   font-weight: bold;
 }
