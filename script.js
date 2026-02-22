@@ -9,8 +9,9 @@ const tagSelect = document.getElementById("tagFilter");
 const senpoNameInput = document.getElementById("senpoNameSearch");
 const senpoTypeSelect = document.getElementById("senpoTypeFilter");
 const senpoGetSelect = document.getElementById("senpoGetFilter");
-const stateSelect = document.getElementById("stateFilter");
-
+const targetSelect = document.getElementById("targetFilter");
+const rangeSelect = document.getElementById("rangeFilter");
+const effectSelect = document.getElementById("effectFilter");
 let allBusho = [];
 let allSenpo = [];
 let senpoStates = [];
@@ -82,6 +83,53 @@ Promise.all([
   allSenpo = parseCSV(senpoText);
   senpoStates = parseCSV(stateText);
   /* tokuseiList = parseCSV(tokuseiText) */
+  senpoStates.forEach(st => {
+
+    let target = "";
+    let range = "";
+    let effect = st.label;
+
+    if (st.label.startsWith("敵軍")) {
+      target = "敵軍";
+    } else if (st.label.startsWith("自軍")) {
+      target = "自軍";
+    } else if (st.label.startsWith("友軍")) {
+      target = "友軍";
+    } else if (st.label.startsWith("自身")) {
+      target = "自身";
+    }
+
+    if (st.label.includes("全体")) {
+      range = "全体";
+    } else if (st.label.includes("2-3人")) {
+      range = "2-3人";
+    } else if (st.label.includes("2人")) {
+      range = "2人";
+    } else if (st.label.includes("1-2人")) {
+      range = "1-2人";
+    } else if (st.label.includes("単体")) {
+      range = "単体";
+    } else if (st.label.includes("雑賀本願寺")) {
+      range = "雑賀本願寺";
+    }
+
+    effect = st.label
+      .replace("敵軍","")
+      .replace("自軍","")
+      .replace("友軍","")
+      .replace("自身","")
+      .replace("全体","")
+      .replace("2-3人","")
+      .replace("2人","")
+      .replace("1-2人","")
+      .replace("単体","")
+      .replace("雑賀本願寺","");
+
+    st.target = target;
+    st.range = range;
+    st.effect = effect;
+
+  });
 
   const stateMap = {};
 
@@ -239,25 +287,25 @@ function renderList(data) {
 /* 戦法一覧 */
   /* フィルター選択肢生成 */
 function setupSenpoFilters(data) {
-    createOptions(senpoTypeSelect, allSenpo.map(s=>s.type));
-    createOptions(senpoGetSelect, allSenpo.map(s=>s.get));
+  createOptions(senpoTypeSelect, allSenpo.map(s=>s.type));
+  createOptions(senpoGetSelect, allSenpo.map(s=>s.get));
 
-    const stateMap = {};
+  const stateMap = {};
 
-    senpoStates.forEach(st => {
-      if (!stateMap[st.senpo_id]) {
-        stateMap[st.senpo_id] = [];
-      }
-      stateMap[st.senpo_id].push(st.label);
-    });
+  senpoStates.forEach(st => {
+    if (!stateMap[st.senpo_id]) {
+      stateMap[st.senpo_id] = [];
+    }
+    stateMap[st.senpo_id].push(st.label);
+  });
 
-    allSenpo.forEach(s => {
-      s.states = stateMap[s.id] || [];
-    });
+  allSenpo.forEach(s => {
+    s.states = stateMap[s.id] || [];
+  });
 
-    const allStates = senpoStates.map(s=>s.label);
-    createOptions(stateSelect, allStates);
-  }
+  createOptions(targetSelect, senpoStates.map(s=>s.target));
+  createOptions(rangeSelect, senpoStates.map(s=>s.range));
+  createOptions(effectSelect, senpoStates.map(s=>s.effect));  }
     
 function renderSenpoList(data){
 
@@ -284,19 +332,23 @@ function applySenpoFilters(){
   const name = senpoNameInput.value.trim();
   const type = senpoTypeSelect.value;
   const get = senpoGetSelect.value;
-  const state = stateSelect.value;
-
-  const filtered = allSenpo.filter(s=>{
+  const target = targetSelect.value;
+  const range = rangeSelect.value;
+  const effect = effectSelect.value;
+  const filtered = allSenpo.filter(s => {
 
     if(name && !s.name.includes(name)) return false;
     if(type && s.type !== type) return false;
     if(get && s.get !== get) return false;
-    if(state){
-      if(!s.states.includes(state)) return false;
-}
+
+    const states = senpoStates.filter(st => st.senpo_id === s.id);
+
+    if(target && !states.some(st => st.target === target)) return false;
+    if(range && !states.some(st => st.range === range)) return false;
+    if(effect && !states.some(st => st.effect === effect)) return false;
+
     return true;
   });
-
   renderSenpoList(filtered);
 }
 /* =========================
@@ -396,4 +448,6 @@ tabSenpo.onclick = () => {
 };
 
 [senpoNameInput, senpoTypeSelect, senpoGetSelect, stateSelect]
+  .forEach(el => el.addEventListener("input", applySenpoFilters));
+[targetSelect, rangeSelect, effectSelect]
   .forEach(el => el.addEventListener("input", applySenpoFilters));
