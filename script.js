@@ -651,6 +651,7 @@ function saveSenpoOwnership(){
   .forEach(el => el.addEventListener("input", applyFilters));
 ownFilter.addEventListener("input", applyFilters);
   
+/* 武将ー戦法ページ切り替え */
 const tabBusho = document.getElementById("tabBusho");
 const tabSenpo = document.getElementById("tabSenpo");
 
