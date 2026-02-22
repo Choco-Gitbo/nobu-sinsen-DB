@@ -101,14 +101,14 @@ Promise.all([
 
     if (st.label.includes("全体")) {
       range = "全体";
-    } else if (st.label.includes("2-3人")) {
-      range = "2-3人";
-    } else if (st.label.includes("2人")) {
-      range = "2人";
-    } else if (st.label.includes("1-2人")) {
-      range = "1-2人";
     } else if (st.label.includes("単体")) {
       range = "単体";
+    } else if (st.label.includes("1-2人")) {
+      range = "1-2人";
+    } else if (st.label.includes("2人")) {
+      range = "2人";
+    } else if (st.label.includes("2-3人")) {
+      range = "2-3人";
     } else if (st.label.includes("雑賀本願寺")) {
       range = "雑賀本願寺";
     }
@@ -119,10 +119,10 @@ Promise.all([
       .replace("友軍","")
       .replace("自身","")
       .replace("全体","")
-      .replace("2-3人","")
-      .replace("2人","")
-      .replace("1-2人","")
       .replace("単体","")
+      .replace("1-2人","")
+      .replace("2人","")
+      .replace("2-3人","")
       .replace("雑賀本願寺","");
 
     st.target = target;
