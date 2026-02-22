@@ -437,7 +437,8 @@ function setupSenpoFilters(data) {
 
   createOptions(targetSelect, unique(senpoStates.map(s => s.target)));
   createOptions(rangeSelect, unique(senpoStates.map(s => s.range)));
-  createOptions(effectSelect, sortEffects(senpoStates.map(s => s.effect)));
+  createOptions(effectSelect, effectOrder);
+  /* createOptions(effectSelect, sortEffects(senpoStates.map(s => s.effect)));*/
 }
 function renderSenpoList(data){
 
