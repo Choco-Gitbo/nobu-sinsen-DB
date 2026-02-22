@@ -350,15 +350,28 @@ function setupFilters(data) {
 }
 
 /* option生成 */
-function createOptions(select, values) {
-  [...new Set(values)].sort().forEach(v => {
+function createOptions(select, values, doSort = true) {
+
+  select.innerHTML = "";
+
+  let list = [...new Set(values)];
+
+  if (doSort) {
+    list.sort((a, b) => a.localeCompare(b, "ja"));
+  }
+
+  list.forEach(v => {
+
+    if (!v) return; // 空白防止
+
     const opt = document.createElement("option");
     opt.value = v;
     opt.textContent = v;
+
     select.appendChild(opt);
+
   });
 }
-
 /* フィルター適用 */
 function applyFilters() {
   const name = nameInput.value.trim();
@@ -439,9 +452,7 @@ function setupSenpoFilters(data) {
 
   createOptions(targetSelect, unique(senpoStates.map(s => s.target)));
   createOptions(rangeSelect, unique(senpoStates.map(s => s.range)));
-  /* createOptions(effectSelect, effectOrder); */
-  createOptions(effectSelect, sortEffects(senpoStates.map(s => s.effect)));
-}
+  createOptions(effectSelect, effects, false);}
 function renderSenpoList(data){
 
   const list = document.getElementById("senpoList");
