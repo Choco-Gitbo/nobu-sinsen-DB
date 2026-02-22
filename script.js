@@ -430,7 +430,7 @@ function renderList(data) {
     </label>
 
     <label>
-    ランク
+    　凸数
     <input type="number" class="rank-input"
     data-id="${b.id}"
     min="0"
