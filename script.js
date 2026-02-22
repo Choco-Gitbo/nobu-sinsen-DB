@@ -31,9 +31,17 @@ const rarityColors = {
 ========================= */
 const STATE_COLOR_RULES = [
   {
-    match: ["兵刃ダメ", "計略ダメ"],
+    match: ["兵刃単体","兵刃複数", "計略単体","計略複数","兵略単体","兵略複数"],
     color: "#ffd5cc"   // バフ（赤）
   },  
+  {
+    match: ["兵刃ダメ", "計略ダメ"],
+    color: "#ffd5cc"   // バフ（赤）
+  },
+  {
+    match: ["強化"],
+    color: "#cce4ff"   // バフ（青）
+  },
   {
     match: ["連撃", "回避", "鉄壁", "乱舞", "反撃", "援護", "肩代り", "耐性", "洞察", "先攻", "必中", "破陣", "離反", "心攻", "襲撃"],
     color: "#cce4ff"   // バフ（青）
@@ -45,7 +53,11 @@ const STATE_COLOR_RULES = [
   {
     match: ["武勇増", "知略増", "統率増", "速度増", "能動増", "突撃増" ,"発動増","会心", "奇策"],
     color: "#cce4ff"   // バフ（青）
-  },  
+  },
+  {
+    match: ["弱体","制御"],
+    color: "#f7d6ff"   // デバフ（赤）
+  },
   {
     match: ["威圧", "無策", "封撃", "混乱", "疲弊", "回復不可", "挑発", "牽制", "麻痺","強化解除"],
     color: "#f7d6ff"   // デバフ（赤）
@@ -68,6 +80,122 @@ const STATE_COLOR_RULES = [
   }  
 ];
 
+const effectOrder = [
+  "連撃",
+  "回避",
+  "鉄壁",
+  "乱舞",
+  "反撃",
+  "援護",
+  "肩代り",
+  "耐性",
+  "洞察",
+  "先攻",
+  "必中",
+  "破陣",
+  "会心",
+  "奇策",
+  "離反",
+  "心攻",
+  "襲撃",
+  "威圧",
+  "無策",
+  "封撃",
+  "混乱",
+  "疲弊",
+  "麻痺",
+  "回復不可",
+  "浄化不可",
+  "挑発",
+  "牽制",
+  "攻撃対象ロック",
+  "火傷",
+  "水攻め",
+  "中毒",
+  "潰走",
+  "消沈",
+  "乱兵",
+  "撹乱",
+  "恐慌",
+  "休養",
+  "回生",
+  "浄化",
+  "強化解除",
+  "武勇増",
+  "武勇減",
+  "知略増",
+  "知略減",
+  "統率増",
+  "統率減",
+  "速度増",
+  "速度減",
+  "全属性減",
+  "メイン属性増",
+  "メイン属性減",
+  "能動発動増",
+  "能動発動減",
+  "固有能動発動増",
+  "固有能動発動減",
+  "突撃発動増",
+  "突撃発動減",
+  "固有突撃発動増",
+  "固有突撃発動減",
+  "継続時間増",
+  "継続時間減",
+  "与兵刃増",
+  "与兵刃減",
+  "被兵刃増",
+  "被兵刃減",
+  "与計略増",
+  "与計略減",
+  "被計略増",
+  "被計略減",
+  "与通攻増",
+  "与通攻減",
+  "被通攻増",
+  "被通攻減",
+  "会心ダメ増",
+  "会心ダメ減",
+  "奇策ダメ増",
+  "奇策ダメ減",
+  "与能動増",
+  "与能動減",
+  "被能動増",
+  "被能動減",
+  "与突撃増",
+  "与突撃減",
+  "被突撃増",
+  "被突撃減",
+  "兵刃ダメ",
+  "計略ダメ",
+  "準備1ターン",
+  "準備2ターン",
+  "準備スキップ",
+  "与回復増",
+  "与回復減",
+  "被回復増",
+  "被回復減",
+  "回復量蓄積",
+  "兵損増",
+  "兵損減",
+  "通攻計略化",
+  "通攻禁止",
+  "傭兵",
+  "一揆",
+  "能動阻止",
+  "特殊兵種",
+  "行軍速度増",
+  "兵刃単体",
+  "兵刃複数",
+  "計略単体",
+  "計略複数",
+  "兵略単体",
+  "兵略複数",
+  "強化",
+  "弱体",
+  "制御",
+  "回復"
+];
 
 /* =========================
    読み込み
@@ -109,6 +237,10 @@ Promise.all([
       range = "2人";
     } else if (st.label.includes("2-3人")) {
       range = "2-3人";
+    } else if (st.label.includes("大将")) {
+      range = "大将";
+    } else if (st.label.includes("副将")) {
+      range = "副将";
     } else if (st.label.includes("雑賀本願寺")) {
       range = "雑賀本願寺";
     }
@@ -303,10 +435,10 @@ function setupSenpoFilters(data) {
     s.states = stateMap[s.id] || [];
   });
 
-  createOptions(targetSelect, senpoStates.map(s=>s.target));
-  createOptions(rangeSelect, senpoStates.map(s=>s.range));
-  createOptions(effectSelect, senpoStates.map(s=>s.effect));  }
-    
+  createOptions(targetSelect, unique(senpoStates.map(s => s.target)));
+  createOptions(rangeSelect, unique(senpoStates.map(s => s.range)));
+  createOptions(effectSelect, sortEffects(senpoStates.map(s => s.effect)));
+}
 function renderSenpoList(data){
 
   const list = document.getElementById("senpoList");
@@ -350,6 +482,23 @@ function applySenpoFilters(){
     return true;
   });
   renderSenpoList(filtered);
+}
+
+function sortEffects(list) {
+
+  return unique(list).sort((a,b)=>{
+
+    const ai = effectOrder.indexOf(a);
+    const bi = effectOrder.indexOf(b);
+
+    if(ai === -1 && bi === -1) return a.localeCompare(b,"ja");
+    if(ai === -1) return 1;
+    if(bi === -1) return -1;
+
+    return ai - bi;
+
+  });
+
 }
 /* =========================
    戦法カード生成
@@ -421,7 +570,11 @@ function createSenpoCard(s){
 
   return card;
 }
-  
+
+function unique(list) {
+  return [...new Set(list.filter(v => v && v.trim() !== ""))];
+}
+
 /* イベント */
 [nameInput, factionSelect, clanSelect, costSelect,sexSelect,tagSelect]
   .forEach(el => el.addEventListener("input", applyFilters));
