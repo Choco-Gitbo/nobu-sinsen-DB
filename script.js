@@ -597,6 +597,16 @@ function createSenpoCard(s){
 
   card.append(titleRow,desc,statesWrap);
 
+  /* 所有チェックボックス */
+  const own = document.createElement("label");
+
+  own.innerHTML = `
+  <input type="checkbox" class="senpo-own" data-id="${s.id}"
+  ${senpoOwnership[s.id] ? "checked":""}>
+  所有
+  `;
+
+  titleRow.appendChild(own);  
   return card;
 }
 
@@ -645,6 +655,8 @@ tabSenpo.onclick = () => {
 [targetSelect, rangeSelect, effectSelect]
   .forEach(el => el.addEventListener("input", applySenpoFilters));
 
+/* 所有チェックボックスイベント */
+/* 武将一覧 */
 listEl.addEventListener("change", e=>{
 
 const id = e.target.dataset.id;
@@ -665,5 +677,18 @@ ownership[id].rank = Number(e.target.value);
 }
 
 saveOwnership();
+
+/* 戦法一覧一覧 */
+document.addEventListener("change",e=>{
+
+if(e.target.classList.contains("senpo-own")){
+
+const id = e.target.dataset.id;
+senpoOwnership[id] = e.target.checked;
+saveSenpoOwnership();
+
+}
+
+});
 
 });
