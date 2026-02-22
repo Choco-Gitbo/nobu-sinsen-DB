@@ -36,7 +36,12 @@
     </select>
     <select id="tagFilter">
       <option value="">タグ（全て）</option>
-    </select>  
+    </select> 
+    <select id="ownFilter">
+    <option value="">所有（全て）</option>
+    <option value="1">所有のみ</option>
+    <option value="0">未所有</option>
+    </select> 
   </div>
 
   <div id="bushoList" class="busho-list"></div>
@@ -68,6 +73,8 @@
   <select id="effectFilter">
   <option value="">効果（全て）</option>
   </select>
+  <button id="ownAll">全部所有</button>
+  <button id="ownNone">全部外す</button>
 </div>
 
 <div id="senpoList" class="senpo-list"></div>

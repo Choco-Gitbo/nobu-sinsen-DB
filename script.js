@@ -5,6 +5,7 @@ const clanSelect = document.getElementById("clanFilter");
 const costSelect = document.getElementById("costFilter");
 const sexSelect = document.getElementById("sexFilter");
 const tagSelect = document.getElementById("tagFilter");
+const ownFilter = document.getElementById("ownFilter");
 
 const senpoNameInput = document.getElementById("senpoNameSearch");
 const senpoTypeSelect = document.getElementById("senpoTypeFilter");
@@ -382,12 +383,34 @@ function applyFilters() {
       const tags = b.tags.split("|");
       if (!tags.includes(tag)) return false;
     }
+    if(ownFilter.value === "1" && !ownership[b.id]?.own) return false;
+    if(ownFilter.value === "0" && ownership[b.id]?.own) return false;
 
     return true;
   });
 
   renderList(filtered);
 }
+
+/* 全て所有 */
+document.getElementById("ownAll").onclick = ()=>{
+allBusho.forEach(b=>{
+ownership[b.id] ??= {};
+ownership[b.id].own = true;
+});
+saveOwnership();
+renderList(allBusho);
+};
+
+document.getElementById("ownNone").onclick = ()=>{
+allBusho.forEach(b=>{
+ownership[b.id] ??= {};
+ownership[b.id].own = false;
+});
+saveOwnership();
+renderList(allBusho);
+};
+
 
 /* 一覧描画 */
 function renderList(data) {
@@ -626,7 +649,7 @@ function saveSenpoOwnership(){
 /* イベント */
 [nameInput, factionSelect, clanSelect, costSelect,sexSelect,tagSelect]
   .forEach(el => el.addEventListener("input", applyFilters));
-
+ownFilter.addEventListener("input", applyFilters);
   
 const tabBusho = document.getElementById("tabBusho");
 const tabSenpo = document.getElementById("tabSenpo");
@@ -678,7 +701,7 @@ ownership[id].rank = Number(e.target.value);
 
 saveOwnership();
 
-/* 戦法一覧一覧 */
+/* 戦法一覧 */
 document.addEventListener("change",e=>{
 
 if(e.target.classList.contains("senpo-own")){
