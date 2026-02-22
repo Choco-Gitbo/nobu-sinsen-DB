@@ -373,12 +373,14 @@ function createSenpoCard(s){
   const get = document.createElement("span");
   get.className = "senpo-get";
   
+  let text = "";
   if (s.owner.length) {
-    text = "入手方法ー固有：" + s.owner.join(" / ");
+    text += "固有：" + s.owner.join(" / ");
   }
 
   if (s.teacher.length) {
-    text = "入手方法ー伝授：" + s.teacher.join(" / ");
+    if(text) text += " ";
+    text += "伝授：" + s.teacher.join(" / ");
   }
   get.textContent = text;
 
