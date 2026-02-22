@@ -16,6 +16,8 @@ let allBusho = [];
 let allSenpo = [];
 let senpoStates = [];
 
+let ownership = JSON.parse(localStorage.getItem("ownership") || "{}");
+let senpoOwnership = JSON.parse(localStorage.getItem("senpoOwnership") || "{}");
 
 /* レアリティ → 色 */
 const rarityColors = {
@@ -408,12 +410,36 @@ function renderList(data) {
     row.appendChild(bar);
 
     row.innerHTML += `
-      <div class="busho-name">${b.name}</div>
-      <div class="busho-sub">
-        勢力:${b.faction} / 家門:${b.clan} / コスト:${b.cost}
-      </div>
-    `;
+    <div class="busho-name">${b.name}</div>
+    <div class="busho-sub">
+    勢力:${b.faction} / 家門:${b.clan} / コスト:${b.cost}
+    </div>
 
+    <div class="own-area">
+
+    <label>
+    <input type="checkbox" class="own-check" data-id="${b.id}"
+    ${ownership[b.id]?.own ? "checked":""}>
+    所有
+    </label>
+
+    <label>
+    <input type="checkbox" class="awake-check" data-id="${b.id}"
+    ${ownership[b.id]?.awake ? "checked":""}>
+    覚醒
+    </label>
+
+    <label>
+    ランク
+    <input type="number" class="rank-input"
+    data-id="${b.id}"
+    min="0"
+    max="${b.rarity}"
+    value="${ownership[b.id]?.rank || 0}">
+    </label>
+
+    </div>
+    `;
     listEl.appendChild(row);
   });
 }
@@ -578,6 +604,15 @@ function unique(list) {
   return [...new Set(list.filter(v => v && v.trim() !== ""))];
 }
 
+/* 所有データ保存 */
+function saveOwnership(){
+  localStorage.setItem("ownership", JSON.stringify(ownership));
+}
+
+function saveSenpoOwnership(){
+  localStorage.setItem("senpoOwnership", JSON.stringify(senpoOwnership));
+}
+
 /* イベント */
 [nameInput, factionSelect, clanSelect, costSelect,sexSelect,tagSelect]
   .forEach(el => el.addEventListener("input", applyFilters));
@@ -609,3 +644,26 @@ tabSenpo.onclick = () => {
   .forEach(el => el.addEventListener("input", applySenpoFilters));
 [targetSelect, rangeSelect, effectSelect]
   .forEach(el => el.addEventListener("input", applySenpoFilters));
+
+listEl.addEventListener("change", e=>{
+
+const id = e.target.dataset.id;
+if(!id) return;
+
+if(!ownership[id]) ownership[id] = {own:false,awake:false,rank:0};
+
+if(e.target.classList.contains("own-check")){
+ownership[id].own = e.target.checked;
+}
+
+if(e.target.classList.contains("awake-check")){
+ownership[id].awake = e.target.checked;
+}
+
+if(e.target.classList.contains("rank-input")){
+ownership[id].rank = Number(e.target.value);
+}
+
+saveOwnership();
+
+});
