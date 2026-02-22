@@ -255,6 +255,8 @@ Promise.all([
       .replace("1-2人","")
       .replace("2人","")
       .replace("2-3人","")
+      .replace("大将","")
+      .replace("副将","")
       .replace("雑賀本願寺","");
 
     st.target = target;
@@ -348,21 +350,15 @@ function setupFilters(data) {
 }
 
 /* option生成 */
-function createOptions(select, list) {
-
-  select.innerHTML = "";
-
-  list.forEach(v => {
-
+function createOptions(select, values) {
+  [...new Set(values)].sort().forEach(v => {
     const opt = document.createElement("option");
     opt.value = v;
     opt.textContent = v;
-
     select.appendChild(opt);
-
   });
-
 }
+
 /* フィルター適用 */
 function applyFilters() {
   const name = nameInput.value.trim();
