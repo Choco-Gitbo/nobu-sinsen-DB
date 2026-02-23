@@ -416,16 +416,23 @@ function renderList(data) {
     const row = document.createElement("div");
     row.className = "busho-row";
 
+    const ownBox = document.createElement("input");
+    ownBox.type = "checkbox";
+    ownBox.className = "own-check";
+    ownBox.dataset.id = b.id;
+    ownBox.checked = ownership[b.id]?.own || false;
+
+    row.appendChild(ownBox);
+
     // ★ クリックで詳細へ
     row.addEventListener("click", (e) => {
 
       if (
-        e.target.tagName === "INPUT" ||
-        e.target.tagName === "LABEL"
-      ) {
+        ["INPUT","SELECT","BUTTON"].includes(e.target.tagName) ||
+        e.target.closest("label")
+      ){
         return;
       }
-
       location.href = `detail.html?id=${b.id}`;
     });
     const bar = document.createElement("div");
