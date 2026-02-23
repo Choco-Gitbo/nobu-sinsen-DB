@@ -438,7 +438,6 @@ function renderList(data) {
     <label>
     <input type="checkbox" class="own-check" data-id="${b.id}"
     ${ownership[b.id]?.own ? "checked":""}>
-    <div class="busho-name"></div>
     ${b.name}
     </label>
     <div class="busho-sub">
