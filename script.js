@@ -13,6 +13,9 @@ const senpoGetSelect = document.getElementById("senpoGetFilter");
 const targetSelect = document.getElementById("targetFilter");
 const rangeSelect = document.getElementById("rangeFilter");
 const effectSelect = document.getElementById("effectFilter");
+const senpoOwnFilter = document.getElementById("senpoOwnFilter");
+
+
 let allBusho = [];
 let allSenpo = [];
 let senpoStates = [];
@@ -408,15 +411,15 @@ document.getElementById("toggleOwn").onclick = () => {
   renderList(allBusho);
 };
 
-let senpoallOwned = false;
+let senpoAllOwned = false;
 
-document.getElementById("senpotoggleOwn").onclick = () => {
+document.getElementById("senpoToggleOwn").onclick = () => {
 
-  senpoallOwned = !senpoallOwned;
+  senpoAllOwned = !senpoAllOwned;
 
   allSenpo.forEach(s => {
     senpoOwnership[s.id] ??= {own:false};
-    senpoOwnership[s.id].own = senpoallOwned;
+    senpoOwnership[s.id].own = senpoAllOwned;
   });
 
   saveOwnership();
@@ -504,8 +507,12 @@ function setupSenpoFilters(data) {
 
   createOptions(targetSelect, unique(senpoStates.map(s => s.target)));
   createOptions(rangeSelect, unique(senpoStates.map(s => s.range)));
-  /* createOptions(effectSelect, effectOrder); */
   createOptions(effectSelect, sortEffects(senpoStates.map(s => s.effect)));
+
+  if(senpoOwnFilter.value === "1" && !senpoOwnership[b.id]?.own) return false;
+  if(senpoOwnFilter.value === "0" && senpoOwnership[b.id]?.own) return false;
+
+
 }
 function renderSenpoList(data){
 
