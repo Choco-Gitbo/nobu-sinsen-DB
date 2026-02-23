@@ -702,6 +702,8 @@ tabSenpo.onclick = () => {
   .forEach(el => el.addEventListener("input", applySenpoFilters));
 [targetSelect, rangeSelect, effectSelect]
   .forEach(el => el.addEventListener("input", applySenpoFilters));
+senpoOwnFilter.addEventListener("input", applyFilters);
+
 
 /* 所有チェックボックスイベント */
 /* 武将一覧 */
