@@ -13,6 +13,8 @@ const senpoGetSelect = document.getElementById("senpoGetFilter");
 const targetSelect = document.getElementById("targetFilter");
 const rangeSelect = document.getElementById("rangeFilter");
 const effectSelect = document.getElementById("effectFilter");
+const senpoOwnFilter =document.getElementById("senpoOwnFilter").value;
+
 let allBusho = [];
 let allSenpo = [];
 let senpoStates = [];
@@ -548,6 +550,15 @@ function applySenpoFilters(){
     if(range && !states.some(st => st.range === range)) return false;
     if(effect && !states.some(st => st.effect === effect)) return false;
 
+const filtered = allSenpo.filter(s=>{
+
+  if(nameSearch && !s.name.includes(nameSearch)) return false;
+  if(senpoOwnFilter === "owned" && !senpoOwnership[s.id]) return false;
+  if(senpoOwnFilter === "not" && senpoOwnership[s.id]) return false;
+
+  return true;
+
+});    
     return true;
   });
   renderSenpoList(filtered);
@@ -700,6 +711,8 @@ tabSenpo.onclick = () => {
   .forEach(el => el.addEventListener("input", applySenpoFilters));
 [targetSelect, rangeSelect, effectSelect]
   .forEach(el => el.addEventListener("input", applySenpoFilters));
+senpoOwnFilter.addEventListener("input", applyFilters);
+
 
 /* 所有チェックボックスイベント */
 /* 武将一覧 */
