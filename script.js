@@ -393,6 +393,7 @@ function applyFilters() {
 }
 
 /* 全て所有 */
+/* 武将 */
 let allOwned = false;
 
 document.getElementById("toggleOwn").onclick = () => {
@@ -406,6 +407,21 @@ document.getElementById("toggleOwn").onclick = () => {
 
   saveOwnership();
   renderList(allBusho);
+};
+
+/* 戦法 */
+let allSenpoOwned = false;
+
+document.getElementById("toggleSenpoOwn").onclick = () => {
+
+  allSenpoOwned = !allSenpoOwned;
+
+  allSenpo.forEach(s => {
+    senpoOwnership[s.id] = allSenpoOwned;
+  });
+
+  saveSenpoOwnership();
+  renderSenpoList(allSenpo);
 };
 
 /* 一覧描画 */
@@ -593,10 +609,14 @@ function createSenpoCard(s){
   desc.innerHTML = (s.description || "").replace(/\|/g,"<br>");
   desc.style.display = "none";
 
-  titleRow.onclick = () =>{
+  titleRow.onclick = (e) =>{
+
+    if (e.target.tagName === "INPUT") return;
+
     desc.style.display =
       desc.style.display === "none" ? "block" : "none";
   };
+
 
   /* 状態タグ */
   const statesWrap = document.createElement("div");
@@ -683,38 +703,39 @@ tabSenpo.onclick = () => {
 
 /* 所有チェックボックスイベント */
 /* 武将一覧 */
+/* 武将一覧 */
 listEl.addEventListener("change", e=>{
 
-const id = e.target.dataset.id;
-if(!id) return;
+  const id = e.target.dataset.id;
+  if(!id) return;
 
-if(!ownership[id]) ownership[id] = {own:false,awake:false,rank:0};
+  if(!ownership[id]) ownership[id] = {own:false,awake:false,rank:0};
 
-if(e.target.classList.contains("own-check")){
-ownership[id].own = e.target.checked;
-}
+  if(e.target.classList.contains("own-check")){
+    ownership[id].own = e.target.checked;
+  }
 
-if(e.target.classList.contains("awake-check")){
-ownership[id].awake = e.target.checked;
-}
+  if(e.target.classList.contains("awake-check")){
+    ownership[id].awake = e.target.checked;
+  }
 
-if(e.target.classList.contains("rank-input")){
-ownership[id].rank = Number(e.target.value);
-}
+  if(e.target.classList.contains("rank-input")){
+    ownership[id].rank = Number(e.target.value);
+  }
 
-saveOwnership();
+  saveOwnership();
+});
+
 
 /* 戦法一覧 */
 document.addEventListener("change",e=>{
 
-if(e.target.classList.contains("senpo-own")){
+  if(e.target.classList.contains("senpo-own")){
 
-const id = e.target.dataset.id;
-senpoOwnership[id] = e.target.checked;
-saveSenpoOwnership();
+    const id = e.target.dataset.id;
+    senpoOwnership[id] = e.target.checked;
+    saveSenpoOwnership();
 
-}
-
-});
+  }
 
 });
