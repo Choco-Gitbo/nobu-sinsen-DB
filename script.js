@@ -54,7 +54,7 @@ const STATE_COLOR_RULES = [
     color: "#cce4ff"   // バフ（青）
   }, 
   {
-    match: ["武勇増", "知略増", "統率増", "速度増", "能動増", "突撃増" ,"発動増","会心", "奇策"],
+    match: ["武勇増", "知略増", "統率増", "速度増", "能動増", "突撃増" ,"発動増","会心", "奇策","属性増"],
     color: "#cce4ff"   // バフ（青）
   },
   {
@@ -70,7 +70,7 @@ const STATE_COLOR_RULES = [
     color: "#f7d6ff"   // デバフ（赤）
   },
   {
-    match: ["武勇減", "知略減", "統率減", "速度減", "能動減", "突撃減","発動減"],
+    match: ["武勇減", "知略減", "統率減", "速度減", "能動減", "突撃減","発動減","属性減"],
     color: "#f7d6ff"   // デバフ（赤）
   },
   {
@@ -406,6 +406,21 @@ document.getElementById("toggleOwn").onclick = () => {
 
   saveOwnership();
   renderList(allBusho);
+};
+
+let senpoallOwned = false;
+
+document.getElementById("senpotoggleOwn").onclick = () => {
+
+  senpoallOwned = !senpoallOwned;
+
+  allSenpo.forEach(s => {
+    senpoOwnership[s.id] ??= {own:false};
+    senpoOwnership[s.id].own = senpoallOwned;
+  });
+
+  saveOwnership();
+  rendersenpoList(allSenpo);
 };
 
 /* 一覧描画 */
