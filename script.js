@@ -13,7 +13,7 @@ const senpoGetSelect = document.getElementById("senpoGetFilter");
 const targetSelect = document.getElementById("targetFilter");
 const rangeSelect = document.getElementById("rangeFilter");
 const effectSelect = document.getElementById("effectFilter");
-const senpoOwnFilter =document.getElementById("senpoOwnFilter").value;
+const senpoOwnFilter =document.getElementById("senpoOwnFilter");
 
 let allBusho = [];
 let allSenpo = [];
