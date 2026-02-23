@@ -435,14 +435,18 @@ function renderList(data) {
     row.appendChild(bar);
 
     row.innerHTML += `
-    <input type="checkbox" class="own-check" data-id="${b.id}"
-    ${ownership[b.id]?.own ? "checked":""}>
     <div class="busho-name">${b.name}</div>
     <div class="busho-sub">
     勢力:${b.faction} / 家門:${b.clan} / コスト:${b.cost}
     </div>
 
     <div class="own-area">
+
+    <label>
+    <input type="checkbox" class="own-check" data-id="${b.id}"
+    ${ownership[b.id]?.own ? "checked":""}>
+    所有
+    </label>
 
     <label>
     <input type="checkbox" class="awake-check" data-id="${b.id}"
