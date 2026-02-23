@@ -588,6 +588,15 @@ function createSenpoCard(s){
   const titleRow = document.createElement("div");
   titleRow.className = "senpo-title-row";
 
+  /* 所有チェックボックス */
+  const own = document.createElement("label");
+
+  own.innerHTML = `
+  <input type="checkbox" class="senpo-own" data-id="${s.id}"
+  ${senpoOwnership[s.id] ? "checked":""}>
+  
+  `;
+
   const name = document.createElement("span");
   name.className = "senpo-name";
   name.textContent = s.name;
@@ -652,14 +661,6 @@ function createSenpoCard(s){
 
   card.append(titleRow,desc,statesWrap);
 
-  /* 所有チェックボックス */
-  const own = document.createElement("label");
-
-  own.innerHTML = `
-  <input type="checkbox" class="senpo-own" data-id="${s.id}"
-  ${senpoOwnership[s.id] ? "checked":""}>
-  所有
-  `;
 
   titleRow.appendChild(own);  
   return card;
