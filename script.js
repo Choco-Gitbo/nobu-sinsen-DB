@@ -711,7 +711,7 @@ tabSenpo.onclick = () => {
   .forEach(el => el.addEventListener("input", applySenpoFilters));
 [targetSelect, rangeSelect, effectSelect]
   .forEach(el => el.addEventListener("input", applySenpoFilters));
-senpoOwnFilter.addEventListener("input", applyFilters);
+snpoOwnFilter.addEventListener("input", applySenpoFilters);
 
 
 /* 所有チェックボックスイベント */
