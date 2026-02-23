@@ -393,24 +393,20 @@ function applyFilters() {
 }
 
 /* 全て所有 */
-document.getElementById("ownAll").onclick = ()=>{
-allBusho.forEach(b=>{
-ownership[b.id] ??= {};
-ownership[b.id].own = true;
-});
-saveOwnership();
-renderList(allBusho);
-};
+let allOwned = false;
 
-document.getElementById("ownNone").onclick = ()=>{
-allBusho.forEach(b=>{
-ownership[b.id] ??= {};
-ownership[b.id].own = false;
-});
-saveOwnership();
-renderList(allBusho);
-};
+document.getElementById("toggleOwn").onclick = () => {
 
+  allOwned = !allOwned;
+
+  allBusho.forEach(b => {
+    ownership[b.id] ??= {own:false,awake:false,rank:0};
+    ownership[b.id].own = allOwned;
+  });
+
+  saveOwnership();
+  renderList(allBusho);
+};
 
 /* 一覧描画 */
 function renderList(data) {
