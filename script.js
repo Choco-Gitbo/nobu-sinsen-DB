@@ -13,9 +13,6 @@ const senpoGetSelect = document.getElementById("senpoGetFilter");
 const targetSelect = document.getElementById("targetFilter");
 const rangeSelect = document.getElementById("rangeFilter");
 const effectSelect = document.getElementById("effectFilter");
-const senpoOwnFilter = document.getElementById("senpoOwnFilter");
-
-
 let allBusho = [];
 let allSenpo = [];
 let senpoStates = [];
@@ -411,21 +408,6 @@ document.getElementById("toggleOwn").onclick = () => {
   renderList(allBusho);
 };
 
-let senpoAllOwned = false;
-
-document.getElementById("senpoToggleOwn").onclick = () => {
-
-  senpoAllOwned = !senpoAllOwned;
-
-  allSenpo.forEach(s => {
-    senpoOwnership[s.id] ??= {own:false};
-    senpoOwnership[s.id].own = senpoAllOwned;
-  });
-
-  saveOwnership();
-  renderSenpoList(allSenpo);
-};
-
 /* 一覧描画 */
 function renderList(data) {
   listEl.innerHTML = "";
@@ -507,12 +489,8 @@ function setupSenpoFilters(data) {
 
   createOptions(targetSelect, unique(senpoStates.map(s => s.target)));
   createOptions(rangeSelect, unique(senpoStates.map(s => s.range)));
+  /* createOptions(effectSelect, effectOrder); */
   createOptions(effectSelect, sortEffects(senpoStates.map(s => s.effect)));
-
-  if(senpoOwnFilter.value === "1" && !senpoOwnership[s.id]?.own) return false;
-  if(senpoOwnFilter.value === "0" && senpoOwnership[s.id]?.own) return false;
-
-
 }
 function renderSenpoList(data){
 
@@ -644,9 +622,9 @@ function createSenpoCard(s){
   card.append(titleRow,desc,statesWrap);
 
   /* 所有チェックボックス */
-  const senpoOwn = document.createElement("label");
+  const own = document.createElement("label");
 
-  senpoOwn.innerHTML = `
+  own.innerHTML = `
   <input type="checkbox" class="senpo-own" data-id="${s.id}"
   ${senpoOwnership[s.id] ? "checked":""}>
   所有
@@ -702,8 +680,6 @@ tabSenpo.onclick = () => {
   .forEach(el => el.addEventListener("input", applySenpoFilters));
 [targetSelect, rangeSelect, effectSelect]
   .forEach(el => el.addEventListener("input", applySenpoFilters));
-senpoOwnFilter.addEventListener("input", applyFilters);
-
 
 /* 所有チェックボックスイベント */
 /* 武将一覧 */
