@@ -420,7 +420,7 @@ document.getElementById("senpotoggleOwn").onclick = () => {
   });
 
   saveOwnership();
-  rendersenpoList(allSenpo);
+  renderSenpoList(allSenpo);
 };
 
 /* 一覧描画 */
