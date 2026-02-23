@@ -18,8 +18,14 @@
 <div id="bushoPage">
   <h1>武将一覧</h1>
   <div class="filters">
+    <button id="toggleOwn">ALL</button>
     <input type="text" id="nameSearch" placeholder="名前検索">
 
+    <select id="ownFilter">
+      <option value="">所有（全て）</option>
+      <option value="1">所有のみ</option>
+      <option value="0">未所有</option>
+    </select> 
     <select id="factionFilter">
       <option value="">勢力（全て）</option>
     </select>
@@ -37,12 +43,6 @@
     <select id="tagFilter">
       <option value="">タグ（全て）</option>
     </select> 
-    <select id="ownFilter">
-      <option value="">所有（全て）</option>
-      <option value="1">所有のみ</option>
-      <option value="0">未所有</option>
-    </select> 
-    <button id="toggleOwn">ALL</button>
   </div>
 
   <div id="bushoList" class="busho-list"></div>
