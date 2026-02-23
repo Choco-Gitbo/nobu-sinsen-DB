@@ -538,6 +538,8 @@ function applySenpoFilters(){
   const target = targetSelect.value;
   const range = rangeSelect.value;
   const effect = effectSelect.value;
+  const own = senpoOwnFilter.value;
+
   const filtered = allSenpo.filter(s => {
 
     if(name && !s.name.includes(name)) return false;
@@ -550,17 +552,12 @@ function applySenpoFilters(){
     if(range && !states.some(st => st.range === range)) return false;
     if(effect && !states.some(st => st.effect === effect)) return false;
 
-const filtered = allSenpo.filter(s=>{
+    if(own === "owned" && !senpoOwnership[s.id]) return false;
+    if(own === "not" && senpoOwnership[s.id]) return false;
 
-  if(nameSearch && !s.name.includes(nameSearch)) return false;
-  if(senpoOwnFilter === "owned" && !senpoOwnership[s.id]) return false;
-  if(senpoOwnFilter === "not" && senpoOwnership[s.id]) return false;
-
-  return true;
-
-});    
     return true;
   });
+
   renderSenpoList(filtered);
 }
 
