@@ -620,6 +620,7 @@ function createSenpoCard(s){
   get.textContent = text;
 
   const trigger = document.createElement("span");
+  type.className = "senpo-type";
   trigger.textContent = "発動率："  + s.trigger + "％";
 
   titleRow.append(name,type,get,trigger);
