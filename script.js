@@ -646,7 +646,17 @@ function saveSenpoOwnership(){
 [nameInput, factionSelect, clanSelect, costSelect,sexSelect,tagSelect]
   .forEach(el => el.addEventListener("input", applyFilters));
 ownFilter.addEventListener("input", applyFilters);
-  
+listEl.addEventListener("click", e => {
+
+  if(
+    e.target.classList.contains("own-check") ||
+    e.target.classList.contains("awake-check") ||
+    e.target.classList.contains("rank-input")
+  ){
+    e.stopPropagation();
+  }
+
+});  
 /* 武将ー戦法ページ切り替え */
 const tabBusho = document.getElementById("tabBusho");
 const tabSenpo = document.getElementById("tabSenpo");
