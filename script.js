@@ -509,8 +509,8 @@ function setupSenpoFilters(data) {
   createOptions(rangeSelect, unique(senpoStates.map(s => s.range)));
   createOptions(effectSelect, sortEffects(senpoStates.map(s => s.effect)));
 
-  if(senpoOwnFilter.value === "1" && !senpoOwnership[b.id]?.own) return false;
-  if(senpoOwnFilter.value === "0" && senpoOwnership[b.id]?.own) return false;
+  if(senpoOwnFilter.value === "1" && !senpoOwnership[s.id]?.own) return false;
+  if(senpoOwnFilter.value === "0" && senpoOwnership[s.id]?.own) return false;
 
 
 }
@@ -644,9 +644,9 @@ function createSenpoCard(s){
   card.append(titleRow,desc,statesWrap);
 
   /* 所有チェックボックス */
-  const own = document.createElement("label");
+  const senpoOwn = document.createElement("label");
 
-  own.innerHTML = `
+  senpoOwn.innerHTML = `
   <input type="checkbox" class="senpo-own" data-id="${s.id}"
   ${senpoOwnership[s.id] ? "checked":""}>
   所有
