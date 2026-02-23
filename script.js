@@ -438,7 +438,7 @@ function renderList(data) {
     <label>
     <input type="checkbox" class="own-check" data-id="${b.id}"
     ${ownership[b.id]?.own ? "checked":""}>
-    <div class="busho-name">${b.name}</div>
+    ${b.name}
     </label>
     <div class="busho-sub">
     勢力:${b.faction} / 家門:${b.clan} / コスト:${b.cost}
