@@ -610,7 +610,10 @@ function createSenpoCard(s){
   }
   get.textContent = text;
 
-  titleRow.append(name,type,get);
+  const trigger = document.createElement("span");
+  trigger.textContent = s.trigger;
+
+  titleRow.append(name,type,get,trigger);
 
   const desc = document.createElement("div");
   desc.className = "senpo-desc";
