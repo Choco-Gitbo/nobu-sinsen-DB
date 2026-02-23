@@ -420,17 +420,6 @@ function renderList(data) {
     row.addEventListener("click", () => {
       location.href = `detail.html?id=${b.id}`;
     });
-    listEl.addEventListener("click", e => {
-
-      if(
-        e.target.classList.contains("own-check") ||
-        e.target.classList.contains("awake-check") ||
-        e.target.classList.contains("rank-input")
-      ){
-        e.stopPropagation();
-      }
-
-    });  
 
     const bar = document.createElement("div");
     bar.className = "rarity-bar";
@@ -689,6 +678,17 @@ tabSenpo.onclick = () => {
 
 /* 所有チェックボックスイベント */
 /* 武将一覧 */
+listEl.addEventListener("click", e => {
+
+  if(
+    e.target.classList.contains("own-check") ||
+    e.target.classList.contains("awake-check") ||
+    e.target.classList.contains("rank-input")
+  ){
+    e.stopPropagation();
+  }
+
+});
 listEl.addEventListener("change", e=>{
 
 const id = e.target.dataset.id;
