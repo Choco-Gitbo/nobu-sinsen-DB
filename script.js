@@ -417,19 +417,16 @@ function renderList(data) {
     row.className = "busho-row";
 
     // ★ クリックで詳細へ
-    row.addEventListener("click", () => {
-      location.href = `detail.html?id=${b.id}`;
-    });
-    listEl.addEventListener("click", e => {
+    row.addEventListener("click", (e) => {
 
-      if(
-        e.target.classList.contains("own-check") ||
-        e.target.classList.contains("awake-check") ||
-        e.target.classList.contains("rank-input")
-      ){
-        e.stopPropagation();
+      if (
+        e.target.tagName === "INPUT" ||
+        e.target.tagName === "LABEL"
+      ) {
+        return;
       }
 
+      location.href = `detail.html?id=${b.id}`;
     });
     const bar = document.createElement("div");
     bar.className = "rarity-bar";
