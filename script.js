@@ -408,9 +408,8 @@ document.getElementById("toggleOwn").onclick = () => {
   });
 
   saveOwnership();
-  renderList(allBusho);
+  applyFilters();
 };
-
 /* 戦法 */
 let allSenpoOwned = false;
 
@@ -423,7 +422,7 @@ document.getElementById("toggleSenpoOwn").onclick = () => {
   });
 
   saveSenpoOwnership();
-  renderSenpoList(allSenpo);
+  applySenpoFilters();
 };
 
 /* 一覧描画 */
