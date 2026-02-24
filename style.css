@@ -132,6 +132,15 @@ h1 {
 
 .senpo-name {
   font-weight: bold;
+  font-size:16px;
+}
+
+.senpo-trigger{
+  color:#666;
+}
+
+.senpo-trigger{
+  color:#666;
 }
 
 .senpo-get {

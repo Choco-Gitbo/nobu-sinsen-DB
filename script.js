@@ -589,17 +589,19 @@ function createSenpoCard(s){
   const card = document.createElement("div");
   card.className = "senpo-card";
 
+  const header = document.createElement("div");
+  header.className = "senpo-header";
+
+  const own = document.createElement("input");
+  own.type = "checkbox";
+  own.className = "senpo-own";
+  own.checked = !!senpoOwnership[s.id];
+
+  const titleBlock = document.createElement("div");
+  titleBlock.className = "senpo-title-block";
+
   const titleRow = document.createElement("div");
   titleRow.className = "senpo-title-row";
-
-  /* 所有チェックボックス */
-  const own = document.createElement("label");
-
-  own.innerHTML = `
-  <input type="checkbox" class="senpo-own" data-id="${s.id}"
-  ${senpoOwnership[s.id] ? "checked":""}>
-  
-  `;
 
   const name = document.createElement("span");
   name.className = "senpo-name";
@@ -609,25 +611,15 @@ function createSenpoCard(s){
   type.className = "senpo-type";
   type.textContent = s.type;
 
-  const get = document.createElement("span");
-  get.className = "senpo-get";
-  
-  let text = "";
-  if (s.owner.length) {
-    text += "固有：" + s.owner.join(" / ");
-  }
-
-  if (s.teacher.length) {
-    if(text) text += " ";
-    text += "伝授：" + s.teacher.join(" / ");
-  }
-  get.textContent = text;
-
   const trigger = document.createElement("span");
-  trigger.className = "senpo-type";
-  trigger.textContent = "発動率"  + s.trigger + "%";
+  trigger.className = "senpo-trigger";
+  trigger.textContent = "発動率：" + s.trigger + "%";
 
-  titleRow.append(name,type,trigger,get);
+  titleRow.append(name,type,trigger);
+  titleBlock.appendChild(titleRow);
+
+  header.append(own,titleBlock);
+  card.appendChild(header);
 
   const desc = document.createElement("div");
   desc.className = "senpo-desc";
@@ -668,7 +660,16 @@ function createSenpoCard(s){
 
 
   titleRow.appendChild(own);  
+
+  const source = document.createElement("div");
+  source.className = "senpo-source";
+  source.textContent = "入手：" + s.source;
+
+  card.appendChild(source);
+
   return card;
+
+  
 }
 
 function unique(list) {
