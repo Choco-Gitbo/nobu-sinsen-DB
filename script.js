@@ -545,7 +545,7 @@ function applySenpoFilters(){
     if(type && s.type !== type) return false;
     if(get && s.get !== get) return false;
 
-    const states = senpoStates.filter(st => st.senpo_id === s.id);
+    const states = s.states;
 
     if(target && !states.some(st => st.target === target)) return false;
     if(range && !states.some(st => st.range === range)) return false;
@@ -680,8 +680,10 @@ function saveSenpoOwnership(){
 }
 
 /* イベント */
-[nameInput, factionSelect, clanSelect, costSelect,sexSelect,tagSelect]
-  .forEach(el => el.addEventListener("input", applyFilters));
+[nameInput].forEach(el => el.addEventListener("input", applyFilters));
+
+[factionSelect, clanSelect, costSelect,sexSelect,tagSelect]
+  .forEach(el => el.addEventListener("change", applyFilters));
 ownFilter.addEventListener("input", applyFilters);
 
 
@@ -741,7 +743,7 @@ listEl.addEventListener("change", e=>{
 
 
 /* 戦法一覧 */
-document.addEventListener("change",e=>{
+document.getElementById("senpoList").addEventListener("change",e=>{
 
   if(e.target.classList.contains("senpo-own")){
 
