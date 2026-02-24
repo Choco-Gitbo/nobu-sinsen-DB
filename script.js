@@ -783,10 +783,11 @@ function exportConsultText(){
 
   allBusho.forEach(b => {
 
-    if(!ownership[b.id]) return;
+    const own = ownership[b.id];
+    if(!own?.own) return;
 
-    const star = ownership[b.id].rank || 0;
-    const awake = ownership[b.id].awake ? " 覚醒" : "";
+    const star = own.rank || 0;
+    const awake = own.awake ? " 覚醒" : "";
 
     text += `${b.name} ★${star}${awake}\n`;
 
@@ -802,9 +803,12 @@ function exportConsultText(){
 
   });
 
-  showCopyBox(text);
+  navigator.clipboard.writeText(text).then(()=>{
+    alert("クリップボードにコピーしました");
+  });
 
 }
+
 function showCopyBox(text){
 
   const box = document.createElement("textarea");
