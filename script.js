@@ -789,7 +789,7 @@ function exportConsultText(){
     const star = own.rank || 0;
     const awake = own.awake ? " 覚醒" : "";
 
-    text += `${b.name} ★${star}${awake}\n`;
+    text += `${b.name} ${star} $凸${awake}\n`;
 
   });
 
