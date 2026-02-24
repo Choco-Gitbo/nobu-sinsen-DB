@@ -595,6 +595,7 @@ function createSenpoCard(s){
   const own = document.createElement("input");
   own.type = "checkbox";
   own.className = "senpo-own";
+  own.dataset.id = s.id;
   own.checked = !!senpoOwnership[s.id];
 
   const titleBlock = document.createElement("div");
@@ -763,6 +764,7 @@ document.getElementById("senpoList").addEventListener("change",e=>{
   if(e.target.classList.contains("senpo-own")){
 
     const id = e.target.dataset.id;
+    if(!id) return;
     senpoOwnership[id] = e.target.checked;
     saveSenpoOwnership();
 
