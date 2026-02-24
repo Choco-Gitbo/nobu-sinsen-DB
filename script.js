@@ -771,3 +771,37 @@ document.getElementById("senpoList").addEventListener("change",e=>{
   }
 
 });
+
+/* 所有コピー */
+document.getElementById("exportText").onclick = exportConsultText;
+
+function exportConsultText(){
+
+  let text = "";
+
+  text += "【武将】\n\n";
+
+  allBusho.forEach(b => {
+
+    if(!bushoOwnership[b.id]) return;
+
+    const star = bushoRank[b.id] || 0;
+    const awake = bushoAwake[b.id] ? " 覚醒" : "";
+
+    text += `${b.name} ★${star}${awake}\n`;
+
+  });
+
+  text += "\n【戦法】\n\n";
+
+  allSenpo.forEach(s => {
+
+    if(!senpoOwnership[s.id]) return;
+
+    text += `${s.name}\n`;
+
+  });
+
+  showCopyBox(text);
+
+}
