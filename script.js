@@ -659,10 +659,10 @@ function createSenpoCard(s){
   card.append(titleRow,desc,statesWrap);
 
 
-  titleRow.appendChild(own);  
+  /* titleRow.appendChild(own);  */
 
   const source = document.createElement("div");
-  source.className = "senpo-source";
+  source.className = "senpo-get";
   let text = "";
   if (s.owner.length) {
     text += "固有：" + s.owner.join(" / ");
