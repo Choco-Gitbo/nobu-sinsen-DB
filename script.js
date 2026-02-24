@@ -783,7 +783,7 @@ function exportConsultText(){
 
   allBusho.forEach(b => {
 
-    if(!bushoOwnership[b.id]) return;
+    if(!ownership[b.id]) return;
 
     const star = bushoRank[b.id] || 0;
     const awake = bushoAwake[b.id] ? " 覚醒" : "";
