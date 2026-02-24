@@ -663,7 +663,16 @@ function createSenpoCard(s){
 
   const source = document.createElement("div");
   source.className = "senpo-source";
-  source.textContent = "入手：" + s.source;
+  let text = "";
+  if (s.owner.length) {
+    text += "固有：" + s.owner.join(" / ");
+  }
+
+  if (s.teacher.length) {
+    if(text) text += " ";
+    text += "伝授：" + s.teacher.join(" / ");
+  }
+  source.textContent = text;
 
   card.appendChild(source);
 
