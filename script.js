@@ -804,24 +804,7 @@ function exportConsultText(){
   });
 
   navigator.clipboard.writeText(text).then(()=>{
-    alert("クリップボードにコピーしました");
+    alert("所有情報をコピーしました");
   });
 
-}
-
-function showCopyBox(text){
-
-  const box = document.createElement("textarea");
-  box.value = text;
-  box.style.position = "fixed";
-  box.style.left = "50%";
-  box.style.top = "50%";
-  box.style.transform = "translate(-50%,-50%)";
-  box.style.width = "400px";
-  box.style.height = "400px";
-  box.style.zIndex = 9999;
-
-  document.body.appendChild(box);
-
-  box.select();
 }
