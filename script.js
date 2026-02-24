@@ -785,8 +785,8 @@ function exportConsultText(){
 
     if(!ownership[b.id]) return;
 
-    const star = bushoRank[b.id] || 0;
-    const awake = bushoAwake[b.id] ? " 覚醒" : "";
+    const star = ownership[b.id].rank || 0;
+    const awake = ownership[b.id].awake ? " 覚醒" : "";
 
     text += `${b.name} ★${star}${awake}\n`;
 
