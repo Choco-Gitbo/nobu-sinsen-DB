@@ -356,14 +356,19 @@ function setupFilters(data) {
 
 /* option生成 */
 function createOptions(select, values) {
-  [...new Set(values)].sort().forEach(v => {
-    const opt = document.createElement("option");
-    opt.value = v;
-    opt.textContent = v;
-    select.appendChild(opt);
-  });
-}
 
+  [...new Set(values)]
+    .filter(v => v && v.trim() !== "")
+    .sort()
+    .forEach(v => {
+
+      const opt = document.createElement("option");
+      opt.value = v;
+      opt.textContent = v;
+      select.appendChild(opt);
+
+    });
+}
 /* フィルター適用 */
 function applyFilters() {
   const name = nameInput.value.trim();
