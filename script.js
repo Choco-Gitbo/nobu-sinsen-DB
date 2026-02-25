@@ -498,19 +498,21 @@ function setupSenpoFilters(data) {
   createOptions(senpoTypeSelect, allSenpo.map(s=>s.type));
   createOptions(senpoGetSelect, allSenpo.map(s=>s.get));
 
-  const stateMap = {};
+const stateMap = {};
 
-  senpoStates.forEach(st => {
-    if (!stateMap[st.senpo_id]) {
-      stateMap[st.senpo_id] = [];
-    }
-    stateMap[st.senpo_id].push(st.label);
-  });
+senpoStates.forEach(st => {
 
-  allSenpo.forEach(s => {
-    s.states = stateMap[s.id] || [];
-  });
+  if (!stateMap[st.senpo_id]) {
+    stateMap[st.senpo_id] = [];
+  }
 
+  stateMap[st.senpo_id].push(st);
+
+});
+
+allSenpo.forEach(s => {
+  s.states = stateMap[s.id] || [];
+});
   createOptions(targetSelect, unique(senpoStates.map(s => s.target)));
   createOptions(rangeSelect, unique(senpoStates.map(s => s.range)));
   /* createOptions(effectSelect, effectOrder); */
