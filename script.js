@@ -270,19 +270,21 @@ Promise.all([
 
   });
 
-  const stateMap = {};
+const stateMap = {};
 
-  senpoStates.forEach(st => {
-    if (!stateMap[st.senpo_id]) {
-      stateMap[st.senpo_id] = [];
-    }
-    stateMap[st.senpo_id].push(st.label);
-  });
+senpoStates.forEach(st => {
 
-  allSenpo.forEach(s => {
-    s.states = stateMap[s.id] || [];
-  });
+  if (!stateMap[st.senpo_id]) {
+    stateMap[st.senpo_id] = [];
+  }
 
+  stateMap[st.senpo_id].push(st);
+
+});
+
+allSenpo.forEach(s => {
+  s.states = stateMap[s.id] || [];
+});
   const senpoOwners = {};
   const senpoTeachers = {};
 
