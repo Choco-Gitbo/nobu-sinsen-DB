@@ -696,11 +696,20 @@ function saveSenpoOwnership(){
 }
 
 /* イベント */
+/*  武将フィルターイベント*/
 [nameInput].forEach(el => el.addEventListener("input", applyFilters));
 
 [factionSelect, clanSelect, costSelect,sexSelect,tagSelect]
   .forEach(el => el.addEventListener("change", applyFilters));
 ownFilter.addEventListener("input", applyFilters);
+
+/*  戦法フィルターイベント*/
+[senpoNameInput, senpoTypeSelect, senpoGetSelect]
+  .forEach(el => el.addEventListener("input", applySenpoFilters));
+[targetSelect, rangeSelect, effectSelect]
+  .forEach(el => el.addEventListener("input", applySenpoFilters));
+senpoOwnFilter.addEventListener("input", applySenpoFilters);
+
 
 
 /* 武将ー戦法ページ切り替え */
@@ -725,12 +734,6 @@ tabSenpo.onclick = () => {
   tabBusho.classList.remove("active");
   tabSenpo.classList.add("active");
 };
-
-[senpoNameInput, senpoTypeSelect, senpoGetSelect]
-  .forEach(el => el.addEventListener("input", applySenpoFilters));
-[targetSelect, rangeSelect, effectSelect]
-  .forEach(el => el.addEventListener("input", applySenpoFilters));
-senpoOwnFilter.addEventListener("input", applySenpoFilters);
 
 
 /* 所有チェックボックスイベント */
