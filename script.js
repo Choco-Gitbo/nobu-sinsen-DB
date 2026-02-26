@@ -93,6 +93,7 @@ const effectOrder = [
   "反撃",
   "援護",
   "肩代り",
+  "分担",
   "耐性",
   "洞察",
   "先攻",
@@ -246,6 +247,8 @@ Promise.all([
       range = "大将";
     } else if (st.label.includes("副将")) {
       range = "副将";
+    } else if (st.label.includes("異性")) {
+      range = "異性";
     } else if (st.label.includes("雑賀本願寺")) {
       range = "雑賀本願寺";
     }
