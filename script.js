@@ -265,6 +265,7 @@ Promise.all([
       .replace("2-3人","")
       .replace("大将","")
       .replace("副将","")
+      .replace("異性","")
       .replace("雑賀本願寺","");
 
     st.target = target;
