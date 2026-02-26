@@ -681,6 +681,12 @@ function createSenpoCard(s){
     if(text) text += " ";
     text += "伝授：" + s.teacher.join(" / ");
   }
+  const getText = (s.get === "事件") ? "事件" : s.man;
+  if (getText) {
+    if (text) text += " ";
+    text +=  getText;
+  }
+
   source.textContent = text;
 
   card.appendChild(source);
