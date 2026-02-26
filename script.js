@@ -684,7 +684,7 @@ function createSenpoCard(s){
   const getText = (s.get === "事件") ? "事件" : s.man;
   if (getText) {
     if (text) text += " ";
-    text +=  getText;
+    text +=  getText + s.man;
   }
 
   source.textContent = text;
