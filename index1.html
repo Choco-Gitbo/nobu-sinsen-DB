@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>横3列フル構造テスト</title>
+
+<style>
+body{
+  margin:0;
+  padding:10px;
+  font-family:sans-serif;
+}
+
+.row{
+  display:flex;
+  gap:6px;
+}
+
+.column{
+  flex:1;
+  border:1px solid #ccc;
+  padding:6px;
+  font-size:12px;
+}
+
+.column h4{
+  margin:0 0 5px 0;
+  text-align:center;
+}
+
+select,input{
+  width:100%;
+  margin-bottom:4px;
+  font-size:12px;
+  padding:4px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="row">
+
+  <div class="column">
+    <h4>大将</h4>
+    <select><option>名前</option></select>
+    <select><option>Lv50</option></select>
+    <select><option>覚醒</option></select>
+    <select><option>戦法2</option></select>
+    <select><option>戦法3</option></select>
+  </div>
+
+  <div class="column">
+    <h4>副将</h4>
+    <select><option>名前</option></select>
+    <select><option>Lv50</option></select>
+    <select><option>覚醒</option></select>
+    <select><option>戦法2</option></select>
+    <select><option>戦法3</option></select>
+  </div>
+
+  <div class="column">
+    <h4>副将</h4>
+    <select><option>名前</option></select>
+    <select><option>Lv50</option></select>
+    <select><option>覚醒</option></select>
+    <select><option>戦法2</option></select>
+    <select><option>戦法3</option></select>
+  </div>
+
+</div>
+
+</body>
+</html>
