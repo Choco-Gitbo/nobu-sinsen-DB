@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>行揃え横3列テスト</title>
+<title>枠付き横3列</title>
 
 <style>
 body{
@@ -13,22 +13,28 @@ body{
   font-size:12px;
 }
 
-.grid{
-  display:grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap:4px;
-  margin-bottom:6px;
+.row{
+  display:flex;
+  gap:6px;
 }
 
-.header{
+.column{
+  flex:1;
+  border:1px solid #aaa;
+  border-radius:6px;
+  padding:6px;
+}
+
+.column h4{
   text-align:center;
-  font-weight:bold;
+  margin:0 0 6px 0;
 }
 
 select{
   width:100%;
   padding:4px;
   font-size:12px;
+  margin-bottom:4px;
 }
 
 .label{
@@ -36,6 +42,7 @@ select{
   font-size:11px;
   background:#f3f3f3;
   padding:4px 0;
+  margin-bottom:4px;
   border-radius:4px;
 }
 </style>
@@ -43,38 +50,44 @@ select{
 
 <body>
 
-<div class="grid header">
-  <div>大将</div>
-  <div>副将</div>
-  <div>副将</div>
-</div>
+<div class="row">
 
-<!-- 名前 -->
-<div class="grid">
-  <select><option>名前</option></select>
-  <select><option>名前</option></select>
-  <select><option>名前</option></select>
-</div>
+  <div class="column">
+    <h4>大将</h4>
+    <select><option>名前</option></select>
 
-<!-- ★ 追加：コスト表示 -->
-<div class="grid">
-  <div class="label">コスト：4　5凸</div>
-  <div class="label">コスト：3.5　5凸</div>
-  <div class="label">コスト：3　4凸</div>
-</div>
+    <div class="label">コスト：4　5凸</div>
 
-<!-- Lv -->
-<div class="grid">
-  <select><option>Lv50</option></select>
-  <select><option>Lv50</option></select>
-  <select><option>Lv50</option></select>
-</div>
+    <select><option>Lv50</option></select>
+    <select><option>覚醒</option></select>
+    <select><option>戦法2</option></select>
+    <select><option>戦法3</option></select>
+  </div>
 
-<!-- 覚醒 -->
-<div class="grid">
-  <select><option>覚醒</option></select>
-  <select><option>覚醒</option></select>
-  <select><option>覚醒</option></select>
+  <div class="column">
+    <h4>副将</h4>
+    <select><option>名前</option></select>
+
+    <div class="label">コスト：3.5　5凸</div>
+
+    <select><option>Lv50</option></select>
+    <select><option>覚醒</option></select>
+    <select><option>戦法2</option></select>
+    <select><option>戦法3</option></select>
+  </div>
+
+  <div class="column">
+    <h4>副将</h4>
+    <select><option>名前</option></select>
+
+    <div class="label">コスト：3　4凸</div>
+
+    <select><option>Lv50</option></select>
+    <select><option>覚醒</option></select>
+    <select><option>戦法2</option></select>
+    <select><option>戦法3</option></select>
+  </div>
+
 </div>
 
 </body>
