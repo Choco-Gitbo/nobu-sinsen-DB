@@ -806,7 +806,7 @@ function exportConsultText(){
     const star = own.rank || 0;
     const awake = own.awake ? " 覚醒" : "";
 
-    text += `${b.name} 凸${star}${awake}\n`;
+    text += `C${b.cost} ${b.name} 凸${star}${awake}\n`;
 
   });
 
