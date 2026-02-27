@@ -3,72 +3,78 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>横3列フル構造テスト</title>
+<title>行揃え横3列テスト</title>
 
 <style>
 body{
   margin:0;
   padding:10px;
   font-family:sans-serif;
-}
-
-.row{
-  display:flex;
-  gap:6px;
-}
-
-.column{
-  flex:1;
-  border:1px solid #ccc;
-  padding:6px;
   font-size:12px;
 }
 
-.column h4{
-  margin:0 0 5px 0;
+.grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap:4px;
+  margin-bottom:6px;
+}
+
+.header{
   text-align:center;
+  font-weight:bold;
 }
 
-select,input{
+select{
   width:100%;
-  margin-bottom:4px;
-  font-size:12px;
   padding:4px;
+  font-size:12px;
+}
+
+.label{
+  text-align:center;
+  font-size:11px;
+  background:#f3f3f3;
+  padding:4px 0;
+  border-radius:4px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="row">
+<div class="grid header">
+  <div>大将</div>
+  <div>副将</div>
+  <div>副将</div>
+</div>
 
-  <div class="column">
-    <h4>大将</h4>
-    <select><option>名前</option></select>
-    <select><option>Lv50</option></select>
-    <select><option>覚醒</option></select>
-    <select><option>戦法2</option></select>
-    <select><option>戦法3</option></select>
-  </div>
+<!-- 名前 -->
+<div class="grid">
+  <select><option>名前</option></select>
+  <select><option>名前</option></select>
+  <select><option>名前</option></select>
+</div>
 
-  <div class="column">
-    <h4>副将</h4>
-    <select><option>名前</option></select>
-    <select><option>Lv50</option></select>
-    <select><option>覚醒</option></select>
-    <select><option>戦法2</option></select>
-    <select><option>戦法3</option></select>
-  </div>
+<!-- ★ 追加：コスト表示 -->
+<div class="grid">
+  <div class="label">コスト：4　5凸</div>
+  <div class="label">コスト：3.5　5凸</div>
+  <div class="label">コスト：3　4凸</div>
+</div>
 
-  <div class="column">
-    <h4>副将</h4>
-    <select><option>名前</option></select>
-    <select><option>Lv50</option></select>
-    <select><option>覚醒</option></select>
-    <select><option>戦法2</option></select>
-    <select><option>戦法3</option></select>
-  </div>
+<!-- Lv -->
+<div class="grid">
+  <select><option>Lv50</option></select>
+  <select><option>Lv50</option></select>
+  <select><option>Lv50</option></select>
+</div>
 
+<!-- 覚醒 -->
+<div class="grid">
+  <select><option>覚醒</option></select>
+  <select><option>覚醒</option></select>
+  <select><option>覚醒</option></select>
 </div>
 
 </body>
