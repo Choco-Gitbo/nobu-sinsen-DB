@@ -1,230 +1,63 @@
+:root {
+  --border-color: #333;
+}
+
 body {
-  font-family: sans-serif;
-  margin: 16px;
-}
-
-h1 {
-  margin-bottom: 12px;
-}
-
-.filters {
+  margin: 0;
+  padding: 5px;
+  font-size: 12px; /* スマホで見やすい最小限のサイズ */
+  height: 100vh;
   display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 6px;
-  margin-bottom: 12px;
+  flex-direction: column;
 }
 
-.filters::-webkit-scrollbar {
-  height: 6px;
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* 画面いっぱいに広げる */
+  border: 2px solid var(--border-color);
 }
 
-.filters::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 3px;
-}
-
-.filters input,
-.filters select {
-  flex: 0 0 auto;
-  min-width: 120px;
-  padding: 8px;
-  font-size: 16px;
-}
-
-.busho-list {
-  display: grid;
-  gap: 8px;
-}
-
-.busho-row {
-  position: relative;
-  padding: 12px;
-  border-radius: 6px;
-  background: #f5f5f5;
-}
-
-.busho-name {
+.header {
+  background: #eee;
+  text-align: center;
   font-weight: bold;
+  padding: 4px;
+  border-bottom: 1px solid var(--border-color);
 }
 
-.busho-sub {
-  font-size: 14px;
-  color: #555;
-}
-
-
-
-.busho-header {
+.unit-card {
+  flex: 1; /* 各武将が画面の高さを均等に分かち合う */
   display: flex;
-  gap: 1px;
-  align-items: flex-start;
+  flex-direction: column;
+  border-bottom: 2px solid var(--border-color);
 }
 
-.busho-info {
-  flex: 1 1 100%;
-   white-space: nowrap; 
-}
-
-.busho-tags {
-  margin: 8px 0 12px;
+.row {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  flex: 1; /* 行も高さを均等に */
+  border-bottom: 1px solid #ccc;
 }
 
-.busho-tag {
-  padding: 2px 8px;
-  font-size: 12px;
-  border-radius: 12px;
-  background: #e0e0e0;
-  white-space: nowrap;
-}
-
-
-.busho-chart {
-  flex: 0 0 100px;
-}
-
-
-/* レアリティバー */
-.rarity-bar {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 6px;
-  border-radius: 6px 0 0 6px;
-}
-
-.senpo-header {
-  display: flex;
-  margin-bottom: 8px;
-  align-items: center;
-  gap: 8px;
-}
-
-.senpo-title-row {
-  display: flex;
-  margin-bottom: 8px;
-  align-items: center;
-  flex-wrap:wrap;
-  gap: 8px;
-  cursor: pointer;
-}
-
-.senpo-sub {
-  font-size: 14px;
-  color: #555;
-}
-
-.senpo-row {
-  position: relative;
-  padding: 12px 12px 12px 14px;
-  border-radius: 6px;
-  background: #f5f5f5;
-}
-
-.senpo-list {
-  display: grid;
-  gap: 8px;
-}
-
-.senpo-name {
-  font-weight: bold;
-  font-size:16px;
-}
-
-.senpo-trigger{
-  font-size: 13px;
-}
-
-.senpo-get {
-  font-size: 14px;
-  color: #555;
-}
-
-.senpo-desc {
-  margin: 6px 0 8px;
-  padding: 6px 10px;
-  font-size: 14px;
-  background: #fafafa;
-  border-left: 4px solid #ccc;
-  line-height: 1.6;
-}
-
-.senpo-type {
-  padding: 4px 10px;
-  font-size: 13px;
-  border-radius: 12px;
-  font-weight: bold;
-  color: #333;
-  white-space: nowrap;
-}
-
-.senpo-states {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.state-tag {
-  padding: 4px 10px;
-  font-size: 13px;
-  border-radius: 12px;
-  background: #f2f2f2;
-  white-space: nowrap;
-}
-
-.senpo-card {
-  position:relative;
-  background:#fff;
-  border-radius:10px;
-  padding:14px 16px 12px 20px;
-  box-shadow:0 1px 3px rgba(0,0,0,0.15);
-  margin-bottom: 20px;
-}
-
-.toggle-card {
-  margin-top: 10px;
-}
-
-.toggle-header {
+.half {
+  flex: 1;
+  border-right: 1px solid #ccc;
   display: flex;
   align-items: center;
-  gap: 6px;
-  cursor: pointer;
+  justify-content: center;
+}
+
+.full {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #ccc;
+}
+
+.unit-title {
+  background: #f0f0f0;
+  text-align: center;
   font-weight: bold;
-}
-
-.toggle-desc {
-  margin: 6px 0 0 18px;
-  padding: 6px 10px;
-  background: #fafafa;
-  border-left: 4px solid #bbb;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-
-canvas {
-  margin-bottom: 24px;
-}
-
-.top-tabs{
-  display:flex;
-  gap:8px;
-  margin-bottom:10px;
-}
-
-.top-tabs button{
-  padding:6px 14px;
-  border:1px solid #ccc;
-  background:#eee;
-  cursor:pointer;
-}
-
-.top-tabs button.active{
-  background:#2f6fb6;
-  color:white;
+  font-size: 10px;
 }
