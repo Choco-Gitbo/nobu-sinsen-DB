@@ -1,75 +1,93 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>横3列フル構造テスト</title>
-
-<style>
-body{
-  margin:0;
-  padding:10px;
-  font-family:sans-serif;
-}
-
-.row{
-  display:flex;
-  gap:6px;
-}
-
-.column{
-  flex:1;
-  border:1px solid #ccc;
-  padding:6px;
-  font-size:12px;
-}
-
-.column h4{
-  margin:0 0 5px 0;
-  text-align:center;
-}
-
-select,input{
-  width:100%;
-  margin-bottom:4px;
-  font-size:12px;
-  padding:4px;
-}
-</style>
+  <meta charset="UTF-8">
+  <title>武将一覧</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div class="row">
-
-  <div class="column">
-    <h4>大将</h4>
-    <select><option>名前</option></select>
-    <select><option>Lv50</option></select>
-    <select><option>覚醒</option></select>
-    <select><option>戦法2</option></select>
-    <select><option>戦法3</option></select>
-  </div>
-
-  <div class="column">
-    <h4>副将</h4>
-    <select><option>名前</option></select>
-    <select><option>Lv50</option></select>
-    <select><option>覚醒</option></select>
-    <select><option>戦法2</option></select>
-    <select><option>戦法3</option></select>
-  </div>
-
-  <div class="column">
-    <h4>副将</h4>
-    <select><option>名前</option></select>
-    <select><option>Lv50</option></select>
-    <select><option>覚醒</option></select>
-    <select><option>戦法2</option></select>
-    <select><option>戦法3</option></select>
-  </div>
-
+<div class="top-tabs">
+  <button id="tabBusho" class="active">武将</button>
+  <button id="tabSenpo">戦法</button>
+  <button id="exportText">所有コピー</button>
 </div>
 
+
+
+<div id="bushoPage">
+  <h1>武将一覧</h1>
+  <div class="filters">
+    <button id="toggleOwn">ALL</button>
+    <input type="text" id="nameSearch" placeholder="名前検索">
+
+    <select id="ownFilter">
+      <option value="">所有（全て）</option>
+      <option value="1">所有のみ</option>
+      <option value="0">未所有</option>
+    </select> 
+    <select id="factionFilter">
+      <option value="">勢力（全て）</option>
+    </select>
+
+    <select id="clanFilter">
+      <option value="">家門（全て）</option>
+    </select>
+
+    <select id="costFilter">
+      <option value="">コスト（全て）</option>
+    </select>
+    <select id="sexFilter">
+      <option value="">性別（全て）</option>
+    </select>
+    <select id="tagFilter">
+      <option value="">タグ（全て）</option>
+    </select> 
+  </div>
+
+  <div id="bushoList" class="busho-list"></div>
+</div>
+
+<div id="senpoPage" style="display:none;">
+
+<h1>戦法一覧</h1>
+
+<div class="filters">
+  <button id="toggleSenpoOwn">ALL</button>
+  
+  <input type="text" id="senpoNameSearch" placeholder="戦法名検索">
+
+  <select id="senpoOwnFilter">
+    <option value="all">所有（全て）</option>
+    <option value="owned">所有のみ</option>
+    <option value="not">未所有のみ</option>
+  </select>
+
+  <select id="senpoTypeFilter">
+    <option value="">タイプ（全て）</option>
+  </select>
+
+  <select id="senpoGetFilter">
+    <option value="">入手方法（全て）</option>
+  </select>
+  
+  <select id="targetFilter">
+  <option value="">対象（全て）</option>
+  </select>
+
+  <select id="rangeFilter">
+  <option value="">範囲（全て）</option>
+  </select>
+
+  <select id="effectFilter">
+  <option value="">効果（全て）</option>
+  </select>
+</div>
+
+<div id="senpoList" class="senpo-list"></div>
+
+</div>
+<script src="script.js"></script>
 </body>
 </html>
