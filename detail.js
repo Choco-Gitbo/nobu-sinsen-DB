@@ -38,6 +38,7 @@ let bushoList = [];
 let senpoList = [];
 let senpoStates = [];
 let tokuseiList = [];
+let heigakuList = [];
 
 /* =========================
    読み込み
@@ -48,7 +49,7 @@ Promise.all([
   fetch("data/senpo_state.csv").then(r => r.text()),
   fetch("data/tokusei.csv").then(r => r.text()),
   fetch("data/heigaku.csv").then(r => r.text())
-]).then(([bushoText, senpoText, stateText,tokuseiText]) => {
+]).then(([bushoText, senpoText, stateText,tokuseiText,heigakuText]) => {
 
   bushoList = parseCSV(bushoText);
   senpoList = parseCSV(senpoText);
@@ -531,5 +532,5 @@ if (busho.heigaku) {
   });
 
 }
-  
+
 }
