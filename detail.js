@@ -46,13 +46,15 @@ Promise.all([
   fetch("data/busho.csv").then(r => r.text()),
   fetch("data/senpo.csv").then(r => r.text()),
   fetch("data/senpo_state.csv").then(r => r.text()),
-  fetch("data/tokusei.csv").then(r => r.text())
+  fetch("data/tokusei.csv").then(r => r.text()),
+  fetch("data/heigaku.csv").then(r => r.text())
 ]).then(([bushoText, senpoText, stateText,tokuseiText]) => {
 
   bushoList = parseCSV(bushoText);
   senpoList = parseCSV(senpoText);
   senpoStates = parseCSV(stateText);
   tokuseiList = parseCSV(tokuseiText);
+  heigakuList = parseCSV(heigakuText);
 
 
   const busho = bushoList.find(b => b.id === bushoId);
@@ -215,6 +217,64 @@ function createTokuseiCard(tokusei,label) {
   return card;
 }
 
+/* =========================
+   兵学カード生成
+========================= */
+function createHeigakuCategoryCard(categoryName, items) {
+
+  const card = document.createElement("div");
+  card.className = "toggle-card";
+
+  const header = document.createElement("div");
+  header.className = "toggle-header";
+
+  const title = document.createElement("span");
+  title.className = "toggle-title";
+  title.textContent = "兵学（" + categoryName + "）";
+
+  header.append(title);
+
+  const body = document.createElement("div");
+  body.style.display = "none";
+
+  header.addEventListener("click", () => {
+    body.style.display =
+      body.style.display === "block" ? "none" : "block";
+  });
+
+  // 🔥 子カード生成
+  items.forEach(h => {
+
+    const child = document.createElement("div");
+    child.className = "toggle-card";
+
+    const childHeader = document.createElement("div");
+    childHeader.className = "toggle-header";
+
+    const childTitle = document.createElement("span");
+    childTitle.textContent = h.name;
+
+    const childDesc = document.createElement("div");
+    childDesc.className = "toggle-desc";
+    childDesc.textContent = h.description;
+    childDesc.style.display = "none";
+
+    childHeader.appendChild(childTitle);
+
+    childHeader.addEventListener("click", (e) => {
+      e.stopPropagation();  // ← 親トグル暴発防止
+      childDesc.style.display =
+        childDesc.style.display === "block" ? "none" : "block";
+    });
+
+    child.append(childHeader, childDesc);
+    body.appendChild(child);
+
+  });
+
+  card.append(header, body);
+  return card;
+}
 
 /* =========================
    詳細描画
@@ -409,7 +469,6 @@ function hexToRGBA(hex,a){
   if (busho.unique_tokusei) {
     const tokusei = tokuseiList.find(s => s.id === busho.unique_tokusei);
     if (tokusei) {
-      /* const states = tokuseiStates.filter(st => st.tokusei_id === tokusei.id); */
       tokuseiArea.append(
         createTokuseiCard(tokusei,  "固有特性")
       );
@@ -419,7 +478,6 @@ function hexToRGBA(hex,a){
   if (busho.tokusei_1) {
     const tokusei = tokuseiList.find(s => s.id === busho.tokusei_1);
     if (tokusei) {
-      /* const states = tokuseiStates.filter(st => st.tokusei_id === tokusei.id); */
       tokuseiArea.append(
         createTokuseiCard(tokusei,  "特性(1凸)")
       );
@@ -429,20 +487,49 @@ function hexToRGBA(hex,a){
   if (busho.tokusei_3) {
     const tokusei = tokuseiList.find(s => s.id === busho.tokusei_3);
     if (tokusei) {
-      /* const states = tokuseiStates.filter(st => st.tokusei_id === tokusei.id); */
       tokuseiArea.append(
         createTokuseiCard(tokusei,  "特性(3凸)")
       );
     }
   } 
     /* 特性5凸 */
-  if (busho.tokusei_1) {
+  if (busho.tokusei_5) {
     const tokusei = tokuseiList.find(s => s.id === busho.tokusei_5);
     if (tokusei) {
-      /* const states = tokuseiStates.filter(st => st.tokusei_id === tokusei.id); */
       tokuseiArea.append(
         createTokuseiCard(tokusei,  "特性(5凸)")
       );
     }
   } 
+
+/* =========================
+   兵学表示
+========================= */
+
+if (busho.heigaku) {
+
+  const ids = busho.heigaku.split("|");
+
+  const myHeigaku = heigakuList.filter(h =>
+    ids.includes(h.id)
+  );
+
+  // categoryごとにまとめる
+  const grouped = {};
+
+  myHeigaku.forEach(h => {
+    if (!grouped[h.category]) {
+      grouped[h.category] = [];
+    }
+    grouped[h.category].push(h);
+  });
+
+  Object.keys(grouped).forEach(cat => {
+    tokuseiArea.append(
+      createHeigakuCategoryCard(cat, grouped[cat])
+    );
+  });
+
+}
+  
 }
