@@ -221,62 +221,88 @@ function createTokuseiCard(tokusei,label) {
 /* =========================
    兵学カード生成
 ========================= */
-function createHeigakuCategoryCard(categoryName, items) {
+function createHeigakuTreeCard(parentName, childrenMap) {
 
-  const card = document.createElement("div");
-  card.className = "toggle-card";
+  const parentCard = document.createElement("div");
+  parentCard.className = "toggle-card";
 
-  const header = document.createElement("div");
-  header.className = "toggle-header";
+  const parentHeader = document.createElement("div");
+  parentHeader.className = "toggle-header";
 
-  const title = document.createElement("span");
-  title.className = "toggle-title";
-  title.textContent = "兵学（" + categoryName + "）";
+  const parentTitle = document.createElement("span");
+  parentTitle.textContent = "兵学（" + parentName + "）";
 
-  header.append(title);
+  parentHeader.appendChild(parentTitle);
 
-  const body = document.createElement("div");
-  body.style.display = "none";
+  const parentBody = document.createElement("div");
+  parentBody.style.display = "none";
 
-  header.addEventListener("click", () => {
-    body.style.display =
-      body.style.display === "block" ? "none" : "block";
+  parentHeader.addEventListener("click", () => {
+    parentBody.style.display =
+      parentBody.style.display === "block" ? "none" : "block";
   });
 
-  // 🔥 子カード生成
-  items.forEach(h => {
+  // ===== 子層 =====
+  Object.keys(childrenMap).forEach(childName => {
 
-    const child = document.createElement("div");
-    child.className = "toggle-childcard";
+    const childCard = document.createElement("div");
+    childCard.className = "toggle-card";
+    childCard.style.marginLeft = "12px";
 
     const childHeader = document.createElement("div");
     childHeader.className = "toggle-header";
 
     const childTitle = document.createElement("span");
-    childTitle.textContent = h.name;
-
-    const childDesc = document.createElement("div");
-    childDesc.className = "toggle-desc";
-    childDesc.textContent = h.description;
-    childDesc.style.display = "none";
+    childTitle.textContent = childName;
 
     childHeader.appendChild(childTitle);
 
+    const childBody = document.createElement("div");
+    childBody.style.display = "none";
+
     childHeader.addEventListener("click", (e) => {
-      e.stopPropagation();  // ← 親トグル暴発防止
-      childDesc.style.display =
-        childDesc.style.display === "block" ? "none" : "block";
+      e.stopPropagation(); // 親の暴発防止
+      childBody.style.display =
+        childBody.style.display === "block" ? "none" : "block";
     });
 
-    child.append(childHeader, childDesc);
-    body.appendChild(child);
+    // ===== 孫層 =====
+    childrenMap[childName].forEach(h => {
 
+      const grandCard = document.createElement("div");
+      grandCard.className = "toggle-card";
+      grandCard.style.marginLeft = "24px";
+
+      const grandHeader = document.createElement("div");
+      grandHeader.className = "toggle-header";
+
+      const grandTitle = document.createElement("span");
+      grandTitle.textContent = h.name;
+
+      const grandDesc = document.createElement("div");
+      grandDesc.className = "toggle-desc";
+      grandDesc.textContent = h.description;
+      grandDesc.style.display = "none";
+
+      grandHeader.appendChild(grandTitle);
+
+      grandHeader.addEventListener("click", (e) => {
+        e.stopPropagation();
+        grandDesc.style.display =
+          grandDesc.style.display === "block" ? "none" : "block";
+      });
+
+      grandCard.append(grandHeader, grandDesc);
+      childBody.appendChild(grandCard);
+    });
+
+    childCard.append(childHeader, childBody);
+    parentBody.appendChild(childCard);
   });
 
-  card.append(header, body);
-  return card;
+  parentCard.append(parentHeader, parentBody);
+  return parentCard;
 }
-
 /* =========================
    詳細描画
 ========================= */
@@ -515,22 +541,24 @@ if (busho.heigaku) {
     ids.includes(h.id)
   );
 
-  // categoryごとにまとめる
-  const grouped = {};
+  // 🔥 3階層グループ化
+  const tree = {};
 
   myHeigaku.forEach(h => {
-    if (!grouped[h.category]) {
-      grouped[h.category] = [];
-    }
-    grouped[h.category].push(h);
+
+    const [parent, child] = h.category.split("|");
+
+    if (!tree[parent]) tree[parent] = {};
+    if (!tree[parent][child]) tree[parent][child] = [];
+
+    tree[parent][child].push(h);
   });
 
-  Object.keys(grouped).forEach(cat => {
+  Object.keys(tree).forEach(parentName => {
     tokuseiArea.append(
-      createHeigakuCategoryCard(cat, grouped[cat])
+      createHeigakuTreeCard(parentName, tree[parentName])
     );
   });
-
 }
 
 }
