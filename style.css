@@ -205,6 +205,10 @@ h1 {
   font-size: 14px;
   line-height: 1.6;
 }
+.toggle-Childcard {
+  margin-top: 10px;
+  margin-left: 12px;
+}
 
 
 canvas {

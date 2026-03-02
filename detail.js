@@ -247,7 +247,7 @@ function createHeigakuCategoryCard(categoryName, items) {
   items.forEach(h => {
 
     const child = document.createElement("div");
-    child.className = "toggle-card";
+    child.className = "toggle-childcard";
 
     const childHeader = document.createElement("div");
     childHeader.className = "toggle-header";
