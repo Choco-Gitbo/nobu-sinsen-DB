@@ -247,7 +247,7 @@ canvas {
   margin-bottom: 10px;
   padding: 6px 12px;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 14px;
   background: linear-gradient(to right, #cfd8dc, #90caf9);
   border-radius: 4px;
 }
@@ -256,7 +256,7 @@ canvas {
   margin-bottom: 10px;
   padding: 6px 12px;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 14px;
   background: linear-gradient(to right, #cfd8dc, #f990e0);
   border-radius: 4px;
 }
