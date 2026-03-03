@@ -492,6 +492,20 @@ function hexToRGBA(hex,a){
   const tokuseiArea = document.getElementById("tokuseiArea");
   tokuseiArea.innerHTML = "";
 
+  /* 特性見出し */
+  if (
+    busho.unique_tokusei ||
+    busho.tokusei_1 ||
+    busho.tokusei_3 ||
+    busho.tokusei_5
+  ) {
+    const title = document.createElement("div");
+    title.className = "section-title";
+    title.textContent = "・特性";
+    tokuseiArea.appendChild(title);
+  }
+
+
   /* 固有特性 */
   if (busho.unique_tokusei) {
     const tokusei = tokuseiList.find(s => s.id === busho.unique_tokusei);
@@ -532,6 +546,13 @@ function hexToRGBA(hex,a){
 /* =========================
    兵学表示
 ========================= */
+if (busho.heigaku) {
+
+  const title = document.createElement("div");
+  title.className = "section-title heigaku";
+  title.textContent = "・兵学";
+  tokuseiArea.appendChild(title);
+}
 
 if (busho.heigaku) {
 
