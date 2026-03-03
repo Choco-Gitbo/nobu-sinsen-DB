@@ -186,7 +186,7 @@ h1 {
 }
 
 .toggle-card {
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 .toggle-header {
@@ -206,7 +206,7 @@ h1 {
   line-height: 1.6;
 }
 .toggle-childcard {
-  margin-top: 10px;
+  margin-top: 5px;
   margin-left: 12px;
 }
 
@@ -238,7 +238,7 @@ canvas {
   margin-bottom: 10px;
   padding: 6px 12px;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 12px;
   background: linear-gradient(to right, #cfd8dc, #90caf9);
   border-radius: 4px;
 }
@@ -247,7 +247,7 @@ canvas {
   margin-bottom: 10px;
   padding: 6px 12px;
   font-weight: bold;
-  font-size: 18px;
-  background: linear-gradient(to right, #cfd8dc, #90caf9);
+  font-size: 12px;
+  background: linear-gradient(to right, #cfd8dc, #f990e0);
   border-radius: 4px;
 }
