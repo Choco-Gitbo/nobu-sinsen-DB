@@ -254,6 +254,7 @@ function createHeigakuTreeCard(parentName, childrenMap) {
     childHeader.className = "toggle-header";
 
     const childTitle = document.createElement("span");
+    childTitle.className = "toggle-title";
     childTitle.textContent = childName;
 
     childHeader.appendChild(childTitle);
@@ -278,6 +279,7 @@ function createHeigakuTreeCard(parentName, childrenMap) {
       grandHeader.className = "toggle-header";
 
       const grandTitle = document.createElement("span");
+      grandTitle.className = "toggle-name";
       grandTitle.textContent = h.name;
 
       const grandDesc = document.createElement("div");
