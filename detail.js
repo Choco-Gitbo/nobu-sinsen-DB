@@ -230,6 +230,7 @@ function createHeigakuTreeCard(parentName, childrenMap) {
   parentHeader.className = "toggle-header";
 
   const parentTitle = document.createElement("span");
+  parentTitle.className = "toggle-title";
   parentTitle.textContent = "兵学（" + parentName + "）";
 
   parentHeader.appendChild(parentTitle);
