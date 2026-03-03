@@ -7,6 +7,7 @@ const sexSelect = document.getElementById("sexFilter");
 const tagSelect = document.getElementById("tagFilter");
 const ownFilter = document.getElementById("ownFilter");
 const heigakuSelect = document.getElementById("heigakuFilter");
+const hyojoSelect = document.getElementById("hyojoFilter");
 
 const senpoNameInput = document.getElementById("senpoNameSearch");
 const senpoTypeSelect = document.getElementById("senpoTypeFilter");
@@ -214,7 +215,7 @@ Promise.all([
   fetch("data/senpo.csv").then(r => r.text()),
   fetch("data/senpo_state.csv").then(r => r.text()),
   fetch("data/tokusei.csv").then(r => r.text()),
-  fetch("data/heigaku.csv").then(r => r.text())  // ←追加
+  fetch("data/heigaku.csv").then(r => r.text()) 
 ]).then(([bushoText, senpoText, stateText, tokuseiText, heigakuText]) => {
 
   allBusho = parseCSV(bushoText);
@@ -363,6 +364,7 @@ function setupFilters(data) {
   const allTags = data
     .flatMap(b => b.tags ? b.tags.split("|") : []);
   createOptions(tagSelect, allTags);
+  createOptions(hyojoSelect, data.map(b => b.hyojo));
 
 }
 
@@ -415,6 +417,7 @@ function applyFilters() {
   const sex = sexSelect.value;
   const tag = tagSelect.value;
   const heigaku = heigakuSelect.value;
+  const hyojo = hyojoSelect.value;
 
   const filtered = allBusho.filter(b => {
     if (name && !b.name.includes(name)) return false;
@@ -422,6 +425,7 @@ function applyFilters() {
     if (clan && b.clan !== clan) return false;
     if (cost && b.cost !== cost) return false;
     if (sex && b.sex !== sex) return false;
+    if (hyojo && b.hyojo !== hyojo) return false;
 
     if (tag) {
       if (!b.tags) return false;
@@ -754,7 +758,7 @@ function saveSenpoOwnership(){
 /*  武将フィルターイベント*/
 [nameInput].forEach(el => el.addEventListener("input", applyFilters));
 
-[factionSelect, clanSelect, costSelect,sexSelect,tagSelect,heigakuSelect]
+[factionSelect, clanSelect, costSelect,sexSelect,tagSelect,heigakuSelect,hyojoSelect]
   .forEach(el => el.addEventListener("change", applyFilters));
 ownFilter.addEventListener("input", applyFilters);
 
