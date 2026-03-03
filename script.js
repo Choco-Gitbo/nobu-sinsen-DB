@@ -6,6 +6,7 @@ const costSelect = document.getElementById("costFilter");
 const sexSelect = document.getElementById("sexFilter");
 const tagSelect = document.getElementById("tagFilter");
 const ownFilter = document.getElementById("ownFilter");
+const heigakuSelect = document.getElementById("heigakuFilter");
 
 const senpoNameInput = document.getElementById("senpoNameSearch");
 const senpoTypeSelect = document.getElementById("senpoTypeFilter");
@@ -18,6 +19,8 @@ const senpoOwnFilter =document.getElementById("senpoOwnFilter");
 let allBusho = [];
 let allSenpo = [];
 let senpoStates = [];
+let heigakuList = [];
+
 
 let ownership = JSON.parse(localStorage.getItem("ownership") || "{}");
 let senpoOwnership = JSON.parse(localStorage.getItem("senpoOwnership") || "{}");
@@ -210,12 +213,14 @@ Promise.all([
   fetch("data/busho.csv").then(r => r.text()),
   fetch("data/senpo.csv").then(r => r.text()),
   fetch("data/senpo_state.csv").then(r => r.text()),
-  fetch("data/tokusei.csv").then(r => r.text())
-]).then(([bushoText, senpoText, stateText,tokuseiText]) => {
+  fetch("data/tokusei.csv").then(r => r.text()),
+  fetch("data/heigaku.csv").then(r => r.text())  // ←追加
+]).then(([bushoText, senpoText, stateText, tokuseiText, heigakuText]) => {
 
   allBusho = parseCSV(bushoText);
   allSenpo = parseCSV(senpoText);
   senpoStates = parseCSV(stateText);
+  heigakuList = parseCSV(heigakuText);
   /* tokuseiList = parseCSV(tokuseiText) */
   senpoStates.forEach(st => {
 
@@ -326,6 +331,7 @@ allSenpo.forEach(s => {
     renderList(allBusho);
     setupSenpoFilters(allSenpo);
     renderSenpoList(allSenpo);
+    setupHeigakuFilter();
 });
 
   /* CSVパース */
@@ -375,6 +381,31 @@ function createOptions(select, values) {
 
     });
 }
+
+function setupHeigakuFilter(){
+
+  const options = heigakuList.map(h => {
+
+    const categoryText = h.category.replace(/\|/g, "-");
+    return {
+      id: h.id,
+      text: categoryText + "-" + h.name
+    };
+
+  });
+
+  options
+    .sort((a,b)=>a.text.localeCompare(b.text,"ja"))
+    .forEach(o => {
+
+      const opt = document.createElement("option");
+      opt.value = o.id;
+      opt.textContent = o.text;
+      heigakuSelect.appendChild(opt);
+
+    });
+}
+
 /* フィルター適用 */
 function applyFilters() {
   const name = nameInput.value.trim();
@@ -383,6 +414,7 @@ function applyFilters() {
   const cost = costSelect.value;
   const sex = sexSelect.value;
   const tag = tagSelect.value;
+  const heigaku = heigakuSelect.value;
 
   const filtered = allBusho.filter(b => {
     if (name && !b.name.includes(name)) return false;
@@ -398,6 +430,15 @@ function applyFilters() {
     }
     if(ownFilter.value === "1" && !ownership[b.id]?.own) return false;
     if(ownFilter.value === "0" && ownership[b.id]?.own) return false;
+
+    if (heigaku) {
+
+      if (!b.heigaku) return false;
+
+      const ids = b.heigaku.split("|");
+
+      if (!ids.includes(heigaku)) return false;
+    }
 
     return true;
   });
@@ -713,7 +754,7 @@ function saveSenpoOwnership(){
 /*  武将フィルターイベント*/
 [nameInput].forEach(el => el.addEventListener("input", applyFilters));
 
-[factionSelect, clanSelect, costSelect,sexSelect,tagSelect]
+[factionSelect, clanSelect, costSelect,sexSelect,tagSelect,heigakuSelect]
   .forEach(el => el.addEventListener("change", applyFilters));
 ownFilter.addEventListener("input", applyFilters);
 
