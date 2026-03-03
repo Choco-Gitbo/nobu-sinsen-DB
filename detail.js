@@ -549,7 +549,7 @@ function hexToRGBA(hex,a){
 if (busho.heigaku) {
 
   const title = document.createElement("div");
-  title.className = "section-title heigaku";
+  title.className = "section-title.heigaku";
   title.textContent = "・兵学";
   tokuseiArea.appendChild(title);
 }

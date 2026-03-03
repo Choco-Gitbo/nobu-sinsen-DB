@@ -196,13 +196,17 @@ h1 {
   cursor: pointer;
   font-weight: bold;
 }
+.toggle-name {
+  font-weight: bold;
+  font-size:12px;
+}
 
 .toggle-desc {
   margin: 6px 0 0 18px;
   padding: 6px 10px;
   background: #fafafa;
   border-left: 4px solid #bbb;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.6;
 }
 .toggle-childcard {
@@ -242,7 +246,7 @@ canvas {
   background: linear-gradient(to right, #cfd8dc, #90caf9);
   border-radius: 4px;
 }
-.section-title {
+.section-title.heigaku {
   margin-top: 24px;
   margin-bottom: 10px;
   padding: 6px 12px;
