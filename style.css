@@ -196,6 +196,11 @@ h1 {
   cursor: pointer;
   font-weight: bold;
 }
+.toggle-title {
+  font-weight: bold;
+  font-size:12px;
+}
+
 .toggle-name {
   font-weight: bold;
   font-size:12px;
