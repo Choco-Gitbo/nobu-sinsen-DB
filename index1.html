@@ -30,6 +30,18 @@ body{
   margin:0 0 6px 0;
 }
 
+.stats{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:4px;
+}
+.stats div{
+  width:48%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
 select{
   width:100%;
   padding:4px;
@@ -57,8 +69,15 @@ select{
     <select><option>名前</option></select>
 
     <div class="label">C4,5凸,覚醒</div>
-
     <select><option>Lv50</option></select>
+    <div class="stats">
+      <div>武勇<input type="number" value="50"></div>
+      <div>知略<input type="number" value="50"></div>
+      <div>統率<input type="number" value="50"></div>
+      <div>速度<input type="number" value="50"></div>
+      <div>政務<input type="number" value="50"></div>
+      <div>魅力<input type="number" value="50"></div>
+    </div>
     <select><option>戦法2</option></select>
     <select><option>戦法3</option></select>
     <div class="label">固有特性：弓兵の大将</div>
@@ -75,12 +94,20 @@ select{
   </div>
 
   <div class="column">
-    <h4>副将</h4>
+    <h4>副将1</h4>
     <select><option>名前</option></select>
 
     <div class="label">C4,5凸,覚醒</div>
 
     <select><option>Lv50</option></select>
+    <div class="stats">
+      <div>武勇<input type="number" value="50"></div>
+      <div>知略<input type="number" value="50"></div>
+      <div>統率<input type="number" value="50"></div>
+      <div>速度<input type="number" value="50"></div>
+      <div>政務<input type="number" value="50"></div>
+      <div>魅力<input type="number" value="50"></div>
+    </div>
     <select><option>戦法2</option></select>
     <select><option>戦法3</option></select>
     <div class="label">固有特性：弓兵の大将</div>
@@ -97,12 +124,20 @@ select{
   </div>
 
   <div class="column">
-    <h4>副将</h4>
+    <h4>副将2</h4>
     <select><option>名前</option></select>
 
     <div class="label">C4,5凸,覚醒</div>
 
     <select><option>Lv50</option></select>
+    <div class="stats">
+      <div>武勇<input type="number" value="50"></div>
+      <div>知略<input type="number" value="50"></div>
+      <div>統率<input type="number" value="50"></div>
+      <div>速度<input type="number" value="50"></div>
+      <div>政務<input type="number" value="50"></div>
+      <div>魅力<input type="number" value="50"></div>
+    </div>
     <select><option>戦法2</option></select>
     <select><option>戦法3</option></select>
     <div class="label">固有特性：弓兵の大将</div>
