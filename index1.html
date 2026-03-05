@@ -31,6 +31,14 @@ body{
   text-align:center;
   margin:0 0 6px 0;
 }
+.busho-grid{
+  display:grid;
+  grid-template-columns:  auto auto auto;
+  gap:3px;
+  margin-bottom:2px;
+  font-size:11px;
+  text-align:center;
+}
 
 .attr-grid{
   display:grid;
@@ -71,11 +79,15 @@ select{
   <div class="column">
     <h4>大将</h4>
     <select><option>名前</option></select>
-
-    <div class="label">C4,5凸,覚醒</div>
+    <div class="busho-grid">
+      <div class="label">C4</div>
+      <div class="label">5凸</div>
+      <div class="label">未覚醒</div>
+    </div>  
     <select><option>Lv50</option></select>
     <div class="column">
       <div class="attr-grid">
+        <div>属性</div><div> </div>
         <div>武勇300.00</div><input type="number" value="50">
         <div>知略300</div><input type="number" value="50">
         <div>統率300</div><input type="number" value="50">
@@ -103,12 +115,16 @@ select{
     <h4>副将1</h4>
     <select><option>名前</option></select>
 
-    <div class="label">C4,5凸,覚醒</div>
-
+    <div class="busho-grid">
+      <div class="label">C4</div>
+      <div class="label">5凸</div>
+      <div class="label">未覚醒</div>
+    </div>  
     <select><option>Lv50</option></select>
     <div class="column">
       <div class="attr-grid">
-        <div>武勇300</div><input type="number" value="50">
+        <div>属性</div><div> </div>
+        <div>武勇300.00</div><input type="number" value="50">
         <div>知略300</div><input type="number" value="50">
         <div>統率300</div><input type="number" value="50">
         <div>速度300</div><input type="number" value="50">
@@ -116,6 +132,7 @@ select{
         <div>魅力300</div><input type="number" value="50">
       </div>
     </div>
+
     <select><option>戦法2</option></select>
     <select><option>戦法3</option></select>
     <div class="label">固有特性：弓兵の大将</div>
@@ -135,12 +152,16 @@ select{
     <h4>副将2</h4>
     <select><option>名前</option></select>
 
-    <div class="label">C4,5凸,覚醒</div>
-
+    <div class="busho-grid">
+      <div class="label">C4</div>
+      <div class="label">5凸</div>
+      <div class="label">未覚醒</div>
+    </div>  
     <select><option>Lv50</option></select>
     <div class="column">
       <div class="attr-grid">
-        <div>武勇300</div><input type="number" value="50">
+        <div>属性</div><div> </div>
+        <div>武勇300.00</div><input type="number" value="50">
         <div>知略300</div><input type="number" value="50">
         <div>統率300</div><input type="number" value="50">
         <div>速度300</div><input type="number" value="50">
@@ -148,6 +169,7 @@ select{
         <div>魅力300</div><input type="number" value="50">
       </div>
     </div>
+
     <select><option>戦法2</option></select>
     <select><option>戦法3</option></select>
     <div class="label">固有特性：弓兵の大将</div>
