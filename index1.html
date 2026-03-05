@@ -53,6 +53,13 @@ body{
   text-align:right;
 }
 
+.tokusei-grid{
+  display:grid;
+  grid-template-columns:  auto auto;
+  gap:3px;
+  margin-bottom:2px;
+}
+
 select{
   width:100%;
   padding:4px;
@@ -110,9 +117,11 @@ select{
     <div class="column">
         <div>特性</div>
         <div class="label">固有：弓兵の大将</div>
-        <div class="label">1凸：</div>
-        <div class="label">3凸：馬術Ⅱ</div>
-        <div class="label">5凸：馬術Ⅲ</div>
+        <div class="label">1：</div>
+        <div class="attr-grid">
+          <div class="label">3：馬術Ⅱ</div>
+          <div class="label">5：馬術Ⅲ</div>
+        </div>
     </div>
     <select><option>兵学</option></select>
     <div class="label">兵学・奇</div>
