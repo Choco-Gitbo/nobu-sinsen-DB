@@ -60,6 +60,13 @@ body{
   margin-bottom:2px;
 }
 
+.heigaku-grid{
+  display:grid;
+  grid-template-columns:  auto auto auto;
+  gap:3px;
+  margin-bottom:2px;
+}
+
 select{
   width:100%;
   padding:4px;
@@ -123,13 +130,18 @@ select{
           <div class="label">馬術Ⅲ</div>
         </div>
     </div>
-    <select><option>兵学</option></select>
-    <div class="label">兵学・奇</div>
-    <select><option>兵学・奇</option></select>
-    <div class="label">兵学・正</div>
-    <select><option>兵学・正1</option></select>
-    <select><option>兵学・正2</option></select>
-    <select><option>兵学・正3</option></select>
+
+    <div class="column">
+      <select><option>兵学</option></select>
+      <div class="label">兵学・奇</div>
+      <select><option>兵学・奇</option></select>
+      <div class="label">兵学・正</div>
+      <div class="heigaku-grid">
+        <select><option>剛力</option></select>
+        <select><option>豪勇</option></select>
+        <select><option>活路</option></select>
+      </div>
+    </div>
   </div>
 
   <div class="column">
