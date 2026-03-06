@@ -98,8 +98,8 @@ attrs.forEach((a,i)=>{
 num = attrb[i];
 num1 =attrg[i];
 num1*= 49;
-nun = num1;
-attrNodes[i].textContent=num1
+num += num1
+attrNodes[i].textContent=string.format("%.2f",num)
 
 })
 
