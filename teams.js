@@ -30,11 +30,11 @@ return obj
 
 async function init(){
 
-DB.busho=await loadCSV("busho.csv")
-DB.senpo=await loadCSV("senpo.csv")
-DB.senpoState=await loadCSV("senpo_state.csv")
-DB.tokusei=await loadCSV("tokusei.csv")
-DB.heigaku=await loadCSV("heigaku.csv")
+DB.busho=await loadCSV("data/busho.csv")
+DB.senpo=await loadCSV("data/senpo.csv")
+DB.senpoState=await loadCSV("data/senpo_state.csv")
+DB.tokusei=await loadCSV("data/tokusei.csv")
+DB.heigaku=await loadCSV("data/heigaku.csv")
 
 createBushoSelect()
 
