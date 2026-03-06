@@ -95,12 +95,8 @@ const attrg=[b.pow_growth,b.int_growth,b.ldr_growth,b.spd_growth,b.adm_growth,b.
 const attrNodes=column.querySelectorAll(".attr-grid div")
 
 attrs.forEach((a,i)=>{
-  num = attrb[i];
-  num1 =attrg[i];
-  num1*= 49;
-  num += num1;
-  num2 = String.format("%.2f",num);
-  attrNodes[i].textContent=num2;
+  num = Double.parseDouble(attrb[i]) +(  Double.parseDouble(attrg[i]) * 49)
+  attrNodes[i].textContent=String.format("%.2f", num);
 })
 
 // タグ
