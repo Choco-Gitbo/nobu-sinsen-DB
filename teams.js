@@ -90,12 +90,13 @@ column.querySelector(".busho-grid").innerHTML=`
 // 属性
 
 const attrs=["buyu","chiryaku","tousei","speed","seimu","miryoku"]
-
+const attrb=[b.pow_base,b.int_base,b.ldr_base,b.spd_base,b.adm_base,b.cha_base]
+const attrg=[b.pow_growth,b.int_growth,b.ldr_growth,b.spd_growth,b.adm_growth,b.cha_growth]
 const attrNodes=column.querySelectorAll(".attr-grid div")
 
 attrs.forEach((a,i)=>{
 
-attrNodes[i].textContent=attrName(a)+b[a]
+attrNodes[i].textContent=attrb[i]+attrg[i]*49
 
 })
 
