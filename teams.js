@@ -95,8 +95,11 @@ const attrg=[b.pow_growth,b.int_growth,b.ldr_growth,b.spd_growth,b.adm_growth,b.
 const attrNodes=column.querySelectorAll(".attr-grid div")
 
 attrs.forEach((a,i)=>{
-
-attrNodes[i].textContent=attrb[i] + (attrg[i] * 49)
+num = attrb[i];
+num1 =attrg[i];
+num1*= 49;
+nun = num1;
+attrNodes[i].textContent=num1
 
 })
 
