@@ -180,6 +180,11 @@ document.querySelectorAll('.collapsible-column').forEach(column => {
     if (content) {
       content.classList.toggle('is-hidden');
     }
+    const contenttag = this.querySelector('.tag-grid');
+    if (contenttag) {
+      contenttag.classList.toggle('is-hidden');
+    }
+
   });
 });
 </script>
