@@ -99,7 +99,7 @@ num = attrb[i];
 num1 =attrg[i];
 num1*= 49;
 num += num1
-attrNodes[i].textContent=string.format("%.2f",num)
+attrNodes[i].textContent=string.format("%.2f",num);
 
 })
 
