@@ -96,7 +96,7 @@ const attrNodes=column.querySelectorAll(".attr-grid div")
 
 attrs.forEach((a,i)=>{
 
-attrNodes[i].textContent=attrb[i]+attrg[i]*49
+attrNodes[i].textContent=attrb[i] + (attrg[i] * 49)
 
 })
 
