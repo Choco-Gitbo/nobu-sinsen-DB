@@ -149,3 +149,22 @@ return map[key]
 }
 
 init()
+
+document.querySelectorAll('.collapsible-column').forEach(column => {
+  column.addEventListener('click', function(e) {
+    // inputタグなどをクリックした時は折りたたまないようにする
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') {
+      return;
+    }
+    
+    // 中身のグリッド（attr-grid）を探してクラスを切り替える
+    const content = this.querySelector('.attr-grid');
+    if (content) {
+      content.classList.toggle('is-hidden');
+    }
+    const contenttag = this.querySelector('.tag-grid');
+    if (contenttag) {
+      contenttag.classList.toggle('is-hidden');
+    }
+  });
+});
