@@ -1,0 +1,106 @@
+body{
+  margin:0;
+  padding:10px;
+  font-family:sans-serif;
+  font-size:12px;
+}
+
+.row{
+  display:flex;
+  gap:6px;
+}
+
+.column{
+  flex:1;
+  border:1px solid #aaa;
+  border-radius:6px;
+  padding:6px;
+  margin-bottom:2px;
+}
+
+.column h4{
+  text-align:center;
+  margin:0 0 6px 0;
+}
+
+.busho-grid{
+  display:grid;
+  grid-template-columns:  auto auto auto;
+  gap:3px;
+  margin-bottom:2px;
+}
+
+.attr-grid{
+  display:grid;
+  grid-template-columns:  65px auto;
+  gap:3px;
+  margin-bottom:2px;
+  font-size:11px;
+}
+
+.attr-grid input{
+  width:20px;
+  font-size:11px;
+  text-align:right;
+}
+
+.tokusei-grid{
+  display:grid;
+  grid-template-columns:  auto auto;
+  gap:3px;
+  margin-bottom:2px;
+}
+
+.heigaku-grid{
+  display:grid;
+  grid-template-columns:  auto auto;
+  gap:3px;
+  margin-bottom:2px;
+}
+
+select{
+  width:100%;
+  padding:4px;
+  font-size:12px;
+  margin-bottom:4px;
+}
+
+.label{
+  text-align:left;
+  font-size:11px;
+  background:#f3f3f3;
+  padding:4px 0;
+  margin-bottom:4px;
+  border-radius:4px;
+}
+
+.label-center{
+  text-align:center;
+  font-size:11px;
+  background:#f3f3f3;
+  padding:4px 0;
+  margin-bottom:4px;
+  border-radius:4px;
+}
+/* 折りたたみ用のスタイル */
+.collapsible-column {
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.collapsible-column:hover {
+  background: #f9f9f9; /* タップできることがわかるように少し色を変える */
+}
+
+/* 閉じている時の状態 */
+.is-hidden {
+  display: none !important;
+}
+
+/* 閉じている時に見出しに「＋」などを出す（任意） */
+.column-title::after {
+  content: ' [開閉]';
+  font-size: 9px;
+  color: #888;
+  vertical-align: middle;
+}
