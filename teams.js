@@ -99,7 +99,7 @@ attrs.forEach((a,i)=>{
   num1 =attrg[i];
   num1*= 49;
   num += num1;
-  num2 = string.format("%.2f",num);
+  num2 = String.format("%.2f",num);
   attrNodes[i].textContent=num2;
 })
 
