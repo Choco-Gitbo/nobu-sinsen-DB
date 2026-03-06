@@ -82,7 +82,8 @@ if(!b)return
 column.querySelector(".busho-grid").innerHTML=`
 
 <div class="label-center">C${b.cost}</div>
-<div class="label-center">${b.rank}凸</div>
+/* <div class="label-center">${b.rank}凸</div> */
+<div class="label-center">0凸</div>
 <div class="label-center">${b.awake=="1"?"覚醒":"未覚醒"}</div>
 
 `
