@@ -99,7 +99,8 @@ attrs.forEach((a,i)=>{
   num1 =attrg[i];
   num1*= 49;
   num += num1;
-  attrNodes[i].textContent=string.format("%.2f",num);
+  num2 = string.format("%.2f",num);
+  attrNodes[i].textContent=num2;
 })
 
 // タグ
