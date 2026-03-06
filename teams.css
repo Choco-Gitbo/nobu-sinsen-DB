@@ -58,6 +58,13 @@ body{
   margin-bottom:2px;
 }
 
+.tag-grid{
+  display:grid;
+  grid-template-columns:  auto auto;
+  gap:3px;
+  margin-bottom:2px;
+}
+
 select{
   width:100%;
   padding:4px;
