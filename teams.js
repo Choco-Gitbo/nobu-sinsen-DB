@@ -221,7 +221,7 @@ document.querySelectorAll(".heigaku-type").forEach(select=>{
   select.addEventListener("change",function(){
 
     const column = this.closest(".column")
-    const bushoId = column.querySelector(".busho-select").value
+    const bushoId = document.querySelector(".busho-select").value
 
     const b = DB.busho.find(v=>v.id === bushoId)
 
