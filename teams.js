@@ -64,7 +64,7 @@ function setBushoData(column,id){
   if(!b)return
 
   // コスト表示
-  column.querySelector(".busho-grid").innerHTML=`
+  team.querySelector(".busho-grid").innerHTML=`
     <div class="label-center">C${b.cost}</div>
     <div class="label-center">0凸</div>
     <div class="label-center">${b.awake=="1"?"覚醒":"未覚醒"}</div>
@@ -73,7 +73,7 @@ function setBushoData(column,id){
   const attrs=["buyu","chiryaku","tousei","speed","seimu","miryoku"]
   const attrb=[b.pow_base,b.int_base,b.ldr_base,b.spd_base,b.adm_base,b.cha_base]
   const attrg=[b.pow_growth,b.int_growth,b.ldr_growth,b.spd_growth,b.adm_growth,b.cha_growth]
-  const attrNodes=column.querySelectorAll(".attr-grid div")
+  const attrNodes=team.querySelectorAll(".attr-grid div")
 
   attrs.forEach((a,i)=>{
     const num1 = parseFloat(attrb[i] || 0)
@@ -84,7 +84,7 @@ function setBushoData(column,id){
 
   // 固有戦法
   const senpo1 = DB.senpo.find(s => s.id === b.unique_senpo)
-  column.querySelector(".senpo1").textContent = senpo1.name
+  team.querySelector(".senpo1").textContent = senpo1.name
 
   // 固有特性
   const tokusei0 = DB.tokusei.find(t => t.id === b.unique_tokusei)
