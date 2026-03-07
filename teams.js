@@ -102,9 +102,9 @@ attrs.forEach((a,i)=>{
 })
 
   // 固有戦法
-  const unique_senpo = senpoList.find(s => s.id === b.unique_senpo)
+  const senpo1 = senpoList.find(s => s.id === b.unique_senpo)
   column.querySelector(".senpo1").textContent =
-    unique_senpo ? unique_senpo.name : ""
+    senpo1 ? senpo1.name : ""
 
 // タグ
 
