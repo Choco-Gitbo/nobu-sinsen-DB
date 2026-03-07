@@ -99,14 +99,6 @@ select{
   border-radius:4px;
 }
 
-.Lv{
-  text-align:left;
-  font-size:11px;
-  padding:4px 0;
-  margin-bottom:4px;
-  border-radius:4px;
-}
-
 .senpo1{
   text-align:left;
   font-size:11px;
@@ -115,6 +107,7 @@ select{
   margin-bottom:4px;
   border-radius:4px;
 }
+
 .tokusei0{
   text-align:left;
   font-size:11px;

@@ -76,7 +76,7 @@ function setBushoData(column,id){
   const attrNodes=column.querySelectorAll(".attr-grid div")
 
   attrs.forEach((a,i)=>{
-    const Lv= parseInt(column.querySelector(".label-Lv").value)
+    const Lv= 50
     const num1 = parseFloat(attrb[i] || 0)
     const num2 = parseFloat(attrg[i] || 0)
     const num = num1 + (num2 * (Lv -1))
