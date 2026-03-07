@@ -221,9 +221,9 @@ document.querySelectorAll(".heigaku-type").forEach(select=>{
   select.addEventListener("change",function(){
 
     const column = this.closest(".column")
-    const bushoId = column.querySelector(".busho-select").value
+    const bushoId = column.querySelector(".busho-select")
 
-    const b = DB.busho.find(v=>v.id === bushoId)
+    const b = DB.busho.find(v=>v.id === bushoId.value)
 
     if(b){
       setupHeigaku(column,b)
