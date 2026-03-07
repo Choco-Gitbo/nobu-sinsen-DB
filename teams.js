@@ -54,6 +54,7 @@ function createSenpoSelect(){
   document.querySelectorAll(".senpo-select").forEach(select=>{
     select.innerHTML=`<option value="">戦法選択</option>`
     DB.senpo.forEach(s=>{
+      if(s.get === "固有") return
       const op=document.createElement("option")
       op.value=s.id
       op.textContent=s.name
