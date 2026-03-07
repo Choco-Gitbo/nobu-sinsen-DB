@@ -95,8 +95,8 @@ const attrg=[b.pow_growth,b.int_growth,b.ldr_growth,b.spd_growth,b.adm_growth,b.
 const attrNodes=column.querySelectorAll(".attr-grid div")
 
 attrs.forEach((a,i)=>{
-  num1 = attrb[i];
-  num2 = attrg[i];
+  num1 = Double.parseDouble(attrb[i]);
+  num2 = Double.parseDouble(attrg[i]);
   num = num1 +(num2* 49);
   attrNodes[i].textContent= attrName(a)+("%.2f", num);
 })
