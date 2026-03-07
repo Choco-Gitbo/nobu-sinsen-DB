@@ -18,17 +18,17 @@ body{
   margin-bottom:2px;
 }
 
+.team h4{
+  text-align:center;
+  margin:0 0 6px 0;
+}
+
 .column{
   flex:1;
   border:1px solid #aaa;
   border-radius:6px;
   padding:6px;
   margin-bottom:2px;
-}
-
-.column h4{
-  text-align:center;
-  margin:0 0 6px 0;
 }
 
 .busho-grid{
