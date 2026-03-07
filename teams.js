@@ -151,10 +151,14 @@ function setupHeigaku(column, b){
   const type = column.querySelector(".heigaku-type").value
 
   const kiSelect  = column.querySelector(".heigaku-ki")
-  const seiSelect = column.querySelector(".heigaku-sei")
+  const sei1Select = column.querySelector(".heigaku-sei1")
+  const sei2Select = column.querySelector(".heigaku-sei2")
+  const sei3Select = column.querySelector(".heigaku-sei3")
 
   kiSelect.innerHTML = ""
-  seiSelect.innerHTML = ""
+  sei1Select.innerHTML = ""
+  sei2Select.innerHTML = ""
+  sei3Select.innerHTML = ""
 
   if(!b.heigaku) return
 
@@ -182,7 +186,9 @@ function setupHeigaku(column, b){
     }
 
     if(kind === "兵学・正"){
-      seiSelect.appendChild(option.cloneNode(true))
+      sei1Select.appendChild(option.cloneNode(true))
+      sei2Select.appendChild(option.cloneNode(true))
+      sei3Select.appendChild(option.cloneNode(true))
     }
 
   })

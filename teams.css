@@ -142,15 +142,27 @@ select{
 .heigaku-ki{
   text-align:center;
   font-size:11px;
-  background:#f3f3f3;
   padding:4px 0;
   margin-bottom:4px;
   border-radius:4px;
 }
-.heigaku-sei{
+.heigaku-sei1{
   text-align:center;
   font-size:11px;
-  background:#f3f3f3;
+  padding:4px 0;
+  margin-bottom:4px;
+  border-radius:4px;
+}
+.heigaku-sei2{
+  text-align:center;
+  font-size:11px;
+  padding:4px 0;
+  margin-bottom:4px;
+  border-radius:4px;
+}
+.heigaku-sei3{
+  text-align:center;
+  font-size:11px;
   padding:4px 0;
   margin-bottom:4px;
   border-radius:4px;
