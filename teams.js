@@ -30,6 +30,7 @@ async function init(){
   DB.heigaku=await loadCSV("data/heigaku.csv")
 
   createBushoSelect()
+  createSenpoSelect()
   setupHeigakuType() 
 
 }
@@ -42,6 +43,20 @@ function createBushoSelect(){
       const op=document.createElement("option")
       op.value=b.id
       op.textContent=b.name
+      select.appendChild(op)
+    })
+  })
+
+}
+
+function createSenpoSelect(){
+
+  document.querySelectorAll(".senpo-select").forEach(select=>{
+    select.innerHTML=`<option value="">戦法選択</option>`
+    DB.senpo.forEach(b=>{
+      const op=document.createElement("option")
+      op.value=s.id
+      op.textContent=s.name
       select.appendChild(op)
     })
   })
