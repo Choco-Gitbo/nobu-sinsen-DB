@@ -25,6 +25,7 @@ body{
 
 .column{
   flex:1;
+  font-size:11px;
   border:1px solid #aaa;
   border-radius:6px;
   padding:6px;
