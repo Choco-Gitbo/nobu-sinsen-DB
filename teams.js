@@ -103,7 +103,7 @@ attrs.forEach((a,i)=>{
 
   // 固有戦法
   const senpo1 = DB.senpo.find(s => s.id === b.unique_senpo)
-  column.querySelector(".senpo1").textContent = senpo1
+  column.querySelector(".senpo1").textContent = senpo1.name
 
 // タグ
 
