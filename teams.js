@@ -103,9 +103,7 @@ function setBushoData(column,id){
   column.querySelector(".tokusei5").textContent = tokusei5.name
 
   // タグ
-
   const tagGrid=column.querySelector(".tag-grid")
-
   tagGrid.innerHTML=""
   if(b.tags){
     b.tags.split("|").forEach(t=>{
@@ -115,7 +113,7 @@ function setBushoData(column,id){
       tagGrid.appendChild(div)
     })
   }
-
+  setupHeigaku(column, b)
 
 }
 
@@ -148,6 +146,49 @@ function setupHeigakuType(){
 
 }
 
+function setupHeigaku(column, b){
+
+  const type = column.querySelector(".heigaku-type").value
+
+  const kiSelect  = column.querySelector(".heigaku-ki")
+  const seiSelect = column.querySelector(".heigaku-sei")
+
+  kiSelect.innerHTML = ""
+  seiSelect.innerHTML = ""
+
+  if(!b.heigaku) return
+
+  const ids = b.heigaku.split("|")
+
+  ids.forEach(id=>{
+
+    const h = DB.heigaku.find(v=>v.id === id)
+
+    if(!h) return
+
+    const cat = h.category.split("|")
+
+    const typeName = cat[0]
+    const kind = cat[1]
+
+    if(typeName !== type) return
+
+    const option = document.createElement("option")
+    option.value = h.id
+    option.textContent = h.name
+
+    if(kind === "兵学・奇"){
+      kiSelect.appendChild(option)
+    }
+
+    if(kind === "兵学・正"){
+      seiSelect.appendChild(option.cloneNode(true))
+    }
+
+  })
+
+}
+
 init()
 
 document.querySelectorAll('.collapsible-column').forEach(column => {
@@ -168,3 +209,20 @@ document.querySelectorAll('.collapsible-column').forEach(column => {
     }
   });
 });
+/* 兵学タイプ変更時の処理*/
+document.querySelectorAll(".heigaku-type").forEach(select=>{
+
+  select.addEventListener("change",function(){
+
+    const column = this.closest(".column")
+    const bushoId = column.querySelector(".busho-select").value
+
+    const b = DB.busho.find(v=>v.id === bushoId)
+
+    if(b){
+      setupHeigaku(column,b)
+    }
+
+  })
+
+})
