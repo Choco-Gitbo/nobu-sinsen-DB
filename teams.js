@@ -84,7 +84,7 @@ function setBushoData(column,id){
 
   // 固有戦法
   const senpo1 = DB.senpo.find(s => s.id === b.unique_senpo)
-  team.querySelector(".senpo1").textContent = senpo1.name
+  column.querySelector(".senpo1").textContent = senpo1.name
 
   // 固有特性
   const tokusei0 = DB.tokusei.find(t => t.id === b.unique_tokusei)
