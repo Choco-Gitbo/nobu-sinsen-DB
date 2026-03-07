@@ -159,7 +159,7 @@ function setupHeigaku(column, b){
   sei1Select.innerHTML = ""
   sei2Select.innerHTML = ""
   sei3Select.innerHTML = ""
-  
+
  // 初期値（空白）
   kiSelect.appendChild(new Option("", ""))
   sei1Select.appendChild(new Option("", ""))
@@ -225,8 +225,9 @@ document.querySelectorAll('.collapsible-column').forEach(column => {
 document.querySelectorAll(".heigaku-type").forEach(select=>{
 
   select.addEventListener("change",function(){
-
-    const bushoId = document.querySelector(".busho-select").value
+    const column = this.closest(".column")
+    const team = this.closest(".team")
+    const bushoId = team.querySelector(".busho-select").value
     const b = DB.busho.find(v=>v.id === bushoId)
 
     if(b){

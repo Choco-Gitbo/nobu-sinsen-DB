@@ -10,6 +10,14 @@ body{
   gap:6px;
 }
 
+.team{
+  flex:1;
+  border:1px solid #aaa;
+  border-radius:6px;
+  padding:6px;
+  margin-bottom:2px;
+}
+
 .column{
   flex:1;
   border:1px solid #aaa;
