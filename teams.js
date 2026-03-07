@@ -64,7 +64,7 @@ function setBushoData(column,id){
   if(!b)return
 
   // コスト表示
-  team.querySelector(".busho-grid").innerHTML=`
+  column.querySelector(".busho-grid").innerHTML=`
     <div class="label-center">C${b.cost}</div>
     <div class="label-center">0凸</div>
     <div class="label-center">${b.awake=="1"?"覚醒":"未覚醒"}</div>
@@ -225,8 +225,8 @@ document.querySelectorAll('.collapsible-column').forEach(column => {
 document.querySelectorAll(".heigaku-type").forEach(select=>{
 
   select.addEventListener("change",function(){
-    const column = this.closest(".column")
     const team = this.closest(".team")
+    const column = this.closest(".column")
     const bushoId = team.querySelector(".busho-select").value
     const b = DB.busho.find(v=>v.id === bushoId)
 
