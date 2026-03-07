@@ -159,6 +159,12 @@ function setupHeigaku(column, b){
   sei1Select.innerHTML = ""
   sei2Select.innerHTML = ""
   sei3Select.innerHTML = ""
+  
+ // 初期値（空白）
+  kiSelect.appendChild(new Option("", ""))
+  sei1Select.appendChild(new Option("", ""))
+  sei2Select.appendChild(new Option("", ""))
+  sei3Select.appendChild(new Option("", ""))
 
   if(!b.heigaku) return
 
@@ -220,9 +226,7 @@ document.querySelectorAll(".heigaku-type").forEach(select=>{
 
   select.addEventListener("change",function(){
 
-    const column = this.closest(".column")
     const bushoId = document.querySelector(".busho-select").value
-
     const b = DB.busho.find(v=>v.id === bushoId)
 
     if(b){
