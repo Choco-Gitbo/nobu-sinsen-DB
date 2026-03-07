@@ -52,7 +52,7 @@ document.addEventListener("change",e=>{
 
   if(!e.target.classList.contains("busho-select"))return
   const bushoId=e.target.value
-  const column=e.target.closest(".column")
+  const column=e.target.closest(".team")
   setBushoData(column,bushoId)
 
 })
