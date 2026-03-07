@@ -76,9 +76,10 @@ function setBushoData(column,id){
   const attrNodes=column.querySelectorAll(".attr-grid div")
 
   attrs.forEach((a,i)=>{
+    const Lv=column.querySelector(".Lv")
     const num1 = parseFloat(attrb[i] || 0)
     const num2 = parseFloat(attrg[i] || 0)
-    const num = num1 + (num2 * 49)
+    const num = num1 + (num2 * (Lv -1))
     attrNodes[i].textContent = attrName(a) + num.toFixed(2)
   })
 

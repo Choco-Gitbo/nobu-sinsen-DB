@@ -99,6 +99,15 @@ select{
   border-radius:4px;
 }
 
+.Lv{
+  text-align:left;
+  font-size:11px;
+  background:#f3f3f3;
+  padding:4px 0;
+  margin-bottom:4px;
+  border-radius:4px;
+}
+
 .senpo1{
   text-align:left;
   font-size:11px;
