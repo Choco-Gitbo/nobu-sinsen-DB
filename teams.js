@@ -98,7 +98,7 @@ attrs.forEach((a,i)=>{
   const num1 = parseFloat(attrb[i] || 0)
   const num2 = parseFloat(attrg[i] || 0)
   const num = num1 + (num2 * 49)
-  attrNodes[i].textContent = attrName(a) + " " + num.toFixed(2)
+  attrNodes[i].textContent = attrName(a) + num.toFixed(2)
 })
 
   // 固有戦法
