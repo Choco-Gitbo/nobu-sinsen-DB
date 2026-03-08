@@ -277,7 +277,7 @@ function createSenpoStateFilter(){
   select.innerHTML=`<option value="">全て</option>`
 
   /* const states=[...new Set(DB.senpo.map(s=>s.state))] */
-  const state = ["連撃","回避","鉄壁","乱舞","反撃","援護","肩代り","分担",
+  const states = ["連撃","回避","鉄壁","乱舞","反撃","援護","肩代り","分担",
   "耐性","洞察","先攻","必中","破陣","会心","奇策","離反","心攻",
   "襲撃","威圧","無策","封撃","混乱","疲弊","麻痺","回復不可","浄化不可",
   "挑発","牽制","攻撃対象ロック",
