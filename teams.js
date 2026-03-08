@@ -248,7 +248,7 @@ document.querySelectorAll(".heigaku-type").forEach(select=>{
 
 /* チェンジイベント処理 */
 document.addEventListener("change",e=>{
-
+  /* 武将選択の重複処理 */
   if(e.target.classList.contains("busho-select")){
 
     const value = e.target.value
@@ -264,5 +264,18 @@ document.addEventListener("change",e=>{
     setBushoData(column,value)
 
   }
+  
+  /* 戦法選択の重複処理 */
+  if(!e.target.classList.contains("senpo-select")) return
+
+  const value = e.target.value
+  if(!value) return
+
+  document.querySelectorAll(".senpo-select").forEach(sel=>{
+    if(sel !== e.target && sel.value === value){
+      alert("同じ戦法は設定できません")
+      e.target.value=""
+    }
+  })
 
 })
