@@ -257,7 +257,6 @@ document.addEventListener("change",e=>{
     document.querySelectorAll(".busho-select").forEach(sel=>{
       if(sel !== e.target && sel.value === value){
         e.target.value=""
-        const value = e.target.value
       }
     })
 
