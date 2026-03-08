@@ -141,8 +141,7 @@ function getFilteredSenpo(){
     if(f.state){
 
       const states = s.states
-
-      if(!states.some(st => st.label === f.state)) return false
+      if(!DB.senpoState.some(st => st.label === f.state)) return false
 
     }
     return true
