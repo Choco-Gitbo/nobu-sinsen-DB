@@ -52,19 +52,6 @@ body{
   font-size:11px;
   text-align:right;
 }
-.senpo-grid{
-  display:grid;
-  grid-template-columns:  30pt auto;
-  gap:3px;
-  margin-bottom:2px;
-  font-size:11px;
-}
-
-.senpo-grid select{
-  width:20px;
-  font-size:11px;
-  text-align:left;
-}
 
 .tokusei-grid{
   display:grid;
