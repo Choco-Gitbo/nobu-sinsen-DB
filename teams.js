@@ -256,8 +256,8 @@ document.addEventListener("change",e=>{
 
     document.querySelectorAll(".busho-select").forEach(sel=>{
       if(sel !== e.target && sel.value === value){
-        alert("同じ武将は選択できません")
         e.target.value=""
+        const value = e.target.value
       }
     })
 
