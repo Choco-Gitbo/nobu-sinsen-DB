@@ -270,10 +270,14 @@ function createSenpoTypeFilter(){
   })
 
 }
-function setupSenpoState(){
+function createSenpoStateFilter(){
 
-  
-  const types = ["連撃","回避","鉄壁","乱舞","反撃","援護","肩代り","分担",
+  const select=document.querySelector(".senpo-state")
+
+  select.innerHTML=`<option value="">全て</option>`
+
+  /* const states=[...new Set(DB.senpo.map(s=>s.state))] */
+  const state = ["連撃","回避","鉄壁","乱舞","反撃","援護","肩代り","分担",
   "耐性","洞察","先攻","必中","破陣","会心","奇策","離反","心攻",
   "襲撃","威圧","無策","封撃","混乱","疲弊","麻痺","回復不可","浄化不可",
   "挑発","牽制","攻撃対象ロック",
@@ -292,17 +296,17 @@ function setupSenpoState(){
   "与回復増","与回復減","被回復増","被回復減","回復量蓄積",
   "兵損増","兵損減","通攻計略化","通攻禁止","傭兵","一揆","能動阻止","特殊兵種",
   "行軍速度増"];
-  document.querySelectorAll(".senpo-state").forEach(select=>{
-    select.innerHTML = ""
-    types.forEach(t=>{
-      const option = document.createElement("option")
-      option.value = t
-      option.textContent = t
-      select.appendChild(option)
-    })
+
+  states.forEach(s=>{
+    const op=document.createElement("option")
+    op.value=s
+    op.textContent=s
+    select.appendChild(op)
   })
 
 }
+
+  
 
 function setupHeigakuType(){
 
