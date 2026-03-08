@@ -31,6 +31,7 @@ async function init(){
 
   createBushoSelect()
   createSenpoSelect()
+  setupSenpoType() 
   setupHeigakuType() 
 
   refreshBushoSelect()
@@ -181,6 +182,21 @@ function attrName(key){
     miryoku:"魅力"
   }
   return map[key]
+
+}
+
+function setupSenpoType(){
+
+  const types = ["指揮","能動","突撃","受動","兵種"]
+  document.querySelectorAll(".senpo-type").forEach(select=>{
+    select.innerHTML = ""
+    types.forEach(t=>{
+      const option = document.createElement("option")
+      option.value = t
+      option.textContent = t
+      select.appendChild(option)
+    })
+  })
 
 }
 
