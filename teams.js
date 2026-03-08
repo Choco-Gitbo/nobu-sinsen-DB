@@ -31,6 +31,8 @@ async function init(){
 
   createBushoSelect()
   createSenpoSelect()
+  
+  setupBushoFaction() 
   setupBushoCost() 
   setupSenpoType() 
   setupHeigakuType() 
@@ -183,6 +185,21 @@ function attrName(key){
     miryoku:"魅力"
   }
   return map[key]
+
+}
+
+function setupBushoFaction(){
+
+  const types = ["織田","豊臣","徳川","武田","上杉","群雄"]
+  document.querySelectorAll(".busho-faction").forEach(select=>{
+    select.innerHTML = ""
+    types.forEach(t=>{
+      const option = document.createElement("option")
+      option.value = t
+      option.textContent = t
+      select.appendChild(option)
+    })
+  })
 
 }
 
