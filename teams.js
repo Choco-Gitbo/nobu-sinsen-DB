@@ -35,7 +35,7 @@ async function init(){
   createBushoFactionFilter() 
   createBushoCostFilter() 
   createSenpoTypeFilter()
-  createSenpoTypeFilter() 
+  createSenpoStateFilter() 
   setupHeigakuType() 
 
   refreshBushoSelect()
