@@ -64,15 +64,6 @@ function createSenpoSelect(){
 
 }
 
-document.addEventListener("change",e=>{
-
-  if(!e.target.classList.contains("busho-select"))return
-  const bushoId=e.target.value
-  const column=e.target.closest(".team")
-  setBushoData(column,bushoId)
-
-})
-
 function setBushoData(column,id){
 
   const b=DB.busho.find(v=>v.id==id)
@@ -101,23 +92,23 @@ function setBushoData(column,id){
 
   // 固有戦法
   const senpo1 = DB.senpo.find(s => s.id === b.unique_senpo)
-  column.querySelector(".senpo1").textContent = senpo1.name
+  column.querySelector(".senpo1").textContent = senpo1 ? senpo1.name : ""
 
   // 固有特性
   const tokusei0 = DB.tokusei.find(t => t.id === b.unique_tokusei)
-  column.querySelector(".tokusei0").textContent = tokusei0.name
+  column.querySelector(".tokusei0").textContent = tokusei0 ? tokusei0.name : ""
 
   // 特性1凸
   const tokusei1 = DB.tokusei.find(t => t.id === b.tokusei_1)
-  column.querySelector(".tokusei1").textContent = tokusei1.name
+  column.querySelector(".tokusei1").textContent = tokusei1 ? tokusei1.name : ""
 
   // 特性3凸
   const tokusei3 = DB.tokusei.find(t => t.id === b.tokusei_3)
-  column.querySelector(".tokusei3").textContent = tokusei3.name
+  column.querySelector(".tokusei3").textContent = tokusei3 ? tokusei3.name : ""
 
   // 特性5凸
   const tokusei5 = DB.tokusei.find(t => t.id === b.tokusei_5)
-  column.querySelector(".tokusei5").textContent = tokusei5.name
+  column.querySelector(".tokusei5").textContent = tokusei5 ? tokusei5.name : ""
 
   // タグ
   const tagGrid=column.querySelector(".tag-grid")
@@ -252,5 +243,27 @@ document.querySelectorAll(".heigaku-type").forEach(select=>{
     }
 
   })
+
+})
+
+/* チェンジイベント処理 */
+document.addEventListener("change",e=>{
+
+  if(e.target.classList.contains("busho-select")){
+
+    const value = e.target.value
+    if(!value) return
+
+    document.querySelectorAll(".busho-select").forEach(sel=>{
+      if(sel !== e.target && sel.value === value){
+        alert("同じ武将は選択できません")
+        e.target.value=""
+      }
+    })
+
+    const column=e.target.closest(".team")
+    setBushoData(column,value)
+
+  }
 
 })
