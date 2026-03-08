@@ -138,8 +138,13 @@ function getFilteredSenpo(){
     if(s.get==="固有") return false
 
     if(f.type && s.type!==f.type) return false
-    if(f.state && s.state!==f.state) return false
+    if(f.state){
 
+      const states = s.states
+
+      if(!states.some(st => st.label === f.state)) return false
+
+    }
     return true
 
   })
