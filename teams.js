@@ -264,7 +264,7 @@ document.addEventListener("change",e=>{
     setBushoData(column,value)
 
   }
-  
+
   /* 戦法選択の重複処理 */
   if(!e.target.classList.contains("senpo-select")) return
 
@@ -273,7 +273,6 @@ document.addEventListener("change",e=>{
 
   document.querySelectorAll(".senpo-select").forEach(sel=>{
     if(sel !== e.target && sel.value === value){
-      alert("同じ戦法は設定できません")
       e.target.value=""
     }
   })
