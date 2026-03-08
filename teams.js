@@ -31,6 +31,7 @@ async function init(){
 
   createBushoSelect()
   createSenpoSelect()
+  setupBushoCost() 
   setupSenpoType() 
   setupHeigakuType() 
 
@@ -302,6 +303,10 @@ document.querySelectorAll('.collapsible-column').forEach(column => {
     const contenttag = this.querySelector('.tag-grid');
     if (contenttag) {
       contenttag.classList.toggle('is-hidden');
+    }
+    const contentfilter = this.querySelector('.select-filter');
+    if (contentfilter) {
+      contentfilter.classList.toggle('is-hidden');
     }
   });
 });
