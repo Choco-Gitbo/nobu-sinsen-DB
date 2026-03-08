@@ -32,10 +32,10 @@ async function init(){
   createBushoSelect()
   createSenpoSelect()
 
-  setupBushoFaction() 
-  setupBushoCost() 
-  setupSenpoType()
-  setupSenpoState() 
+  createBushoFactionFilter() 
+  createBushoCostFilter() 
+  createSenpoTypeFilter()
+  createSenpoTypeFilter() 
   setupHeigakuType() 
 
   refreshBushoSelect()
@@ -65,7 +65,7 @@ function refreshBushoSelect(){
   document.querySelectorAll(".busho-select").forEach(select=>{
     const current = select.value
     select.innerHTML = `<option value="">武将選択</option>`
-    DB.busho.forEach(b=>{
+    getFilteredBusho().forEach(b=>{
       if(selected.includes(b.id) && b.id !== current) return
       const op=document.createElement("option")
       op.value=b.id
@@ -75,6 +75,20 @@ function refreshBushoSelect(){
 
     })
   })
+}
+function getFilteredBusho(){
+
+  const f=getBushoFilter()
+
+  return DB.busho.filter(b=>{
+
+    if(f.faction && b.faction!==f.faction) return false
+    if(f.cost && b.cost!==f.cost) return false
+
+    return true
+
+  })
+
 }
 
 function createSenpoSelect(){
@@ -101,7 +115,7 @@ function refreshSenpoSelect(){
 
     const current = select.value
     select.innerHTML=`<option value="">戦法選択</option>`
-    DB.senpo.forEach(s=>{
+    getFilteredSenpo().forEach(s=>{
       if(s.get === "固有") return
       if(selected.includes(s.id) && s.id !== current) return
       const op=document.createElement("option")
@@ -110,6 +124,23 @@ function refreshSenpoSelect(){
       if(s.id === current) op.selected=true
       select.appendChild(op)
     })
+
+  })
+
+}
+
+function getFilteredSenpo(){
+
+  const f=getSenpoFilter()
+
+  return DB.senpo.filter(s=>{
+
+    if(s.get==="固有") return false
+
+    if(f.type && s.type!==f.type) return false
+    if(f.state && s.state!==f.state) return false
+
+    return true
 
   })
 
@@ -189,51 +220,56 @@ function attrName(key){
 
 }
 
-function setupBushoFaction(){
+function createBushoFactionFilter(){
 
-  const types = ["織田","豊臣","徳川","武田","上杉","群雄"]
-  document.querySelectorAll(".busho-faction").forEach(select=>{
-    select.innerHTML = ""
-    types.forEach(t=>{
-      const option = document.createElement("option")
-      option.value = t
-      option.textContent = t
-      select.appendChild(option)
-    })
+  const select=document.querySelector(".busho-faction")
+
+  select.innerHTML=`<option value="">全て</option>`
+
+  const factions=[...new Set(DB.busho.map(b=>b.faction))]
+
+  factions.forEach(f=>{
+    const op=document.createElement("option")
+    op.value=f
+    op.textContent=f
+    select.appendChild(op)
   })
 
 }
+function createBushoCostFilter(){
 
-function setupBushoCost(){
+  const select=document.querySelector(".busho-cost")
 
-  const types = [3,4,5,6,7]
-  document.querySelectorAll(".busho-cost").forEach(select=>{
-    select.innerHTML = ""
-    types.forEach(t=>{
-      const option = document.createElement("option")
-      option.value = t
-      option.textContent = t
-      select.appendChild(option)
-    })
+  select.innerHTML=`<option value="">全て</option>`
+
+  const costs=[...new Set(DB.busho.map(b=>b.cost))]
+
+  costs.sort((a,b)=>a-b)
+
+  costs.forEach(c=>{
+    const op=document.createElement("option")
+    op.value=c
+    op.textContent=c
+    select.appendChild(op)
   })
 
 }
+function createSenpoTypeFilter(){
 
-function setupSenpoType(){
+  const select=document.querySelector(".senpo-type")
 
-  const types = ["指揮","能動","突撃","受動","兵種"]
-  document.querySelectorAll(".senpo-type").forEach(select=>{
-    select.innerHTML = ""
-    types.forEach(t=>{
-      const option = document.createElement("option")
-      option.value = t
-      option.textContent = t
-      select.appendChild(option)
-    })
+  select.innerHTML=`<option value="">全て</option>`
+
+  const types=[...new Set(DB.senpo.map(s=>s.type))]
+
+  types.forEach(t=>{
+    const op=document.createElement("option")
+    op.value=t
+    op.textContent=t
+    select.appendChild(op)
   })
 
 }
-
 function setupSenpoState(){
 
   
@@ -340,6 +376,23 @@ function setupHeigaku(column, b){
 
 init()
 
+/* フィルター値の取得 */
+function getBushoFilter(){
+
+  return {
+    faction:document.querySelector(".busho-faction").value,
+    cost:document.querySelector(".busho-cost").value
+  }
+
+}
+function getSenpoFilter(){
+
+  return {
+    type:document.querySelector(".senpo-type").value,
+    state:document.querySelector(".senpo-state").value
+  }
+
+}
 document.querySelectorAll('.collapsible-column').forEach(column => {
   column.addEventListener('click', function(e) {
     // inputタグなどをクリックした時は折りたたまないようにする
@@ -390,10 +443,17 @@ document.addEventListener("change",e=>{
 
     refreshBushoSelect()
 
-    }
+  }
 
     /* 戦法選択の変更処理 */
   if(e.target.classList.contains("senpo-select")){
+    refreshSenpoSelect()
+
+  }
+
+  if(e.target.closest(".select-filter")){
+
+    refreshBushoSelect()
     refreshSenpoSelect()
 
   }
