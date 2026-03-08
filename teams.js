@@ -185,6 +185,21 @@ function attrName(key){
 
 }
 
+function setupBushoCost(){
+
+  const types = [3,4,5,6,7]
+  document.querySelectorAll(".busho-cost").forEach(select=>{
+    select.innerHTML = ""
+    types.forEach(t=>{
+      const option = document.createElement("option")
+      option.value = t
+      option.textContent = t
+      select.appendChild(option)
+    })
+  })
+
+}
+
 function setupSenpoType(){
 
   const types = ["指揮","能動","突撃","受動","兵種"]
