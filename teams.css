@@ -39,6 +39,14 @@ body{
   margin-bottom:2px;
 }
 
+.select-filter{
+  display:grid;
+  grid-template-columns:  auto auto;
+  gap:3px;
+  margin-bottom:2px;
+  font-size:11px;
+}
+
 .attr-grid{
   display:grid;
   grid-template-columns:  65px auto;
