@@ -31,10 +31,11 @@ async function init(){
 
   createBushoSelect()
   createSenpoSelect()
-  
+
   setupBushoFaction() 
   setupBushoCost() 
-  setupSenpoType() 
+  setupSenpoType()
+  setupSenpoState() 
   setupHeigakuType() 
 
   refreshBushoSelect()
@@ -222,6 +223,40 @@ function setupSenpoType(){
 
   const types = ["指揮","能動","突撃","受動","兵種"]
   document.querySelectorAll(".senpo-type").forEach(select=>{
+    select.innerHTML = ""
+    types.forEach(t=>{
+      const option = document.createElement("option")
+      option.value = t
+      option.textContent = t
+      select.appendChild(option)
+    })
+  })
+
+}
+
+function setupSenpoState(){
+
+  
+  const types = ["連撃","回避","鉄壁","乱舞","反撃","援護","肩代り","分担",
+  "耐性","洞察","先攻","必中","破陣","会心","奇策","離反","心攻",
+  "襲撃","威圧","無策","封撃","混乱","疲弊","麻痺","回復不可","浄化不可",
+  "挑発","牽制","攻撃対象ロック",
+  "火傷","水攻め","中毒","潰走","消沈","乱兵","撹乱","恐慌",
+  "休養","回生","浄化","強化解除",
+  "武勇増","武勇減","知略増","知略減","統率増","統率減","速度増","速度減",
+  "全属性減","メイン属性増","メイン属性減",
+  "能動発動増","能動発動減","固有能動発動増","固有能動発動減",
+  "突撃発動増","突撃発動減","固有突撃発動増","固有突撃発動減","継続時間増","継続時間減",
+  "与兵刃増","与兵刃減","被兵刃増","被兵刃減",
+  "与計略増","与計略減","被計略増","被計略減",
+  "与通攻増","与通攻減","被通攻増","被通攻減",
+  "会心ダメ増","会心ダメ減","奇策ダメ増","奇策ダメ減",
+  "与能動増","与能動減","被能動増","被能動減","与突撃増","与突撃減","被突撃増","被突撃減",
+  "兵刃ダメ","計略ダメ","準備1ターン","準備2ターン","準備スキップ",
+  "与回復増","与回復減","被回復増","被回復減","回復量蓄積",
+  "兵損増","兵損減","通攻計略化","通攻禁止","傭兵","一揆","能動阻止","特殊兵種",
+  "行軍速度増"];
+  document.querySelectorAll(".senpo-state").forEach(select=>{
     select.innerHTML = ""
     types.forEach(t=>{
       const option = document.createElement("option")
