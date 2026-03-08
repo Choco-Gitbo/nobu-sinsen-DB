@@ -33,6 +33,7 @@ async function init(){
   createSenpoSelect()
   setupHeigakuType() 
 
+  refreshBushoSelect()
 }
 
 function createBushoSelect(){
@@ -47,6 +48,27 @@ function createBushoSelect(){
     })
   })
 
+}
+
+function refreshBushoSelect(){
+
+  const selected = [...document.querySelectorAll(".busho-select")]
+    .map(s=>s.value)
+    .filter(v=>v)
+
+  document.querySelectorAll(".busho-select").forEach(select=>{
+    const current = select.value
+    select.innerHTML = `<option value="">武将選択</option>`
+    DB.busho.forEach(b=>{
+      if(selected.includes(b.id) && b.id !== current) return
+      const op=document.createElement("option")
+      op.value=b.id
+      op.textContent=b.name
+      if(b.id === current) op.selected = true
+      select.appendChild(op)
+
+    })
+  })
 }
 
 function createSenpoSelect(){
@@ -249,19 +271,13 @@ document.querySelectorAll(".heigaku-type").forEach(select=>{
 /* チェンジイベント処理 */
 document.addEventListener("change",e=>{
   /* 武将選択の重複処理 */
-  if(e.target.classList.contains("busho-select")){
+if(e.target.classList.contains("busho-select")){
 
-    const value = e.target.value
-    if(!value) return
+  const column=e.target.closest(".team")
 
-    document.querySelectorAll(".busho-select").forEach(sel=>{
-      if(sel !== e.target && sel.value === value){
-        e.target.value=""
-      }
-    })
+  setBushoData(column,e.target.value)
 
-    const column=e.target.closest(".team")
-    setBushoData(column,value)
+  refreshBushoSelect()
 
   }
 
