@@ -34,6 +34,7 @@ async function init(){
   setupHeigakuType() 
 
   refreshBushoSelect()
+  refreshSenpoSelect()
 }
 
 function createBushoSelect(){
@@ -85,7 +86,29 @@ function createSenpoSelect(){
   })
 
 }
+function refreshSenpoSelect(){
 
+  const selected = [...document.querySelectorAll(".senpo-select")]
+    .map(s=>s.value)
+    .filter(v=>v)
+
+  document.querySelectorAll(".senpo-select").forEach(select=>{
+
+    const current = select.value
+    select.innerHTML=`<option value="">戦法選択</option>`
+    DB.senpo.forEach(s=>{
+      if(s.get === "固有") return
+      if(selected.includes(s.id) && s.id !== current) return
+      const op=document.createElement("option")
+      op.value=s.id
+      op.textContent=s.name
+      if(s.id === current) op.selected=true
+      select.appendChild(op)
+    })
+
+  })
+
+}
 function setBushoData(column,id){
 
   const b=DB.busho.find(v=>v.id==id)
@@ -270,27 +293,20 @@ document.querySelectorAll(".heigaku-type").forEach(select=>{
 
 /* チェンジイベント処理 */
 document.addEventListener("change",e=>{
-  /* 武将選択の重複処理 */
-if(e.target.classList.contains("busho-select")){
+  /* 武将選択の変更処理 */
+  if(e.target.classList.contains("busho-select")){
 
-  const column=e.target.closest(".team")
+    const column=e.target.closest(".team")
 
-  setBushoData(column,e.target.value)
+    setBushoData(column,e.target.value)
 
-  refreshBushoSelect()
+    refreshBushoSelect()
+
+    }
+
+    /* 戦法選択の変更処理 */
+  if(e.target.classList.contains("senpo-select")){
+    refreshSenpoSelect()
 
   }
-
-  /* 戦法選択の重複処理 */
-  if(!e.target.classList.contains("senpo-select")) return
-
-  const value = e.target.value
-  if(!value) return
-
-  document.querySelectorAll(".senpo-select").forEach(sel=>{
-    if(sel !== e.target && sel.value === value){
-      e.target.value=""
-    }
-  })
-
 })
