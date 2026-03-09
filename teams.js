@@ -197,7 +197,7 @@ function linkStatesToSenpo(){
 
   const stateMap={}
 
-  DB.senpoStates.forEach(st=>{
+  DB.senpoState.forEach(st=>{
 
     if(!stateMap[st.senpo_id]){
       stateMap[st.senpo_id]=[]
