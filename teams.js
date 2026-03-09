@@ -230,7 +230,7 @@ function getFilteredSenpo(){
     if(s.get==="固有") return false
 
     if(f.type && s.type!==f.type) return false
-    if(effect && !s.states.some(st=>st.effect===effect)) return false
+    if(f.state && !s.states.some(st=>st.effect===f.state)) return false
     return true
 
   })
