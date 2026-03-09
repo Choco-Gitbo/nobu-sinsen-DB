@@ -230,6 +230,7 @@ function linkStatesToSenpo(){
 function getFilteredSenpo(){
 
   const f=getSenpoFilter()
+  const unit = getUnitFilter()
 
   return DB.senpo.filter(s=>{
 
@@ -237,8 +238,14 @@ function getFilteredSenpo(){
 
     if(f.type && s.type!==f.type) return false
     if(f.state && !s.states.some(st=>st.effect===f.state)) return false
-    return true
+    
+    if(unit){
 
+      const units = (s.unit || "").split("|").map(u=>u.trim())
+      if(!units.includes(unit)) return false
+    
+    return true
+    }
   })
 
 }
@@ -572,6 +579,12 @@ function getSenpoFilter(){
   }
 
 }
+function getUnitFilter(){
+  return document.querySelector(".unit-select").value
+}
+
+/* */
+
 document.querySelectorAll('.collapsible-column').forEach(column => {
   column.addEventListener('click', function(e) {
     // inputタグなどをクリックした時は折りたたまないようにする
@@ -646,3 +659,7 @@ document.addEventListener("change",e=>{
 document
 .querySelector(".maxcost")
 .addEventListener("change", updateNowCost)
+
+document
+.querySelector(".unit-select")
+.addEventListener("change",refreshSenpoSelect)
