@@ -139,15 +139,10 @@ function setupSenpoStates(){
     let range=""
     let effect=st.label
 
-    if (st.label.startsWith("敵軍")) {
-      target = "敵軍";
-    } else if (st.label.startsWith("自軍")) {
-      target = "自軍";
-    } else if (st.label.startsWith("友軍")) {
-      target = "友軍";
-    } else if (st.label.startsWith("自身")) {
-      target = "自身";
-    }
+    if(st.label.startsWith("敵軍")) target="敵軍"
+    else if(st.label.startsWith("自軍")) target="自軍"
+    else if(st.label.startsWith("友軍")) target="友軍"
+    else if(st.label.startsWith("自身")) target="自身"
 
     if (st.label.includes("全体")) {
       range = "全体";
