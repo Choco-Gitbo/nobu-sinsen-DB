@@ -434,7 +434,7 @@ function createSenpoStateFilter(){
 function setupTeamType(){
 
   const types = ["騎兵","弓兵","鉄砲","足軽","兵器"]
-  document.querySelectorAll(".team-select").forEach(select=>{
+  document.querySelectorAll(".unit-select").forEach(select=>{
     select.innerHTML = ""
     types.forEach(t=>{
       const option = document.createElement("option")
