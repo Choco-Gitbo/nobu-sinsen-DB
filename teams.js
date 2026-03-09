@@ -296,7 +296,16 @@ function setBushoData(column,id){
   setupHeigaku(column, b)
 
 }
+function resetBushoData(column){
 
+  column.querySelector(".busho-grid").innerHTML=`
+    <div class="label-center">C</div>
+    <div class="label-center">0凸</div>
+    <div class="label-center">"未覚醒"}</div>
+  `
+  column.querySelector(".senpo1").textContent = ""
+
+}
 function attrName(key){
 
   const map={
@@ -533,8 +542,12 @@ document.addEventListener("change",e=>{
   if(e.target.classList.contains("busho-select")){
 
     const column=e.target.closest(".team")
-
-    setBushoData(column,e.target.value)
+    const id = e.target.value
+    if(!id){
+      resetBushoData(column)
+      return
+    }
+    setBushoData(column,id)
 
     refreshBushoSelect()
 
