@@ -300,8 +300,16 @@ function resetBushoData(column){
 
   column.querySelector(".busho-grid").innerHTML=`
     <div class="label-center">C</div>
-    <div class="label-center">0凸</div>
-    <div class="label-center">"未覚醒"}</div>
+    <div class="label-center">凸</div>
+    <div class="label-center">"未覚醒"</div>
+  `
+  column.querySelector(".attr-grid").innerHTML=`
+      <div>武勇</div><input type="number" value="0">
+      <div>知略</div><input type="number" value="0">
+      <div>統率</div><input type="number" value="0">
+      <div>速度</div><input type="number" value="0">
+      <div>政務</div><input type="number" value="0">
+      <div>魅力</div><input type="number" value="0">
   `
   column.querySelector(".senpo1").textContent = ""
 
