@@ -6,28 +6,33 @@ const DB={
   heigaku:[]
 }
 
-async function loadCSV(path){
+function parseCSV(text) {
 
-  const res=await fetch(path)
-  const text=await res.text()
-  const rows=text.trim().split("\n")
-  const header=rows.shift().split(",")
+  text = text.replace(/^\uFEFF/, "");
 
-  return rows.map(r=>{
-    const cols=r.split(",")
-    const obj={}
-    header.forEach((h,i)=>obj[h]=cols[i])
-    return obj
-  })
+  const lines = text.trim().split("\n");
+  const headers = lines.shift().split(",").map(h => h.trim());
+
+  return lines.map(line => {
+
+    const values = line.split(",").map(v => v.trim());
+    const obj = {};
+
+    headers.forEach((h,i)=>{
+      obj[h] = values[i] ?? "";
+    });
+
+    return obj;
+
+  });
 }
-
 async function init(){
   /* 初期化処理*/
-  DB.busho=await loadCSV("data/busho.csv")
-  DB.senpo=await loadCSV("data/senpo.csv")
-  DB.senpoState=await loadCSV("data/senpo_state.csv")
-  DB.tokusei=await loadCSV("data/tokusei.csv")
-  DB.heigaku=await loadCSV("data/heigaku.csv")
+  DB.busho=parseCSV("data/busho.csv")
+  DB.senpo=parseCSV("data/senpo.csv")
+  DB.senpoState=parseCSV("data/senpo_state.csv")
+  DB.tokusei=parseCSV("data/tokusei.csv")
+  DB.heigaku=parseCSV("data/heigaku.csv")
 
   createBushoSelect()
   createSenpoSelect()
