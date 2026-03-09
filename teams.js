@@ -6,6 +6,14 @@ const DB={
   heigaku:[]
 }
 
+async function loadCSV(url){
+
+  const res = await fetch(url)
+  const text = await res.text()
+
+  return parseCSV(text)
+
+}
 function parseCSV(text) {
 
   text = text.replace(/^\uFEFF/, "");
@@ -28,11 +36,11 @@ function parseCSV(text) {
 }
 async function init(){
   /* 初期化処理*/
-  DB.busho=parseCSV("data/busho.csv")
-  DB.senpo=parseCSV("data/senpo.csv")
-  DB.senpoState=parseCSV("data/senpo_state.csv")
-  DB.tokusei=parseCSV("data/tokusei.csv")
-  DB.heigaku=parseCSV("data/heigaku.csv")
+  DB.busho=await loadCSV("data/busho.csv")
+  DB.senpo=await loadCSV("data/senpo.csv")
+  DB.senpoState=await loadCSV("data/senpo_state.csv")
+  DB.tokusei=await loadCSV("data/tokusei.csv")
+  DB.heigaku=await loadCSV("data/heigaku.csv")
 
   createBushoSelect()
   createSenpoSelect()
