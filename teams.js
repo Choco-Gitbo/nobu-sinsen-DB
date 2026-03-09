@@ -301,7 +301,7 @@ function resetBushoData(column){
   column.querySelector(".busho-grid").innerHTML=`
     <div class="label-center">C</div>
     <div class="label-center">凸</div>
-    <div class="label-center">"未覚醒"</div>
+    <div class="label-center">未覚醒</div>
   `
   column.querySelector(".attr-grid").innerHTML=`
       <div>武勇</div><input type="number" value="0">
@@ -312,6 +312,10 @@ function resetBushoData(column){
       <div>魅力</div><input type="number" value="0">
   `
   column.querySelector(".senpo1").textContent = ""
+  column.querySelector(".tokusei0").textContent = ""
+  column.querySelector(".tokusei1").textContent = ""
+  column.querySelector(".tokusei3").textContent = ""
+  column.querySelector(".tokusei5").textContent = ""
 
 }
 function attrName(key){
