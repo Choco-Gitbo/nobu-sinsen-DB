@@ -32,6 +32,8 @@ async function init(){
   createBushoSelect()
   createSenpoSelect()
 
+  setupSenpoStates()  /* 戦法状態の作成 */
+  
   createBushoFactionFilter() 
   createBushoCostFilter() 
   createSenpoTypeFilter()
@@ -129,6 +131,73 @@ function refreshSenpoSelect(){
 
 }
 
+function setupSenpoStates(){
+
+  DB.senpoStates.forEach(st=>{
+
+    let target=""
+    let range=""
+    let effect=st.label
+
+    if(st.label.startsWith("敵軍")) target="敵軍"
+    else if(st.label.startsWith("自軍")) target="自軍"
+    else if(st.label.startsWith("友軍")) target="友軍"
+    else if(st.label.startsWith("自身")) target="自身"
+
+    if (st.label.includes("全体")) range = "全体"
+    else if (st.label.includes("単体")) range = "単体"
+    else if (st.label.includes("1-2人")) range = "1-2人"
+    else if (st.label.includes("2人")) range = "2人"
+    else if (st.label.includes("2-3人")) range = "2-3人"
+    else if (st.label.includes("大将")) range = "大将"
+    else if (st.label.includes("副将")) range = "副将"
+    else if (st.label.includes("異性")) range = "異性"
+    else if (st.label.includes("雑賀本願寺")) range = "雑賀本願寺"
+
+    effect=effect
+      .replace("敵軍","")
+      .replace("自軍","")
+      .replace("友軍","")
+      .replace("自身","")
+      .replace("全体","")
+      .replace("単体","")
+      .replace("1-2人","")
+      .replace("2人","")
+      .replace("2-3人","")
+      .replace("大将","")
+      .replace("副将","")
+      .replace("異性","")
+      .replace("雑賀本願寺","")
+
+    st.target=target
+    st.range=range
+    st.effect=effect
+
+  })
+
+  linkStatesToSenpo()
+
+}
+function linkStatesToSenpo(){
+
+  const stateMap={}
+
+  DB.senpoStates.forEach(st=>{
+
+    if(!stateMap[st.senpo_id]){
+      stateMap[st.senpo_id]=[]
+    }
+
+    stateMap[st.senpo_id].push(st)
+
+  })
+
+  DB.senpo.forEach(s=>{
+    s.states=stateMap[s.id] || []
+  })
+
+}
+
 function getFilteredSenpo(){
 
   const f=getSenpoFilter()
@@ -138,12 +207,7 @@ function getFilteredSenpo(){
     if(s.get==="固有") return false
 
     if(f.type && s.type!==f.type) return false
-    if(f.state){
-
-      const states = s.states
-      if(!DB.senpoState.some(st => st.label === f.state)) return false
-
-    }
+    if(effect && !s.states.some(st=>st.effect===effect)) return false
     return true
 
   })
