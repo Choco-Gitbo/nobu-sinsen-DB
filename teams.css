@@ -185,6 +185,14 @@ select{
   margin-bottom:4px;
   border-radius:4px;
 }
+.nowcost{
+  text-align:right;
+  font-size:11px;
+  background:#f3f3f3;
+  padding:4px 0;
+  margin-bottom:4px;
+  border-radius:4px;
+}
 
 /* 折りたたみ用のスタイル */
 .collapsible-column {
