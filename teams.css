@@ -31,7 +31,12 @@ body{
   padding:6px;
   margin-bottom:2px;
 }
-
+.team-grid{
+  display:grid;
+  grid-template-columns:  auto auto auto;
+  gap:3px;
+  margin-bottom:2px;
+}
 .busho-grid{
   display:grid;
   grid-template-columns:  auto auto auto;
