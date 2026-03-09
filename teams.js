@@ -133,7 +133,7 @@ function refreshSenpoSelect(){
 
 function setupSenpoStates(){
 
-  DB.senpoStates.forEach(st=>{
+  DB.senpoState.forEach(st=>{
 
     let target=""
     let range=""
