@@ -43,8 +43,8 @@ async function init(){
   DB.heigaku=await loadCSV("data/heigaku.csv")
 
   setupTeamType()
-  setupMaxCost()
-  
+  createMaxCost()
+
   createBushoSelect()
   createSenpoSelect()
 
@@ -94,6 +94,8 @@ function refreshBushoSelect(){
     })
   })
 }
+
+
 function getFilteredBusho(){
 
   const f=getBushoFilter()
@@ -435,21 +437,51 @@ function setupTeamType(){
   })
 
 }
-function setupMaxCost(){
+function createMaxCost(){
 
-  const types = [15,16,17,18,19,20]
-  document.querySelectorAll(".maxcost").forEach(select=>{
-    select.innerHTML = ""
-    types.forEach(t=>{
-      const option = document.createElement("option")
-      option.value = t
-      option.textContent = t
-      select.appendChild(option)
-    })
-  })
+  const select = document.querySelector(".maxcost")
+
+  for(let i=15;i<=20;i++){
+
+    const op = document.createElement("option")
+    op.value = i
+    op.textContent = i
+
+    if(i===15) op.selected = true   // 初期値
+
+    select.appendChild(op)
+
+  }
 
 }
+function updateNowCost(){
 
+  let total = 0
+
+  document.querySelectorAll(".busho-select").forEach(select=>{
+
+    const id = select.value
+    if(!id) return
+
+    const b = DB.busho.find(x=>x.id===id)
+    if(!b) return
+
+    total += Number(b.cost)||0
+
+  })
+
+  const now = document.querySelector(".nowcost")
+  const max = Number(document.querySelector(".maxcost").value)
+
+  now.textContent = total
+
+  if(total > max){
+    now.style.color = "red"
+  }else{
+    now.style.color = ""
+  }
+
+}
 function setupHeigakuType(){
 
   const types = ["武略","機略","陣立","臨戦"]
@@ -608,3 +640,6 @@ document.addEventListener("change",e=>{
 
   }
 })
+document
+.querySelector(".maxcost")
+.addEventListener("change", updateNowCost)
