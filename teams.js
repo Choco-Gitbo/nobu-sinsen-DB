@@ -42,6 +42,9 @@ async function init(){
   DB.tokusei=await loadCSV("data/tokusei.csv")
   DB.heigaku=await loadCSV("data/heigaku.csv")
 
+  setupTeamType()
+  setupMaxCost()
+  
   createBushoSelect()
   createSenpoSelect()
 
@@ -418,7 +421,34 @@ function createSenpoStateFilter(){
 
 }
 
-  
+function setupTeamType(){
+
+  const types = ["騎兵","弓兵","鉄砲","足軽","兵器"]
+  document.querySelectorAll(".team-select").forEach(select=>{
+    select.innerHTML = ""
+    types.forEach(t=>{
+      const option = document.createElement("option")
+      option.value = t
+      option.textContent = t
+      select.appendChild(option)
+    })
+  })
+
+}
+function setupMaxCost(){
+
+  const types = [15,16,17,18,19,20]
+  document.querySelectorAll(".maxcost").forEach(select=>{
+    select.innerHTML = ""
+    types.forEach(t=>{
+      const option = document.createElement("option")
+      option.value = t
+      option.textContent = t
+      select.appendChild(option)
+    })
+  })
+
+}
 
 function setupHeigakuType(){
 
