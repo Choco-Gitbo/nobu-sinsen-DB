@@ -620,6 +620,7 @@ document.addEventListener("change",e=>{
     const id = e.target.value
     if(!id){
       resetBushoData(column)
+      updateNowCost()
       return
     }
     setBushoData(column,id)
