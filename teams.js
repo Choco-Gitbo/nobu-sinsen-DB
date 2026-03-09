@@ -139,22 +139,37 @@ function setupSenpoStates(){
     let range=""
     let effect=st.label
 
-    if(st.label.startsWith("敵軍")) target="敵軍"
-    else if(st.label.startsWith("自軍")) target="自軍"
-    else if(st.label.startsWith("友軍")) target="友軍"
-    else if(st.label.startsWith("自身")) target="自身"
+    if (st.label.startsWith("敵軍")) {
+      target = "敵軍";
+    } else if (st.label.startsWith("自軍")) {
+      target = "自軍";
+    } else if (st.label.startsWith("友軍")) {
+      target = "友軍";
+    } else if (st.label.startsWith("自身")) {
+      target = "自身";
+    }
 
-    if (st.label.includes("全体")) range = "全体"
-    else if (st.label.includes("単体")) range = "単体"
-    else if (st.label.includes("1-2人")) range = "1-2人"
-    else if (st.label.includes("2人")) range = "2人"
-    else if (st.label.includes("2-3人")) range = "2-3人"
-    else if (st.label.includes("大将")) range = "大将"
-    else if (st.label.includes("副将")) range = "副将"
-    else if (st.label.includes("異性")) range = "異性"
-    else if (st.label.includes("雑賀本願寺")) range = "雑賀本願寺"
+    if (st.label.includes("全体")) {
+      range = "全体";
+    } else if (st.label.includes("単体")) {
+      range = "単体";
+    } else if (st.label.includes("1-2人")) {
+      range = "1-2人";
+    } else if (st.label.includes("2人")) {
+      range = "2人";
+    } else if (st.label.includes("2-3人")) {
+      range = "2-3人";
+    } else if (st.label.includes("大将")) {
+      range = "大将";
+    } else if (st.label.includes("副将")) {
+      range = "副将";
+    } else if (st.label.includes("異性")) {
+      range = "異性";
+    } else if (st.label.includes("雑賀本願寺")) {
+      range = "雑賀本願寺";
+    }
 
-    effect=effect
+    effect = st.label
       .replace("敵軍","")
       .replace("自軍","")
       .replace("友軍","")
@@ -167,7 +182,7 @@ function setupSenpoStates(){
       .replace("大将","")
       .replace("副将","")
       .replace("異性","")
-      .replace("雑賀本願寺","")
+      .replace("雑賀本願寺","");
 
     st.target=target
     st.range=range
