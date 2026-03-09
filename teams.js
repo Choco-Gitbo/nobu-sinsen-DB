@@ -44,7 +44,8 @@ async function init(){
 
   setupTeamType()
   createMaxCost()
-
+  updateNowCost()
+  
   createBushoSelect()
   createSenpoSelect()
 
@@ -625,6 +626,7 @@ document.addEventListener("change",e=>{
 
     refreshBushoSelect()
 
+    updateNowCost()
   }
 
     /* 戦法選択の変更処理 */
