@@ -33,7 +33,7 @@ body{
 }
 .team-grid{
   display:grid;
-  grid-template-columns:  auto auto auto;
+  grid-template-columns:  auto auto auto auto auto auto;
   gap:3px;
   margin-bottom:2px;
 }
