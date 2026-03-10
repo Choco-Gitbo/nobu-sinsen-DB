@@ -93,7 +93,9 @@ function refreshBushoSelect(){
       select.appendChild(op)
 
     })
-    select.value = current 
+    select.value = current
+    select.textContent = DB.busho[current].name 
+    
   })
 }
 
