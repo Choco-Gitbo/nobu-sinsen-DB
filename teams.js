@@ -81,12 +81,16 @@ function refreshBushoSelect(){
     .map(s=>s.value)
     .filter(v=>v)
 
+  const filtered = getFilteredBusho()
+  const usedIds = getSelectedBushoIds()
+
   document.querySelectorAll(".busho-select").forEach(select=>{
     const current = select.value
     select.innerHTML = `<option value="">武将選択</option>` 
-    const filtered = getFilteredBusho()
+    
     DB.busho.forEach(b=>{
       if(!filtered.includes(b) && b.id !== current) return 
+      if(usedIds.includes(b.id) && b.id !== current) return
       const op=document.createElement("option")
       op.value=b.id
       op.textContent=b.name
@@ -588,6 +592,27 @@ function getUnitFilter(){
   return document.querySelector(".unit-select").value
 }
 
+/* 使用中のIDを取得 */
+function getSelectedBushoIds(){
+
+  const ids=[]
+
+  document.querySelectorAll(".busho-select").forEach(s=>{
+    if(s.value) ids.push(s.value)
+  })
+
+  return ids
+}
+function getSelectedSenpoIds(){
+
+  const ids=[]
+
+  document.querySelectorAll(".senpo-select").forEach(s=>{
+    if(s.value) ids.push(s.value)
+  })
+
+  return ids
+}
 /* */
 
 document.querySelectorAll('.collapsible-column').forEach(column => {
