@@ -322,12 +322,12 @@ function resetBushoData(column){
     <div class="label-center">未覚醒</div>
   `
   column.querySelector(".attr-grid").innerHTML=`
-      <div>武勇</div><input type="number" value="0">
-      <div>知略</div><input type="number" value="0">
-      <div>統率</div><input type="number" value="0">
-      <div>速度</div><input type="number" value="0">
-      <div>政務</div><input type="number" value="0">
-      <div>魅力</div><input type="number" value="0">
+      <div>武勇</div><input class ="input-buyu" type="number" value="0">
+      <div>知略</div><input class ="input-tiryaku" type="number" value="0">
+      <div>統率</div><input class ="input-tousotsu" type="number" value="0">
+      <div>速度</div><input class ="input-sokudo" type="number" value="0">
+      <div>政務</div><input class ="input-seimu" type="number" value="0">
+      <div>魅力</div><input class ="input-miryoku" type="number" value="0">
   `
   column.querySelector(".senpo1").textContent = ""
   column.querySelector(".tokusei0").textContent = ""
