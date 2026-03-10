@@ -86,7 +86,7 @@ function refreshBushoSelect(){
     select.innerHTML = `<option value="">武将選択</option>` 
     const filtered = getFilteredBusho()
     DB.busho.forEach(b=>{
-      if(filtered.includes(b) && b.id == current) return 
+      if(!filtered.includes(b) && b.id !== current) return 
       const op=document.createElement("option")
       op.value=b.id
       op.textContent=b.name
