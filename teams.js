@@ -140,14 +140,17 @@ function refreshSenpoSelect(){
     .map(s=>s.value)
     .filter(v=>v)
 
+  const filtered = getFilteredSenpo()
+  const usedIds = getSelectedBushoIds()
+
   document.querySelectorAll(".senpo-select").forEach(select=>{
 
     const current = select.value
-    const filtered = getFilteredSenpo()
     select.innerHTML=`<option value="">戦法選択</option>`
     DB.senpo.forEach(s=>{
       if(s.get === "固有") return
       if(!filtered.includes(s) && s.id !== current) return
+      if(usedIds.includes(s.id) && s.id !== current) return
       const op=document.createElement("option")
       op.value=s.id
       op.textContent=s.name
