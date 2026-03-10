@@ -139,17 +139,18 @@ function refreshSenpoSelect(){
   document.querySelectorAll(".senpo-select").forEach(select=>{
 
     const current = select.value
+    const filtered = getFilteredSenpo()
     select.innerHTML=`<option value="">戦法選択</option>`
-    getFilteredSenpo().forEach(s=>{
+    DB.senpo.forEach(s=>{
       if(s.get === "固有") return
-      if(selected.includes(s.id) && s.id !== current) return
+      if(!filtered.includes(s) && s.id !== current) return
       const op=document.createElement("option")
       op.value=s.id
       op.textContent=s.name
-      if(s.id === current) op.selected=true
+      /* if(s.id === current) op.selected=true */
       select.appendChild(op)
     })
-
+    select.value = current
   })
 
 }
