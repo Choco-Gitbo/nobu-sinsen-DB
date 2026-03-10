@@ -83,7 +83,7 @@ function refreshBushoSelect(){
 
   document.querySelectorAll(".busho-select").forEach(select=>{
     const current = select.value
-    select.innerHTML = `<option value="">武将選択</option>` 
+    /* select.innerHTML = `<option value="">武将選択</option>` */
     getFilteredBusho().forEach(b=>{
       if(selected.includes(b.id) && b.id !== current) return
       const op=document.createElement("option")
