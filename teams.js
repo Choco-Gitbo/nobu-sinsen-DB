@@ -266,7 +266,7 @@ function getFilteredSenpo(){
 function setTeamData(){
   document.querySelector(".team-grid").innerHTML=`
     <div class="label"> 兵種:<select class="unit-select"></select></div>
-    <div class="label">Cost: class="nowcost">0 / <select class="maxcost"></select></div>
+    <div class="label">Cost: class="nowcost" 0 / <select class="maxcost"></select></div>
   `
 }
 
