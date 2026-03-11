@@ -141,7 +141,7 @@ function refreshSenpoSelect(){
     .filter(v=>v)
 
   const filtered = getFilteredSenpo()
-  const usedIds = getSelectedBushoIds()
+  const usedIds = getSelectedSenpoIds()
 
   document.querySelectorAll(".senpo-select").forEach(select=>{
 
