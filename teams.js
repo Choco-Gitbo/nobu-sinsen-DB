@@ -42,7 +42,6 @@ async function init(){
   DB.tokusei=await loadCSV("data/tokusei.csv")
   DB.heigaku=await loadCSV("data/heigaku.csv")
 
-  setTeamData()
   setupTeamType()
   createMaxCost()
   updateNowCost()
@@ -263,14 +262,7 @@ function getFilteredSenpo(){
 
 }
 
-function setTeamData(){
-  document.querySelector(".team-grid").innerHTML=`
-    <div class="label"> 兵種:<select class="unit-select"></select></div>
-    <div class="label">Cost: class="nowcost" 0 / <select class="maxcost"></select></div>
-  `
-}
-
-  
+ 
 
 function setBushoData(column,id){
 
