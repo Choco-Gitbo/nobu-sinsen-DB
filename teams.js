@@ -334,7 +334,7 @@ function resetBushoData(column){
   column.querySelector(".attr-grid").innerHTML=`
       <div>武勇</div><input class ="input-buyu" type="number" value="0">
       <div>知略</div><input class ="input-tiryaku" type="number" value="0">
-      <div>統率</div><input class ="input-tousotsu" type="number" value="0">
+      <div>統率</div><input class ="input-tosotsu" type="number" value="0">
       <div>速度</div><input class ="input-sokudo" type="number" value="0">
       <div>政務</div><input class ="input-seimu" type="number" value="0">
       <div>魅力</div><input class ="input-miryoku" type="number" value="0">
@@ -699,3 +699,81 @@ document
 document
 .querySelector(".unit-select")
 .addEventListener("change",refreshSenpoSelect)
+
+/* 設定内容の保存 */
+function saveTeam(){
+
+  const team=[]
+
+  /* team.push({
+    heishu:col.querySelector(".unit-select")?.value || "",
+    maxcost:col.querySelector(".maxcost")?.value || ""
+  }) */
+
+  document.querySelectorAll(".column").forEach(col=>{
+
+    team.push({
+      busho:col.querySelector(".busho-select")?.value || "",
+      buyu:col.querySelector(".input-buyu")?.value || "",
+      tiryaku:col.querySelector(".input-tiryaku")?.value || "",
+      tosotsu:col.querySelector(".input-tosotsu")?.value || "",
+      sokudo:col.querySelector(".input-sokudo")?.value || "",
+      seimu:col.querySelector(".input-seimu")?.value || "",
+      miryoku:col.querySelector(".input-miryoku")?.value || "",
+      senpo2:col.querySelector(".senpo2")?.value || "",
+      senpo3:col.querySelector(".senpo3")?.value || "",
+      heigakuType:col.querySelector(".heigaku-type")?.value || "",
+      heigakuKi:col.querySelector(".heigaku-ki")?.value || "",
+      heigakuSei:col.querySelector(".heigaku-sei")?.value || ""
+    })
+
+  })
+
+  localStorage.setItem("teamData",JSON.stringify(team))
+
+}
+/* 設定内容の読み出し */
+function loadTeam(){
+
+  const data=JSON.parse(localStorage.getItem("teamData")||"[]")
+
+  const columns=document.querySelectorAll(".column")
+
+  data.forEach((t,i)=>{
+
+    const col=columns[i]
+    if(!col) return
+
+    col.querySelector(".busho-select").value=t.busho||""
+    col.querySelector(".input-buyu").value=t.buyu||""
+    col.querySelector(".input-tiryaku").value=t.tiryaku||""
+    col.querySelector(".input-tosotsu").value=t.tosotsu||""
+    col.querySelector(".input-sokudo").value=t.sokudo||""
+    col.querySelector(".input-seimu").value=t.seimu||""
+    col.querySelector(".input-miryoku").value=t.miryoku||""
+    col.querySelector(".senpo2").value=t.senpo2||""
+    col.querySelector(".senpo3").value=t.senpo3||""
+    col.querySelector(".heigaku-type").value=t.heigakuType||""
+    col.querySelector(".heigaku-ki").value=t.heigakuKi||""
+    col.querySelector(".heigaku-sei").value=t.heigakuSei||""
+
+  })
+
+}
+
+/* 自動保存 */
+document.addEventListener("change",e=>{
+
+  if(e.target.tagName==="SELECT"){
+    saveTeam()
+  }
+
+})
+/* 初回ロード */
+document.addEventListener("change",e=>{
+
+  if(e.target.tagName==="SELECT"){
+    saveTeam()
+  }
+
+})
