@@ -44,7 +44,7 @@ async function init(){
 
   setupTeamType()
   createMaxCost()
-  updateNowCost()
+  
   
   createBushoSelect()
   createSenpoSelect()
@@ -61,6 +61,8 @@ async function init(){
   refreshSenpoSelect()
 
   loadTeam()
+
+  updateNowCost()
 }
 
 function createBushoSelect(){
