@@ -782,10 +782,10 @@ function loadTeam(){
 /* 初回ロード */
 window.addEventListener("DOMContentLoaded",()=>{
   init()
-  loadTeam()
+  
 
   refreshBushoSelect()
   refreshSenpoSelect()
-
+  loadTeam()
   updateNowCost()
 })
