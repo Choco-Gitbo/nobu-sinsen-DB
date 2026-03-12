@@ -710,7 +710,7 @@ function saveTeam(){
     maxcost:col.querySelector(".maxcost")?.value || ""
   }) */
 
-  document.querySelectorAll(".column").forEach(col=>{
+  document.querySelectorAll(".team").forEach(col=>{
 
     team.push({
       busho:col.querySelector(".busho-select")?.value || "",
@@ -737,7 +737,7 @@ function loadTeam(){
 
   const data=JSON.parse(localStorage.getItem("teamData")||"[]")
 
-  const columns=document.querySelectorAll(".column")
+  const columns=document.querySelectorAll(".team")
 
   data.forEach((t,i)=>{
 
@@ -745,6 +745,9 @@ function loadTeam(){
     if(!col) return
 
     col.querySelector(".busho-select").value=t.busho||""
+    if(t.busho){
+      setBushoData(col,t.busho)
+    }
     col.querySelector(".input-buyu").value=t.buyu||""
     col.querySelector(".input-tiryaku").value=t.tiryaku||""
     col.querySelector(".input-tosotsu").value=t.tosotsu||""
