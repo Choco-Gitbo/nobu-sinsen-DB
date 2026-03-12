@@ -770,10 +770,8 @@ document.addEventListener("change",e=>{
 
 })
 /* 初回ロード */
-document.addEventListener("change",e=>{
+window.addEventListener("DOMContentLoaded",()=>{
 
-  if(e.target.tagName==="SELECT"){
-    saveTeam()
-  }
+  loadTeam()
 
 })
