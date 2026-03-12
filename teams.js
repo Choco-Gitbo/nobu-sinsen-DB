@@ -720,8 +720,8 @@ function saveTeam(){
       sokudo:col.querySelector(".input-sokudo")?.value || "",
       seimu:col.querySelector(".input-seimu")?.value || "",
       miryoku:col.querySelector(".input-miryoku")?.value || "",
-      senpo2:col.querySelector(".senpo-select senpo2")?.value || "",
-      senpo3:col.querySelector(".senpo-select senpo3")?.value || "",
+      senpo2:col.querySelector(".senpo2")?.value || "",
+      senpo3:col.querySelector(".senpo3")?.value || "",
       heigakuType:col.querySelector(".heigaku-type")?.value || "",
       heigakuKi:col.querySelector(".heigaku-ki")?.value || "",
       heigakuSei1:col.querySelector(".heigaku-sei1")?.value || "",
@@ -756,8 +756,8 @@ function loadTeam(){
     col.querySelector(".input-sokudo").value=t.sokudo||""
     col.querySelector(".input-seimu").value=t.seimu||""
     col.querySelector(".input-miryoku").value=t.miryoku||""
-    col.querySelector(".senpo-select senpo2").value=t.senpo2||""
-    col.querySelector(".senpo-select senpo3").value=t.senpo3||""
+    col.querySelector(".senpo2").value=t.senpo2||""
+    col.querySelector(".senpo3").value=t.senpo3||""
     col.querySelector(".heigaku-type").value=t.heigakuType||""
     col.querySelector(".heigaku-ki").value=t.heigakuKi||""
     col.querySelector(".heigaku-sei1").value=t.heigakuSei1||""
