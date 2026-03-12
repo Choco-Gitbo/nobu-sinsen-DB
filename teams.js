@@ -766,6 +766,11 @@ function loadTeam(){
 
   })
 
+  refreshBushoSelect()
+  refreshSenpoSelect()
+
+  saveTeam()
+
 }
 
 /* 自動保存 */
@@ -781,4 +786,8 @@ window.addEventListener("DOMContentLoaded",()=>{
 
   loadTeam()
 
+  refreshBushoSelect()
+  refreshSenpoSelect()
+
+  updateNowCost()
 })
