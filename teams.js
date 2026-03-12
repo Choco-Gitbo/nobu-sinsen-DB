@@ -768,10 +768,6 @@ function loadTeam(){
 
   })
 
-  refreshBushoSelect()
-  refreshSenpoSelect()
-
-  saveTeam()
 
 }
 
