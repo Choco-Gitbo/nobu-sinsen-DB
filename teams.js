@@ -662,6 +662,9 @@ document.querySelectorAll(".heigaku-type").forEach(select=>{
 
 /* チェンジイベント処理 */
 document.addEventListener("change",e=>{
+
+  saveTeam()
+
   /* 武将選択の変更処理 */
   if(e.target.classList.contains("busho-select")){
 
@@ -677,15 +680,11 @@ document.addEventListener("change",e=>{
     refreshBushoSelect()
 
     updateNowCost()
-
-    saveTeam()
   }
 
     /* 戦法選択の変更処理 */
   if(e.target.classList.contains("senpo-select")){
     refreshSenpoSelect()
-
-    saveTeam()
   }
 
   if(e.target.closest(".select-filter")){
