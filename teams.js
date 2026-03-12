@@ -677,12 +677,15 @@ document.addEventListener("change",e=>{
     refreshBushoSelect()
 
     updateNowCost()
+
+    saveTeam()
   }
 
     /* 戦法選択の変更処理 */
   if(e.target.classList.contains("senpo-select")){
     refreshSenpoSelect()
 
+    saveTeam()
   }
 
   if(e.target.closest(".select-filter")){
@@ -774,13 +777,13 @@ function loadTeam(){
 }
 
 /* 自動保存 */
-document.addEventListener("change",e=>{
+/* document.addEventListener("change",e=>{
 
   if(e.target.tagName==="SELECT"){
     saveTeam()
   }
 
-})
+})*/
 /* 初回ロード */
 window.addEventListener("DOMContentLoaded",()=>{
 
