@@ -59,6 +59,8 @@ async function init(){
 
   refreshBushoSelect()
   refreshSenpoSelect()
+
+  loadTeam()
 }
 
 function createBushoSelect(){
@@ -575,7 +577,7 @@ function setupHeigaku(column, b){
 
 }
 
-/*init()*/
+init()
 
 /* フィルター値の取得 */
 function getBushoFilter(){
@@ -780,7 +782,7 @@ function loadTeam(){
 
 })*/
 /* 初回ロード */
-window.addEventListener("DOMContentLoaded",()=>{
+/*window.addEventListener("DOMContentLoaded",()=>{
    init()
   
 
@@ -788,4 +790,4 @@ window.addEventListener("DOMContentLoaded",()=>{
   refreshSenpoSelect() 
   loadTeam()
   updateNowCost()
-})
+}) */
