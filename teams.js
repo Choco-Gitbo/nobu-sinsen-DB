@@ -714,12 +714,12 @@ function saveTeam(){
 
     team.push({
       busho:col.querySelector(".busho-select")?.value || "",
-      buyu:col.querySelector(".input-buyu")?.value || "",
-      tiryaku:col.querySelector(".input-tiryaku")?.value || "",
-      tosotsu:col.querySelector(".input-tosotsu")?.value || "",
-      sokudo:col.querySelector(".input-sokudo")?.value || "",
-      seimu:col.querySelector(".input-seimu")?.value || "",
-      miryoku:col.querySelector(".input-miryoku")?.value || "",
+      buyu:col.querySelector(".input-buyu")?.value || "0",
+      tiryaku:col.querySelector(".input-tiryaku")?.value || "0",
+      tosotsu:col.querySelector(".input-tosotsu")?.value || "0",
+      sokudo:col.querySelector(".input-sokudo")?.value || "0",
+      seimu:col.querySelector(".input-seimu")?.value || "0",
+      miryoku:col.querySelector(".input-miryoku")?.value || "0",
       senpo2:col.querySelector(".senpo2")?.value || "",
       senpo3:col.querySelector(".senpo3")?.value || "",
       heigakuType:col.querySelector(".heigaku-type")?.value || "",
@@ -751,11 +751,11 @@ function loadTeam(){
       setBushoData(col,t.busho)
     }
     col.querySelector(".input-buyu").value=t.buyu||""
-    col.querySelector(".input-tiryaku").value=t.tiryaku||""
-    col.querySelector(".input-tosotsu").value=t.tosotsu||""
-    col.querySelector(".input-sokudo").value=t.sokudo||""
-    col.querySelector(".input-seimu").value=t.seimu||""
-    col.querySelector(".input-miryoku").value=t.miryoku||""
+    col.querySelector(".input-tiryaku").value=t.tiryaku||"0"
+    col.querySelector(".input-tosotsu").value=t.tosotsu||"0"
+    col.querySelector(".input-sokudo").value=t.sokudo||"0"
+    col.querySelector(".input-seimu").value=t.seimu||"0"
+    col.querySelector(".input-miryoku").value=t.miryoku||"0"
     col.querySelector(".senpo2").value=t.senpo2||""
     col.querySelector(".senpo3").value=t.senpo3||""
     col.querySelector(".heigaku-type").value=t.heigakuType||""
