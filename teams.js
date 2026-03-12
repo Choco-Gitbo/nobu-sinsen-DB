@@ -781,11 +781,11 @@ function loadTeam(){
 })*/
 /* 初回ロード */
 window.addEventListener("DOMContentLoaded",()=>{
-  init()
+  /* init()
   
 
   refreshBushoSelect()
-  refreshSenpoSelect()
+  refreshSenpoSelect() */
   loadTeam()
   updateNowCost()
 })
