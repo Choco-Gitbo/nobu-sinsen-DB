@@ -724,7 +724,9 @@ function saveTeam(){
       senpo3:col.querySelector(".senpo3")?.value || "",
       heigakuType:col.querySelector(".heigaku-type")?.value || "",
       heigakuKi:col.querySelector(".heigaku-ki")?.value || "",
-      heigakuSei:col.querySelector(".heigaku-sei")?.value || ""
+      heigakuSei1:col.querySelector(".heigaku-sei1")?.value || "",
+      heigakuSei2:col.querySelector(".heigaku-sei2")?.value || "",
+      heigakuSei3:col.querySelector(".heigaku-sei3")?.value || ""
     })
 
   })
@@ -758,7 +760,9 @@ function loadTeam(){
     col.querySelector(".senpo3").value=t.senpo3||""
     col.querySelector(".heigaku-type").value=t.heigakuType||""
     col.querySelector(".heigaku-ki").value=t.heigakuKi||""
-    col.querySelector(".heigaku-sei").value=t.heigakuSei||""
+    col.querySelector(".heigaku-sei1").value=t.heigakuSei1||""
+    col.querySelector(".heigaku-sei2").value=t.heigakuSei2||""
+    col.querySelector(".heigaku-sei3").value=t.heigakuSei3||""
 
   })
 
