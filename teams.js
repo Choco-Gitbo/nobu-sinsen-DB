@@ -713,11 +713,17 @@ document
 /* 設定内容の保存 */
 function saveTeam(){
 
-  const team=[]
+  const data = {
+
+    unit: document.querySelector(".unit-select")?.value || "",
+    maxcost: document.querySelector(".maxcost")?.value || "",
+    team: []
+
+  }
 
   document.querySelectorAll(".team").forEach(col=>{
 
-    team.push({
+    data.team.push({
       busho:col.querySelector(".busho-select")?.value || "",
       buyu:col.querySelector(".input-buyu")?.value || "0",
       tiryaku:col.querySelector(".input-tiryaku")?.value || "0",
@@ -736,13 +742,25 @@ function saveTeam(){
 
   })
 
-  localStorage.setItem("teamData_"+currentTeam,JSON.stringify(team))
+  localStorage.setItem("teamData_"+currentTeam,JSON.stringify(data))
 
 }
 /* 設定内容の読み出し */
 function loadTeam(){
 
-  const data=JSON.parse(localStorage.getItem("teamData_"+currentTeam)||"[]")
+  const data=JSON.parse(localStorage.getItem("teamData_"+currentTeam)||"{}")
+
+  if(!data.team) return
+
+  /* グローバル設定 */
+
+  if(data.unit){
+    document.querySelector(".unit-select").value = data.unit
+  }
+
+  if(data.maxcost){
+    document.querySelector(".maxcost").value = data.maxcost
+  }
 
   const columns=document.querySelectorAll(".team")
 
