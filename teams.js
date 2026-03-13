@@ -764,7 +764,7 @@ function loadTeam(){
 
   const columns=document.querySelectorAll(".team")
 
-  data.forEach((t,i)=>{
+  data.team.forEach((t,i)=>{
 
     const col=columns[i]
     if(!col) return
