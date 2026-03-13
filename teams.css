@@ -216,3 +216,27 @@ select{
   color: #888;
   vertical-align: middle;
 }
+
+.team-preset-buttons{
+  margin-bottom:10px;
+}
+
+.team-preset-buttons button{
+
+  width:36px;
+  height:28px;
+  margin:2px;
+
+  border:1px solid #aaa;
+  background:#f4f4f4;
+  cursor:pointer;
+
+}
+
+.team-preset-buttons button.active{
+
+  background:#4caf50;
+  color:white;
+  font-weight:bold;
+
+}

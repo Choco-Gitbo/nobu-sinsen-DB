@@ -5,6 +5,7 @@ const DB={
   tokusei:[],
   heigaku:[]
 }
+let currentTeam = 1
 
 async function loadCSV(url){
 
@@ -63,6 +64,9 @@ async function init(){
   loadTeam()
 
   updateNowCost()
+
+  createTeamPresetButtons()
+  updatePresetActive()
 }
 
 function createBushoSelect(){
@@ -711,11 +715,6 @@ function saveTeam(){
 
   const team=[]
 
-  /* team.push({
-    heishu:col.querySelector(".unit-select")?.value || "",
-    maxcost:col.querySelector(".maxcost")?.value || ""
-  }) */
-
   document.querySelectorAll(".team").forEach(col=>{
 
     team.push({
@@ -737,13 +736,13 @@ function saveTeam(){
 
   })
 
-  localStorage.setItem("teamData",JSON.stringify(team))
+  localStorage.setItem("teamData_"+currentTeam,JSON.stringify(team))
 
 }
 /* 設定内容の読み出し */
 function loadTeam(){
 
-  const data=JSON.parse(localStorage.getItem("teamData")||"[]")
+  const data=JSON.parse(localStorage.getItem("teamData_"+currentTeam)||"[]")
 
   const columns=document.querySelectorAll(".team")
 
@@ -775,21 +774,47 @@ function loadTeam(){
 
 }
 
-/* 自動保存 */
-/* document.addEventListener("change",e=>{
+function createTeamPresetButtons(){
 
-  if(e.target.tagName==="SELECT"){
-    saveTeam()
+  const container = document.querySelector(".team-preset-buttons")
+
+  for(let i=1;i<=12;i++){
+
+    const btn = document.createElement("button")
+
+    btn.textContent = i
+    btn.dataset.team = i
+
+    btn.addEventListener("click",function(){
+
+      saveTeam()
+
+      currentTeam = Number(this.dataset.team)
+
+      loadTeam()
+
+      updatePresetActive()
+
+    })
+
+    container.appendChild(btn)
+
   }
 
-})*/
-/* 初回ロード */
-/*window.addEventListener("DOMContentLoaded",()=>{
-   init()
-  
+}
 
-  refreshBushoSelect()
-  refreshSenpoSelect() 
-  loadTeam()
-  updateNowCost()
-}) */
+function updatePresetActive(){
+
+  document
+  .querySelectorAll(".team-preset-buttons button")
+  .forEach(btn=>{
+
+    if(Number(btn.dataset.team) === currentTeam){
+      btn.classList.add("active")
+    }else{
+      btn.classList.remove("active")
+    }
+
+  })
+
+}
