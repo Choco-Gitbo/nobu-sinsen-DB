@@ -771,6 +771,7 @@ function loadTeam(){
 
   })
 
+  updateNowCost()
 
 }
 
