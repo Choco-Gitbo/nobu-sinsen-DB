@@ -260,6 +260,7 @@ select{
   border-radius:4px;
 }
 .unit-name {
+  width: 100;
   font-size:12px;
   padding: 2px 5px;
   border: 1px solid #ccc;
