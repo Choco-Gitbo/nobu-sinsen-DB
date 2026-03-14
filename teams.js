@@ -717,6 +717,7 @@ function saveTeam(){
 
     unit: document.querySelector(".unit-select")?.value || "",
     maxcost: document.querySelector(".maxcost")?.value || "",
+    name:document.querySelector(".unit-name")?.value || "",
     team: []
 
   }
@@ -760,6 +761,9 @@ function loadTeam(){
 
   if(data.maxcost){
     document.querySelector(".maxcost").value = data.maxcost
+  }
+  if(data.name){
+    document.querySelector(".unit-name").value = data.name
   }
 
   const columns=document.querySelectorAll(".team")
