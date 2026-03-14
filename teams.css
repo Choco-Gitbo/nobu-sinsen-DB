@@ -96,6 +96,7 @@ select{
 }
 
 .label{
+  white-space: nowrap;
   text-align:left;
   font-size:11px;
   background:#f3f3f3;
