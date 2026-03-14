@@ -505,7 +505,7 @@ function getFilteredSenpo(){
   const f=getSenpoFilter()
   const unit=getUnitFilter()
 
-  const mode = document.querySelector(".candidate-mode").value
+  const mode = document.querySelector(".list-mode").value
   const ownedIds = getOwnedSenpoIds()
 
   return DB.senpo.filter(s=>{
