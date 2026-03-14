@@ -244,7 +244,8 @@ select{
 
 /* 各グループ内の設定 */
 .unit-group,
-.cost-group {
+.cost-group,
+.name-group {
   display: flex;
   align-items: center;
   gap: 4px; /* 要素同士の細かい隙間（必要に応じて0にしてください） */
@@ -257,4 +258,10 @@ select{
   padding:4px 0;
   margin-bottom:4px;
   border-radius:4px;
+}
+unit-name {
+  width: 150px;
+  padding: 2px 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
