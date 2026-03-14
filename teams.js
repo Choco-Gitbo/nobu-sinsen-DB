@@ -348,6 +348,8 @@ function resetBushoData(column){
       <div>魅力</div><input class ="input-miryoku" type="number" value="0">
   `
   column.querySelector(".senpo1").textContent = ""
+  column.querySelector(".senpo2").value = ""
+  column.querySelector(".senpo3").value = ""
   column.querySelector(".tokusei0").textContent = ""
   column.querySelector(".tokusei1").textContent = ""
   column.querySelector(".tokusei3").textContent = ""
