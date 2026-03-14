@@ -928,3 +928,12 @@ function updatePresetActive(){
   })
 
 }
+
+/* 編成画面への切り替え */
+const goBshoBtn = document.getElementById("goBushoList");
+
+if(goBushoBtn){
+  goBushoBtn.onclick = () => {
+    location.href = "index.html";
+  };
+}

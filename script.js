@@ -870,3 +870,12 @@ function exportConsultText(){
   });
 
 }
+
+/* 編成画面への切り替え */
+const goFormationBtn = document.getElementById("goFormation");
+
+if(goFormationBtn){
+  goFormationBtn.onclick = () => {
+    location.href = "teams.html";
+  };
+}
