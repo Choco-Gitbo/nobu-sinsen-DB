@@ -483,7 +483,7 @@ function getFilteredBusho(){
 
   const f = getBushoFilter()
 
-  const mode = document.querySelector(".candidate-mode").value
+  const mode = document.querySelector(".list-mode").value
   const ownedIds = getOwnedBushoIds()
 
   return DB.busho.filter(b=>{
