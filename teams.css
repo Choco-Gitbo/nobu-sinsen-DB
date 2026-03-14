@@ -31,12 +31,6 @@ body{
   padding:6px;
   margin-bottom:2px;
 }
-.team-grid{
-  display:grid;
-  grid-template-columns:  auto auto auto auto auto auto;
-  gap:3px;
-  margin-bottom:2px;
-}
 .busho-grid{
   display:grid;
   grid-template-columns:  auto auto auto;
@@ -256,3 +250,11 @@ select{
   gap: 4px; /* 要素同士の細かい隙間（必要に応じて0にしてください） */
 }
 
+.team-label{
+  white-space: nowrap;
+  text-align:left;
+  font-size:11px;
+  padding:4px 0;
+  margin-bottom:4px;
+  border-radius:4px;
+}
