@@ -61,11 +61,10 @@ async function init(){
   refreshBushoSelect()
   refreshSenpoSelect()
 
-  loadTeam()
-
   updateNowCost()
 
   createTeamPresetButtons()
+  loadTeam()
   updatePresetActive()
 }
 
@@ -800,6 +799,8 @@ function loadTeam(){
 
   updateNowCost()
 
+  refreshBushoSelect()
+  refreshSenpoSelect()
 }
 
 function createTeamPresetButtons(){
