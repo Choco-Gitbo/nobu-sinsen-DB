@@ -240,3 +240,19 @@ select{
   font-weight:bold;
 
 }
+
+/* 全体のコンテナ */
+.team-container {
+  display: flex;
+  align-items: center; /* 上下中央揃え */
+  gap: 1em; /* 兵種グループとCostグループの間の隙間（全角スペース約1個分） */
+}
+
+/* 各グループ内の設定 */
+.unit-group,
+.cost-group {
+  display: flex;
+  align-items: center;
+  gap: 4px; /* 要素同士の細かい隙間（必要に応じて0にしてください） */
+}
+
