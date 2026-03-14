@@ -535,7 +535,7 @@ function setupListMode(){
   const select = document.querySelector(".list-mode")
   select.innerHTML = `
     <option value="all">全て</option>
-    <option value="own">登録のみ</option>
+    <option value="owned">登録のみ</option>
   `
 }
 function setupTeamType(){
