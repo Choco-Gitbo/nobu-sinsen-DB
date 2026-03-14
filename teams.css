@@ -273,6 +273,7 @@ select{
 }
 
 .top-tabs button{
+  white-space: nowrap;
   padding:6px 10px;
   border:1px solid #ccc;
   background:#eee;
