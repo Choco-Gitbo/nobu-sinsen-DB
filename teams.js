@@ -930,7 +930,7 @@ function updatePresetActive(){
 }
 
 /* 編成画面への切り替え */
-const goBshoBtn = document.getElementById("goBushoList");
+const goBushoBtn = document.getElementById("goBushoList");
 
 if(goBushoBtn){
   goBushoBtn.onclick = () => {
