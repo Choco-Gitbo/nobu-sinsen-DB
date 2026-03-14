@@ -268,12 +268,12 @@ select{
 }
 .top-tabs{
   display:flex;
-  gap:8px;
+  gap:5px;
   margin-bottom:10px;
 }
 
 .top-tabs button{
-  padding:6px 4px;
+  padding:6px 10px;
   border:1px solid #ccc;
   background:#eee;
   cursor:pointer;
