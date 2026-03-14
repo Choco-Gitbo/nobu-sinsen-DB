@@ -266,3 +266,15 @@ select{
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+.top-tabs{
+  display:flex;
+  gap:8px;
+  margin-bottom:10px;
+}
+
+.top-tabs button{
+  padding:6px 14px;
+  border:1px solid #ccc;
+  background:#eee;
+  cursor:pointer;
+}
