@@ -46,7 +46,6 @@ async function init(){
   setupTeamType()
   createMaxCost()
   
-  
   createBushoSelect()
   createSenpoSelect()
 
@@ -56,6 +55,7 @@ async function init(){
   createBushoCostFilter() 
   createSenpoTypeFilter()
   createSenpoStateFilter() 
+  setupListMode()
   setupHeigakuType() 
 
   refreshBushoSelect()
@@ -68,6 +68,26 @@ async function init(){
   updatePresetActive()
 }
 
+/* 所持武将・戦法取得 */
+function getOwnedBushoIds(){
+
+  const ownership = JSON.parse(localStorage.getItem("ownership") || "{}")
+
+  return Object.keys(ownership)
+    .filter(id => ownership[id]?.own)
+
+}
+
+function getOwnedSenpoIds(){
+
+  const senpoOwnership = JSON.parse(localStorage.getItem("senpoOwnership") || "{}")
+
+  return Object.keys(senpoOwnership)
+    .filter(id => senpoOwnership[id])
+
+}
+
+/* */
 function createBushoSelect(){
 
   document.querySelectorAll(".busho-select").forEach(select=>{
@@ -458,6 +478,66 @@ function createSenpoStateFilter(){
 
 }
 
+/* 所持武将フィルター */
+function getFilteredBusho(){
+
+  const f = getBushoFilter()
+
+  const mode = document.querySelector(".candidate-mode").value
+  const ownedIds = getOwnedBushoIds()
+
+  return DB.busho.filter(b=>{
+
+    if(mode==="owned" && !ownedIds.includes(b.id)) return false
+
+    if(f.faction && b.faction!==f.faction) return false
+    if(f.cost && b.cost!==f.cost) return false
+
+    return true
+
+  })
+
+}
+
+/* 所持戦法フィルター */
+function getFilteredSenpo(){
+
+  const f=getSenpoFilter()
+  const unit=getUnitFilter()
+
+  const mode = document.querySelector(".candidate-mode").value
+  const ownedIds = getOwnedSenpoIds()
+
+  return DB.senpo.filter(s=>{
+
+    if(s.get==="固有") return false
+
+    if(mode==="owned" && !ownedIds.includes(s.id)) return false
+
+    if(f.type && s.type!==f.type) return false
+    if(f.state && !s.states.some(st=>st.effect===f.state)) return false
+
+    if(unit){
+
+      const units=(s.unit||"").split("|").map(u=>u.trim())
+      if(!units.includes(unit)) return false
+
+    }
+
+    return true
+
+  })
+
+}
+
+function setupListMode(){
+
+  const select = document.querySelector(".list-mode")
+  select.innerHTML = `
+    <option value="all">全て</option>
+    <option value="my">登録のみ</option>
+  `
+}
 function setupTeamType(){
 
   const types = ["騎兵","弓兵","鉄砲","足軽","兵器"]
@@ -705,6 +785,7 @@ document.addEventListener("change",e=>{
     refreshSenpoSelect()
 
   }
+
 })
 document
 .querySelector(".maxcost")
