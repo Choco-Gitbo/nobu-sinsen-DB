@@ -456,6 +456,11 @@ function createSenpoStateFilter(){
 
 function setupTeamType(){
 
+  document.querySelectorAll(".team-grid").innerHTML =`
+  兵種：<select class="unit-select"></select>　<div class="nowcost">0</div><div > / </div>
+    <select class="maxcost"></select>
+  `
+  
   const types = ["騎兵","弓兵","鉄砲","足軽","兵器"]
   document.querySelectorAll(".unit-select").forEach(select=>{
     select.innerHTML = ""
