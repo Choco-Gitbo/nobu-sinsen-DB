@@ -278,3 +278,7 @@ select{
   background:#eee;
   cursor:pointer;
 }
+
+.team-preset-buttons{
+  text-align:center;
+}
