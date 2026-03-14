@@ -357,7 +357,7 @@ function resetBushoData(column){
   column.querySelector(".heigaku-ki").value=""
   column.querySelector(".heigaku-sei1").value=""
   column.querySelector(".heigaku-sei2").value=""
-  colmun.querySelector(".heigaku-sei3").value=""
+  column.querySelector(".heigaku-sei3").value=""
 }
 function attrName(key){
 
