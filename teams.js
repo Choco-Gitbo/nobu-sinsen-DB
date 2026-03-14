@@ -354,7 +354,10 @@ function resetBushoData(column){
   column.querySelector(".tokusei1").textContent = ""
   column.querySelector(".tokusei3").textContent = ""
   column.querySelector(".tokusei5").textContent = ""
-
+  column.querySelector(".heigaku-ki").value=""
+  column.querySelector(".heigaku-sei1").value=""
+  column.querySelector(".heigaku-sei2").value=""
+  colmun.querySelector(".heigaku-sei3").value=""
 }
 function attrName(key){
 
