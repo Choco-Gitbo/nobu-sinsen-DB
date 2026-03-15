@@ -855,6 +855,8 @@ function loadTeam(){
     col.querySelector(".senpo2").value=t.senpo2||""
     col.querySelector(".senpo3").value=t.senpo3||""
     col.querySelector(".heigaku-type").value=t.heigakuType||""
+    
+    setupHeigaku(col,t.busho)
     col.querySelector(".heigaku-ki").value=t.heigakuKi||""
     col.querySelector(".heigaku-sei1").value=t.heigakuSei1||""
     col.querySelector(".heigaku-sei2").value=t.heigakuSei2||""
