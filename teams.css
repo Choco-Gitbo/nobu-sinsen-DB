@@ -283,3 +283,9 @@ select{
 .team-preset-buttons{
   text-align:center;
 }
+
+.team-row{
+  display:flex;
+  gap:5px;
+  margin-bottom:5px;
+}

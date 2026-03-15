@@ -888,6 +888,12 @@ function createTeamPresetButtons(){
 
   const container = document.querySelector(".team-preset-buttons")
 
+  const row1 = document.createElement("div")
+  const row2 = document.createElement("div")
+
+  row1.className = "team-row"
+  row2.className = "team-row"
+
   for(let i=1;i<=12;i++){
 
     const btn = document.createElement("button")
@@ -907,7 +913,14 @@ function createTeamPresetButtons(){
 
     })
 
-    container.appendChild(btn)
+    if(i<=5){
+      row1.appendChild(btn)
+    }else{
+      row2.appendChild(btn)
+    }
+
+    container.appendChild(row1)
+    container.appendChild(row2)
 
   }
 
