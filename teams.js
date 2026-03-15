@@ -323,15 +323,11 @@ function setBushoData(column,id){
 }
 function resetBushoData(column){
 
-  const own = ownership[b.id] || {};
-
-  const rank = own.rank ?? 0;
-  const awake = own.awake ? "覚醒" : "未覚醒";
 
   column.querySelector(".busho-grid").innerHTML = `
-    <div class="label-center">C${b.cost}</div>
-    <div class="label-center">${rank}凸</div>
-    <div class="label-center">${awake}</div>
+    <div class="label-center">C</div>
+    <div class="label-center">凸</div>
+    <div class="label-center">未覚醒</div>
   `; 
 
   column.querySelector(".attr-grid").innerHTML=`
