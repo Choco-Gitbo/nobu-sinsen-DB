@@ -132,21 +132,6 @@ function refreshBushoSelect(){
 }
 
 
-function getFilteredBusho(){
-
-  const f=getBushoFilter()
-
-  return DB.busho.filter(b=>{
-
-    if(f.faction && b.faction!==f.faction) return false
-    if(f.cost && b.cost!==f.cost) return false
-
-    return true
-
-  })
-
-}
-
 function createSenpoSelect(){
 
   document.querySelectorAll(".senpo-select").forEach(select=>{
@@ -266,30 +251,6 @@ function linkStatesToSenpo(){
 
 }
 
-function getFilteredSenpo(){
-
-  const f=getSenpoFilter()
-  const unit = getUnitFilter()
-
-  return DB.senpo.filter(s=>{
-
-    if(s.get==="固有") return false
-
-    if(f.type && s.type!==f.type) return false
-    if(f.state && !s.states.some(st=>st.effect===f.state)) return false
-    
-    if(unit){
-
-      const units = (s.unit || "").split("|").map(u=>u.trim())
-      if(!units.includes(unit)) return false
-    
-    return true
-    }
-  })
-
-}
-
- 
 
 function setBushoData(column,id){
 
@@ -308,7 +269,7 @@ function setBushoData(column,id){
     <div class="label-center">${rank}凸</div>
     <div class="label-center">${awake}</div>
   `; 
-  
+
   // 属性
   const attrs=["buyu","chiryaku","tousei","speed","seimu","miryoku"]
   const attrb=[b.pow_base,b.int_base,b.ldr_base,b.spd_base,b.adm_base,b.cha_base]
