@@ -291,21 +291,33 @@ function setBushoData(column,id){
   const senpo1 = DB.senpo.find(s => s.id === b.unique_senpo)
   column.querySelector(".senpo1").textContent = senpo1 ? senpo1.name : ""
 
+  const t0 = column.querySelector(".tokusei0")
+  const t1 = column.querySelector(".tokusei1")
+  const t3 = column.querySelector(".tokusei3")
+  const t5 = column.querySelector(".tokusei5")
+
+  const on  = "#ffd966"   // 黄色
+  const off = ""          // 既存CSS（薄グレー）に戻す
+
   // 固有特性
   const tokusei0 = DB.tokusei.find(t => t.id === b.unique_tokusei)
-  column.querySelector(".tokusei0").textContent = tokusei0 ? tokusei0.name : ""
+  t0.textContent = tokusei0 ? tokusei0.name : ""
+  if(t0) t0.style.background = on
 
   // 特性1凸
   const tokusei1 = DB.tokusei.find(t => t.id === b.tokusei_1)
-  column.querySelector(".tokusei1").textContent = tokusei1 ? tokusei1.name : ""
+  t1.textContent = tokusei1 ? tokusei1.name : ""
+  if(t1) t1.style.background = rank >= 1 ? on : off
 
   // 特性3凸
   const tokusei3 = DB.tokusei.find(t => t.id === b.tokusei_3)
-  column.querySelector(".tokusei3").textContent = tokusei3 ? tokusei3.name : ""
+  t3.textContent = tokusei3 ? tokusei3.name : ""
+  if(t3) t3.style.background = rank >= 3 ? on : off
 
   // 特性5凸
   const tokusei5 = DB.tokusei.find(t => t.id === b.tokusei_5)
-  column.querySelector(".tokusei5").textContent = tokusei5 ? tokusei5.name : ""
+  t5.textContent = tokusei5 ? tokusei5.name : ""
+  if(t5) t5.style.background = rank >= 5 ? on : off
 
   // タグ
   const tagGrid=column.querySelector(".tag-grid")
