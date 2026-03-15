@@ -69,9 +69,12 @@ async function init(){
 }
 
 /* 所持武将・戦法取得 */
-function getOwnedBushoIds(){
+const ownership = JSON.parse(localStorage.getItem("ownership") || "{}")
+const senpoOwnership = JSON.parse(localStorage.getItem("senpoOwnership") || "{}")
 
-  const ownership = JSON.parse(localStorage.getItem("ownership") || "{}")
+  function getOwnedBushoIds(){
+
+  /* const ownership = JSON.parse(localStorage.getItem("ownership") || "{}") */
 
   return Object.keys(ownership)
     .filter(id => ownership[id]?.own)
@@ -80,7 +83,7 @@ function getOwnedBushoIds(){
 
 function getOwnedSenpoIds(){
 
-  const senpoOwnership = JSON.parse(localStorage.getItem("senpoOwnership") || "{}")
+  /* const senpoOwnership = JSON.parse(localStorage.getItem("senpoOwnership") || "{}") */
 
   return Object.keys(senpoOwnership)
     .filter(id => senpoOwnership[id])
@@ -330,7 +333,7 @@ function resetBushoData(column){
     <div class="label-center">${rank}凸</div>
     <div class="label-center">${awake}</div>
   `; 
-  
+
   column.querySelector(".attr-grid").innerHTML=`
       <div>武勇</div><input class ="input-buyu" type="number" value="0">
       <div>知略</div><input class ="input-tiryaku" type="number" value="0">
