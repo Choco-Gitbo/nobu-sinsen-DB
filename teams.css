@@ -269,13 +269,13 @@ select{
 .top-tabs{
   display:flex;
   
-  gap:15px;
+  gap:5px;
   margin-bottom:5px;
 }
 
 .top-tabs button{
   white-space: nowrap;
-  padding:0px 1px;
+  padding:2px 1px;
   border:1px solid #ccc;
   background:#eee;
   cursor:pointer;
