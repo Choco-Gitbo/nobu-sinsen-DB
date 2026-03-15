@@ -275,6 +275,8 @@ select{
 
 .top-tabs button{
   white-space: nowrap;
+  width:120px;
+  height:65px;
   padding:2px 1px;
   border:1px solid #ccc;
   background:#eee;
@@ -282,6 +284,8 @@ select{
 }
 
 .team-preset-buttons{
+  width:40px;
+  height:32px;
   text-align:center;
 }
 
