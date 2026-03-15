@@ -843,6 +843,11 @@ function loadTeam(){
     if(!col) return
 
     col.querySelector(".busho-select").value=t.busho||""
+    col.querySelector(".heigaku-ki").value=t.heigakuKi||""
+
+    if(t.busho){
+      setBushoData(col,t.busho)
+    }
     col.querySelector(".input-buyu").value=t.buyu||""
     col.querySelector(".input-tiryaku").value=t.tiryaku||"0"
     col.querySelector(".input-tosotsu").value=t.tosotsu||"0"
@@ -853,11 +858,7 @@ function loadTeam(){
     col.querySelector(".senpo3").value=t.senpo3||""
     col.querySelector(".heigaku-type").value=t.heigakuType||""
     
-    if(t.busho){
-      setBushoData(col,t.busho)
-    }
 
-    col.querySelector(".heigaku-ki").value=t.heigakuKi||""
     col.querySelector(".heigaku-sei1").value=t.heigakuSei1||""
     col.querySelector(".heigaku-sei2").value=t.heigakuSei2||""
     col.querySelector(".heigaku-sei3").value=t.heigakuSei3||""
