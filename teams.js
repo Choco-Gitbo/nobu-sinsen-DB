@@ -888,7 +888,7 @@ function createTeamPresetButtons(){
 
   const container = document.querySelector(".team-preset-buttons")
 
-  for(let i=1;i<=5;i++){
+  for(let i=1;i<=12;i++){
 
     const btn = document.createElement("button")
 
