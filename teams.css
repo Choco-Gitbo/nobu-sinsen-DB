@@ -268,7 +268,8 @@ select{
 }
 .top-tabs{
   display:flex;
-  gap:5px;
+  align-items:flex-start;
+  gap:15px;
   margin-bottom:5px;
 }
 
@@ -286,6 +287,6 @@ select{
 
 .team-row{
   display:flex;
-  gap:2px;
+  gap:1px;
   margin-bottom:5px;
 }
