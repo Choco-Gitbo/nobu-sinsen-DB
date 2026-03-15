@@ -835,6 +835,8 @@ function loadTeam(){
     document.querySelector(".unit-name").value = data.name
   }
 
+  refreshSenpoSelect()
+  
   const columns=document.querySelectorAll(".team")
 
   data.team.forEach((t,i)=>{
@@ -866,7 +868,7 @@ function loadTeam(){
   updateNowCost()
 
   refreshBushoSelect()
-  refreshSenpoSelect()
+  
 }
 
 function createTeamPresetButtons(){
