@@ -298,11 +298,17 @@ function setBushoData(column,id){
   if(!b)return
 
   // コスト表示
-  column.querySelector(".busho-grid").innerHTML=`
+  const own = ownership[b.id] || {};
+
+  const rank = own.rank ?? 0;
+  const awake = own.awake ? "覚醒" : "未覚醒";
+
+  column.querySelector(".busho-grid").innerHTML = `
     <div class="label-center">C${b.cost}</div>
-    <div class="label-center">0凸</div>
-    <div class="label-center">${b.awake=="1"?"覚醒":"未覚醒"}</div>
-  `
+    <div class="label-center">${rank}凸</div>
+    <div class="label-center">${awake}</div>
+  `; 
+  
   // 属性
   const attrs=["buyu","chiryaku","tousei","speed","seimu","miryoku"]
   const attrb=[b.pow_base,b.int_base,b.ldr_base,b.spd_base,b.adm_base,b.cha_base]
