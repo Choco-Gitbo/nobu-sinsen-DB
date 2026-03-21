@@ -18,3 +18,21 @@ body{
   padding:6px;
   margin-bottom:2px;
 }
+
+select{
+  width:100%;
+  padding:4px;
+  font-size:11px;
+  text-align:center;
+  margin-bottom:4px;
+}
+
+.label{
+  width:100%;
+  white-space: nowrap;
+  text-align:left;
+  font-size:11px;
+  padding:2px 0;
+  margin-bottom:4px;
+  border-radius:4px;
+}
