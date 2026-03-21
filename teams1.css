@@ -7,7 +7,7 @@ body{
 
 .row{
   display:flex;
-  gap:6px;
+  gap:2px;
 }
 
 .column{
@@ -24,7 +24,7 @@ select{
   padding:4px;
   font-size:11px;
   text-align:center;
-  margin-bottom:4px;
+  margin-bottom:2px;
 }
 
 .label{
