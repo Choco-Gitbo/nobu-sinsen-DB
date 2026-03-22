@@ -222,15 +222,12 @@ function linkStatesToBusho(){
   })
 
   const ownMap={}
-  console.log('DBの中身:', DB);
-  console.log('own_bushoの中身:', DB.own_busho);
-  console.log('ownershipの中身:', ownership);
 
-  Object.values(DB.own_busho).forEach(o=>{
-    if(!ownMap[o.own]){
-      ownMap[o.own]=[]
+  Object.entries(DB.own_busho).forEach(([key, value])=>{
+    if(!ownMap[key]){
+      ownMap[key]=[]
     }
-    ownMap[o.own].push(o)
+    ownMap[key].push(value)
   })
   DB.busho.forEach(b=>{
     b.own=ownMap[b.id] || []
