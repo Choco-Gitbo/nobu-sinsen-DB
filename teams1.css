@@ -92,4 +92,21 @@ body{
   border-radius:6px;
 }
 
-
+@media(max-width: 479px) {
+  /*スマホ縦モードでの処理*/
+  .rank{
+    display: none;
+  }
+  .column-senpo{
+  flex-direction: row;
+  }
+  .row-heigaku{
+    display: none;
+  }
+  .column-heigaku{
+    display: none;
+  }
+  .row-heigaku2{
+    display: none;
+  }
+}
