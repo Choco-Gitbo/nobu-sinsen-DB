@@ -5,7 +5,9 @@ const DB={
   senpo:[],
   senpoState:[],
   tokusei:[],
-  heigaku:[]
+  heigaku:[],
+  own_busho:[],
+  own_senpo:[]
 }
 let currentTeam = 1
 
@@ -54,7 +56,9 @@ async function init(){
 
 /* 所持武将・戦法取得 */
 const ownership = JSON.parse(localStorage.getItem("ownership") || "{}")
+DB.own_busho=ownership
 const senpoOwnership = JSON.parse(localStorage.getItem("senpoOwnership") || "{}")
+DB.own_senpo=senpoOwnership
 
 function getOwnedBushoIds(){
 
@@ -214,7 +218,7 @@ function linkStatesToBusho(){
   })
 
   DB.busho.forEach(b=>{
-    b.uniquestates=stateMap[b.unique_senpo] || []
+    b.unique_senpostates=stateMap[b.unique_senpo] || []
   })
 
   const ownMap={}
@@ -238,10 +242,6 @@ function setBushoData(column,id){
   if(!b)return
 
   // コスト表示
-  const own = ownership[b.id] || {};
-
-  const rank = own.rank ?? 0;
-  const awake = own.awake ? "覚醒" : "未覚醒";
 
   column.querySelector(".busho-grid").innerHTML = `
     <div class="label-center">C${b.cost}</div>
