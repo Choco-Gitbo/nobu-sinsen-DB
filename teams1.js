@@ -225,18 +225,12 @@ function linkStatesToBusho(){
   console.log('DBの中身:', DB);
   console.log('own_bushoの中身:', DB.own_busho);
   console.log('ownershipの中身:', ownership);
-  if (Array.isArray(DB.own_busho)) {
-    DB.own_busho.forEach(o => {
-      // 処理
-    });
-  } else {
-    console.error("DB.own_bushoが配列ではありません:", DB.own_busho);
-  }
-  ownership.forEach(ow=>{
-    if(!ownMap[ow.own]){
-      ownMap[ow.own]=[]
+
+  Object.values(DB.own_busho).forEach(o=>{
+    if(!ownMap[o.own]){
+      ownMap[o.own]=[]
     }
-    ownMap[ow.own].push(ow)
+    ownMap[o.own].push(o)
   })
   DB.busho.forEach(b=>{
     b.own=ownMap[b.id] || []
