@@ -201,6 +201,18 @@ function linkStatesToSenpo(){
     s.states=stateMap[s.id] || []
   })
 
+  const ownMap={}
+
+  Object.entries(DB.own_senpo).forEach(([key, value])=>{
+    if(!ownMap[key]){
+      ownMap[key]=[]
+    }
+    ownMap[key].push(value)
+  })
+  DB.senpo.forEach(s=>{
+    s.own=ownMap[s.id] || []
+  })
+
 }
 function linkStatesToBusho(){
 
