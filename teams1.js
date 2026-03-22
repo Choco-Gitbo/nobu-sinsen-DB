@@ -56,7 +56,9 @@ async function init(){
 
 /* 所持武将・戦法取得 */
 const ownership = JSON.parse(localStorage.getItem("ownership") || "{}")
+DB.own_busho = ownership
 const senpoOwnership = JSON.parse(localStorage.getItem("senpoOwnership") || "{}")
+DB.own_senpo = senpoOwnership
 
 function getOwnedBushoIds(){
 
@@ -220,7 +222,10 @@ function linkStatesToBusho(){
   })
 
   const ownMap={}
-  
+  console.log('DBの中身:', DB);
+  console.log('own_bushoの中身:', DB.own_busho);
+    console.log('ownershipの中身:', ownership);
+
   ownership.forEach(ow=>{
     if(!ownMap[ow.own]){
       ownMap[ow.own]=[]
