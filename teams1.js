@@ -729,13 +729,6 @@ document.addEventListener("change",e=>{
   }
 
 })
-document
-.querySelector(".maxcost")
-.addEventListener("change", updateNowCost)
-
-document
-.querySelector(".unit-select")
-.addEventListener("change",refreshSenpoSelect)
 
 /* 設定内容の保存 */
 function saveTeam(){
@@ -782,16 +775,6 @@ function loadTeam(){
 
   /* グローバル設定 */
 
-  if(data.unit){
-    document.querySelector(".unit-select").value = data.unit
-  }
-
-  if(data.maxcost){
-    document.querySelector(".maxcost").value = data.maxcost
-  }
-  if(data.name){
-    document.querySelector(".unit-name").value = data.name
-  }
 
   refreshSenpoSelect()
   
