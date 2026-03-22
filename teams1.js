@@ -476,30 +476,7 @@ function updateNowCost(){
   })
 
   const now = document.querySelector(".nowcost")
-  const max = Number(document.querySelector(".maxcost").value)
-
   now.textContent = total
-
-  if(total > max){
-    now.style.color = "red"
-  }else{
-    now.style.color = ""
-  }
-
-}
-function setupHeigakuType(){
-
-  const types = ["武略","機略","陣立","臨戦"]
-  document.querySelectorAll(".heigaku-type").forEach(select=>{
-    select.innerHTML = ""
-    types.forEach(t=>{
-      const option = document.createElement("option")
-      option.value = t
-      option.textContent = t
-      select.appendChild(option)
-    })
-  })
-
 }
 
 function setupHeigaku(column, b){
@@ -558,27 +535,6 @@ function setupHeigaku(column, b){
 }
 
 init()
-
-/* フィルター値の取得 */
-function getBushoFilter(){
-
-  return {
-    faction:document.querySelector(".busho-faction").value,
-    cost:document.querySelector(".busho-cost").value
-  }
-
-}
-function getSenpoFilter(){
-
-  return {
-    type:document.querySelector(".senpo-type").value,
-    state:document.querySelector(".senpo-state").value
-  }
-
-}
-function getUnitFilter(){
-  return document.querySelector(".unit-select").value
-}
 
 /* 使用中のIDを取得 */
 function getSelectedBushoIds(){
