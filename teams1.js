@@ -888,7 +888,7 @@ function updatePresetActive(){
 }
 
 /* 編成画面への切り替え */
-const goBushoBtn = document.getElementById("js-menu-open");
+const goBushoBtn = document.getElementById("side-menu");
 
 if(goBushoBtn){
   goBushoBtn.onclick = () => {
