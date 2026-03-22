@@ -52,12 +52,6 @@ async function init(){
 
   setupSenpoStates()  /* 戦法状態の作成 */
   
-  createBushoFactionFilter() 
-  createBushoCostFilter() 
-  createSenpoTypeFilter()
-  createSenpoStateFilter() 
-  setupListMode()
-  setupHeigakuType() 
 
 }
 
@@ -322,35 +316,6 @@ function setBushoData(column,id){
   setupHeigaku(column, b)
 
 }
-function resetBushoData(column){
-
-
-  column.querySelector(".busho-grid").innerHTML = `
-    <div class="label-center">C</div>
-    <div class="label-center">凸</div>
-    <div class="label-center">未覚醒</div>
-  `; 
-
-  column.querySelector(".attr-grid").innerHTML=`
-      <div>武勇</div><input class ="input-buyu" type="number" value="0">
-      <div>知略</div><input class ="input-tiryaku" type="number" value="0">
-      <div>統率</div><input class ="input-tosotsu" type="number" value="0">
-      <div>速度</div><input class ="input-sokudo" type="number" value="0">
-      <div>政務</div><input class ="input-seimu" type="number" value="0">
-      <div>魅力</div><input class ="input-miryoku" type="number" value="0">
-  `
-  column.querySelector(".senpo1").textContent = ""
-  column.querySelector(".senpo2").value = ""
-  column.querySelector(".senpo3").value = ""
-  column.querySelector(".tokusei0").textContent = ""
-  column.querySelector(".tokusei1").textContent = ""
-  column.querySelector(".tokusei3").textContent = ""
-  column.querySelector(".tokusei5").textContent = ""
-  column.querySelector(".heigaku-ki").value=""
-  column.querySelector(".heigaku-sei1").value=""
-  column.querySelector(".heigaku-sei2").value=""
-  column.querySelector(".heigaku-sei3").value=""
-}
 function attrName(key){
 
   const map={
@@ -365,100 +330,6 @@ function attrName(key){
 
 }
 
-function createBushoFactionFilter(){
-
-  const select=document.querySelector(".busho-faction")
-
-  select.innerHTML=`<option value="">全て</option>`
-
-  const factions=[...new Set(DB.busho.map(b=>b.faction))]
-
-  factions.forEach(f=>{
-    const op=document.createElement("option")
-    op.value=f
-    op.textContent=f
-    select.appendChild(op)
-  })
-
-}
-function createBushoCostFilter(){
-
-  const select=document.querySelector(".busho-cost")
-
-  select.innerHTML=`<option value="">全て</option>`
-
-  const costs=[...new Set(DB.busho.map(b=>b.cost))]
-
-  costs.sort((a,b)=>a-b)
-
-  costs.forEach(c=>{
-    const op=document.createElement("option")
-    op.value=c
-    op.textContent=c
-    select.appendChild(op)
-  })
-
-}
-function createSenpoTypeFilter(){
-
-  const select=document.querySelector(".senpo-type")
-
-  select.innerHTML=`<option value="">全て</option>`
-
-  const types=[...new Set(DB.senpo.map(s=>s.type))]
-
-  types.forEach(t=>{
-    const op=document.createElement("option")
-    op.value=t
-    op.textContent=t
-    select.appendChild(op)
-  })
-
-}
-function createSenpoStateFilter(){
-
-  const select=document.querySelector(".senpo-state")
-
-  select.innerHTML=`<option value="">全て</option>`
-
-  /* const states=[...new Set(DB.senpo.map(s=>s.state))] */
-  const states = ["連撃","回避","鉄壁","乱舞","反撃","援護","肩代り","分担",
-  "耐性","洞察","先攻","必中","破陣","会心","奇策","離反","心攻",
-  "襲撃","威圧","無策","封撃","混乱","疲弊","麻痺","回復不可","浄化不可",
-  "挑発","牽制","攻撃対象ロック",
-  "火傷","水攻め","中毒","潰走","消沈","乱兵","撹乱","恐慌",
-  "休養","回生","浄化","強化解除",
-  "武勇増","武勇減","知略増","知略減","統率増","統率減","速度増","速度減",
-  "全属性減","メイン属性増","メイン属性減",
-  "能動発動増","能動発動減","固有能動発動増","固有能動発動減",
-  "突撃発動増","突撃発動減","固有突撃発動増","固有突撃発動減","継続時間増","継続時間減",
-  "与兵刃増","与兵刃減","被兵刃増","被兵刃減",
-  "与計略増","与計略減","被計略増","被計略減",
-  "与通攻増","与通攻減","被通攻増","被通攻減",
-  "会心ダメ増","会心ダメ減","奇策ダメ増","奇策ダメ減",
-  "与能動増","与能動減","被能動増","被能動減","与突撃増","与突撃減","被突撃増","被突撃減",
-  "兵刃ダメ","計略ダメ","準備1ターン","準備2ターン","準備スキップ",
-  "与回復増","与回復減","被回復増","被回復減","回復量蓄積",
-  "兵損増","兵損減","通攻計略化","通攻禁止","傭兵","一揆","能動阻止","特殊兵種",
-  "行軍速度増"];
-
-  states.forEach(s=>{
-    const op=document.createElement("option")
-    op.value=s
-    op.textContent=s
-    select.appendChild(op)
-  })
-
-}
-
-function setupListMode(){
-
-  const select = document.querySelector(".list-mode")
-  select.innerHTML = `
-    <option value="all">全て</option>
-    <option value="owned">登録のみ</option>
-  `
-}
 function updateNowCost(){
 
   let total = 0
@@ -559,28 +430,6 @@ function getSelectedSenpoIds(){
 }
 /* */
 
-document.querySelectorAll('.collapsible-column').forEach(column => {
-  column.addEventListener('click', function(e) {
-    // inputタグなどをクリックした時は折りたたまないようにする
-    if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') {
-      return;
-    }
-    
-    // 中身のグリッド（attr-grid）を探してクラスを切り替える
-    const content = this.querySelector('.attr-grid');
-    if (content) {
-      content.classList.toggle('is-hidden');
-    }
-    const contenttag = this.querySelector('.tag-grid');
-    if (contenttag) {
-      contenttag.classList.toggle('is-hidden');
-    }
-    const contentfilter = this.querySelector('.select-filter');
-    if (contentfilter) {
-      contentfilter.classList.toggle('is-hidden');
-    }
-  });
-});
 /* 兵学タイプ変更時の処理*/
 document.querySelectorAll(".heigaku-type").forEach(select=>{
 
@@ -601,36 +450,6 @@ document.querySelectorAll(".heigaku-type").forEach(select=>{
 /* チェンジイベント処理 */
 document.addEventListener("change",e=>{
 
-  saveTeam()
-
-  /* 武将選択の変更処理 */
-  if(e.target.classList.contains("busho-select")){
-
-    const column=e.target.closest(".team")
-    const id = e.target.value
-    if(!id){
-      resetBushoData(column)
-      updateNowCost()
-      return
-    }
-    setBushoData(column,id)
-
-    refreshBushoSelect()
-
-    updateNowCost()
-  }
-
-    /* 戦法選択の変更処理 */
-  if(e.target.classList.contains("senpo-select")){
-    refreshSenpoSelect()
-  }
-
-  if(e.target.closest(".select-filter")){
-
-    refreshBushoSelect()
-    refreshSenpoSelect()
-
-  }
 
 })
 
@@ -714,64 +533,6 @@ function loadTeam(){
 
   refreshBushoSelect()
   
-}
-
-function createTeamPresetButtons(){
-
-  const container = document.querySelector(".team-preset-buttons")
-
-  const row1 = document.createElement("div")
-  const row2 = document.createElement("div")
-
-  row1.className = "team-row"
-  row2.className = "team-row"
-
-  for(let i=1;i<=12;i++){
-
-    const btn = document.createElement("button")
-
-    btn.textContent = i
-    btn.dataset.team = i
-
-    btn.addEventListener("click",function(){
-
-      saveTeam()
-
-      currentTeam = Number(this.dataset.team)
-
-      loadTeam()
-
-      updatePresetActive()
-
-    })
-
-    if(i<=5){
-      row1.appendChild(btn)
-    }else{
-      row2.appendChild(btn)
-    }
-
-    container.appendChild(row1)
-    container.appendChild(row2)
-
-  }
-
-}
-
-function updatePresetActive(){
-
-  document
-  .querySelectorAll(".team-preset-buttons button")
-  .forEach(btn=>{
-
-    if(Number(btn.dataset.team) === currentTeam){
-      btn.classList.add("active")
-    }else{
-      btn.classList.remove("active")
-    }
-
-  })
-
 }
 
 /* 編成画面への切り替え */
