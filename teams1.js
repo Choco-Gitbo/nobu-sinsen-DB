@@ -115,7 +115,6 @@ function createSenpoSelect(){
     select.innerHTML=`<option value="">戦法選択</option>`
     DB.senpo.forEach(s=>{
       if(s.get === "固有") return
-      if(!filtered.includes(s) && s.id !== current) return
       if(s.states.includes(s.id) && s.id !== current) return
       const op=document.createElement("option")
       op.value=s.id
