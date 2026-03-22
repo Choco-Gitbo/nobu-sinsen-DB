@@ -71,21 +71,8 @@ function getOwnedSenpoIds(){
 }
 
 /* */
+
 function createBushoSelect(){
-
-  document.querySelectorAll(".busho-select").forEach(select=>{
-    select.innerHTML=`<option value="">武将選択</option>`
-    DB.busho.forEach(b=>{
-      const op=document.createElement("option")
-      op.value=b.id
-      op.textContent=b.name
-      select.appendChild(op)
-    })
-  })
-
-}
-
-function refreshBushoSelect(){
 
   const selected = [...document.querySelectorAll(".busho-select")]
     .map(s=>s.value)
@@ -127,22 +114,20 @@ function createSenpoSelect(){
   })
 
 }
-function refreshSenpoSelect(){
+function createSenpoSelect(){
 
-  const selected = [...document.querySelectorAll(".senpo-select")]
+  const selected = [...document.querySelectorAll(".senpo")]
     .map(s=>s.value)
     .filter(v=>v)
 
-  const usedIds = getSelectedSenpoIds()
-
-  document.querySelectorAll(".senpo-select").forEach(select=>{
+  document.querySelectorAll(".senpo").forEach(select=>{
 
     const current = select.value
     select.innerHTML=`<option value="">戦法選択</option>`
     DB.senpo.forEach(s=>{
       if(s.get === "固有") return
       if(!filtered.includes(s) && s.id !== current) return
-      if(usedIds.includes(s.id) && s.id !== current) return
+      if(s.states.includes(s.id) && s.id !== current) return
       const op=document.createElement("option")
       op.value=s.id
       op.textContent=s.name
@@ -228,6 +213,36 @@ function linkStatesToSenpo(){
     s.states=stateMap[s.id] || []
   })
 
+}
+function linkStatesToBusho(){
+
+  const stateMap={}
+
+  DB.senpoState.forEach(st=>{
+
+    if(!stateMap[st.senpo_id]){
+      stateMap[st.senpo_id]=[]
+    }
+
+    stateMap[st.senpo_id].push(st)
+
+  })
+
+  DB.busho.forEach(b=>{
+    b.uniquestates=stateMap[b.unique_senpo] || []
+  })
+
+  const ownMap={}
+  
+  ownership.forEach(o=>{
+    if(!ownMap[o.own]){
+      ownMap[o.own]=[]
+    }
+    ownMap[o.own].push(o)
+  })
+  DB.busho.forEach(b=>{
+    b.own=ownMap[b.id] || []
+  })
 }
 
 
