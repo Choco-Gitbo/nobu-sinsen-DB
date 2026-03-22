@@ -46,6 +46,8 @@ async function init(){
   DB.senpoState=await loadCSV("data/senpo_state.csv")
   DB.tokusei=await loadCSV("data/tokusei.csv")
   DB.heigaku=await loadCSV("data/heigaku.csv")
+  DB.own_busho=ownership
+  DB.own_senpo=senpoOwnership
 
   await linkStatesToBusho() /* 武将情報に所有情報を付与 */
   await setupSenpoStates()  /* 戦法状態の作成 */
@@ -56,9 +58,7 @@ async function init(){
 
 /* 所持武将・戦法取得 */
 const ownership = JSON.parse(localStorage.getItem("ownership") || "{}")
-DB.own_busho=ownership
 const senpoOwnership = JSON.parse(localStorage.getItem("senpoOwnership") || "{}")
-DB.own_senpo=senpoOwnership
 
 function getOwnedBushoIds(){
 
