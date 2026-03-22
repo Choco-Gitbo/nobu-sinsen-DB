@@ -145,6 +145,40 @@ body{
   border-radius:6px;
   border:1px solid #aaa;
 }
+
+/* メニューの初期状態：画面の左側に隠す */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -300px; /* メニューの幅分だけ外に出す */
+  width: 300px;
+  height: 100%;
+  background: #333;
+  color: white;
+  z-index: 1000;
+  transition: transform 0.3s ease-in-out; /* ここが「にょきっと」の正体 */
+}
+
+/* クラスがついた時だけ右に移動して表示 */
+.side-menu.is-open {
+  transform: translateX(300px); /* 右に300pxスライドさせる */
+}
+
+/* 背景を暗くする設定（初期は非表示） */
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+  z-index: 999;
+}
+.menu-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
 @media(max-width: 479px) {
   /*スマホ縦モードでの処理*/
   .rank{
