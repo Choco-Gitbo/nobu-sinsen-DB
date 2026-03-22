@@ -49,6 +49,7 @@ async function init(){
 
   linkStatesToBusho() /* 武将情報に所有情報を付与 */
   setupSenpoStates()  /* 戦法状態の作成 */
+  
   createBushoSelect()
   createSenpoSelect()
 
@@ -78,13 +79,13 @@ function getOwnedSenpoIds(){
 
 function createBushoSelect(){
 
-  const selected = [...document.querySelectorAll(".busho-select")]
+  const selected = [...document.querySelectorAll(".busho-name")]
     .map(s=>s.value)
     .filter(v=>v)
 
   const usedIds = getSelectedBushoIds()
 
-  document.querySelectorAll(".busho-select").forEach(select=>{
+  document.querySelectorAll(".busho-name").forEach(select=>{
     const current = select.value
     select.innerHTML = `<option value="">武将選択</option>` 
     
@@ -338,7 +339,7 @@ function updateNowCost(){
 
   let total = 0
 
-  document.querySelectorAll(".busho-select").forEach(select=>{
+  document.querySelectorAll(".busho-name").forEach(select=>{
 
     const id = select.value
     if(!id) return
@@ -416,7 +417,7 @@ function getSelectedBushoIds(){
 
   const ids=[]
 
-  document.querySelectorAll(".busho-select").forEach(s=>{
+  document.querySelectorAll(".busho-name").forEach(s=>{
     if(s.value) ids.push(s.value)
   })
 
@@ -440,7 +441,7 @@ document.querySelectorAll(".heigaku-type").forEach(select=>{
   select.addEventListener("change",function(){
     const team = this.closest(".team")
     const column = this.closest(".column")
-    const bushoId = team.querySelector(".busho-select").value
+    const bushoId = team.querySelector(".busho-name").value
     const b = DB.busho.find(v=>v.id === bushoId)
 
     if(b){
