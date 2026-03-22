@@ -45,11 +45,10 @@ async function init(){
   DB.tokusei=await loadCSV("data/tokusei.csv")
   DB.heigaku=await loadCSV("data/heigaku.csv")
 
-  createBushoSelect()
-  createSenpoSelect()
-
   setupSenpoStates()  /* 戦法状態の作成 */
   
+  createBushoSelect()
+  createSenpoSelect()
 
 }
 
@@ -104,7 +103,6 @@ function refreshBushoSelect(){
       const op=document.createElement("option")
       op.value=b.id
       op.textContent=b.name
-      /* if(b.id === current) op.selected = true */
       select.appendChild(op)
 
     })
@@ -148,7 +146,6 @@ function refreshSenpoSelect(){
       const op=document.createElement("option")
       op.value=s.id
       op.textContent=s.name
-      /* if(s.id === current) op.selected=true */
       select.appendChild(op)
     })
     select.value = current
