@@ -224,8 +224,14 @@ function linkStatesToBusho(){
   const ownMap={}
   console.log('DBの中身:', DB);
   console.log('own_bushoの中身:', DB.own_busho);
-    console.log('ownershipの中身:', ownership);
-
+  console.log('ownershipの中身:', ownership);
+  if (Array.isArray(DB.own_busho)) {
+    DB.own_busho.forEach(o => {
+      // 処理
+    });
+  } else {
+    console.error("DB.own_bushoが配列ではありません:", DB.own_busho);
+  }
   ownership.forEach(ow=>{
     if(!ownMap[ow.own]){
       ownMap[ow.own]=[]
