@@ -94,7 +94,6 @@ function refreshBushoSelect(){
     .map(s=>s.value)
     .filter(v=>v)
 
-  const filtered = getFilteredBusho()
   const usedIds = getSelectedBushoIds()
 
   document.querySelectorAll(".busho-select").forEach(select=>{
@@ -138,7 +137,6 @@ function refreshSenpoSelect(){
     .map(s=>s.value)
     .filter(v=>v)
 
-  const filtered = getFilteredSenpo()
   const usedIds = getSelectedSenpoIds()
 
   document.querySelectorAll(".senpo-select").forEach(select=>{
