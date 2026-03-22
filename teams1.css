@@ -18,6 +18,69 @@ body{
   padding:6px;
   margin-bottom:2px;
 }
+.column-unit{
+  flex:0;
+  flex-direction: column;
+  font-size:12px;
+  border:1px solid #aaa;
+  border-radius:6px;
+  padding:6px;
+  margin-bottom:2px;
+}
+.row-busho{
+  display: flex;
+  flex-direction: row;
+  font-size:12px;
+  border:1px solid #aaa;
+  border-radius:6px;
+  padding:6px;
+  margin-bottom:2px;
+}
+.row-busho-basic{
+  display: flex;
+  flex-direction: row;
+  font-size:12px;
+  border:1px solid #aaa;
+  border-radius:6px;
+  padding:6px;
+  margin-bottom:2px;
+}
+.column-cost{
+  flex:0;
+  flex-direction: column;
+  font-size:12px;
+  border:1px solid #aaa;
+  border-radius:6px;
+  padding:6px;
+  margin-bottom:2px;
+}
+.column-senpo{
+  flex:0;
+  flex-direction: column;
+  font-size:12px;
+  border:1px solid #aaa;
+  border-radius:6px;
+  padding:6px;
+  margin-bottom:2px;
+}
+.row-heigaku{
+  display: flex;
+  flex-direction: row;
+  font-size:12px;
+  border:1px solid #aaa;
+  border-radius:6px;
+  padding:6px;
+  margin-bottom:2px;
+}
+.column-heigaku{
+  flex-direction: column;
+  font-size:12px;
+  border:1px solid #aaa;
+  border-radius:6px;
+  padding:6px;
+  margin-bottom:2px;
+}
+
 
 .select{
   width:auto;

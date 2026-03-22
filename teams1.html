@@ -9,9 +9,20 @@
 
 <body>
     <div class="row team">
-        <div class=" row busho">
-            <div class="row">
-                <div class="column cost-rank">
+        <div class="column-unit">
+            <select name="select unit-Type">
+                <option value="">兵種</option>
+                <option value="">騎兵</option>
+                <option value="">弓兵</option>
+                <option value="">鉄砲</option>
+                <option value="">足軽</option>
+                <option value="">兵器</option>
+            </select>
+            <div class="nowCost">C0</div>
+        </div>
+        <div class=" row-busho busho">
+            <div class="row-busho-basic">
+                <div class="column-cost cost-rank">
                     <div class="cost">C0</div>
                     <div class="rank">R0</div>
                 </div>
@@ -19,18 +30,18 @@
                     <option value="">長宗我部元親</option>
                     <option value="">長宗我部信親</option>
                 </select>
+                <div class="column-senpo">
+                    <select name="select senpo">
+                        <option value="">東国無双の麗</option>
+                        <option value="">天下無双</option>
+                    </select>
+                    <select name="select senpo">
+                        <option value="">東国無双の麗</option>
+                        <option value="">天下無双</option>
+                    </select>
+                </div>
             </div>
-            <div class="column">
-                <select name="select senpo">
-                    <option value="">東国無双の麗</option>
-                    <option value="">天下無双</option>
-                </select>
-                <select name="select senpo">
-                    <option value="">東国無双の麗</option>
-                    <option value="">天下無双</option>
-                </select>
-            </div>
-            <div class="row heigaku">
+            <div class="row-heigaku heigaku">
                 <select name="select heigaku-type">
                     <option value="">兵学</option>
                     <option value="">武略</option>
@@ -38,7 +49,7 @@
                     <option value="">陣立</option>
                     <option value="">臨戦</option>
                 </select>
-                <div class="column">
+                <div class="column-heigaku">
                     <div class="row">
                         <div class="label">奇</div>
                         <select name="select heigaku-ki">
