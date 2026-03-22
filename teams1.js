@@ -1,4 +1,4 @@
-import { formatPrice, showAlert } from './module.js';
+import { setupNavigation } from './module.js';
 
 const DB={
   busho:[],
@@ -65,18 +65,14 @@ async function init(){
 const ownership = JSON.parse(localStorage.getItem("ownership") || "{}")
 const senpoOwnership = JSON.parse(localStorage.getItem("senpoOwnership") || "{}")
 
-  function getOwnedBushoIds(){
-
-  /* const ownership = JSON.parse(localStorage.getItem("ownership") || "{}") */
+function getOwnedBushoIds(){
 
   return Object.keys(ownership)
-    .filter(id => ownership[id]?.own)
+  .filter(id => ownership[id]?.own)
 
 }
 
 function getOwnedSenpoIds(){
-
-  /* const senpoOwnership = JSON.parse(localStorage.getItem("senpoOwnership") || "{}") */
 
   return Object.keys(senpoOwnership)
     .filter(id => senpoOwnership[id])
@@ -892,10 +888,10 @@ function updatePresetActive(){
 }
 
 /* 編成画面への切り替え */
-const goBushoBtn = document.getElementById("goBushoList");
+const goBushoBtn = document.getElementById("js-menu-open");
 
 if(goBushoBtn){
   goBushoBtn.onclick = () => {
-    location.href = "index.html";
+    setupNavigation()
   };
 }
