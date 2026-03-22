@@ -223,11 +223,11 @@ function linkStatesToBusho(){
 
   const ownMap={}
   
-  DB.own_busho.forEach(o=>{
-    if(!ownMap[o.own]){
-      ownMap[o.own]=[]
+  DB.own_busho.forEach(ow=>{
+    if(!ownMap[ow.own]){
+      ownMap[ow.own]=[]
     }
-    ownMap[o.own].push(o)
+    ownMap[ow.own].push(ow)
   })
   DB.busho.forEach(b=>{
     b.own=ownMap[b.id] || []
