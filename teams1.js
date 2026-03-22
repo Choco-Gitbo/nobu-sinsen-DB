@@ -46,11 +46,9 @@ async function init(){
   DB.senpoState=await loadCSV("data/senpo_state.csv")
   DB.tokusei=await loadCSV("data/tokusei.csv")
   DB.heigaku=await loadCSV("data/heigaku.csv")
-  DB.own_busho=ownership
-  DB.own_senpo=senpoOwnership
 
-  await linkStatesToBusho() /* 武将情報に所有情報を付与 */
-  await setupSenpoStates()  /* 戦法状態の作成 */
+  linkStatesToBusho() /* 武将情報に所有情報を付与 */
+  setupSenpoStates()  /* 戦法状態の作成 */
   createBushoSelect()
   createSenpoSelect()
 
