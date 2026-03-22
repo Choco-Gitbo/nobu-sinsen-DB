@@ -45,8 +45,6 @@ async function init(){
   DB.tokusei=await loadCSV("data/tokusei.csv")
   DB.heigaku=await loadCSV("data/heigaku.csv")
 
-  loadTeam()  /* 所有データの読み出し */
-
   createBushoSelect()
   createSenpoSelect()
 
