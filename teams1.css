@@ -17,11 +17,24 @@ body{
   white-space: nowrap;
   text-align:left;
   font-size:11px;
-  padding:2px 0;
-  margin-bottom:0px;
-  border-radius:4px;
+  padding:0px ;
 }
-
+.label-tag{
+  width:auto;
+  white-space: nowrap;
+  text-align:center;
+  font-size:11px;
+  padding-left:4px;
+  padding-right:4px;
+  margin:1px;
+  border-radius:4px;
+  background-color: #f3f3f3;
+}
+.btn{
+  font-size:11px;
+  padding-top:1px;
+  padding-bottom:1px;
+}
 .row{
   display:flex;
   gap:1px;
@@ -33,16 +46,24 @@ body{
   flex:1;
   font-size:11px;
   border-radius:6px;
-  padding:6px;
-  margin-bottom:2px;
+  padding:0px;
+  margin-bottom:0px;
 }
 .column-unit{
-  flex:0;
+  display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   font-size:11px;
   border-radius:6px;
-  padding:6px;
+  padding:1px;
   border:1px solid #aaa;
+}
+.row-cost{
+  display:flex;
+  flex-direction: row;
+  gap:0px;
+  padding:0px;
 }
 .row-busho{
   display: flex;
@@ -91,7 +112,33 @@ body{
   font-size:11px;
   border-radius:6px;
 }
-
+.row-tokusei{
+  display: grid;
+  grid-template-rows: repeat(2, 1fr); /* 2行固定 */
+  grid-auto-flow: column;             /* 要素を列方向に流す */
+  grid-auto-columns: auto;           /* 列の幅を指定 */
+  font-size:11px;
+  border-radius:6px;
+  border:1px solid #aaa;
+}
+.row-states{
+  display: grid;
+  grid-template-rows: repeat(2, 1fr); /* 2行固定 */
+  grid-auto-flow: column;             /* 要素を列方向に流す */
+  grid-auto-columns: auto;           /* 列の幅を指定 */
+  font-size:11px;
+  border-radius:6px;
+  border:1px solid #aaa;
+}
+.row-tags{
+  display: grid;
+  grid-template-rows: repeat(2, 1fr); /* 2行固定 */
+  grid-auto-flow: column;             /* 要素を列方向に流す */
+  grid-auto-columns: auto;           /* 列の幅を指定 */
+  font-size:11px;
+  border-radius:6px;
+  border:1px solid #aaa;
+}
 @media(max-width: 479px) {
   /*スマホ縦モードでの処理*/
   .rank{
@@ -107,6 +154,15 @@ body{
     display: none;
   }
   .row-heigaku2{
+    display: none;
+  }
+  .row-tokusei{
+    display: none;
+  }
+  .row-states{
+    display: none;
+  }
+  .row-tags{
     display: none;
   }
 }
