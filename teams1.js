@@ -451,7 +451,7 @@ document.addEventListener("change",e=>{
 
 
 /* 編成画面への切り替え */
-const goBushoBtn = document.getElementById("side-menu");
+const goBushoBtn = document.getElementById("js-menu-open");
 
 if(goBushoBtn){
   goBushoBtn.onclick = () => {
