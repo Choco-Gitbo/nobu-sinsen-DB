@@ -45,8 +45,8 @@ async function init(){
   DB.tokusei=await loadCSV("data/tokusei.csv")
   DB.heigaku=await loadCSV("data/heigaku.csv")
 
+  linkStatesToBusho() /* 武将情報に所有情報を付与 */
   setupSenpoStates()  /* 戦法状態の作成 */
-  
   createBushoSelect()
   createSenpoSelect()
 
