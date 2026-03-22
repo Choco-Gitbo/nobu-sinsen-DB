@@ -451,10 +451,6 @@ document.addEventListener("change",e=>{
 
 
 /* 編成画面への切り替え */
-const goBushoBtn = document.getElementById("js-menu-open");
-
-if(goBushoBtn){
-  goBushoBtn.onclick = () => {
-    setupNavigation()
-  };
-}
+window.addEventListener('DOMContentLoaded', () => {
+  setupNavigation();
+});
