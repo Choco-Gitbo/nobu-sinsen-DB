@@ -451,58 +451,6 @@ function createSenpoStateFilter(){
 
 }
 
-/* 所持武将フィルター */
-function getFilteredBusho(){
-
-  const f = getBushoFilter()
-
-  const mode = document.querySelector(".list-mode").value
-  const ownedIds = getOwnedBushoIds()
-
-  return DB.busho.filter(b=>{
-
-    if(mode==="owned" && !ownedIds.includes(b.id)) return false
-
-    if(f.faction && b.faction!==f.faction) return false
-    if(f.cost && b.cost!==f.cost) return false
-
-    return true
-
-  })
-
-}
-
-/* 所持戦法フィルター */
-function getFilteredSenpo(){
-
-  const f=getSenpoFilter()
-  const unit=getUnitFilter()
-
-  const mode = document.querySelector(".list-mode").value
-  const ownedIds = getOwnedSenpoIds()
-
-  return DB.senpo.filter(s=>{
-
-    if(s.get==="固有") return false
-
-    if(mode==="owned" && !ownedIds.includes(s.id)) return false
-
-    if(f.type && s.type!==f.type) return false
-    if(f.state && !s.states.some(st=>st.effect===f.state)) return false
-
-    if(unit){
-
-      const units=(s.unit||"").split("|").map(u=>u.trim())
-      if(!units.includes(unit)) return false
-
-    }
-
-    return true
-
-  })
-
-}
-
 function setupListMode(){
 
   const select = document.querySelector(".list-mode")
