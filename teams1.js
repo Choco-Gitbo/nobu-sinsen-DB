@@ -73,12 +73,11 @@ function createBushoSelect(){
   const f = getBushoFilter()
   const usedIds = getSelectedBushoIds()
   const mode = document.querySelector(".own-mode").value
-  let usedmark =""
 
   document.querySelectorAll(".busho-name").forEach(select=>{
     const current = select.value
     select.innerHTML = `<option value="">武将選択</option>` 
-    
+    let usedmark =""
     DB.busho.forEach(b=>{
       if(!usedIds.includes(b.id) || b.id !== current) { /*　現在選択している項目 */
         if(mode==="owned" && !b.own.own !== true) return false /* 所有確認 */
