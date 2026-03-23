@@ -79,16 +79,18 @@ function createBushoSelect(){
     select.innerHTML = `<option value="">武将選択</option>` 
     
     DB.busho.forEach(b=>{
+      let usedmark =""
       if(!usedIds.includes(b.id) || b.id !== current) { /*　現在選択している項目 */
         if(mode==="owned" && !b.own.own !== true) return false /* 所有確認 */
         if(f.faction && b.faction!==f.faction) return false /*陣営フィルター */
         if(f.cost && b.cost!==f.cost) return false /*コストフィルター */
         /*if(f.usType && b.u!==f.faction) return false*/ /*固有戦法タイプフィルター */
         if(f.usState && b.unique_senpostates.effect!==f.usState) return false /*固有戦法状態フィルター */
+        if(usedIds.includes(b.id)) usedmark = "●"
       }
       const op=document.createElement("option")
       op.value=b.id
-      op.textContent=b.name
+      op.textContent=usedmark + b.name
       select.appendChild(op)
 
     })
