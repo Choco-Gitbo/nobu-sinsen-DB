@@ -61,19 +61,6 @@ DB.own_busho = ownership
 const senpoOwnership = JSON.parse(localStorage.getItem("senpoOwnership") || "{}")
 DB.own_senpo = senpoOwnership
 
-function getOwnedBushoIds(){
-
-  return Object.keys(ownership)
-  .filter(id => ownership[id]?.own)
-
-}
-
-function getOwnedSenpoIds(){
-
-  return Object.keys(senpoOwnership)
-    .filter(id => senpoOwnership[id])
-
-}
 
 /* */
 
