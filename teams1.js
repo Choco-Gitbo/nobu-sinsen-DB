@@ -476,6 +476,10 @@ document.addEventListener("change",e=>{
   if(e.target.classList.contains("filter-b")){
     createBushoSelect()
   }
+    /* 武将選択の変更処理 */
+  if(e.target.classList.contains("busho-name")){
+    createBushoSelect()
+  }
 
 
 })
