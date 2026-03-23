@@ -83,15 +83,17 @@ function createBushoSelect(){
     .map(s=>s.value)
     .filter(v=>v)
 
-  const usedIds = getSelectedBushoIds()
+  const f = getBushoFilter()
 
   document.querySelectorAll(".busho-name").forEach(select=>{
     const current = select.value
     select.innerHTML = `<option value="">武将選択</option>` 
     
     DB.busho.forEach(b=>{
-      /*if(!filtered.includes(b) && b.id !== current) return 
-      if(usedIds.includes(b.id) && b.id !== current) return*/
+      if(f.faction && b.faction!==f.faction) return false /*陣営フィルター */
+      if(f.cost && b.cost!==f.cost) return false /*コストフィルター */
+      /*if(f.usType && b.u!==f.faction) return false*/ /*固有戦法タイプフィルター */
+      if(f.usState && b.unique_senpostates.effect!==f.usState) return false /*固有戦法状態フィルター */
       const op=document.createElement("option")
       op.value=b.id
       op.textContent=b.name
@@ -433,6 +435,29 @@ function getSelectedSenpoIds(){
 
   return ids
 }
+/* フィルター値の取得 */
+function getBushoFilter(){
+
+  return {
+    faction:document.querySelector(".busho-faction").value,
+    cost:document.querySelector(".busho-cost").value,
+    usType:document.querySelector(".usenpo-type").value,
+    usState:document.querySelector(".usenpo-states").value
+  }
+
+}
+function getSenpoFilter(){
+
+  return {
+    type:document.querySelector(".senpo-type").value,
+    state:document.querySelector(".senpo-state").value
+  }
+
+}
+function getUnitFilter(){
+  return document.querySelector(".own-mode").value
+}
+
 /* */
 
 /* 兵学タイプ変更時の処理*/
