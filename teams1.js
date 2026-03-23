@@ -71,12 +71,14 @@ function createBushoSelect(){
     .filter(v=>v)
 
   const f = getBushoFilter()
+  const usedIds = getSelectedBushoIds()
 
   document.querySelectorAll(".busho-name").forEach(select=>{
     const current = select.value
     select.innerHTML = `<option value="">武将選択</option>` 
     
     DB.busho.forEach(b=>{
+      if(usedIds.includes(b.id) && b.id !== current) return /*　現在選択している項目 */
       if(f.faction && b.faction!==f.faction) return false /*陣営フィルター */
       if(f.cost && b.cost!==f.cost) return false /*コストフィルター */
       /*if(f.usType && b.u!==f.faction) return false*/ /*固有戦法タイプフィルター */
