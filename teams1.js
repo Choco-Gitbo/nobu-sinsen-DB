@@ -79,7 +79,7 @@ function createBushoSelect(){
     select.innerHTML = `<option value="">武将選択</option>` 
     
     DB.busho.forEach(b=>{
-      if(!usedIds.includes(b.id) && b.id !== current) { /*　現在選択している項目 */
+      if(!usedIds.includes(b.id) || b.id !== current) { /*　現在選択している項目 */
         if(mode==="owned" && !b.own.own !== true) return false /* 所有確認 */
         if(f.faction && b.faction!==f.faction) return false /*陣営フィルター */
         if(f.cost && b.cost!==f.cost) return false /*コストフィルター */
