@@ -490,16 +490,16 @@ allBushoSelects.forEach(select=>{
   /* チェンジイベント後処理 */
   select.addEventListener('change', (e) => {
       const newValue = e.target.value;  
-  })
-  if (newValue === "") return;  /*未選択時は空にする */
-  allSelects.forEach(otherSelect => {
-      if (otherSelect !== e.target && otherSelect.value === newValue) {
-        otherSelect.value = beforeValue;
-      }
+  
+    if (newValue === "") return;  /*未選択時は空にする */
+    allSelects.forEach(otherSelect => {
+        if (otherSelect !== e.target && otherSelect.value === newValue) {
+          otherSelect.value = beforeValue;
+        }
+    });
+    beforeValue = newValue;
   });
-  beforeValue = newValue;
-});
-
+})
 
 /* チェンジイベント処理 */
 document.addEventListener("change",e=>{
