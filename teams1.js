@@ -493,7 +493,7 @@ allBushoSelects.forEach(select=>{
       const newValue = e.target.value;  
   
     if (newValue === "") return;  /*未選択時は空にする */
-    allSelects.forEach(otherSelect => {
+    allBushoSelects.forEach(otherSelect => {
         if (otherSelect !== e.target && otherSelect.value === newValue) {
           otherSelect.value = beforeValue;
         }
