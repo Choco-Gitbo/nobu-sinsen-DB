@@ -494,10 +494,24 @@ allBushoSelects.forEach(select=>{
       const newValue = e.target.value;  
   
     if (newValue === "") return;  /*未選択時は空にする */
+// 自分の行を取得
+    const myRow = e.target.closest('.member-row'); // または .member-row
+    const mySenpos = myRow.querySelectorAll('.senpo'); // 戦法プルダウン    allBushoSelects.forEach(otherSelect => {
+
     allBushoSelects.forEach(otherSelect => {
-        if (otherSelect !== e.target && otherSelect.value === newValue) {
-          otherSelect.value = beforeBushoValue;
-        }
+      if (otherSelect !== e.target && otherSelect.value === newValue) {
+          
+        const otherRow = otherSelect.closest('.member-row');
+        const otherSenpos = otherRow.querySelectorAll('.senpo');
+        
+        otherSelect.value = beforeBushoValue;
+
+        mySenpos.forEach((senpo, index) => {
+          const tempSenpo = senpo.value;
+          senpo.value = otherSenpos[index].value;
+          otherSenpos[index].value = tempSenpo;
+        });
+      }
     });
     beforeBushoValue = newValue;
   });
