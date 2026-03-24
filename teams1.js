@@ -488,6 +488,8 @@ document.addEventListener("change",e=>{
     /* 選択対象フィルターの変更処理 */
   if(e.target.classList.contains("own-mode")){
     createBushoSelect()
+    createSenpoSelect()
+
   }
     /* 武将選択フィルターの変更処理 */
   if(e.target.classList.contains("filter-b")){
@@ -496,6 +498,14 @@ document.addEventListener("change",e=>{
     /* 武将選択の変更処理 */
   if(e.target.classList.contains("busho-name")){
     createBushoSelect()
+  }
+    /* 戦法選択フィルターの変更処理 */
+  if(e.target.classList.contains("filter-s")){
+    createSenpoSelect()
+  }
+    /* 戦法選択の変更処理 */
+  if(e.target.classList.contains("senpo")){
+    createSenpoSelect()
   }
 
 
