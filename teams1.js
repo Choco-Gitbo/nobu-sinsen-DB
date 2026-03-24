@@ -460,11 +460,7 @@ function getSenpoFilter(){
   }
 
 }
-function getUnitFilter(){
-  return document.querySelector(".own-mode").value
-}
 
-/* */
 
 /* 兵学タイプ変更時の処理*/
 document.querySelectorAll(".heigaku-type").forEach(select=>{
@@ -483,6 +479,28 @@ document.querySelectorAll(".heigaku-type").forEach(select=>{
 
 })
 
+const allBushoSelects = document.querySelectorAll('.busho-name');
+
+allBushoSelects.forEach(select=>{
+  /* チェンジイベント前処理 */
+  select.addEventListener('focus',(e)=>{
+      beforeValue=e.target.value; /*変更前の値取得 */
+    }
+  )
+  /* チェンジイベント後処理 */
+  select.addEventListener('change', (e) => {
+      const newValue = e.target.value;  
+  })
+  if (newValue === "") return;  /*未選択時は空にする */
+  allSelects.forEach(otherSelect => {
+      if (otherSelect !== e.target && otherSelect.value === newValue) {
+        otherSelect.value = beforeValue;
+      }
+  });
+  beforeValue = newValue;
+});
+
+
 /* チェンジイベント処理 */
 document.addEventListener("change",e=>{
     /* 選択対象フィルターの変更処理 */
@@ -495,13 +513,13 @@ document.addEventListener("change",e=>{
   if(e.target.classList.contains("filter-b")){
     createBushoSelect()
   }
-    /* 武将選択の変更処理 */
-  if(e.target.classList.contains("busho-name")){
-    createBushoSelect()
-  }
     /* 戦法選択フィルターの変更処理 */
   if(e.target.classList.contains("filter-s")){
     createSenpoSelect()
+  }
+    /* 武将選択の変更処理 */
+  if(e.target.classList.contains("busho-name")){
+    createBushoSelect()
   }
     /* 戦法選択の変更処理 */
   if(e.target.classList.contains("senpo")){
