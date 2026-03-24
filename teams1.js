@@ -495,13 +495,13 @@ allBushoSelects.forEach(select=>{
   
     if (newValue === "") return;  /*未選択時は空にする */
     // 自分の行を取得
-    const myRow = e.target.closest('tr'); 
+    const myRow = e.target.closest('row-busho'); 
     const mySenpos = myRow.querySelectorAll('.senpo'); // 戦法プルダウン
 
     allBushoSelects.forEach(otherSelect => {
       if (otherSelect !== e.target && otherSelect.value === newValue) {
           
-        const otherRow = otherSelect.closest('tr');
+        const otherRow = otherSelect.closest('row-busho');
         const otherSenpos = otherRow.querySelectorAll('.senpo');
         
         otherSelect.value = beforeBushoValue;
