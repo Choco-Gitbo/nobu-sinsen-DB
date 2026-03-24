@@ -480,6 +480,7 @@ document.querySelectorAll(".heigaku-type").forEach(select=>{
 })
 
 const allBushoSelects = document.querySelectorAll('.busho-name');
+let beforeValue = "";
 
 allBushoSelects.forEach(select=>{
   /* チェンジイベント前処理 */
