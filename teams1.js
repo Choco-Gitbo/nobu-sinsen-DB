@@ -479,13 +479,14 @@ document.querySelectorAll(".heigaku-type").forEach(select=>{
 
 })
 
+/* 同じ武将を選択した時、入れ替える処理 */
 const allBushoSelects = document.querySelectorAll('.busho-name');
-let beforeValue = "";
+let beforeBushoValue = "";
 
 allBushoSelects.forEach(select=>{
   /* チェンジイベント前処理 */
   select.addEventListener('focus',(e)=>{
-      beforeValue=e.target.value; /*変更前の値取得 */
+      beforeBushoValue=e.target.value; /*変更前の値取得 */
     }
   )
   /* チェンジイベント後処理 */
@@ -495,10 +496,33 @@ allBushoSelects.forEach(select=>{
     if (newValue === "") return;  /*未選択時は空にする */
     allBushoSelects.forEach(otherSelect => {
         if (otherSelect !== e.target && otherSelect.value === newValue) {
-          otherSelect.value = beforeValue;
+          otherSelect.value = beforeBushoValue;
         }
     });
-    beforeValue = newValue;
+    beforeBushoValue = newValue;
+  });
+})
+/* 同じ戦法を選択した時、入れ替える処理 */
+const allSenpoSelects = document.querySelectorAll('.senpo');
+let beforeSenpoValue = "";
+
+allSenpoSelects.forEach(select=>{
+  /* チェンジイベント前処理 */
+  select.addEventListener('focus',(e)=>{
+      beforeSenpoValue=e.target.value; /*変更前の値取得 */
+    }
+  )
+  /* チェンジイベント後処理 */
+  select.addEventListener('change', (e) => {
+      const newValue = e.target.value;  
+  
+    if (newValue === "") return;  /*未選択時は空にする */
+    allBushoSelects.forEach(otherSelect => {
+        if (otherSelect !== e.target && otherSelect.value === newValue) {
+          otherSelect.value = beforeSenpoValue;
+        }
+    });
+    beforeSenpoValue = newValue;
   });
 })
 
