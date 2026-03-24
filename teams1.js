@@ -517,7 +517,7 @@ allSenpoSelects.forEach(select=>{
       const newValue = e.target.value;  
   
     if (newValue === "") return;  /*未選択時は空にする */
-    allBushoSelects.forEach(otherSelect => {
+    allSenpoSelects.forEach(otherSelect => {
         if (otherSelect !== e.target && otherSelect.value === newValue) {
           otherSelect.value = beforeSenpoValue;
         }
