@@ -435,7 +435,7 @@ function getSelectedSenpoIds(){
 
   const ids=[]
 
-  document.querySelectorAll(".senpo-select").forEach(s=>{
+  document.querySelectorAll(".senpo").forEach(s=>{
     if(s.value) ids.push(s.value)
   })
 
