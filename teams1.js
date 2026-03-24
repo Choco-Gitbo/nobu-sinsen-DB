@@ -82,7 +82,7 @@ function createBushoSelect(){
       let usedmark =""
       if(!usedIds.includes(b.id) || b.id !== current) { /*　現在選択している項目 */
         if(usedIds.includes(b.id)) usedmark = "●"
-        if(mode==="owned" && !b.own.some(o=>o.own) !== true) return false /* 所有確認 */
+        if(mode==="owned" && !b.own.some(o=>o.own === true) ) return false /* 所有確認 */
         if(f.faction && b.faction!==f.faction) return false /*陣営フィルター */
         if(f.cost && b.cost!==f.cost) return false /*コストフィルター */
         /*if(f.usType && b.u!==f.faction) return false*/ /*固有戦法タイプフィルター */
