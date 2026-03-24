@@ -456,7 +456,7 @@ function getSenpoFilter(){
 
   return {
     type:document.querySelector(".senpo-type").value,
-    state:document.querySelector(".senpo-state").value
+    state:document.querySelector(".senpo-states").value
   }
 
 }
