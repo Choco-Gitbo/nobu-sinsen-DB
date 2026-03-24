@@ -82,7 +82,7 @@ function createBushoSelect(){
       let usedmark =""
       if(!usedIds.includes(b.id) || b.id !== current) { /*　現在選択している項目 */
         if(usedIds.includes(b.id)) usedmark = "●"
-        if(mode==="owned" && !b.own.own !== true) return false /* 所有確認 */
+        if(mode==="owned" && !b.own[own] !== true) return false /* 所有確認 */
         if(f.faction && b.faction!==f.faction) return false /*陣営フィルター */
         if(f.cost && b.cost!==f.cost) return false /*コストフィルター */
         /*if(f.usType && b.u!==f.faction) return false*/ /*固有戦法タイプフィルター */
@@ -474,7 +474,7 @@ document.querySelectorAll(".heigaku-type").forEach(select=>{
 
 /* チェンジイベント処理 */
 document.addEventListener("change",e=>{
-    /* 武将選択フィルターの変更処理 */
+    /* 選択対象フィルターの変更処理 */
   if(e.target.classList.contains("own-mode")){
     createBushoSelect()
   }
