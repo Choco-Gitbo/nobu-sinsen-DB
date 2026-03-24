@@ -86,7 +86,7 @@ function createBushoSelect(){
         if(f.faction && b.faction!==f.faction) return false /*陣営フィルター */
         if(f.cost && b.cost!==f.cost) return false /*コストフィルター */
         /*if(f.usType && b.u!==f.faction) return false*/ /*固有戦法タイプフィルター */
-        if(f.usState && b.unique_senpostates.effect!==f.usState) return false /*固有戦法状態フィルター */
+        if(f.usState && !b.unique_senpostates.some(e=>e.effect===f.usState)) return false /*固有戦法状態フィルター */
       }
       
       const op=document.createElement("option")
@@ -107,16 +107,27 @@ function createSenpoSelect(){
     .map(s=>s.value)
     .filter(v=>v)
 
+  const f = getSenpoFilter()
+  const usedIds = getSelectedSenpoIds()
+  const mode = document.querySelector(".own-mode").value
+
   document.querySelectorAll(".senpo").forEach(select=>{
 
     const current = select.value
     select.innerHTML=`<option value="">戦法選択</option>`
     DB.senpo.forEach(s=>{
+      let usedmark =""
+
       if(s.get === "固有") return
-      if(s.states.includes(s.id) && s.id !== current) return
+      if(!usedIds.includes(s.id) || s.id !== current) { /*　現在選択している項目 */
+        if(usedIds.includes(s.id)) usedmark = "●"
+        if(mode==="owned" && !s.own.some(o=>o.own === true) ) return false /* 所有確認 */
+        if(f.type && s.type!==f.type) return false
+        if(f.state && !s.states.some(st=>st.effect===f.state)) return false
+      }
       const op=document.createElement("option")
       op.value=s.id
-      op.textContent=s.name
+      op.textContent=usedmark + s.name
       select.appendChild(op)
     })
     select.value = current
