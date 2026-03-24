@@ -475,6 +475,10 @@ document.querySelectorAll(".heigaku-type").forEach(select=>{
 /* チェンジイベント処理 */
 document.addEventListener("change",e=>{
     /* 武将選択フィルターの変更処理 */
+  if(e.target.classList.contains("own-mode")){
+    createBushoSelect()
+  }
+    /* 武将選択フィルターの変更処理 */
   if(e.target.classList.contains("filter-b")){
     createBushoSelect()
   }
