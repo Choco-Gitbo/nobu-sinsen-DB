@@ -578,7 +578,7 @@ const table = document.getElementById('squad-table');
 let html = '';
 
 // 12チーム × 3名 = 36回ループ
-for (let i = 1; i <= 36; i++) {
+for (let i = 1; i <= 2; i++) {
   // チーム番号の計算（1,1,1, 2,2,2... となるように）
   const teamNum = Math.ceil(i / 3);
   
