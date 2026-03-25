@@ -86,15 +86,14 @@ body{
 }
 .heigaku{
   font-size:11px;
+  text-align: center;
   gap:0px;
 }
 .heigaku-ki{
   display: flex;
-  flex-direction: row;
 }
 .heigaku-sei{
   display: flex;
-  flex-direction: row;
 }
 .tokusei{
   font-size:11px;
