@@ -97,6 +97,7 @@ body{
 .heigaku-sei2{
   display: flex;
   flex-direction: row;
+  background-color: brown;
 }
 .tokusei{
   font-size:11px;
