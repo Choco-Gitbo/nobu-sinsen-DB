@@ -593,7 +593,7 @@ function makeTable(){
 
       html += `
         <tr class="data-group="${i}">
-          ${isTeamStart ? `<td rowspan="6">${teamNum}</td>` : ''}
+          ${isTeamStart ? `<td class="team-No" rowspan="6">${teamNum}</td>` : ''}
           <td class="cost">C0</td>
           <td rowspan="2">
             <select class="select busho-name">
@@ -657,19 +657,13 @@ function makeTable(){
           <td class="rank">R0</td>
           <td class="heigaku">正</td>
           <td class="heigaku">
-            <select class="select heigaku-sei">
-                <option value="">・正</option>
-            </select>
+            正
           </td>
           <td class="heigaku">
-            <select class="select heigaku-sei">
-                <option value="">・正</option>
-            </select>
+            正
           </td>
           <td class="heigaku">
-            <select class="select heigaku-sei">
-                <option value="">・正</option>
-            </select>
+            正
           </td>
         </tr>
         `;
