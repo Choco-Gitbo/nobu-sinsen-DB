@@ -600,7 +600,7 @@ function makeTable(){
                 <option value="">武将選択</option>
             </select>
           </td>
-        <td rowspan="2">
+          <td rowspan="2">
             <div class="column-senpo">
                 <select class="select senpo">
                     <option value="">戦法選択</option>
@@ -609,7 +609,7 @@ function makeTable(){
                     <option value="">戦法選択</option>
                 </select>
             </div>
-        </td>
+          </td>
           <td class="heigaku" rowspan="2">
             <select class="select heigaku-type">
                 <option value="">兵学</option>
@@ -627,7 +627,6 @@ function makeTable(){
           </td>
           <td rowspan="2" class="tokusei">
             <div class="row-tokusei2">
-                <span> 特性</span>
                 <div class="row-tokusei">
                     <span class="label-tag tokusei0">ラベル0</span>
                     <span class="label-tag tokusei1">rabel1</span>
@@ -638,7 +637,6 @@ function makeTable(){
           </td>
           <td rowspan="2" class="states">
             <div class="row-states2">
-                <span> 状態</span>
                 <div class="row-states">
                     <span class="label-tag stetas"></span>
                 </div>
@@ -646,7 +644,6 @@ function makeTable(){
           </td>
           <td rowspan="2" class="tags">
             <div class="row-tags2">
-                <span> タグ</span>
                 <div class="row-tags">
                     <span class="label-tag tags"></span>
                 </div>
