@@ -578,13 +578,15 @@ const table = document.getElementById('squad-table');
 let html = '';
 
 // 12チーム × 3名 = 36回ループ
+for (let j=1; j<=12; j++){
+  let html = `<tbody class="member-unit" >`
 for (let i = 1; i <= 3; i++) {
   // チーム番号の計算（1,1,1, 2,2,2... となるように）
-  let html = `<tbody class="member-unit" >`
-    const teamNum = Math.ceil(i / 3);
+  
+    const teamNum = j
   
   // 3人ごとの最初の1人だけ rowspan="3" をつけるための判定
-  const isTeamStart = (i % 3 === 1);
+  const isTeamStart = (i  === 1);
 
   html += `
     <tr class="data-group="${i}">
@@ -670,7 +672,7 @@ for (let i = 1; i <= 3; i++) {
   </tbody>
     `;
 }
-
+}
 // 最後にテーブルにガバッと入れる
 table.insertAdjacentHTML('beforeend', html);
 
