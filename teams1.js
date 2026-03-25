@@ -656,7 +656,7 @@ function makeTable(){
         <tr>
           <td class="rank">R0</td>
           <td class="heigaku">正</td>
-          <td class="heigaku">
+          <td class="heigaku-sei2">
             <select class="select heigaku-sei">
                 <option value="">・正</option>
             </select>
