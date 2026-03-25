@@ -669,10 +669,10 @@ for (let i = 1; i <= 3; i++) {
         </select>
       </td>
     </tr>
-  </tbody>
     `;
 }
-}
 // 最後にテーブルにガバッと入れる
+html += `</tbody>`;
 table.insertAdjacentHTML('beforeend', html);
+}
 
