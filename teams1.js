@@ -588,7 +588,7 @@ for (let i = 1; i <= 2; i++) {
   html += `
   <tbody class="member-unit" data-group="${i}">
     <tr>
-      ${isTeamStart ? `<td rowspan="6">第${teamNum}部隊</td>` : ''}
+      <td rowspan="2">第${teamNum}部隊</td>
       <td class="cost">C0</td>
       <td rowspan="2">
         <select class="select busho-name">
