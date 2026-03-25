@@ -578,17 +578,17 @@ const table = document.getElementById('squad-table');
 let html = '';
 
 // 12チーム × 3名 = 36回ループ
-for (let i = 1; i <= 2; i++) {
+for (let i = 1; i <= 3; i++) {
   // チーム番号の計算（1,1,1, 2,2,2... となるように）
-  const teamNum = Math.ceil(i / 3);
+  let html = `<tbody class="member-unit" data-group="${i}">`
+    const teamNum = Math.ceil(i / 3);
   
   // 3人ごとの最初の1人だけ rowspan="3" をつけるための判定
   const isTeamStart = (i % 3 === 1);
 
   html += `
-  <tbody class="member-unit" data-group="${i}">
     <tr>
-      <td rowspan="2">第${teamNum}部隊</td>
+      ${isTeamStart ? `<td rowspan="6">第${teamNum}部隊</td>` : ''}
       <td class="cost">C0</td>
       <td rowspan="2">
         <select class="select busho-name">
