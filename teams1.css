@@ -90,6 +90,7 @@ body{
   font-size:11px;
   text-align: center;
   gap:0px;
+  background-color: blue;
 }
 .heigaku-ki{
   display: flex;
