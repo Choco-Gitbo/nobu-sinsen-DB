@@ -87,7 +87,6 @@ body{
   width: 100px;
 }
 .heigaku{
-  display: flex;
   font-size:11px;
   text-align: center;
   gap:0px;
@@ -97,6 +96,7 @@ body{
 }
 .heigaku-sei{
   display: flex;
+  flex-direction: row;
 }
 .tokusei{
   font-size:11px;
