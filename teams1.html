@@ -77,230 +77,96 @@
 <div class="menu-overlay js-menu-overlay"></div>
 <!--サイドメニューここまで-->
 
-<!--本体-->
-<!--部隊1-->
-<div class="row team">
-    <div class="column-unit">
-        <select class="select unit-Type">
-            <option value="">兵種</option>
-            <option value="">騎兵</option>
-            <option value="">弓兵</option>
-            <option value="">鉄砲</option>
-            <option value="">足軽</option>
-            <option value="">兵器</option>
+<table border="1">
+  <thead>
+    </thead>
+
+  <tbody class="member-unit" data-group="1">
+    <tr>
+      <td rowspan="6">unit</td>
+      <td class="cost">C0</td>
+      <td rowspan="2">
+        <select class="select busho-name">
+            <option value="">武将選択</option>
         </select>
-        <div class="row-cost">
-            <div class="label nowCost">C0</div>
-            <input class="chain-chk" type="checkbox" checked="false" defaultchecked="true" />
+      </td>
+    <td rowspan="2">
+        <div class="column-senpo">
+            <select class="select senpo">
+                <option value="">戦法選択</option>
+            </select>
+            <select class="select senpo">
+                <option value="">戦法選択</option>
+            </select>
         </div>
-            <button class="btn" type="button" >詳細</button>
-    </div>
-    <div class="column">
-        <!-- 大将 -->
-        <div class=" row-busho busho">
-            <div class="row-busho-basic">
-                <div class="column-cost cost-rank">
-                    <div class="cost">C0</div>
-                    <div class="rank">R0</div>
-                </div>
-                <select class="select busho-name">
-                    <option value="">武将選択</option>
-                </select>
-                <div class="column-senpo">
-                    <select class="select senpo">
-                        <option value="">戦法選択</option>
-                    </select>
-                    <select class="select senpo">
-                        <option value="">戦法選択</option>
-                    </select>
-                </div>
-            </div>
-            <div class="row-heigaku heigaku">
-                <select class="select heigaku-type">
-                    <option value="">兵学</option>
-                    <option value="武略">武略</option>
-                    <option value="機略">機略</option>
-                    <option value="陣立">陣立</option>
-                    <option value="臨戦">臨戦</option>
-                </select>
-                <div class="column-heigaku">
-                    <div class="row-heigaku2">
-                        <div >奇</div>
-                        <select class="select heigaku-ki">
-                            <option value="">兵学・奇</option>
-                        </select>
-                    </div>
-                    <div class="row-heigaku2">
-                        <div >正</div>
-                        <select class="select heigaku-sei">
-                            <option value="">・正</option>
-                        </select>
-                        <select class="select heigaku-sei">
-                            <option value="">・正</option>
-                        </select>
-                        <select class="select heigaku-sei">
-                            <option value="">・正</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+    </td>
+      <td class="heigaku" rowspan="2">
+        <select class="select heigaku-type">
+            <option value="">兵学</option>
+            <option value="武略">武略</option>
+            <option value="機略">機略</option>
+            <option value="陣立">陣立</option>
+            <option value="臨戦">臨戦</option>
+        </select>
+      </td>
+      <td class="heigaku">奇</td>
+      <td class="heigaku" colspan="3">
+        <select class="select heigaku-ki">
+            <option value="">兵学・奇</option>
+        </select>
+      </td>
+      <td rowspan="2" class="tokusei">
+        <div class="row-tokusei2">
+            <span> 特性</span>
             <div class="row-tokusei">
-                <div>特性</div>
-                <div></div>
-                <div class="label-tag tokusei0"></div>
-                <div class="label-tag tokusei1"></div>
-                <div class="label-tag tokusei3"></div>
-                <div class="label-tag tokusei5"></div>
-            </div>
-            <div class="row-states">
-                <div>状態</div>
-                <div></div>
-                <div class="label-tag states"></div>
-            </div>
-            <div class="row-tags">
-                <div>タグ</div>
-                <div></div>
-                <div class="label-tag tags"></div>
+                <span class="label-tag tokusei0">ラベル0</span>
+                <span class="label-tag tokusei1">rabel1</span>
+                <span class="label-tag tokusei3">ラベル3</span>
+                <span class="label-tag tokusei5">ラベル5</span>
             </div>
         </div>
-        <!-- 副将 -->
-        <div class=" row-busho busho">
-            <div class="row-busho-basic">
-                <div class="column-cost cost-rank">
-                    <div class="cost">C0</div>
-                    <div class="rank">R0</div>
-                </div>
-                <select class="select busho-name">
-                    <option value="">武将選択</option>
-                </select>
-                <div class="column-senpo">
-                    <select class="select senpo">
-                        <option value="">戦法選択</option>
-                    </select>
-                    <select class="select senpo">
-                        <option value="">戦法選択</option>
-                    </select>
-                </div>
-            </div>
-            <div class="row-heigaku heigaku">
-                <select class="select heigaku-type">
-                    <option value="">兵学</option>
-                    <option value="武略">武略</option>
-                    <option value="機略">機略</option>
-                    <option value="陣立">陣立</option>
-                    <option value="臨戦">臨戦</option>
-                </select>
-                <div class="column-heigaku">
-                    <div class="row-heigaku2">
-                        <div >奇</div>
-                        <select class="select heigaku-ki">
-                            <option value="">兵学・奇</option>
-                        </select>
-                    </div>
-                    <div class="row-heigaku2">
-                        <div >正</div>
-                        <select class="select heigaku-sei">
-                            <option value="">・正</option>
-                        </select>
-                        <select class="select heigaku-sei">
-                            <option value="">・正</option>
-                        </select>
-                        <select class="select heigaku-sei">
-                            <option value="">・正</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="row-tokusei">
-                <div>特性</div>
-                <div></div>
-                <div class="label-tag tokusei0"></div>
-                <div class="label-tag tokusei1"></div>
-                <div class="label-tag tokusei3"></div>
-                <div class="label-tag tokusei5"></div>
-            </div>
+      </td>
+      <td rowspan="2" class="states">
+        <div class="row-states2">
+            <span> 状態</span>
             <div class="row-states">
-                <div>状態</div>
-                <div></div>
-                <div class="label-tag states"></div>
-            </div>
-            <div class="row-tags">
-                <div>タグ</div>
-                <div></div>
-                <div class="label-tag tags"></div>
+                <span class="label-tag stetas"></span>
             </div>
         </div>
-        <!-- 副将 -->
-        <div class=" row-busho busho">
-            <div class="row-busho-basic">
-                <div class="column-cost cost-rank">
-                    <div class="cost">C0</div>
-                    <div class="rank">R0</div>
-                </div>
-                <select class="select busho-name">
-                    <option value="">武将選択</option>
-                </select>
-                <div class="column-senpo">
-                    <select class="select senpo">
-                        <option value="">戦法選択</option>
-                    </select>
-                    <select class="select senpo">
-                        <option value="">戦法選択</option>
-                    </select>
-                </div>
-            </div>
-            <div class="row-heigaku heigaku">
-                <select class="select heigaku-type">
-                    <option value="">兵学</option>
-                    <option value="武略">武略</option>
-                    <option value="機略">機略</option>
-                    <option value="陣立">陣立</option>
-                    <option value="臨戦">臨戦</option>
-                </select>
-                <div class="column-heigaku">
-                    <div class="row-heigaku2">
-                        <div >奇</div>
-                        <select class="select heigaku-ki">
-                            <option value="">兵学・奇</option>
-                        </select>
-                    </div>
-                    <div class="row-heigaku2">
-                        <div >正</div>
-                        <select class="select heigaku-sei">
-                            <option value="">・正</option>
-                        </select>
-                        <select class="select heigaku-sei">
-                            <option value="">・正</option>
-                        </select>
-                        <select class="select heigaku-sei">
-                            <option value="">・正</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="row-tokusei">
-                <div>特性</div>
-                <div></div>
-                <div class="label-tag tokusei0"></div>
-                <div class="label-tag tokusei1"></div>
-                <div class="label-tag tokusei3"></div>
-                <div class="label-tag tokusei5"></div>
-            </div>
-            <div class="row-states">
-                <div>状態</div>
-                <div></div>
-                <div class="label-tag states"></div>
-            </div>
+      </td>
+      <td rowspan="2" class="tags">
+        <div class="row-tags2">
+            <span> タグ</span>
             <div class="row-tags">
-                <div>タグ</div>
-                <div></div>
-                <div class="label-tag tags"></div>
+                <span class="label-tag tags"></span>
             </div>
         </div>
-        <!--ここまで-->
-    </div>
-</div>
-<!--本体ここまで-->
+      </td>
+    </tr>
+    <tr>
+      <td class="rank">R0</td>
+      <td class="heigaku">正</td>
+      <td class="heigaku">
+        <select class="select heigaku-sei">
+            <option value="">・正</option>
+        </select>
+      </td>
+      <td class="heigaku">
+        <select class="select heigaku-sei">
+            <option value="">・正</option>
+        </select>
+      </td>
+      <td class="heigaku">
+        <select class="select heigaku-sei">
+            <option value="">・正</option>
+        </select>
+      </td>
+    </tr>
+  </tbody>
+
+  <tbody class="member-unit" data-group="2">
+  </tbody>
+</table>
 
 <script type="module" src="./teams1.js"></script>
 

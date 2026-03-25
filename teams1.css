@@ -7,10 +7,10 @@ body{
 .select{
   width:auto;
   height:auto;
-  padding:2px;
+  padding:1px;
   font-size:11px;
   text-align:center;
-  margin-bottom:0px;
+  margin: 0px auto;
 }
 .label{
   width:auto;
@@ -26,7 +26,7 @@ body{
   font-size:11px;
   padding-left:4px;
   padding-right:4px;
-  margin:1px;
+  margin:2px;
   border-radius:4px;
   background-color: #f3f3f3;
 }
@@ -59,64 +59,38 @@ body{
   padding:1px;
   border:1px solid #aaa;
 }
-.row-cost{
-  display:flex;
-  flex-direction: row;
-  gap:0px;
-  padding:0px;
-}
-.row-busho{
-  display: flex;
-  flex-direction: row;
-  font-size:11px;
-  border-radius:2px;
-  border:1px solid #aaa;
-}
-.row-busho-basic{
-  display: flex;
-  flex-direction: row;
-  font-size:11px;
-  border-radius:6px;
-}
 .busho-name{
+  display: flex;
   width: 100px;
-}
-.column-cost{
-  flex:0;
-  flex-direction: column;
-  font-size:11px;
-  border-radius:6px;
-  padding-left:6px;
-  padding-right:6px;
-  padding-top:0px;
-  padding-bottom:0px;
 }
 .column-senpo{
   display: flex;
   flex-direction: column;
   font-size:11px;
   border-radius:6px;
+  width: auto;
+  gap: 4px;
 }
 .senpo{
+  display: flex;
   width: 100px;
 }
-.row-heigaku{
+.heigaku{
+  font-size:11px;
+  gap:0px;
+}
+.heigaku-ki{
   display: flex;
   flex-direction: row;
-  font-size:11px;
-  border-radius:6px;
 }
-.column-heigaku{
-  flex-direction: column;
-  font-size:11px;
-  border-radius:6px;
-  margin-left: 2px;
-}
-.row-heigaku2{
+.heigaku-sei{
   display: flex;
   flex-direction: row;
+}
+.tokusei{
   font-size:11px;
-  border-radius:6px;
+  height: 1px; /* ブラウザに高さを計算させるためのハック（重要） */
+  vertical-align: middle;
 }
 .row-tokusei{
   display: grid;
@@ -124,8 +98,18 @@ body{
   grid-auto-flow: column;             /* 要素を列方向に流す */
   grid-auto-columns: auto;           /* 列の幅を指定 */
   font-size:11px;
-  border-radius:6px;
-  border:1px solid #aaa;
+}
+.row-tokusei2 {
+  display: flex;
+  align-items: center;  /* 縦中央 */
+  justify-content: flex-start;
+  height: 100%;         /* これで2行分の高さを使い切る */
+  min-height: 50px;     /* 最小の高さを確保 */
+}
+.states{
+  font-size:11px;
+  height: 1px; /* ブラウザに高さを計算させるためのハック（重要） */
+  vertical-align: middle;
 }
 .row-states{
   display: grid;
@@ -133,8 +117,18 @@ body{
   grid-auto-flow: column;             /* 要素を列方向に流す */
   grid-auto-columns: auto;           /* 列の幅を指定 */
   font-size:11px;
-  border-radius:6px;
-  border:1px solid #aaa;
+}
+.row-states2 {
+  display: flex;
+  align-items: center;  /* 縦中央 */
+  justify-content: flex-start;
+  height: 100%;         /* これで2行分の高さを使い切る */
+  min-height: 50px;     /* 最小の高さを確保 */
+}
+.tags{
+  font-size:11px;
+  height: 1px; /* ブラウザに高さを計算させるためのハック（重要） */
+  vertical-align: middle;
 }
 .row-tags{
   display: grid;
@@ -142,8 +136,13 @@ body{
   grid-auto-flow: column;             /* 要素を列方向に流す */
   grid-auto-columns: auto;           /* 列の幅を指定 */
   font-size:11px;
-  border-radius:6px;
-  border:1px solid #aaa;
+}
+.row-tags2 {
+  display: flex;
+  align-items: center;  /* 縦中央 */
+  justify-content: flex-start;
+  height: 100%;         /* これで2行分の高さを使い切る */
+  min-height: 50px;     /* 最小の高さを確保 */
 }
 
 /* メニューの初期状態：画面の左側に隠す */
@@ -187,19 +186,22 @@ body{
   .column-senpo{
   flex-direction: row;
   }
-  .row-heigaku{
+  .heigaku{
     display: none;
   }
-  .column-heigaku{
-    display: none;
-  }
-  .row-heigaku2{
+  .tokusei{
     display: none;
   }
   .row-tokusei{
     display: none;
   }
+  .states{
+    display: none;
+  }
   .row-states{
+    display: none;
+  }
+  .tags{
     display: none;
   }
   .row-tags{
@@ -211,4 +213,14 @@ body{
     padding-bottom:0px;
   }
 
+}
+
+/* テーブル全体の基本設定 */
+table {
+  border-collapse: collapse; /* セル同士の隙間をなくす */
+  border: 2px solid #333;    /* テーブル全体の外枠 */
+}
+
+td{
+  padding:0;
 }

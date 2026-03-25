@@ -418,7 +418,7 @@ function setupHeigaku(column, b){
 
 }
 
-init()
+//init()
 
 /* 使用中のIDを取得 */
 function getSelectedBushoIds(){
@@ -573,3 +573,104 @@ document.addEventListener("change",e=>{
 window.addEventListener('DOMContentLoaded', () => {
   setupNavigation();
 });
+
+const table = document.getElementById('squad-table');
+let html = '';
+
+// 12チーム × 3名 = 36回ループ
+for (let i = 1; i <= 36; i++) {
+  // チーム番号の計算（1,1,1, 2,2,2... となるように）
+  const teamNum = Math.ceil(i / 3);
+  
+  // 3人ごとの最初の1人だけ rowspan="3" をつけるための判定
+  const isTeamStart = (i % 3 === 1);
+
+  html += `
+  <tbody class="member-unit" data-group="${i}">
+    <tr>
+      ${isTeamStart ? `<td rowspan="18">第${teamNum}部隊</td>` : ''}
+      <td class="cost">C0</td>
+      <td rowspan="2">
+        <select class="select busho-name">
+            <option value="">武将選択</option>
+        </select>
+      </td>
+    <td rowspan="2">
+        <div class="column-senpo">
+            <select class="select senpo">
+                <option value="">戦法選択</option>
+            </select>
+            <select class="select senpo">
+                <option value="">戦法選択</option>
+            </select>
+        </div>
+    </td>
+      <td class="heigaku" rowspan="2">
+        <select class="select heigaku-type">
+            <option value="">兵学</option>
+            <option value="武略">武略</option>
+            <option value="機略">機略</option>
+            <option value="陣立">陣立</option>
+            <option value="臨戦">臨戦</option>
+        </select>
+      </td>
+      <td class="heigaku">奇</td>
+      <td class="heigaku" colspan="3">
+        <select class="select heigaku-ki">
+            <option value="">兵学・奇</option>
+        </select>
+      </td>
+      <td rowspan="2" class="tokusei">
+        <div class="row-tokusei2">
+            <span> 特性</span>
+            <div class="row-tokusei">
+                <span class="label-tag tokusei0">ラベル0</span>
+                <span class="label-tag tokusei1">rabel1</span>
+                <span class="label-tag tokusei3">ラベル3</span>
+                <span class="label-tag tokusei5">ラベル5</span>
+            </div>
+        </div>
+      </td>
+      <td rowspan="2" class="states">
+        <div class="row-states2">
+            <span> 状態</span>
+            <div class="row-states">
+                <span class="label-tag stetas"></span>
+            </div>
+        </div>
+      </td>
+      <td rowspan="2" class="tags">
+        <div class="row-tags2">
+            <span> タグ</span>
+            <div class="row-tags">
+                <span class="label-tag tags"></span>
+            </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="rank">R0</td>
+      <td class="heigaku">正</td>
+      <td class="heigaku">
+        <select class="select heigaku-sei">
+            <option value="">・正</option>
+        </select>
+      </td>
+      <td class="heigaku">
+        <select class="select heigaku-sei">
+            <option value="">・正</option>
+        </select>
+      </td>
+      <td class="heigaku">
+        <select class="select heigaku-sei">
+            <option value="">・正</option>
+        </select>
+      </td>
+    </tr>
+  </tbody>
+    `;
+}
+
+// 最後にテーブルにガバッと入れる
+table.insertAdjacentHTML('beforeend', html);
+
