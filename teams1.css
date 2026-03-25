@@ -59,6 +59,9 @@ body{
   padding:1px;
   border:1px solid #aaa;
 }
+.team-No{
+  text-align: center;
+}
 .cost{
   text-align: center;
 }
