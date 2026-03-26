@@ -10,7 +10,8 @@ const DB={
   own_senpo:[]
 }
 let currentTeam = 1
-let allSenpoSelects=""
+const allSenpoSelects={}
+
 async function loadCSV(url){
 
   const res = await fetch(url)
