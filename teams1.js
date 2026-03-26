@@ -483,42 +483,33 @@ document.querySelectorAll(".heigaku-type").forEach(select=>{
 // テーブル全体に対してイベントを設定
 const table = document.getElementById('squad-table');
 /* 同じ武将を選択した時、入れ替える処理 */
-const allBushoSelects = document.querySelectorAll('.busho-name');
 let beforeBushoValue = "";
 
-allBushoSelects.forEach(select=>{
   /* チェンジイベント前処理 */
-  select.addEventListener('focus',(e)=>{
-      beforeBushoValue=e.target.value; /*変更前の値取得 */
-    }
-  )
+table.addEventListener('focusin', (e) => {
+  if (e.target.classList.contains('busho')) {
+    beforeBushoValue = e.target.value;
+  }
+});
   /* チェンジイベント後処理 */
-  select.addEventListener('change', (e) => {
+  table.addEventListener('change', (e) => {
+    if (!e.target.classList.contains('busho')) return;
       const newValue = e.target.value;  
   
     if (newValue === "") return;  /*未選択時は空にする */
-    // 自分の行を取得
-    const myRow = e.target.closest('row-busho'); 
-    const mySenpos = myRow.querySelectorAll('.senpo'); // 戦法プルダウン
-
+    
+    const allBushoSelects = document.querySelectorAll('.busho-name');
     allBushoSelects.forEach(otherSelect => {
-      if (otherSelect !== e.target && otherSelect.value === newValue) {
-          
-        const otherRow = otherSelect.closest('row-busho');
-        const otherSenpos = otherRow.querySelectorAll('.senpo');
-        
-        otherSelect.value = beforeBushoValue;
+        if (otherSelect !== e.target && otherSelect.value === newValue) {
+          otherSelect.value = beforeBushoValue;
 
-        mySenpos.forEach((senpo, index) => {
-          const tempSenpo = senpo.value;
-          senpo.value = otherSenpos[index].value;
-          otherSenpos[index].value = tempSenpo;
-        });
-      }
+          flashElement(e.target);  //選択箇所を光らせる
+          flashElement(otherSelect);  //入替箇所を光らせる
+        }
     });
     beforeBushoValue = newValue;
   });
-})
+
 /* 同じ戦法を選択した時、入れ替える処理 */
 let beforeSenpoValue = "";
 
@@ -546,7 +537,6 @@ table.addEventListener('focusin', (e) => {
     });
     beforeSenpoValue = newValue;
   });
-//})
 
 /* チェンジイベント処理 */
 document.addEventListener("change",e=>{
