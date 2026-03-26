@@ -77,7 +77,7 @@ function createBushoSelect(){
 
   document.querySelectorAll(".busho-name").forEach(select=>{
     const current = select.value
-    select.innerHTML = `<option value="">武将選択</option>` 
+    select.innerHTML = `<option value="">--</option>` 
     
     DB.busho.forEach(b=>{
       let usedmark =""
@@ -98,7 +98,6 @@ function createBushoSelect(){
     })
     select.value = current
     
-
   })
 }
 
@@ -115,7 +114,7 @@ function createSenpoSelect(){
   document.querySelectorAll(".senpo").forEach(select=>{
 
     const current = select.value
-    select.innerHTML=`<option value="">戦法選択</option>`
+    select.innerHTML=`<option value="">--</option>`
     DB.senpo.forEach(s=>{
       let usedmark =""
 
