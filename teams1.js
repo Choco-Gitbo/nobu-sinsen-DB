@@ -10,7 +10,7 @@ const DB={
   own_senpo:[]
 }
 let currentTeam = 1
-
+let allSenpoSelects=""
 async function loadCSV(url){
 
   const res = await fetch(url)
@@ -518,7 +518,7 @@ allBushoSelects.forEach(select=>{
   });
 })
 /* 同じ戦法を選択した時、入れ替える処理 */
-const allSenpoSelects = document.querySelectorAll('.senpo');
+//const allSenpoSelects = document.querySelectorAll('.senpo');
 let beforeSenpoValue = "";
 
 allSenpoSelects.forEach(select=>{
@@ -545,7 +545,7 @@ allSenpoSelects.forEach(select=>{
 document.addEventListener("change",e=>{
 
   if(allSenpoSelects=[]){
-    const allSenpoSelects = document.querySelectorAll('.senpo'); 
+    allSenpoSelects = document.querySelectorAll('.senpo'); 
   }
 
     /* 選択対象フィルターの変更処理 */
