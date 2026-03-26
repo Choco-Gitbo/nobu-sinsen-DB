@@ -496,13 +496,27 @@ table.addEventListener('focusin', (e) => {
     if (!e.target.classList.contains('busho-name')) return;
       const newValue = e.target.value;  
   
-    if (newValue === "") return;  /*未選択時は空にする */
-    
+    if (newValue === ""|| nuwValue === beforeBushoValue) return;  /*未選択時は空にする */
+    // 自分のユニット（データグループ）を取得
+    const myUnitId = e.target.closest('[data-group]').getAttribute('data-group');
+    // 全ての武将セレクトを取得して重複チェック
     const allBushoSelects = document.querySelectorAll('.busho-name');
     allBushoSelects.forEach(otherSelect => {
         if (otherSelect !== e.target && otherSelect.value === newValue) {
+          const otherUnitId = otherSelect.closest('[data-group]').getAttribute('data-group');
+          // 1. 武将の値をスワップ
           otherSelect.value = beforeBushoValue;
 
+          // 2. そのユニット内の「戦法」などをスワップ
+          // data-group属性を使って、自分と相手の関連セレクトを全て取得
+          const mySenpo = document.querySelectorAll(`[data-group="${myUnitId}"] select:not(.busho-name)`);
+          const otherSenpo = document.querySelectorAll(`[data-group="${otherUnitId}"] select:not(.busho-name)`);
+
+          mySenpo.forEach((s, i) => {
+            const temp = s.value;
+            s.value = otherSenpo[i].value;
+            otherSenpo[i].value = temp;
+          });
           flashElement(e.target);  //選択箇所を光らせる
           flashElement(otherSelect);  //入替箇所を光らせる
         }
@@ -525,7 +539,7 @@ table.addEventListener('focusin', (e) => {
       const newValue = e.target.value;  
   
     if (newValue === "") return;  /*未選択時は空にする */
-    
+    // 全ての戦法セレクトを取得して重複チェック
     const allSenpoSelects = document.querySelectorAll('.senpo');
     allSenpoSelects.forEach(otherSelect => {
         if (otherSelect !== e.target && otherSelect.value === newValue) {
@@ -537,6 +551,7 @@ table.addEventListener('focusin', (e) => {
     });
     beforeSenpoValue = newValue;
   });
+
 
 /* チェンジイベント処理 */
 document.addEventListener("change",e=>{
