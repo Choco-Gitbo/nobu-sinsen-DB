@@ -73,6 +73,7 @@ body{
   font-size: 11px;
   text-align: center;
   border: none;
+  border-bottom: 1px solid #ccc
 }
 .busho-name{
   display: flex;
