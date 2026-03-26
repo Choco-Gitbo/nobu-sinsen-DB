@@ -92,8 +92,9 @@ body{
   gap:0px;
   background-color: blue;
 }
-.heigaku-ki{
+.heigaku-ki2{
   display: flex;
+  flex-direction: row;
 }
 .heigaku-sei2{
   display: flex;

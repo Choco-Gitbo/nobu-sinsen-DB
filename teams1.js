@@ -620,7 +620,7 @@ function makeTable(){
             </select>
           </td>
           <td class="heigaku">奇</td>
-          <td class="heigaku">
+          <td class="heigaku-ki2">
             <select class="select heigaku-ki">
                 <option value="">兵学・奇</option>
             </select>
