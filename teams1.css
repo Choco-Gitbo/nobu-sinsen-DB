@@ -63,10 +63,12 @@ body{
   text-align: center;
 }
 .cost{
+  display: flex;
   font-size: 11px;
   text-align: center;
 }
 .rank{
+  display: flex;
   font-size: 11px;
   text-align: center;
 }
