@@ -203,6 +203,12 @@ body{
   .heigaku{
     display: none;
   }
+  .heigaku-ki2{
+    display: none;
+  }
+  .heigaku-sei2{
+    display: none;
+  }
   .tokusei{
     display: none;
   }
