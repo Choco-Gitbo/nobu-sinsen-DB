@@ -622,7 +622,20 @@ function makeTable(){
 
       html += `
         <tr class="unit-row-1" data-group="${i}">
-          ${isTeamStart ? `<td class="team-No" rowspan="6">${teamNum}</td>` : ''}
+          ${isTeamStart ? `<td class="team-No" rowspan="6">
+            ${teamNum}
+            <select class="select unit-type">
+                <option value="">--</option>
+                <option value="騎兵">騎兵</option>
+                <option value="弓兵">弓兵</option>
+                <option value="鉄砲">鉄砲</option>
+                <option value="足軽">足軽</option>
+                <option value="兵器">兵器</option>
+            </select>
+            C + nowcost
+            <input class="chain-chk" type="checkbox" checked="false" defaultchecked="true" />
+
+          </td>` : ''}
           <td class="cost">C0</td>
           <td rowspan="2">
             <select class="select busho-name">
