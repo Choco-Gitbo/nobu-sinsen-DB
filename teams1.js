@@ -595,22 +595,22 @@ function makeTable(){
           <td class="cost">C0</td>
           <td rowspan="2">
             <select class="select busho-name">
-                <option value="">武将選択</option>
+                <option value="">--</option>
             </select>
           </td>
           <td rowspan="2">
             <div class="column-senpo">
                 <select class="select senpo">
-                    <option value="">戦法選択</option>
+                    <option value="">--</option>
                 </select>
                 <select class="select senpo">
-                    <option value="">戦法選択</option>
+                    <option value="">--</option>
                 </select>
             </div>
           </td>
           <td class="heigaku" rowspan="2">
             <select class="select heigaku-type">
-                <option value="">兵学</option>
+                <option value="">--</option>
                 <option value="武略">武略</option>
                 <option value="機略">機略</option>
                 <option value="陣立">陣立</option>
