@@ -674,8 +674,8 @@ function makeTable(){
 /* 入れ替わったことを分かりやすくするための演出
  */
 function flashElement(el) {
-  el.style.transition = 'background-color 0.3s';
-  el.style.backgroundColor = '#e1f5fe'; // 薄い青色などで強調
+  el.style.transition = 'background-color 0.5s';
+  el.style.backgroundColor = 'gold'; // 薄い青色などで強調
   setTimeout(() => {
     el.style.backgroundColor = '';
   }, 600);
