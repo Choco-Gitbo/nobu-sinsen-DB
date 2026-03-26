@@ -594,6 +594,10 @@ document.addEventListener("change",e=>{
   if(e.target.classList.contains("senpo")){
     createSenpoSelect()
   }
+    /* 兵種選択の変更処理 */
+  if(e.target.classList.contains("unit-type")){
+    createSenpoSelect()
+  }
 
 
 })
@@ -632,7 +636,7 @@ function makeTable(){
                 <option value="足軽">足軽</option>
                 <option value="兵器">兵器</option>
             </select>
-            C + nowcost
+            C0
             <input class="chain-chk" type="checkbox" checked="false" defaultchecked="true" />
 
           </td>` : ''}
