@@ -628,10 +628,6 @@ function makeTable(){
           <td rowspan="2" class="tokusei">
             <div class="row-tokusei2">
                 <div class="row-tokusei">
-                    <span class="label-tag tokusei0">ラベル0</span>
-                    <span class="label-tag tokusei1">rabel1</span>
-                    <span class="label-tag tokusei3">ラベル3</span>
-                    <span class="label-tag tokusei5">ラベル5</span>
                 </div>
             </div>
           </td>
