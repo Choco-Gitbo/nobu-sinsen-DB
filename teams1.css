@@ -66,11 +66,13 @@ body{
   display: flex;
   font-size: 11px;
   text-align: center;
+  border: none;
 }
 .rank{
   display: flex;
   font-size: 11px;
   text-align: center;
+  border: none;
 }
 .busho-name{
   display: flex;
@@ -92,7 +94,6 @@ body{
   font-size:11px;
   text-align: center;
   gap:0px;
-  background-color: blue;
 }
 .heigaku-ki2{
   display: flex;
@@ -101,7 +102,6 @@ body{
 .heigaku-sei2{
   display: flex;
   flex-direction: row;
-  background-color: brown;
 }
 .tokusei{
   font-size:11px;
