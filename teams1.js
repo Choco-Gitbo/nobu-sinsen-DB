@@ -541,6 +541,8 @@ table.addEventListener('focusin', (e) => {
       const newValue = e.target.value;  
   
     if (newValue === "") return;  /*未選択時は空にする */
+    
+    const allSenpoSelects = document.querySelectorAll('.senpo');
     allSenpoSelects.forEach(otherSelect => {
         if (otherSelect !== e.target && otherSelect.value === newValue) {
           otherSelect.value = beforeSenpoValue;
