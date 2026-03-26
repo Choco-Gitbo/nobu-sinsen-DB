@@ -86,7 +86,7 @@ function createBushoSelect(){
         if(mode==="owned" && !b.own.some(o=>o.own === true) ) return false /* 所有確認 */
         if(f.faction && b.faction!==f.faction) return false /*陣営フィルター */
         if(f.cost && b.cost!==f.cost) return false /*コストフィルター */
-        if(f.usType && !b.unique_senpotype.some(e=>e.type===f.usType)) return false /*固有戦法タイプフィルター */
+        if(f.usType && b.unique_senpotype!==f.usType) return false /*固有戦法タイプフィルター */
         if(f.usState && !b.unique_senpostates.some(e=>e.effect===f.usState)) return false /*固有戦法状態フィルター */
       }
       
