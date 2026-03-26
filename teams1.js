@@ -10,7 +10,6 @@ const DB={
   own_senpo:[]
 }
 let currentTeam = 1
-const allSenpoSelects={}
 
 async function loadCSV(url){
 
@@ -481,6 +480,8 @@ document.querySelectorAll(".heigaku-type").forEach(select=>{
 
 })
 
+// テーブル全体に対してイベントを設定
+const table = document.getElementById('squad-table');
 /* 同じ武将を選択した時、入れ替える処理 */
 const allBushoSelects = document.querySelectorAll('.busho-name');
 let beforeBushoValue = "";
@@ -522,14 +523,21 @@ allBushoSelects.forEach(select=>{
 //const allSenpoSelects = document.querySelectorAll('.senpo');
 let beforeSenpoValue = "";
 
-allSenpoSelects.forEach(select=>{
+//allSenpoSelects.forEach(select=>{
   /* チェンジイベント前処理 */
-  select.addEventListener('focus',(e)=>{
-      beforeSenpoValue=e.target.value; /*変更前の値取得 */
-    }
-  )
+  //select.addEventListener('focus',(e)=>{
+  //    beforeSenpoValue=e.target.value; /*変更前の値取得 */
+  //  }
+  //)
+table.addEventListener('focusin', (e) => {
+  if (e.target.classList.contains('senpo')) {
+    beforeSenpoValue = e.target.value;
+  }
+});
   /* チェンジイベント後処理 */
-  select.addEventListener('change', (e) => {
+  //select.addEventListener('change', (e) => {
+  table.addEventListener('change', (e) => {
+    if (!e.target.classList.contains('senpo')) return;
       const newValue = e.target.value;  
   
     if (newValue === "") return;  /*未選択時は空にする */
@@ -540,7 +548,7 @@ allSenpoSelects.forEach(select=>{
     });
     beforeSenpoValue = newValue;
   });
-})
+//})
 
 /* チェンジイベント処理 */
 document.addEventListener("change",e=>{
@@ -663,5 +671,5 @@ function makeTable(){
   html += `</tbody>`;
   table.insertAdjacentHTML('beforeend', html);
   }
-  allSenpoSelects = document.querySelectorAll('.senpo');
+  
 }
