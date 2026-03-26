@@ -54,7 +54,6 @@ async function init(){
   createBushoSelect() //武将プルダウンのオプション作成
   createSenpoSelect() //戦法プルダウンのオプション作成
 
-  const allSenpoSelects = document.querySelectorAll('.senpo');
 }
 
 /* 所持武将・戦法取得 */
@@ -544,6 +543,11 @@ allSenpoSelects.forEach(select=>{
 
 /* チェンジイベント処理 */
 document.addEventListener("change",e=>{
+
+  if(allSenpoSelects=[]){
+    const allSenpoSelects = document.querySelectorAll('.senpo'); 
+  }
+
     /* 選択対象フィルターの変更処理 */
   if(e.target.classList.contains("own-mode")){
     createBushoSelect()
