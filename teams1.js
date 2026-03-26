@@ -487,13 +487,13 @@ let beforeBushoValue = "";
 
   /* チェンジイベント前処理 */
 table.addEventListener('focusin', (e) => {
-  if (e.target.classList.contains('busho')) {
+  if (e.target.classList.contains('busho-name')) {
     beforeBushoValue = e.target.value;
   }
 });
   /* チェンジイベント後処理 */
   table.addEventListener('change', (e) => {
-    if (!e.target.classList.contains('busho')) return;
+    if (!e.target.classList.contains('busho-name')) return;
       const newValue = e.target.value;  
   
     if (newValue === "") return;  /*未選択時は空にする */
