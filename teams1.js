@@ -520,22 +520,15 @@ allBushoSelects.forEach(select=>{
   });
 })
 /* 同じ戦法を選択した時、入れ替える処理 */
-//const allSenpoSelects = document.querySelectorAll('.senpo');
 let beforeSenpoValue = "";
 
-//allSenpoSelects.forEach(select=>{
   /* チェンジイベント前処理 */
-  //select.addEventListener('focus',(e)=>{
-  //    beforeSenpoValue=e.target.value; /*変更前の値取得 */
-  //  }
-  //)
 table.addEventListener('focusin', (e) => {
   if (e.target.classList.contains('senpo')) {
     beforeSenpoValue = e.target.value;
   }
 });
   /* チェンジイベント後処理 */
-  //select.addEventListener('change', (e) => {
   table.addEventListener('change', (e) => {
     if (!e.target.classList.contains('senpo')) return;
       const newValue = e.target.value;  
@@ -546,6 +539,9 @@ table.addEventListener('focusin', (e) => {
     allSenpoSelects.forEach(otherSelect => {
         if (otherSelect !== e.target && otherSelect.value === newValue) {
           otherSelect.value = beforeSenpoValue;
+
+          flashElement(e.target);  //選択箇所を光らせる
+          flashElement(otherSelect);  //入替箇所を光らせる
         }
     });
     beforeSenpoValue = newValue;
@@ -674,4 +670,13 @@ function makeTable(){
   table.insertAdjacentHTML('beforeend', html);
   }
   
+}
+/* 入れ替わったことを分かりやすくするための演出
+ */
+function flashElement(el) {
+  el.style.transition = 'background-color 0.3s';
+  el.style.backgroundColor = '#e1f5fe'; // 薄い青色などで強調
+  setTimeout(() => {
+    el.style.backgroundColor = '';
+  }, 600);
 }
