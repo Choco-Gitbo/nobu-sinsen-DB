@@ -66,14 +66,11 @@ body{
   display: flex;
   font-size: 11px;
   text-align: center;
-  border: none;
 }
 .rank{
   display: flex;
   font-size: 11px;
   text-align: center;
-  border: none;
-  border-bottom: 1px solid #ccc
 }
 .busho-name{
   display: flex;
