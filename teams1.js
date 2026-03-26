@@ -86,7 +86,7 @@ function createBushoSelect(){
         if(mode==="owned" && !b.own.some(o=>o.own === true) ) return false /* 所有確認 */
         if(f.faction && b.faction!==f.faction) return false /*陣営フィルター */
         if(f.cost && b.cost!==f.cost) return false /*コストフィルター */
-        /*if(f.usType && b.u!==f.faction) return false*/ /*固有戦法タイプフィルター */
+        if(f.usType && !b.unique_senpotype.some(e=>e.type===f.usType)) return false /*固有戦法タイプフィルター */
         if(f.usState && !b.unique_senpostates.some(e=>e.effect===f.usState)) return false /*固有戦法状態フィルター */
       }
       
@@ -195,6 +195,7 @@ function setupSenpoStates(){
 }
 function linkStatesToSenpo(){
 
+  //戦法状態を戦法DBに付与
   const stateMap={}
 
   DB.senpoState.forEach(st=>{
@@ -211,6 +212,7 @@ function linkStatesToSenpo(){
     s.states=stateMap[s.id] || []
   })
 
+  //所有情報を戦法DBに付与
   const ownMap={}
 
   Object.entries(DB.own_senpo).forEach(([key, value])=>{
@@ -226,6 +228,23 @@ function linkStatesToSenpo(){
 }
 function linkStatesToBusho(){
 
+  //戦法情報(タイプ)を武将DBに付与
+  const sTypeMap={}
+
+  DB.senpo.forEach(st=>{
+
+    if(!sTypeMap[st.senpo_id]){
+      sTypeMap[st.senpo_id]=[]
+    }
+
+    sTypeMap[st.senpo_id].push(st)
+
+  })
+  DB.busho.forEach(b=>{
+    b.unique_senpotype=sTypeMap[b.unique_senpo] || []
+  })
+
+  //戦法状態を武将DBに付与
   const stateMap={}
 
   DB.senpoState.forEach(st=>{
@@ -237,11 +256,11 @@ function linkStatesToBusho(){
     stateMap[st.senpo_id].push(st)
 
   })
-
   DB.busho.forEach(b=>{
     b.unique_senpostates=stateMap[b.unique_senpo] || []
   })
 
+  //所有情報を武将DBに付与
   const ownMap={}
 
   Object.entries(DB.own_busho).forEach(([key, value])=>{
@@ -496,7 +515,7 @@ table.addEventListener('focusin', (e) => {
     if (!e.target.classList.contains('busho-name')) return;
       const newValue = e.target.value;  
   
-    if (newValue === ""|| nuwValue === beforeBushoValue) return;  /*未選択時は空にする */
+    if (newValue === ""|| newValue === beforeBushoValue) return;  /*未選択時は空にする */
     // 自分のユニット（データグループ）を取得
     const myUnitId = e.target.closest('[data-group]').getAttribute('data-group');
     // 全ての武将セレクトを取得して重複チェック
