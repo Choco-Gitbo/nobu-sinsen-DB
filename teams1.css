@@ -80,7 +80,7 @@ body{
   font-size:11px;
   border-radius:6px;
   width: auto;
-  gap: 4px;
+  gap: 0px;
 }
 .senpo{
   display: flex;
