@@ -623,7 +623,7 @@ function makeTable(){
       const isTeamStart = (i  === 1);
 
       html += `
-        <tr class="data-group="${i}">
+        <tr class="unit-row-1" data-group="${i}">
           ${isTeamStart ? `<td class="team-No" rowspan="6">${teamNum}</td>` : ''}
           <td class="cost">C0</td>
           <td rowspan="2">
@@ -671,7 +671,7 @@ function makeTable(){
                 </div>
           </td>
         </tr>
-        <tr>
+        <tr class="unit-row-2" data-group="${i}">
           <td class="rank">R0</td>
           <td class="heigaku">正</td>
           <td class="heigaku-sei2">
