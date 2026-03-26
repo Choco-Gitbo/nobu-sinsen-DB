@@ -625,20 +625,20 @@ function makeTable(){
                 <option value="">兵学・奇</option>
             </select>
           </td>
-          <td rowspan="2" class="tokusei">
+          <td  class="tokusei">
             <div class="row-tokusei2">
                 <div class="row-tokusei">
                 </div>
             </div>
           </td>
-          <td rowspan="2" class="states">
+          <td  class="states">
             <div class="row-states2">
                 <div class="row-states">
                     <span class="label-tag stetas"></span>
                 </div>
             </div>
           </td>
-          <td rowspan="2" class="tags">
+          <td  class="tags">
             <div class="row-tags2">
                 <div class="row-tags">
                     <span class="label-tag tags"></span>
