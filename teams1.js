@@ -544,10 +544,6 @@ allSenpoSelects.forEach(select=>{
 /* チェンジイベント処理 */
 document.addEventListener("change",e=>{
 
-  if(allSenpoSelects=[]){
-    allSenpoSelects = document.querySelectorAll('.senpo'); 
-  }
-
     /* 選択対象フィルターの変更処理 */
   if(e.target.classList.contains("own-mode")){
     createBushoSelect()
@@ -666,4 +662,5 @@ function makeTable(){
   html += `</tbody>`;
   table.insertAdjacentHTML('beforeend', html);
   }
+  allSenpoSelects = document.querySelectorAll('.senpo');
 }
