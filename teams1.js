@@ -230,17 +230,15 @@ function linkStatesToBusho(){
   //戦法情報(タイプ)を武将DBに付与
   const sTypeMap={}
 
-  DB.senpo.forEach(st=>{
-
-    if(!sTypeMap[st.senpo_id]){
-      sTypeMap[st.senpo_id]=[]
-    }
-
-    sTypeMap[st.senpo_id].push(st)
-
-  })
   DB.busho.forEach(b=>{
-    b.unique_senpotype=sTypeMap[b.unique_senpo] || []
+
+    DB.senpo.forEach(s=>{
+      if(b.unique_senpo==s.id){
+        b.unique_senpotype=s.type
+        return false
+      }
+      
+    })
   })
 
   //戦法状態を武将DBに付与
