@@ -639,7 +639,6 @@ function makeTable(){
               <span>C0</span>
               <input class="chain-chk" type="checkbox" checked="false" defaultchecked="true" />
             </td>
-          
           <td class="cost">C0</td>
           <td rowspan="2">
             <select class="select busho-name">
@@ -687,7 +686,7 @@ function makeTable(){
           </td>
         </tr>
         <tr class="unit-row-2" data-group="${i}">
-          <td></td>
+          <td>''</td>
           <td class="rank">R0</td>
           <td class="heigaku">正</td>
           <td class="heigaku-sei2">
