@@ -626,8 +626,8 @@ function makeTable(){
 
       html += `
         <tr class="unit-row-1" data-group="${i}">
-          ${isTeamStart ? `<td  rowspan="6">
-            <div class="team-No">
+          ${isTeamStart ? `<td class="team-No" rowspan="6">
+            <div>
               ${teamNum}
               <select class="select unit-type">
                   <option value="">--</option>
@@ -637,6 +637,10 @@ function makeTable(){
                   <option value="足軽">足軽</option>
                   <option value="兵器">兵器</option>
               </select>
+              <div class="team-cost">
+                C0
+                <input class="chain-chk" type="checkbox" checked="false" defaultchecked="true" />
+              </div>
             </div>
           </td>` : ''}
           <td class="cost">C0</td>
