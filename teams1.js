@@ -688,7 +688,7 @@ function makeTable(){
           </td>
         </tr>
         <tr class="unit-row-2" data-group="${i}">
-          <td class="rank">R0</td>
+          <td><span class="rank">R0</span></td>
           <td class="heigaku">正</td>
           <td class="heigaku-sei2">
             <select class="select heigaku-sei">
