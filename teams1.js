@@ -124,6 +124,11 @@ function createSenpoSelect(){
         if(mode==="owned" && !s.own.some(o=>o.own === true) ) return false /* 所有確認 */
         if(f.type && s.type!==f.type) return false
         if(f.state && !s.states.some(st=>st.effect===f.state)) return false
+        if(unit){
+          const units=(s.unit||"").split("|").map(u=>u.trim())
+          if(!units.includes(f.unit)) return false
+        }
+
       }
       const op=document.createElement("option")
       op.value=s.id
@@ -473,7 +478,8 @@ function getSenpoFilter(){
 
   return {
     type:document.querySelector(".senpo-type").value,
-    state:document.querySelector(".senpo-states").value
+    state:document.querySelector(".senpo-states").value,
+    unit:document.querySelector(".unit-type").value    
   }
 
 }
