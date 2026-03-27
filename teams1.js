@@ -124,7 +124,7 @@ function createSenpoSelect(){
         if(mode==="owned" && !s.own.some(o=>o.own === true) ) return false /* 所有確認 */
         if(f.type && s.type!==f.type) return false
         if(f.state && !s.states.some(st=>st.effect===f.state)) return false
-        if(unit){
+        if(f.unit){
           const units=(s.unit||"").split("|").map(u=>u.trim())
           if(!units.includes(f.unit)) return false
         }
