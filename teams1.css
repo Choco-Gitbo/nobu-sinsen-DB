@@ -65,7 +65,12 @@ body{
 .unit{
   display: flex;
   flex-direction: column;
+  text-align: center;
 }
+.team-cost{
+  display: flex;
+  flex-direction: row;
+  }
 .cost{
   display: block;
   font-size: 11px;
@@ -208,9 +213,6 @@ body{
 }
   .rank{
     display: none;
-  }
-  .team-cost{
-  flex-direction: row;
   }
   .column-senpo{
   flex-direction: row;
