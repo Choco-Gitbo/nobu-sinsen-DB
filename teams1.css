@@ -64,6 +64,10 @@ body{
   flex-direction: column;
   text-align: center;
 }
+.team-cost{
+  display: flex;
+  flex-direction: column;
+}
 .cost{
   display: flex;
   font-size: 11px;
@@ -203,6 +207,9 @@ body{
   /*スマホ縦モードでの処理*/
   .rank{
     display: none;
+  }
+  .team-cost{
+  flex-direction: row;
   }
   .column-senpo{
   flex-direction: row;

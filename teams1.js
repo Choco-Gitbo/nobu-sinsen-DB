@@ -637,8 +637,10 @@ function makeTable(){
                   <option value="足軽">足軽</option>
                   <option value="兵器">兵器</option>
               </select>
-              C0
-              <input class="chain-chk" type="checkbox" checked="false" defaultchecked="true" />
+              <div class="team-cost">
+                C0
+                <input class="chain-chk" type="checkbox" checked="false" defaultchecked="true" />
+              </div>
             </div>
           </td>` : ''}
           <td class="cost">C0</td>
