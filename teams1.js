@@ -631,9 +631,10 @@ function makeTable(){
       
       // 3人ごとの最初の1人だけ rowspan="3" をつけるための判定
       const isTeamStart = (i  === 1);
-
+      
+      const groupNo = (j-1)*3+i;
       html += `
-        <tr class="unit-row-1" data-group="${i}">
+        <tr class="unit-row-1" data-group="${groupNo}">
           ${isTeamStart ? `<td class="team-No" rowspan="6">${teamNum}</td>` : ''}
           ${isTeamStart ? `<td rowspan="6">
             <div class="unit">
@@ -697,7 +698,7 @@ function makeTable(){
                 </div>
           </td>
         </tr>
-        <tr class="unit-row-2" data-group="${i}">
+        <tr class="unit-row-2" data-group="${groupNo}">
           <td><span class="rank">R0</span></td>
           <td class="heigaku">正</td>
           <td class="heigaku-sei2">
