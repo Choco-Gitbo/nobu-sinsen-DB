@@ -525,8 +525,8 @@ table.addEventListener('focusin', (e) => {
 
           // 2. そのユニット内の「戦法」などをスワップ
           // data-group属性を使って、自分と相手の関連セレクトを全て取得
-          const mySenpo = document.querySelectorAll(`[data-group="${myUnitId}"] select:(.senpo)`);
-          const otherSenpo = document.querySelectorAll(`[data-group="${otherUnitId}"] select:(.senpo)`);
+          const mySenpo = document.querySelectorAll(`[data-group="${myUnitId}"] select:not(.busho-name)`);
+          const otherSenpo = document.querySelectorAll(`[data-group="${otherUnitId}"] select:not(.busho-name)`);
 
           mySenpo.forEach((s, i) => {
             const temp = s.value;
