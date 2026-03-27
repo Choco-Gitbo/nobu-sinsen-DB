@@ -128,7 +128,7 @@ function createSenpoSelect(){
         if(f.type && s.type!==f.type) return false
         if(f.state && !s.states.some(st=>st.effect===f.state)) return false
         
-        if(UnitType[0].value){
+        if(UnitType){
           const units=(s.unit||"").split("|").map(u=>u.trim())
           if(!units.includes(UnitType[0].value)) return false
         }
