@@ -627,8 +627,8 @@ function makeTable(){
       html += `
         <tr class="unit-row-1" data-group="${i}">
           ${isTeamStart ? `<td class="team-No" rowspan="6">${teamNum}</td>` : ''}
-            <td class="unit">
-              <div>
+            <td class="unit" rowspan="2">
+              <div class="unit">
               <select class="select unit-type">
                   <option value="">--</option>
                   <option value="騎兵">騎兵</option>
@@ -688,7 +688,6 @@ function makeTable(){
           </td>
         </tr>
         <tr class="unit-row-2" data-group="${i}">
-          <td></td>
           <td class="rank">R0</td>
           <td class="heigaku">正</td>
           <td class="heigaku-sei2">
