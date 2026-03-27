@@ -60,9 +60,6 @@ body{
   border:1px solid #aaa;
 }
 .team-No{
-  display: flex;
-  flex-direction: column;
-
   text-align: center;
 }
 .team-cost{
