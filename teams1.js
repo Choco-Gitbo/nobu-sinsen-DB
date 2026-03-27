@@ -115,7 +115,7 @@ function createSenpoSelect(){
 
     const current = select.value
     const UnitId = select.closest('[data-group]').getAttribute('data-group');
-    const u = quotient(UnitId -1 , 3)+1
+    const u = Math.floor((UnitId -1)/ 3)+1
     const UnitType = document.querySelectorAll(`[data-group="${u}"] .${"unit-type"}`);
 
     select.innerHTML=`<option value="">--</option>`
