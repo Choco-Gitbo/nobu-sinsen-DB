@@ -116,7 +116,7 @@ function createSenpoSelect(){
     const current = select.value
     const UnitId = select.closest('[data-group]').getAttribute('data-group');
     const UnitType = document.querySelectorAll(`[data-group="${UnitId}"] .${"unit-type"}`);
-    
+
     select.innerHTML=`<option value="">--</option>`
     DB.senpo.forEach(s=>{
       let usedmark =""
@@ -127,9 +127,10 @@ function createSenpoSelect(){
         if(mode==="owned" && !s.own.some(o=>o.own === true) ) return false /* 所有確認 */
         if(f.type && s.type!==f.type) return false
         if(f.state && !s.states.some(st=>st.effect===f.state)) return false
-        if(UnitType.value){
+        
+        if(UnitType[0].value){
           const units=(s.unit||"").split("|").map(u=>u.trim())
-          if(!units.includes(UnitType.value)) return false
+          if(!units.includes(UnitType[0].value)) return false
         }
 
       }
