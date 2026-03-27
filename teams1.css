@@ -208,9 +208,6 @@ body{
 
 @media(max-width: 479px) {
   /*スマホ縦モードでの処理*/
-.unit{
-  flex-direction: row;
-}
   .rank{
     display: none;
   }
