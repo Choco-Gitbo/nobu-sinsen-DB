@@ -67,12 +67,13 @@ body{
   flex-direction: column;
 }
 .cost{
+  display: block;
   font-size: 11px;
   text-align: center;
   border: none;
 }
 .rank{
-  display: flex;
+  display: block;
   font-size: 11px;
   text-align: center;
   border: none;
