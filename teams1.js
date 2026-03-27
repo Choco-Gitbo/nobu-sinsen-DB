@@ -523,16 +523,24 @@ table.addEventListener('focusin', (e) => {
           // 1. 武将の値をスワップ
           otherSelect.value = beforeBushoValue;
 
-          // 2. そのユニット内の「戦法」などをスワップ
-          // data-group属性を使って、自分と相手の関連セレクトを全て取得
-          const mySenpo = document.querySelectorAll(`[data-group="${myUnitId}"] select:not(.busho-name)`);
-          const otherSenpo = document.querySelectorAll(`[data-group="${otherUnitId}"] select:not(.busho-name)`);
+          const myUnit = document.querySelector(`[data-group="${myUnitId}"]`);
+          const otherUnit = document.querySelectorAll(`[data-group="${otherUnitId}"]`); // ※1チーム複数行ある場合
+          
+          const swapByClass = (className) => {
+            const myItems = document.querySelectorAll(`[data-group="${myUnitId}"] .${className}`);
+            const otherItems = document.querySelectorAll(`[data-group="${otherUnitId}"] .${className}`);
+            
+            myItems.forEach((item, i) => {
+              if (otherItems[i]) {
+                const temp = item.value;
+                item.value = otherItems[i].value;
+                otherItems[i].value = temp;
+              }
+            });
+          };
 
-          mySenpo.forEach((s, i) => {
-            const temp = s.value;
-            s.value = otherSenpo[i].value;
-            otherSenpo[i].value = temp;
-          });
+          swapByClass('senpo');  // 戦法を入れ替え
+
           flashElement(e.target);  //選択箇所を光らせる
           flashElement(otherSelect);  //入替箇所を光らせる
         }
