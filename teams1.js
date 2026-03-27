@@ -114,6 +114,9 @@ function createSenpoSelect(){
   document.querySelectorAll(".senpo").forEach(select=>{
 
     const current = select.value
+    const UnitId = select.closest('[data-group]').getAttribute('data-group');
+    const UnitType = document.querySelectorAll(`[data-group="${UnitId}"] .${"unit-type"}`);
+    
     select.innerHTML=`<option value="">--</option>`
     DB.senpo.forEach(s=>{
       let usedmark =""
@@ -124,9 +127,9 @@ function createSenpoSelect(){
         if(mode==="owned" && !s.own.some(o=>o.own === true) ) return false /* 所有確認 */
         if(f.type && s.type!==f.type) return false
         if(f.state && !s.states.some(st=>st.effect===f.state)) return false
-        if(f.unit){
+        if(UnitType){
           const units=(s.unit||"").split("|").map(u=>u.trim())
-          if(!units.includes(f.unit)) return false
+          if(!units.includes(UnitType)) return false
         }
 
       }
@@ -331,19 +334,6 @@ function setBushoData(column,id){
     })
   }
   setupHeigaku(column, b)
-
-}
-function attrName(key){
-
-  const map={
-    buyu:"武勇",
-    chiryaku:"知略",
-    tousei:"統率",
-    speed:"速度",
-    seimu:"政務",
-    miryoku:"魅力"
-  }
-  return map[key]
 
 }
 
@@ -585,6 +575,7 @@ document.addEventListener("change",e=>{
     /* 武将選択の変更処理 */
   if(e.target.classList.contains("busho-name")){
     createBushoSelect()
+
   }
     /* 戦法選択の変更処理 */
   if(e.target.classList.contains("senpo")){
