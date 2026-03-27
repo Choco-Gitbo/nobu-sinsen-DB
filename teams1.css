@@ -67,7 +67,6 @@ body{
   flex-direction: column;
 }
 .cost{
-  display: flex;
   font-size: 11px;
   text-align: center;
   border: none;

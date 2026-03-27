@@ -629,19 +629,19 @@ function makeTable(){
           ${isTeamStart ? `<td class="team-No" rowspan="6">${teamNum}</td>` : ''}
             <td class="unit" rowspan="2">
               <div class="unit">
-              <select class="select unit-type">
-                  <option value="">--</option>
-                  <option value="騎兵">騎兵</option>
-                  <option value="弓兵">弓兵</option>
-                  <option value="鉄砲">鉄砲</option>
-                  <option value="足軽">足軽</option>
-                  <option value="兵器">兵器</option>
-              </select>
-              <span>C0</span>
-              <input class="chain-chk" type="checkbox" >
+                <select class="select unit-type">
+                    <option value="">--</option>
+                    <option value="騎兵">騎兵</option>
+                    <option value="弓兵">弓兵</option>
+                    <option value="鉄砲">鉄砲</option>
+                    <option value="足軽">足軽</option>
+                    <option value="兵器">兵器</option>
+                </select>
+                <span>C0</span>
+                <input class="chain-chk" type="checkbox" >
               </div>
             </td>
-          <td class="cost">C0</td>
+          <td ><span class="cost">C0</span></td>
           <td rowspan="2">
             <select class="select busho-name">
                 <option value="">--</option>
