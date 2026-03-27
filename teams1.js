@@ -625,6 +625,7 @@ function makeTable(){
       const isTeamStart = (i  === 1);
 
       html += `
+        <tr class="unit-row-1" data-group="${i}">
           ${isTeamStart ? `<td class="team-No" rowspan="6">${teamNum}</td>` : ''}
           ${isTeamStart ? `<td rowspan="6">
             <div class="unit">
@@ -642,8 +643,6 @@ function makeTable(){
               </div>
             </div>
           </td>` : ''}
-
-        <tr class="unit-row-1" data-group="${i}">
           <td ><span class="cost">C0</span></td>
           <td rowspan="2">
             <select class="select busho-name">
