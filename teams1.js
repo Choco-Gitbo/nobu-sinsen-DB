@@ -291,24 +291,6 @@ function setBushoData(column,id){
     <div class="label-center">${awake}</div>
   `; 
 
-  // 属性
-  const attrs=["buyu","chiryaku","tousei","speed","seimu","miryoku"]
-  const attrb=[b.pow_base,b.int_base,b.ldr_base,b.spd_base,b.adm_base,b.cha_base]
-  const attrg=[b.pow_growth,b.int_growth,b.ldr_growth,b.spd_growth,b.adm_growth,b.cha_growth]
-  const attrNodes=column.querySelectorAll(".attr-grid div")
-
-  attrs.forEach((a,i)=>{
-    const Lv= 50
-    const num1 = parseFloat(attrb[i] || 0)
-    const num2 = parseFloat(attrg[i] || 0)
-    const num = num1 + (num2 * (Lv -1))
-    attrNodes[i].textContent = attrName(a) + num.toFixed(2)
-  })
-
-  // 固有戦法
-  const senpo1 = DB.senpo.find(s => s.id === b.unique_senpo)
-  column.querySelector(".senpo1").textContent = senpo1 ? senpo1.name : ""
-
   const t0 = column.querySelector(".tokusei0")
   const t1 = column.querySelector(".tokusei1")
   const t3 = column.querySelector(".tokusei3")
@@ -691,6 +673,10 @@ function makeTable(){
           </td>
           <td rowspan="2" class="tokusei">
                 <div class="row-tokusei">
+                    <span class="label-tag tokusei0"></span>
+                    <span class="label-tag tokusei1"></span>
+                    <span class="label-tag tokusei3"></span>
+                    <span class="label-tag tokusei5"></span>
                 </div>
           </td>
           <td rowspan="2" class="states">
