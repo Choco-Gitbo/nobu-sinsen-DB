@@ -62,7 +62,7 @@ body{
 .team-No{
   text-align: center;
 }
-.team-cost{
+.unit{
   display: flex;
   flex-direction: column;
 }

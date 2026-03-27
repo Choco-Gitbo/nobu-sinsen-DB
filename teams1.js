@@ -626,9 +626,8 @@ function makeTable(){
 
       html += `
         <tr class="unit-row-1" data-group="${i}">
-          ${isTeamStart ? `<td class="team-No" rowspan="6">
-            <div>
-              ${teamNum}
+          ${isTeamStart ? `<td class="team-No" rowspan="6">${teamNum}</td>` : ''}
+            <td class="unit">
               <select class="select unit-type">
                   <option value="">--</option>
                   <option value="騎兵">騎兵</option>
@@ -639,8 +638,8 @@ function makeTable(){
               </select>
               <span>C0</span>
               <input class="chain-chk" type="checkbox" checked="false" defaultchecked="true" />
-            </div>
-          </td>` : ''}
+            </td>
+          
           <td class="cost">C0</td>
           <td rowspan="2">
             <select class="select busho-name">
@@ -688,6 +687,7 @@ function makeTable(){
           </td>
         </tr>
         <tr class="unit-row-2" data-group="${i}">
+          <td></td>
           <td class="rank">R0</td>
           <td class="heigaku">正</td>
           <td class="heigaku-sei2">
