@@ -115,7 +115,7 @@ function createSenpoSelect(){
 
     const current = select.value
     const UnitId = select.closest('[data-group]').getAttribute('data-group');
-    const UnitType = document.querySelectorAll(`[data-group="${UnitId}"] .${"unit-type"}`);
+    const UnitType = document.querySelectorAll(`[data-group="${UnitId}"] .${"unit-type"}`).value;
     
     select.innerHTML=`<option value="">--</option>`
     DB.senpo.forEach(s=>{
