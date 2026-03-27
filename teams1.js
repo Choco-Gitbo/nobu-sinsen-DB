@@ -638,7 +638,7 @@ function makeTable(){
                   <option value="兵器">兵器</option>
               </select>
               <span>C0</span>
-              <input class="chain-chk" type="checkbox" checked="false" defaultchecked="true" />
+              <input class="chain-chk" type="checkbox" >
               </div>
             </td>
           <td class="cost">C0</td>
