@@ -291,21 +291,16 @@ function setBushoData(Gid,id){
   if(!b)return
 
   const UnitGroup = document.querySelectorAll(`[data-group="${Gid}"]`);
-  let c =null;
-  let r=null;
+  let c = null;
+  let r = null;
   UnitGroup.forEach(u => {
     const found_c = u.querySelector('.cost'); //コスト
-    if (found_c){c=found_c}
+    if (found_c){c=found_c;}
     const found_r = u.querySelector('.rank'); //凸数
-    if (found_r){c=found_r}
+    if (found_r){c=found_r;}
   })
-   
-  if(c){
-    c.textContent = "C" + b.cost;
-  }
-  if(r){
-    r.textContent = "R" + (b.own[0]?.rank ?? 0);
-  }
+  if(c){c.textContent = "C" + b.cost;}
+  if(r){r.textContent = "R" + (b.own[0]?.rank ?? 0);}
 
   const t0 = UnitGroup.querySelector('.tokusei0') //固有特性
   const t1 = UnitGroup.querySelector('.tokusei1') //特性1凸
