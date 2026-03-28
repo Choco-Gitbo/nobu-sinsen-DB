@@ -345,7 +345,7 @@ function setBushoData(Gid,id){
   // 状態
   /* 下記コードで表示できるが項目数が多すぎるので再考
   const UnitGroupStates = document.querySelector(`[data-group="${Gid}"]`);
-  const state = UnitGroupStates.querySelector('.row-states'); //凸数
+  const state = UnitGroupStates.querySelector('.row-states'); //状態
   if(state){
     state.innerHTML=""
     if(b.unique_senpostates){
@@ -360,7 +360,7 @@ function setBushoData(Gid,id){
   */
   // 状態
   const UnitGroupStates = document.querySelector(`[data-group="${Gid}"]`);
-  const state = UnitGroupStates.querySelector('.row-states'); //凸数
+  const state = UnitGroupStates.querySelector('.row-states'); //状態
   if(state){
     state.innerHTML=""
     if(b.unique_senpostates){
@@ -373,7 +373,7 @@ function setBushoData(Gid,id){
 
   // タグ
   const UnitGroupTag = document.querySelector(`[data-group="${Gid}"]`);
-  const tag = UnitGroupTag.querySelector('.row-tags'); //凸数
+  const tag = UnitGroupTag.querySelector('.row-tags'); //タグ
   if(tag){
     tag.innerHTML=""
     if(b.tags){
@@ -389,6 +389,26 @@ function setBushoData(Gid,id){
 
 }
 
+function setSenpoStates(Gid,id){
+  // 状態
+  const UnitGroupStates = document.querySelector(`[data-group="${Gid}"]`);
+  const state = UnitGroupStates.querySelector('.row-states'); //状態
+  const UnitGroupSenpo = document.querySelector(`[data-group="${Gid}"]`);
+  const senpo = UnitGroupSenpo.querySelectorAll('.senpo'); 
+  if(senpo){
+    let n=2;
+    senpo.forEach(s=>{
+      if(s.value !==""){
+        const span=document.createElement("span")
+        span.className="label-tag state0"
+        span.textContent="第" + n + "戦法" + s.states.length + "種類"
+        state.appendChild(span)
+        n++;
+      } 
+    })
+  }
+
+}
 function updateNowCost(){
 
   let total = 0
@@ -635,6 +655,10 @@ document.addEventListener("change",e=>{
     /* 戦法選択の変更処理 */
   if(e.target.classList.contains("senpo")){
     createSenpoSelect()
+    const s = e.target.closest('[data-group]');
+    const sGId = parseInt(b.getAttribute('data-group'));
+    const svalue = e.target.value
+    setSenpoStates(sGId,svalue)
   }
     /* 兵種選択の変更処理 */
   if(e.target.classList.contains("unit-type")){
