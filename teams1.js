@@ -343,6 +343,7 @@ function setBushoData(Gid,id){
   if(t5) t5.style.background = rank >= 5 ? on : off
 
   // 状態
+  /* 下記コードで表示できるが項目数が多すぎるので再考
   const UnitGroupStates = document.querySelector(`[data-group="${Gid}"]`);
   const state = UnitGroupStates.querySelector('.row-states'); //凸数
   if(state){
@@ -354,6 +355,19 @@ function setBushoData(Gid,id){
         span.textContent=s.label
         state.appendChild(span)
       })
+    } 
+  }
+  */
+  // 状態
+  const UnitGroupStates = document.querySelector(`[data-group="${Gid}"]`);
+  const state = UnitGroupStates.querySelector('.row-states'); //凸数
+  if(state){
+    state.innerHTML=""
+    if(b.unique_senpostates){
+      const span=document.createElement("span")
+      span.className="label-tag state0"
+      span.textContent="固有" + b.unique_senpostates.length + "種類"
+      state.appendChild(span)
     } 
   }
 
