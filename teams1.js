@@ -400,7 +400,7 @@ function setSenpoStates(Gid,id){
     senpo.forEach(s=>{
       if(s.value !==""){
         DB.senpo.forEach(st=>{
-          if(st.id!==s.id) return false
+          if(st.id!==s.value) return false
           const span=document.createElement("span")
           span.className="label-tag state0"
           span.textContent="第" + n + "戦法" + st.states.length + "種類"
