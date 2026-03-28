@@ -297,6 +297,7 @@ function setBushoData(Gid,id){
   let t1 = null;
   let t3 = null;
   let t5 = null;
+  let tag = null;
 
   UnitGroup.forEach(u => {
     const found_c = u.querySelector('.cost'); //コスト
@@ -312,6 +313,9 @@ function setBushoData(Gid,id){
     if (found_t1){t1=found_t1;}
     if (found_t3){t3=found_t3;}
     if (found_t5){t5=found_t5;}
+
+    const found_tag = u.querySelector('.tags'); //凸数
+    if (found_tag){tag=found_tag;}
 
   })
   //コスト＆凸数
@@ -343,16 +347,17 @@ function setBushoData(Gid,id){
   if(t5) t5.style.background = rank >= 5 ? on : off
 
   // タグ
-  /*const tagGrid=column.querySelector(".tag-grid")
-  tagGrid.innerHTML=""
-  if(b.tags){
-    b.tags.split("|").forEach(t=>{
-      const div=document.createElement("div")
-      div.className="label-center"
-      div.textContent=t
-      tagGrid.appendChild(div)
-    })
-  } */
+  if(tag){
+    tag.innerHTML=""
+    if(b.tags){
+      b.tags.split("|").forEach(t=>{
+        const span=document.createElement("span")
+        span.className="label-tag tags"
+        span.textContent=t
+        tag.appendChild(span)
+      })
+    } 
+  }
   //setupHeigaku(column, b)
 
 }
