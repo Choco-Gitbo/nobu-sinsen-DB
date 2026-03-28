@@ -295,7 +295,7 @@ function setBushoData(Gid,id){
   const r = UnitGroup.querySelector('.rank')  //凸数
    
   c.textContent = "C" + b.cost;
-  r.textContent = "R" + String(b.own[0].rank);
+  r.textContent = "R" + b.own[0]?.rank;
 
   const t0 = UnitGroup.querySelector('.tokusei0') //固有特性
   const t1 = UnitGroup.querySelector('.tokusei1') //特性1凸
