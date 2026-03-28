@@ -292,7 +292,7 @@ function setBushoData(Gid,id){
 
   const UnitGroup = document.querySelector(`[data-group="${Gid}"]`);
   UnitGroup.querySelector('.cost').value = b.cost  //コスト
-  UnitGroup.querySelector('.rank').value = b.own.some(o=>o.rank)  //凸数
+  UnitGroup.querySelector('.rank').value = b.own[0].rank  //凸数
   
   const t0 = UnitGroup.querySelector('.tokusei0') //固有特性
   const t1 = UnitGroup.querySelector('.tokusei1') //特性1凸
