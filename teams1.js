@@ -314,7 +314,7 @@ function setBushoData(Gid,id){
     if (found_t3){t3=found_t3;}
     if (found_t5){t5=found_t5;}
 
-    const found_tag = u.querySelector('.tags'); //凸数
+    const found_tag = u.querySelector('.row-tags'); //凸数
     if (found_tag){tag=found_tag;}
 
   })
@@ -352,7 +352,7 @@ function setBushoData(Gid,id){
     if(b.tags){
       b.tags.split("|").forEach(t=>{
         const span=document.createElement("span")
-        span.className="label-tag tags"
+        span.className="label-tag row-tags"
         span.textContent=t
         tag.appendChild(span)
       })
@@ -705,6 +705,7 @@ function makeTable(){
           </td>
           <td rowspan="2" class="tags">
                 <div class="row-tags">
+                    <span class="label-tag tags"></span>
                 </div>
           </td>
         </tr>
