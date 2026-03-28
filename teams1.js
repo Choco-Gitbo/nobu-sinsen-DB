@@ -352,7 +352,7 @@ function setBushoData(Gid,id){
     if(b.tags){
       b.tags.split("|").forEach(t=>{
         const span=document.createElement("span")
-        span.className="label-tag row-tags"
+        span.className="label-tag tags"
         span.textContent=t
         tag.appendChild(span)
       })

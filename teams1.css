@@ -127,13 +127,6 @@ body{
   grid-auto-columns: auto;           /* 列の幅を指定 */
   font-size:11px;
 }
-.row-tokusei2 {
-  display: flex;
-  align-items: center;  /* 縦中央 */
-  justify-content: flex-start;
-  height: 100%;         /* これで2行分の高さを使い切る */
-  min-height: 50px;     /* 最小の高さを確保 */
-}
 .states{
   font-size:11px;
   height: 1px; /* ブラウザに高さを計算させるためのハック（重要） */
@@ -146,13 +139,6 @@ body{
   grid-auto-columns: auto;           /* 列の幅を指定 */
   font-size:11px;
 }
-.row-states2 {
-  display: flex;
-  align-items: center;  /* 縦中央 */
-  justify-content: flex-start;
-  height: 100%;         /* これで2行分の高さを使い切る */
-  min-height: 50px;     /* 最小の高さを確保 */
-}
 .tags{
   font-size:11px;
   height: 1px; /* ブラウザに高さを計算させるためのハック（重要） */
@@ -164,13 +150,6 @@ body{
   grid-auto-flow: column;             /* 要素を列方向に流す */
   grid-auto-columns: auto;           /* 列の幅を指定 */
   font-size:11px;
-}
-.row-tags2 {
-  display: flex;
-  align-items: center;  /* 縦中央 */
-  justify-content: flex-start;
-  height: 100%;         /* これで2行分の高さを使い切る */
-  min-height: 50px;     /* 最小の高さを確保 */
 }
 
 /* メニューの初期状態：画面の左側に隠す */
