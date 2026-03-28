@@ -577,7 +577,7 @@ document.addEventListener("change",e=>{
     createBushoSelect()
     const b = e.target.closest('[data-group]');
     const bGId = parseInt(b.getAttribute('data-group'));
-    const bvalue = e.value
+    const bvalue = e.target.value
     setBushoData(bGId,bvalue)
   }
     /* 戦法選択の変更処理 */
