@@ -293,6 +293,11 @@ function setBushoData(Gid,id){
   const UnitGroup = document.querySelectorAll(`[data-group="${Gid}"]`);
   let c = null;
   let r = null;
+  let t0 = null;
+  let t1 = null;
+  let t3 = null;
+  let t5 = null;
+
   UnitGroup.forEach(u => {
     const found_c = u.querySelector('.cost'); //コスト
     if (found_c){c=found_c;}
