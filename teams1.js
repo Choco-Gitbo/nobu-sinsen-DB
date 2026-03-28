@@ -354,7 +354,7 @@ function setBushoData(Gid,id){
     if(b.tags){
       b.tags.split("|").forEach(t=>{
         const span=document.createElement("span")
-        span.className="label-tag tags"
+        span.className="label-tag tag0"
         span.textContent=t
         tag.appendChild(span)
       })
@@ -707,7 +707,7 @@ function makeTable(){
           </td>
           <td rowspan="2" class="tags">
                 <div class="row-tags">
-                    <span class="label-tag tags"></span>
+                    <span class="label-tag tag0"></span>
                 </div>
           </td>
         </tr>
