@@ -656,7 +656,7 @@ document.addEventListener("change",e=>{
   if(e.target.classList.contains("senpo")){
     createSenpoSelect()
     const s = e.target.closest('[data-group]');
-    const sGId = parseInt(b.getAttribute('data-group'));
+    const sGId = parseInt(s.getAttribute('data-group'));
     const svalue = e.target.value
     setSenpoStates(sGId,svalue)
   }
