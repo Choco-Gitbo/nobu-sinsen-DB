@@ -403,8 +403,8 @@ function setSenpoStates(Gid,id){
         span.className="label-tag state0"
         span.textContent="第" + n + "戦法" + s.states.length + "種類"
         state.appendChild(span)
-        n++;
       } 
+      n++;
     })
   }
 
