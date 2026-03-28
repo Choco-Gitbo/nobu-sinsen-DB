@@ -302,7 +302,7 @@ function setBushoData(Gid,id){
     const found_c = u.querySelector('.cost'); //コスト
     if (found_c){c=found_c;}
     const found_r = u.querySelector('.rank'); //凸数
-    if (found_r){c=found_r;}
+    if (found_r){r=found_r;}
   
     const found_t0 = u.querySelector('.tokusei0') //固有特性
     const found_t1 = u.querySelector('.tokusei1') //特性1凸
