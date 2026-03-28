@@ -119,7 +119,6 @@ function createSenpoSelect(){
     const teamLeaderId = Math.floor((unitId - 1) / 3) * 3 + 1;
     const leaderUnit = document.querySelector(`[data-group="${teamLeaderId}"]`);
     
-
     select.innerHTML=`<option value="">--</option>`
     DB.senpo.forEach(s=>{
       let usedmark =""
@@ -285,24 +284,20 @@ function linkStatesToBusho(){
 }
 
 
-function setBushoData(column,id){
+function setBushoData(Gid,id){
 
   const b=DB.busho.find(v=>v.id==id)
 
   if(!b)return
 
-  // コスト表示
-
-  column.querySelector(".busho-grid").innerHTML = `
-    <div class="label-center">C${b.cost}</div>
-    <div class="label-center">${rank}凸</div>
-    <div class="label-center">${awake}</div>
-  `; 
-
-  const t0 = column.querySelector(".tokusei0")
-  const t1 = column.querySelector(".tokusei1")
-  const t3 = column.querySelector(".tokusei3")
-  const t5 = column.querySelector(".tokusei5")
+  const UnitGroup = document.querySelector(`[data-group="${Gid}"]`);
+  UnitGroup.querySelector('.cost').value = b.cost  //コスト
+  UnitGroup.querySelector('.rank').value = b.own.some(o=>o.rank)  //凸数
+  
+  const t0 = UnitGroup.querySelector('.tokusei0') //固有特性
+  const t1 = UnitGroup.querySelector('.tokusei1') //特性1凸
+  const t3 = UnitGroup.querySelector('.tokusei3') //特性3凸
+  const t5 = UnitGroup.querySelector('.tokusei5') //特性5凸
 
   const on  = "#ffd966"   // 黄色
   const off = ""          // 既存CSS（薄グレー）に戻す
@@ -328,7 +323,7 @@ function setBushoData(column,id){
   if(t5) t5.style.background = rank >= 5 ? on : off
 
   // タグ
-  const tagGrid=column.querySelector(".tag-grid")
+  /*const tagGrid=column.querySelector(".tag-grid")
   tagGrid.innerHTML=""
   if(b.tags){
     b.tags.split("|").forEach(t=>{
@@ -337,8 +332,8 @@ function setBushoData(column,id){
       div.textContent=t
       tagGrid.appendChild(div)
     })
-  }
-  setupHeigaku(column, b)
+  } */
+  //setupHeigaku(column, b)
 
 }
 
@@ -580,7 +575,10 @@ document.addEventListener("change",e=>{
     /* 武将選択の変更処理 */
   if(e.target.classList.contains("busho-name")){
     createBushoSelect()
-
+    const b = e.target.closest('[data-group]');
+    const bGId = parseInt(b.getAttribute('data-group'));
+    const bvalue = e.value
+    setBushoData(bGId,bvalue)
   }
     /* 戦法選択の変更処理 */
   if(e.target.classList.contains("senpo")){
