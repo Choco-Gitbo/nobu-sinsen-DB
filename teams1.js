@@ -298,14 +298,20 @@ function setBushoData(Gid,id){
     if (found_c){c=found_c;}
     const found_r = u.querySelector('.rank'); //凸数
     if (found_r){c=found_r;}
+  
+    const found_t0 = u.querySelector('.tokusei0') //固有特性
+    const found_t1 = u.querySelector('.tokusei1') //特性1凸
+    const found_t3 = u.querySelector('.tokusei3') //特性3凸
+    const found_t5 = u.querySelector('.tokusei5') //特性5凸
+    if (found_t0){t0=found_t0;}
+    if (found_t1){t1=found_t1;}
+    if (found_t3){t3=found_t3;}
+    if (found_t5){t5=found_t5;}
+
   })
+  //コスト＆凸数
   if(c){c.textContent = "C" + b.cost;}
   if(r){r.textContent = "R" + (b.own[0]?.rank ?? 0);}
-
-  const t0 = UnitGroup.querySelector('.tokusei0') //固有特性
-  const t1 = UnitGroup.querySelector('.tokusei1') //特性1凸
-  const t3 = UnitGroup.querySelector('.tokusei3') //特性3凸
-  const t5 = UnitGroup.querySelector('.tokusei5') //特性5凸
 
   const on  = "#ffd966"   // 黄色
   const off = ""          // 既存CSS（薄グレー）に戻す
