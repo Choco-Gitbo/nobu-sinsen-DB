@@ -399,10 +399,13 @@ function setSenpoStates(Gid,id){
     let n=2;
     senpo.forEach(s=>{
       if(s.value !==""){
-        const span=document.createElement("span")
-        span.className="label-tag state0"
-        span.textContent="第" + n + "戦法" + s.states.length + "種類"
-        state.appendChild(span)
+        DB.senpo.forEach(st=>{
+          if(st.id!==s.id) return false
+          const span=document.createElement("span")
+          span.className="label-tag state0"
+          span.textContent="第" + n + "戦法" + st.states.length + "種類"
+          state.appendChild(span)
+        })
       } 
       n++;
     })
