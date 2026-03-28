@@ -114,8 +114,7 @@ function createSenpoSelect(){
   document.querySelectorAll(".senpo").forEach(select=>{
 
     const current = select.value
-    const UnitId = select.closest('[data-group]');
-    const u = Math.floor((UnitId -1)/ 3)+1
+    const Unit = select.closest('[data-group]');
 
     select.innerHTML=`<option value="">--</option>`
     DB.senpo.forEach(s=>{
@@ -128,8 +127,8 @@ function createSenpoSelect(){
         if(f.type && s.type!==f.type) return false
         if(f.state && !s.states.some(st=>st.effect===f.state)) return false
         
-        if(UnitId){
-          const UnitType = UnitId.querySelector('.unit-type').value;
+        if(Unit){
+          const UnitType = Unit.querySelector('.unit-type').value;
           const units=(s.unit||"").split("|").map(u=>u.trim())
           if(!units.includes(UnitType)) return false
         }
