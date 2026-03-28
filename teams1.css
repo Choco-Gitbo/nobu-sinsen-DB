@@ -154,11 +154,6 @@ body{
   min-height: 50px;     /* 最小の高さを確保 */
 }
 .tags{
-  font-size:11px;
-  height: 1px; /* ブラウザに高さを計算させるためのハック（重要） */
-  vertical-align: middle;
-}
-.row-tags{
   display: grid;
   grid-template-rows: repeat(2, 1fr); /* 2行固定 */
   grid-auto-flow: column;             /* 要素を列方向に流す */
