@@ -315,8 +315,9 @@ function setBushoData(Gid,id){
 
   })
   //コスト＆凸数
+  const rank = b.own[0]?.rank ?? 0
   if(c){c.textContent = "C" + b.cost;}
-  if(r){r.textContent = "R" + (b.own[0]?.rank ?? 0);}
+  if(r){r.textContent = "R" + rank;}
 
   const on  = "#ffd966"   // 黄色
   const off = ""          // 既存CSS（薄グレー）に戻す
@@ -329,17 +330,17 @@ function setBushoData(Gid,id){
   // 特性1凸
   const tokusei1 = DB.tokusei.find(t => t.id === b.tokusei_1)
   t1.textContent = tokusei1 ? tokusei1.name : ""
-  if(t1) t1.style.background = b.own[0]?.rank >= 1 ? on : off
+  if(t1) t1.style.background = rank >= 1 ? on : off
 
   // 特性3凸
   const tokusei3 = DB.tokusei.find(t => t.id === b.tokusei_3)
   t3.textContent = tokusei3 ? tokusei3.name : ""
-  if(t3) t3.style.background = b.own[0]?.rank >= 3 ? on : off
+  if(t3) t3.style.background = rank >= 3 ? on : off
 
   // 特性5凸
   const tokusei5 = DB.tokusei.find(t => t.id === b.tokusei_5)
   t5.textContent = tokusei5 ? tokusei5.name : ""
-  if(t5) t5.style.background = b.own[0]?.rank >= 5 ? on : off
+  if(t5) t5.style.background = rank >= 5 ? on : off
 
   // タグ
   /*const tagGrid=column.querySelector(".tag-grid")
