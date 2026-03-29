@@ -408,32 +408,25 @@ function setSenpoStates(Gid,id){
     state3.textContent = ""           
     senpo.forEach(s=>{
       if(s.value !==""){
+        let fullStates = ""
         DB.senpo.forEach(st=>{
           if(st.id!==s.value) return false
-            if (n==2){state2.textContent = "第2:" + st.states.length + "種類"}
-            if (n==3){state3.textContent = "第3:" + st.states.length + "種類"}            
+            st.states.forEach(sst=>{
+              if (fullStates==""){fullStates= sst.label}
+              else{fullStates = fullStates + "," + sst.label}
+            })
+            if (n==2){
+              state2.textContent = "第2:" + st.states.length + "種類"
+              stateCell2.dataset.fullStatesSenpo2 = fullStates
+            }
+            if (n==3){
+              state3.textContent = "第3:" + st.states.length + "種類"
+              stateCell3.dataset.fullStatesSenpo3 = fullStates
+            }            
         })
       } 
       n++;
     })
-    //状態の全てのタグを仕込む
-    const stateCell2 = UnitGroupStates.querySelector('.states'); //状態
-    const senpo2 = UnitGroupSenpo.querySelectorAll('.senpo'); 
-    if(senpo2){
-      senpo2.forEach(s=>{
-        if(s.value !==""){
-          let fullStates = ""
-          let n=2;
-          DB.senpo.states.forEach(st=>{
-            if (fullStates==""){fullStates= st.label}
-            else{fullStates = fullStates + "," + st.label}
-          })
-          if(n==2){stateCell2.dataset.fullStatesSenpo2 = fullStates}
-          if(n==3){stateCell2.dataset.fullStatesSenpo3 = fullStates}
-          n++;
-        } 
-      })
-    } 
   }
 
 }
