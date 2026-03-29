@@ -390,6 +390,8 @@ function setSenpoStates(Gid,id){
   const senpo = UnitGroupSenpo.querySelectorAll('.senpo'); 
   let n=2
   if(senpo){
+    state2.textContent = ""
+    state3.textContent = ""           
     senpo.forEach(s=>{
       if(s.value !==""){
         DB.senpo.forEach(st=>{
