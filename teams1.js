@@ -362,7 +362,7 @@ function setBushoData(Gid,id){
       else{fullStates = fullStates + "," + s.label}
       
     })
-    stateCell.dataset.fullStates = fullStates
+    stateCell.dataset.fullStatesUnique = fullStates
   } 
 
   // タグ
@@ -671,17 +671,17 @@ table.addEventListener('click', (e) => {
   // 1. その武将が持っている「全ての状態データ」をどこから持ってくるか？
   // おすすめは、表示用に省略する前の「全データ」を一時的に保持しておく方法です
   // ここでは仮に、セルの中に隠しデータ(dataset)で持たせているとします
-  const allStates = targetCell.dataset.fullStates.split(',');
+  const allStatesUnique = targetCell.dataset.fullStatesUnique.split(',');
 
   // 2. ポップアップの中身を作成
-  const listContainer = document.getElementById('popup-tags-list');
-  listContainer.innerHTML = ''; // クリア
+  const listContainerUnique = document.getElementById('popup-tags-list-unique');
+  listContainerUnique.innerHTML = ''; // クリア
   
-  allStates.forEach(state => {
+  allStatesUnique.forEach(state => {
     const span = document.createElement('span');
-    span.className = 'tag-item'; // タグと同じデザインを流用
+    span.className = 'label-tag'; // タグと同じデザインを流用
     span.textContent = state;
-    listContainer.appendChild(span);
+    listContainerUnique.appendChild(span);
   });
 
   // 3. 表示

@@ -195,7 +195,13 @@ body{
   background: white; padding: 20px; border-radius: 8px;
   max-width: 80%; max-height: 70%; overflow-y: auto;
 }
-#popup-tags-list {
+#popup-tags-list-unique {
+  display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;
+}
+#popup-tags-list-senpo2 {
+  display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;
+}
+#popup-tags-list-senpo3 {
   display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;
 }
 
