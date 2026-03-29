@@ -442,7 +442,7 @@ function setupHeigaku(Gid, id){
   let hsei = null;
 
   UnitGroup.forEach(u => {
-    const found_h = u.querySelector('.heigaku'); //コスト
+    const found_h = u.querySelector('.heigaku-type'); //コスト
     if (found_h){hei=found_h;}
     const found_hki = u.querySelector('.heigaku-ki'); //凸数
     if (found_hki){hki=found_hki;}
