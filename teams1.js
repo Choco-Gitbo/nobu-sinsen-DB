@@ -421,15 +421,17 @@ function setSenpoStates(Gid,id){
     const senpo2 = UnitGroupSenpo.querySelectorAll('.senpo'); 
     if(senpo2){
       senpo2.forEach(s=>{
-        let fullStates = ""
-        let n=2;
-        s.states.forEach(st=>{
-          if (fullStates==""){fullStates= st.label}
-          else{fullStates = fullStates + "," + st.label}
-        })
-        if(n==2){stateCell2.dataset.fullStatesSenpo2 = fullStates}
-        if(n==3){stateCell2.dataset.fullStatesSenpo3 = fullStates}
-        n++;
+        if(s.value !==""){
+          let fullStates = ""
+          let n=2;
+          DB.senpo.states.forEach(st=>{
+            if (fullStates==""){fullStates= st.label}
+            else{fullStates = fullStates + "," + st.label}
+          })
+          if(n==2){stateCell2.dataset.fullStatesSenpo2 = fullStates}
+          if(n==3){stateCell2.dataset.fullStatesSenpo3 = fullStates}
+          n++;
+        } 
       })
     } 
   }
