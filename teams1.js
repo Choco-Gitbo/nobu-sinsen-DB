@@ -601,6 +601,11 @@ table.addEventListener('focusin', (e) => {
 
           setBushoData(myUnitId,newValue)  //入替後の武将情報セット
           setBushoData(otherUnitId,otherSelect.value)  //入替後の武将情報セット
+        
+          swapByClass('heigaku-ki');  // 兵学タイプを入れ替え
+          swapByClass('heigaku-sei1');  // 兵学タイプを入れ替え
+          swapByClass('heigaku-sei2');  // 兵学タイプを入れ替え
+          swapByClass('heigaku-sei3');  // 兵学タイプを入れ替え
         }
     });
     beforeBushoValue = newValue;
