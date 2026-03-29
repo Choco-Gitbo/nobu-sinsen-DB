@@ -590,8 +590,8 @@ table.addEventListener('focusin', (e) => {
           flashElement(e.target);  //選択箇所を光らせる
           flashElement(otherSelect);  //入替箇所を光らせる
 
-          setBushoData(myUnitId,"")  //入替後の武将情報セット
-          setBushoData(otherUnitId,"")  //入替後の武将情報セット
+          setBushoData(myUnitId,newValue)  //入替後の武将情報セット
+          setBushoData(otherUnitId,otherSelect.value)  //入替後の武将情報セット
         }
     });
     beforeBushoValue = newValue;
