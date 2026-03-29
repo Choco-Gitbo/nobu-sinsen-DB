@@ -402,7 +402,8 @@ function setSenpoStates(Gid,id){
         DB.senpo.forEach(st=>{
           if(st.id!==s.value) return false
           const tcls = "label-tag state"+n
-          const st2 = UnitGroupSenpo.querySelector('.${tcls}');
+          const tcls2 = "." + tcls
+          const st2 = UnitGroupSenpo.querySelector('${tcls2}');
           if (!st2){
             const span=document.createElement("span")
             span.className=tcls
