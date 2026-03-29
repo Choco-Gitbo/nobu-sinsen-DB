@@ -361,7 +361,9 @@ function setBushoData(Gid,id){
   // 状態
   const UnitGroupStates = document.querySelector(`[data-group="${Gid}"]`);
   const state = UnitGroupStates.querySelector('.states0'); //状態
+  const statemore = UnitGroupStates.querySelector('.statesmore'); //状態
   state.textContent="固有" + b.unique_senpostates.length + "種類"
+  statemore.textContent="more..."
 
   // タグ
   const UnitGroupTag = document.querySelector(`[data-group="${Gid}"]`);
@@ -396,8 +398,8 @@ function setSenpoStates(Gid,id){
       if(s.value !==""){
         DB.senpo.forEach(st=>{
           if(st.id!==s.value) return false
-            if (n==2){state2.textContent = "第2戦法" + st.states.length + "種類"}
-            if (n==3){state3.textContent = "第3戦法" + st.states.length + "種類"}            
+            if (n==2){state2.textContent = "第2:" + st.states.length + "種類"}
+            if (n==3){state3.textContent = "第3:" + st.states.length + "種類"}            
         })
       } 
       n++;
@@ -748,6 +750,7 @@ function makeTable(){
           <td rowspan="2" class="states">
                 <div class="row-states">
                     <span class="label-tag states0"></span>
+                    <span class="label-tag statesmore"></span>
                     <span class="label-tag states2"></span>
                     <span class="label-tag states3"></span>
                 </div>
