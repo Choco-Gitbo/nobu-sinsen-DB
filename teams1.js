@@ -586,7 +586,7 @@ table.addEventListener('focusin', (e) => {
           };
 
           swapByClass('senpo');  // 戦法を入れ替え
-          setBushoData(otherUnitId,"")  //入替後の武将情報セット
+          setBushoData(myUnitId,"")  //入替後の武将情報セット
 
           flashElement(e.target);  //選択箇所を光らせる
           flashElement(otherSelect);  //入替箇所を光らせる
