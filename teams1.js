@@ -379,7 +379,7 @@ function setBushoData(Gid,id){
       })
     } 
   }
-  //setupHeigaku(column, b)
+  setupHeigaku(Gid, id) //兵学
 
   //トータルコスト
   const teamLeaderId = Math.floor((Gid - 1) / 3) * 3 + 1;
@@ -432,25 +432,36 @@ function setSenpoStates(Gid,id){
 
 }
 
-function setupHeigaku(column, b){
+function setupHeigaku(Gid, id){
 
-  const type = column.querySelector(".heigaku-type").value
+  const b=DB.busho.find(v=>v.id==id)
 
-  const kiSelect  = column.querySelector(".heigaku-ki")
-  const sei1Select = column.querySelector(".heigaku-sei1")
-  const sei2Select = column.querySelector(".heigaku-sei2")
-  const sei3Select = column.querySelector(".heigaku-sei3")
+  const UnitGroup = document.querySelectorAll(`[data-group="${Gid}"]`);
+  let hei = null;
+  let hki = null;
+  let hsei = null;
+
+  UnitGroup.forEach(u => {
+    const found_h = u.querySelector('.heigaku'); //コスト
+    if (found_h){hei=found_h;}
+    const found_hki = u.querySelector('.heigaku-ki'); //凸数
+    if (found_hki){hki=found_hki;}
+    const found_hsei = u.querySelector('.heigaku-sei'); //凸数
+    if (found_hsei){hsei=found_hsei;}
+
+  })
+  
+  const type = hei.value
+
+  const kiSelect  = hki
+  const seiSelect = hsei
 
   kiSelect.innerHTML = ""
-  sei1Select.innerHTML = ""
-  sei2Select.innerHTML = ""
-  sei3Select.innerHTML = ""
+  seiSelect.innerHTML = ""
 
  // 初期値（空白）
   kiSelect.appendChild(new Option("", ""))
-  sei1Select.appendChild(new Option("", ""))
-  sei2Select.appendChild(new Option("", ""))
-  sei3Select.appendChild(new Option("", ""))
+  seiSelect.appendChild(new Option("", ""))
 
   if(!b.heigaku) return
 
@@ -478,9 +489,7 @@ function setupHeigaku(column, b){
     }
 
     if(kind === "兵学・正"){
-      sei1Select.appendChild(option.cloneNode(true))
-      sei2Select.appendChild(option.cloneNode(true))
-      sei3Select.appendChild(option.cloneNode(true))
+      seiSelect.appendChild(option.cloneNode(true))
     }
 
   })
