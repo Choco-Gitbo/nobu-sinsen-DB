@@ -349,12 +349,12 @@ function setBushoData(Gid,id){
 
   // 状態
   const UnitGroupStates = document.querySelector(`[data-group="${Gid}"]`);
-  const stateCell = UnitGroupStates.querySelector('.states'); //状態
   const state = UnitGroupStates.querySelector('.states0'); //状態
   const statemore = UnitGroupStates.querySelector('.statesmore'); //状態
   state.textContent="固有" + b.unique_senpostates.length + "種類"
   statemore.textContent="more..."
   //状態の全てのタグを仕込む
+  const stateCell = UnitGroupStates.querySelector('.states'); //状態
   if(b.unique_senpostates){
     let fullStates = ""
     b.unique_senpostates.forEach(s=>{
@@ -416,6 +416,29 @@ function setSenpoStates(Gid,id){
       } 
       n++;
     })
+    //状態の全てのタグを仕込む
+    const stateCell2 = UnitGroupStates.querySelector('.states'); //状態
+    const senpo2 = UnitGroupSenpo.querySelector('.senpo2'); 
+    const senpo3 = UnitGroupSenpo.querySelector('.senpo3'); 
+    if(senpo2.states){
+      let fullStates = ""
+      senpo2.states.forEach(st=>{
+        if (fullStates==""){fullStates= st.label}
+        else{fullStates = fullStates + "," + st.label}
+        
+      })
+      stateCell2.dataset.fullStatesUnique = fullStates
+    } 
+    if(senpo3.states){
+      let fullStates = ""
+      senpo3.states.forEach(st=>{
+        if (fullStates==""){fullStates= st.label}
+        else{fullStates = fullStates + "," + st.label}
+        
+      })
+      stateCell3.dataset.fullStatesUnique = fullStates
+    } 
+
   }
 
 }
@@ -682,6 +705,32 @@ table.addEventListener('click', (e) => {
     span.className = 'label-tag'; // タグと同じデザインを流用
     span.textContent = state;
     listContainerUnique.appendChild(span);
+  });
+
+  const allStatesSenpo2 = targetCell.dataset.fullStatesSenpo2.split(',');
+
+  // 2. ポップアップの中身を作成
+  const listContainerSenpo2 = document.getElementById('popup-tags-list-senpo2');
+  listContainerSenpo2.innerHTML = ''; // クリア
+  
+  allStatesSenpo2.forEach(state => {
+    const span = document.createElement('span');
+    span.className = 'label-tag'; // タグと同じデザインを流用
+    span.textContent = state;
+    listContainerSenpo2.appendChild(span);
+  });
+
+  const allStatesSenpo3 = targetCell.dataset.fullStatesSenpo3.split(',');
+
+  // 2. ポップアップの中身を作成
+  const listContainerSenpo3 = document.getElementById('popup-tags-list-senpo3');
+  listContainerSenpo3.innerHTML = ''; // クリア
+  
+  allStatesSenpo3.forEach(state => {
+    const span = document.createElement('span');
+    span.className = 'label-tag'; // タグと同じデザインを流用
+    span.textContent = state;
+    listContainerSenpo3.appendChild(span);
   });
 
   // 3. 表示
