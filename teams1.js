@@ -596,15 +596,15 @@ table.addEventListener('focusin', (e) => {
           swapByClass('senpo');  // 戦法を入れ替え
           swapByClass('heigaku-type');  // 兵学タイプを入れ替え
 
-          const kiA = document.querySelectorAll(`[data-group="${myUnitId}"] .heigaku-ki`).value;
-          const sei1A = document.querySelectorAll(`[data-group="${myUnitId}"] .heigaku-sei1`).value;
-          const sei2A = document.querySelectorAll(`[data-group="${myUnitId}"] .heigaku-sei2`).value;
-          const sei3A = document.querySelectorAll(`[data-group="${myUnitId}"] .heigaku-sei3`).value;
+          const kiA = document.querySelector(`[data-group="${myUnitId}"] .heigaku-ki`).value;
+          const sei1A = document.querySelector(`[data-group="${myUnitId}"] .heigaku-sei1`).value;
+          const sei2A = document.querySelector(`[data-group="${myUnitId}"] .heigaku-sei2`).value;
+          const sei3A = document.querySelector(`[data-group="${myUnitId}"] .heigaku-sei3`).value;
 
-          const kiB = document.querySelectorAll(`[data-group="${otherUnitId}"] .heigaku-ki`).value;
-          const sei1B = document.querySelectorAll(`[data-group="${otherUnitId}"] .heigaku-sei1`).value;
-          const sei2B = document.querySelectorAll(`[data-group="${otherUnitId}"] .heigaku-sei2`).value;
-          const sei3B = document.querySelectorAll(`[data-group="${otherUnitId}"] .heigaku-sei3`).value;
+          const kiB = document.querySelector(`[data-group="${otherUnitId}"] .heigaku-ki`).value;
+          const sei1B = document.querySelector(`[data-group="${otherUnitId}"] .heigaku-sei1`).value;
+          const sei2B = document.querySelector(`[data-group="${otherUnitId}"] .heigaku-sei2`).value;
+          const sei3B = document.querySelector(`[data-group="${otherUnitId}"] .heigaku-sei3`).value;
 
 
           flashElement(e.target);  //選択箇所を光らせる
@@ -613,15 +613,15 @@ table.addEventListener('focusin', (e) => {
           setBushoData(myUnitId,newValue)  //入替後の武将情報セット
           setBushoData(otherUnitId,otherSelect.value)  //入替後の武将情報セット
         
-          document.querySelectorAll(`[data-group="${myUnitId}"] .heigaku-ki`).value = kiB;
-          document.querySelectorAll(`[data-group="${myUnitId}"] .heigaku-sei1`).value = sei1B;
-          document.querySelectorAll(`[data-group="${myUnitId}"] .heigaku-sei2`).value = sei2B;
-          document.querySelectorAll(`[data-group="${myUnitId}"] .heigaku-sei3`).value = sei3B;
+          document.querySelector(`[data-group="${myUnitId}"] .heigaku-ki`).value = kiB;
+          document.querySelector(`[data-group="${myUnitId}"] .heigaku-sei1`).value = sei1B;
+          document.querySelector(`[data-group="${myUnitId}"] .heigaku-sei2`).value = sei2B;
+          document.querySelector(`[data-group="${myUnitId}"] .heigaku-sei3`).value = sei3B;
 
-          document.querySelectorAll(`[data-group="${otherUnitId}"] .heigaku-ki`).value = kiA;
-          document.querySelectorAll(`[data-group="${otherUnitId}"] .heigaku-sei1`).value = sei1A;
-          document.querySelectorAll(`[data-group="${otherUnitId}"] .heigaku-sei2`).value = sei2A;
-          document.querySelectorAll(`[data-group="${otherUnitId}"] .heigaku-sei3`).value = sei3A;
+          document.querySelector(`[data-group="${otherUnitId}"] .heigaku-ki`).value = kiA;
+          document.querySelector(`[data-group="${otherUnitId}"] .heigaku-sei1`).value = sei1A;
+          document.querySelector(`[data-group="${otherUnitId}"] .heigaku-sei2`).value = sei2A;
+          document.querySelector(`[data-group="${otherUnitId}"] .heigaku-sei3`).value = sei3A;
           
         }
     });
