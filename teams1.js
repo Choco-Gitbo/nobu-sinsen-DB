@@ -418,27 +418,20 @@ function setSenpoStates(Gid,id){
     })
     //状態の全てのタグを仕込む
     const stateCell2 = UnitGroupStates.querySelector('.states'); //状態
-    const senpo2 = UnitGroupSenpo.querySelector('.senpo2'); 
-    const senpo3 = UnitGroupSenpo.querySelector('.senpo3'); 
-    if(senpo2.states){
-      let fullStates = ""
-      senpo2.states.forEach(st=>{
-        if (fullStates==""){fullStates= st.label}
-        else{fullStates = fullStates + "," + st.label}
-        
+    const senpo2 = UnitGroupSenpo.querySelectorAll('.senpo'); 
+    if(senpo2){
+      senpo2.forEach(s=>{
+        let fullStates = ""
+        let n=2;
+        s.states.forEach(st=>{
+          if (fullStates==""){fullStates= st.label}
+          else{fullStates = fullStates + "," + st.label}
+        })
+        if(n==2){stateCell2.dataset.fullStatesSenpo2 = fullStates}
+        if(n==3){stateCell2.dataset.fullStatesSenpo3 = fullStates}
+        n++;
       })
-      stateCell2.dataset.fullStatesUnique = fullStates
     } 
-    if(senpo3.states){
-      let fullStates = ""
-      senpo3.states.forEach(st=>{
-        if (fullStates==""){fullStates= st.label}
-        else{fullStates = fullStates + "," + st.label}
-        
-      })
-      stateCell3.dataset.fullStatesUnique = fullStates
-    } 
-
   }
 
 }
