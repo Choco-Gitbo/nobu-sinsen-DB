@@ -442,14 +442,20 @@ function setupHeigaku(Gid, id){
   const type = heigaku.querySelector(".heigaku-type").value
 
   const kiSelect  = heigaku.querySelector(".heigaku-ki")
-  const seiSelect = heigaku.querySelectorAll(".heigaku-sei")
-  
+  const sei1Select = heigaku.querySelector(".heigaku-sei1")
+  const sei2Select = heigaku.querySelector(".heigaku-sei2")
+  const sei3Select = heigaku.querySelector(".heigaku-sei3")
+
   kiSelect.innerHTML = ""
-  seiSelect.innerHTML = ""
+  sei1Select.innerHTML = ""
+  sei2Select.innerHTML = ""
+  sei3Select.innerHTML = ""
 
  // 初期値（空白）
   kiSelect.appendChild(new Option("", ""))
-  seiSelect.appendChild(new Option("", ""))
+  sei1Select.appendChild(new Option("", ""))
+  sei2Select.appendChild(new Option("", ""))
+  sei3Select.appendChild(new Option("", ""))
 
   if(!b.heigaku) return
 
@@ -477,7 +483,9 @@ function setupHeigaku(Gid, id){
     }
 
     if(kind === "兵学・正"){
-      seiSelect.appendChild(option.cloneNode(true))
+      sei1Select.appendChild(option.cloneNode(true))
+      sei2Select.appendChild(option.cloneNode(true))
+      sei3Select.appendChild(option.cloneNode(true))
     }
 
   })
@@ -836,14 +844,14 @@ function makeTable(){
         <tr class="unit-row-2" data-group="${groupNo}">
           <td><span class="rank">R0</span></td>
           <td class="heigaku">正</td>
-          <td class="heigaku-sei2">
-            <select class="select heigaku-sei">
+          <td class="heigaku-sei">
+            <select class="select heigaku-sei1">
                 <option value="">・正</option>
             </select>
-            <select class="select heigaku-sei">
+            <select class="select heigaku-sei2">
                 <option value="">・正</option>
             </select>
-            <select class="select heigaku-sei">
+            <select class="select heigaku-sei3">
                 <option value="">・正</option>
             </select>
           </td>
