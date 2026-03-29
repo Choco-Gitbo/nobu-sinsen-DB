@@ -360,16 +360,8 @@ function setBushoData(Gid,id){
   */
   // 状態
   const UnitGroupStates = document.querySelector(`[data-group="${Gid}"]`);
-  const state = UnitGroupStates.querySelector('.row-states'); //状態
-  if(state){
-    state.innerHTML=""
-    if(b.unique_senpostates){
-      const span=document.createElement("span")
-      span.className="label-tag state0"
-      span.textContent="固有" + b.unique_senpostates.length + "種類"
-      state.appendChild(span)
-    } 
-  }
+  const state = UnitGroupStates.querySelector('.states0'); //状態
+  state.textContent="固有" + b.unique_senpostates.length + "種類"
 
   // タグ
   const UnitGroupTag = document.querySelector(`[data-group="${Gid}"]`);
@@ -392,26 +384,18 @@ function setBushoData(Gid,id){
 function setSenpoStates(Gid,id){
   // 状態
   const UnitGroupStates = document.querySelector(`[data-group="${Gid}"]`);
-  const state = UnitGroupStates.querySelector('.row-states'); //状態
+  const state2 = UnitGroupStates.querySelector('.states2'); //状態
+  const state3 = UnitGroupStates.querySelector('.states3'); //状態
   const UnitGroupSenpo = document.querySelector(`[data-group="${Gid}"]`);
   const senpo = UnitGroupSenpo.querySelectorAll('.senpo'); 
+  let n=2
   if(senpo){
-    let n=2;
     senpo.forEach(s=>{
       if(s.value !==""){
         DB.senpo.forEach(st=>{
           if(st.id!==s.value) return false
-          const tcls = "label-tag state"+n
-          const tcls2 = "." + tcls
-          const st2 = UnitGroupSenpo.querySelector('${tcls2}');
-          if (!st2){
-            const span=document.createElement("span")
-            span.className=tcls
-            span.textContent="第" + n + "戦法" + st.states.length + "種類"
-            state.appendChild(span)
-          }else{
-            st2.textContent = "第" + n + "戦法" + st.states.length + "種類"
-          }
+            if (n==2){state2.textContent = "第2戦法" + st.states.length + "種類"}
+            if (n==3){state3.textContent = "第3戦法" + st.states.length + "種類"}            
         })
       } 
       n++;
@@ -761,7 +745,9 @@ function makeTable(){
           </td>
           <td rowspan="2" class="states">
                 <div class="row-states">
-                    <span class="label-tag stetas0"></span>
+                    <span class="label-tag states0"></span>
+                    <span class="label-tag states2"></span>
+                    <span class="label-tag states3"></span>
                 </div>
           </td>
           <td rowspan="2" class="tags">
