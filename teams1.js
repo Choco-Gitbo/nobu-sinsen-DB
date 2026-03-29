@@ -398,6 +398,7 @@ function setBushoData(Gid,id){
 function setSenpoStates(Gid,id){
   // 状態
   const UnitGroupStates = document.querySelector(`[data-group="${Gid}"]`);
+  const stateCell2 = UnitGroupStates.querySelector('.states'); //状態
   const state2 = UnitGroupStates.querySelector('.states2'); //状態
   const state3 = UnitGroupStates.querySelector('.states3'); //状態
   const UnitGroupSenpo = document.querySelector(`[data-group="${Gid}"]`);
@@ -421,7 +422,7 @@ function setSenpoStates(Gid,id){
             }
             if (n==3){
               state3.textContent = "第3:" + st.states.length + "種類"
-              stateCell3.dataset.fullStatesSenpo3 = fullStates
+              stateCell2.dataset.fullStatesSenpo3 = fullStates
             }            
         })
       } 
