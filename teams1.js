@@ -315,7 +315,12 @@ function setBushoData(Gid,id){
 
   })
   //コスト＆凸数
-  const rank = b.own[0]?.rank ?? 0
+  const mode = document.querySelector(".own-mode").value
+  let rank=0
+  if (mode==="owned"){
+    rank = b.own[0]?.rank ?? 0
+  }
+  
   if(c){c.textContent = "C" + b.cost;}
   if(r){r.textContent = "R" + rank;}
 
@@ -381,6 +386,17 @@ function setBushoData(Gid,id){
   }
   //setupHeigaku(column, b)
 
+  //トータルコスト
+  const teamLeaderId = Math.floor((Gid - 1) / 3) * 3 + 1;
+  
+  let total=0;
+  for (let i = teamLeaderId; i< teamLeaderId+2; i++){
+      const unit = document.querySelector(`[data-group="${i}"]`);
+      const c = unit.querySelector('.cost'); //コスト
+      total += Number(c.textContent.replace("C",""))||0
+  }
+  const teamCost = document.querySelector(`[data-group="${teamLeaderId}"]`);
+  teamCost.querySelector('.nowcost').textContent = "C" + total;
 }
 
 function setSenpoStates(Gid,id){
