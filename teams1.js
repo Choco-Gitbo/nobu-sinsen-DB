@@ -672,8 +672,8 @@ document.addEventListener("change",e=>{
     const b = e.target.closest('[data-group]');
     const bGId = parseInt(b.getAttribute('data-group'));
     const myUnit = document.querySelector(`[data-group="${bGId}"]`);
-    const bvalue = myUnit.querySelector("busho-name").value;
-    setupHeigaku(bGId,bvalue)
+    const bvalue = myUnit.querySelector("busho-name");
+    setupHeigaku(bGId,bvalue.value)
   }
     /* 兵種選択の変更処理 */
   if(e.target.classList.contains("unit-type")){
