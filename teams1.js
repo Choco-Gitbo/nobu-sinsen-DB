@@ -446,7 +446,7 @@ function setupHeigaku(Gid, id){
 
   UnitGroup.forEach(u => {
     const found_type = u.querySelector('.heigaku-type'); //コスト
-    if (found_type){type=found_type;}
+    if (found_type){type=found_type.value;}
     const found_ki = u.querySelector('.heigaku-ki'); //凸数
     if (found_ki){kiSelect=found_ki;}
     const found_sei1 = u.querySelector('.heigaku-sei1'); //凸数
