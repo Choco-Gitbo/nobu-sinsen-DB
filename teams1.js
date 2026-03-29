@@ -391,7 +391,7 @@ function setBushoData(Gid,id){
   
   let total=0;
   const teamLeaderId2 = teamLeaderId + 2
-  for (let i = teamLeaderId; i< teamLeaderId2; i++){
+  for (let i = teamLeaderId; i<= teamLeaderId2; i++){
       const unit = document.querySelector(`[data-group="${i}"]`);
       const c = unit.querySelector('.cost'); //コスト
       total += Number(c.textContent.replace("C",""))||0
