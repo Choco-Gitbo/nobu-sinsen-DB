@@ -549,22 +549,6 @@ function getSenpoFilter(){
 }
 
 
-/* 兵学タイプ変更時の処理*/
-document.querySelectorAll(".heigaku-type").forEach(select=>{
-
-  select.addEventListener("change",function(){
-    const team = this.closest(".team")
-    const column = this.closest(".column")
-    const bushoId = team.querySelector(".busho-name").value
-    const b = DB.busho.find(v=>v.id === bushoId)
-
-    if(b){
-      setupHeigaku(column,b)
-    }
-
-  })
-
-})
 
 // テーブル全体に対してイベントを設定
 const table = document.getElementById('squad-table');
@@ -682,6 +666,13 @@ document.addEventListener("change",e=>{
     const sGId = parseInt(s.getAttribute('data-group'));
     const svalue = e.target.value
     setSenpoStates(sGId,svalue)
+  }
+    /* 兵法選択の変更処理 */
+  if(e.target.classList.contains("heigaku-type")){
+    const b = e.target.closest('[data-group]');
+    const bGId = parseInt(b.getAttribute('data-group'));
+    const bvalue = b.querySelector("busho-name").value;
+    setupHeigaku(bGId,bvalue)
   }
     /* 兵種選択の変更処理 */
   if(e.target.classList.contains("unit-type")){
