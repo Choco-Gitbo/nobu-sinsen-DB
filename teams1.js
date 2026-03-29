@@ -688,10 +688,18 @@ table.addEventListener('click', (e) => {
   document.getElementById('status-popup').style.display = 'flex';
 });
 
-// 閉じる関数
-function closePopup() {
+// 関数定義
+const closePopup = () => {
   document.getElementById('status-popup').style.display = 'none';
-}
+};
+
+// ボタンにイベントを登録
+document.getElementById('close-popup-btn').addEventListener('click', closePopup);
+
+// 背景をタップしても閉じるようにするとさらに使いやすいです
+document.getElementById('status-popup').addEventListener('click', (e) => {
+  if (e.target.id === 'status-popup') closePopup();
+});
 
 
 window.addEventListener('DOMContentLoaded', () => {
