@@ -436,15 +436,27 @@ function setupHeigaku(Gid, id){
 
   const b=DB.busho.find(v=>v.id==id)
 
-  //const UnitGroup = document.closest(`[data-group="${Gid}"]`);
-  const heigaku = document.closest("heigaku")
+  const UnitGroup = document.querySelectorAll(`[data-group="${Gid}"]`);
   
-  const type = heigaku.querySelector(".heigaku-type").value
+  let type = null;
+  let kiSelect = null;
+  let sei1Select = null;
+  let sei2Select = null;
+  let sei3Select = null;
 
-  const kiSelect  = heigaku.querySelector(".heigaku-ki")
-  const sei1Select = heigaku.querySelector(".heigaku-sei1")
-  const sei2Select = heigaku.querySelector(".heigaku-sei2")
-  const sei3Select = heigaku.querySelector(".heigaku-sei3")
+  UnitGroup.forEach(u => {
+    const found_type = u.querySelector('.heigaku-type'); //コスト
+    if (found_type){type=found_type;}
+    const found_ki = u.querySelector('.heigaku-ki'); //凸数
+    if (found_ki){kiSelect=found_ki;}
+    const found_sei1 = u.querySelector('.heigaku-sei1'); //凸数
+    if (found_sei1){sei1Select=found_sei1;}
+    const found_sei2 = u.querySelector('.heigaku-sei2'); //凸数
+    if (found_sei2){sei2Select=found_sei2;}
+    const found_sei3 = u.querySelector('.heigaku-sei3'); //凸数
+    if (found_sei3){sei3Select=found_sei3;}
+
+  })
 
   kiSelect.innerHTML = ""
   sei1Select.innerHTML = ""
