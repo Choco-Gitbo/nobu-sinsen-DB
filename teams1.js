@@ -348,27 +348,22 @@ function setBushoData(Gid,id){
   if(t5) t5.style.background = rank >= 5 ? on : off
 
   // 状態
-  /* 下記コードで表示できるが項目数が多すぎるので再考
   const UnitGroupStates = document.querySelector(`[data-group="${Gid}"]`);
-  const state = UnitGroupStates.querySelector('.row-states'); //状態
-  if(state){
-    state.innerHTML=""
-    if(b.unique_senpostates){
-      b.unique_senpostates.forEach(s=>{
-        const span=document.createElement("span")
-        span.className="label-tag state0"
-        span.textContent=s.label
-        state.appendChild(span)
-      })
-    } 
-  }
-  */
-  // 状態
-  const UnitGroupStates = document.querySelector(`[data-group="${Gid}"]`);
+  const stateCell = UnitGroupStates.querySelector('.states'); //状態
   const state = UnitGroupStates.querySelector('.states0'); //状態
   const statemore = UnitGroupStates.querySelector('.statesmore'); //状態
   state.textContent="固有" + b.unique_senpostates.length + "種類"
   statemore.textContent="more..."
+  //状態の全てのタグを仕込む
+  if(b.unique_senpostates){
+    let fullStates = ""
+    b.unique_senpostates.forEach(s=>{
+      if (fullStates==""){fullStates= s.label}
+      else{fullStates = fullStates + "," + s.label}
+      
+    })
+    stateCell.dataset.fullStates = fullStates
+  } 
 
   // タグ
   const UnitGroupTag = document.querySelector(`[data-group="${Gid}"]`);
@@ -667,8 +662,38 @@ document.addEventListener("change",e=>{
 
 })
 
+// テーブル全体のイベントに追加
+table.addEventListener('click', (e) => {
+  // statesクラスのセル（またはその中の要素）がクリックされたか判定
+  const targetCell = e.target.closest('.states');
+  if (!targetCell) return;
 
-/* 編成画面への切り替え */
+  // 1. その武将が持っている「全ての状態データ」をどこから持ってくるか？
+  // おすすめは、表示用に省略する前の「全データ」を一時的に保持しておく方法です
+  // ここでは仮に、セルの中に隠しデータ(dataset)で持たせているとします
+  const allStates = targetCell.dataset.fullStates.split(',');
+
+  // 2. ポップアップの中身を作成
+  const listContainer = document.getElementById('popup-tags-list');
+  listContainer.innerHTML = ''; // クリア
+  
+  allStates.forEach(state => {
+    const span = document.createElement('span');
+    span.className = 'tag-item'; // タグと同じデザインを流用
+    span.textContent = state;
+    listContainer.appendChild(span);
+  });
+
+  // 3. 表示
+  document.getElementById('status-popup').style.display = 'flex';
+});
+
+// 閉じる関数
+function closePopup() {
+  document.getElementById('status-popup').style.display = 'none';
+}
+
+
 window.addEventListener('DOMContentLoaded', () => {
   setupNavigation();
 });
