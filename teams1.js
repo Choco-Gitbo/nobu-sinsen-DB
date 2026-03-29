@@ -594,6 +594,7 @@ table.addEventListener('focusin', (e) => {
           };
 
           swapByClass('senpo');  // 戦法を入れ替え
+          swapByClass('heigaku-type');  // 兵学タイプを入れ替え
 
           flashElement(e.target);  //選択箇所を光らせる
           flashElement(otherSelect);  //入替箇所を光らせる
