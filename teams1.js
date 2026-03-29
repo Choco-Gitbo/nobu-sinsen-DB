@@ -707,32 +707,35 @@ table.addEventListener('click', (e) => {
     listContainerUnique.appendChild(span);
   });
 
-  const allStatesSenpo2 = targetCell.dataset.fullStatesSenpo2.split(',');
+  if(targetCell.dataset.fullStatesSenpo2){
+    const allStatesSenpo2 = targetCell.dataset.fullStatesSenpo2.split(',');
 
-  // 2. ポップアップの中身を作成
-  const listContainerSenpo2 = document.getElementById('popup-tags-list-senpo2');
-  listContainerSenpo2.innerHTML = ''; // クリア
-  
-  allStatesSenpo2.forEach(state => {
-    const span = document.createElement('span');
-    span.className = 'label-tag'; // タグと同じデザインを流用
-    span.textContent = state;
-    listContainerSenpo2.appendChild(span);
-  });
+    // 2. ポップアップの中身を作成
+    const listContainerSenpo2 = document.getElementById('popup-tags-list-senpo2');
+    listContainerSenpo2.innerHTML = ''; // クリア
+    
+    allStatesSenpo2.forEach(state => {
+      const span = document.createElement('span');
+      span.className = 'label-tag'; // タグと同じデザインを流用
+      span.textContent = state;
+      listContainerSenpo2.appendChild(span);
+    });
+  }
 
-  const allStatesSenpo3 = targetCell.dataset.fullStatesSenpo3.split(',');
+  if(targetCell.dataset.fullStatesSenpo3){
+    const allStatesSenpo3 = targetCell.dataset.fullStatesSenpo3.split(',');
 
-  // 2. ポップアップの中身を作成
-  const listContainerSenpo3 = document.getElementById('popup-tags-list-senpo3');
-  listContainerSenpo3.innerHTML = ''; // クリア
-  
-  allStatesSenpo3.forEach(state => {
-    const span = document.createElement('span');
-    span.className = 'label-tag'; // タグと同じデザインを流用
-    span.textContent = state;
-    listContainerSenpo3.appendChild(span);
-  });
-
+    // 2. ポップアップの中身を作成
+    const listContainerSenpo3 = document.getElementById('popup-tags-list-senpo3');
+    listContainerSenpo3.innerHTML = ''; // クリア
+    
+    allStatesSenpo3.forEach(state => {
+      const span = document.createElement('span');
+      span.className = 'label-tag'; // タグと同じデザインを流用
+      span.textContent = state;
+      listContainerSenpo3.appendChild(span);
+    });
+  }
   // 3. 表示
   document.getElementById('status-popup').style.display = 'flex';
 });
