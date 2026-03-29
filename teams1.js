@@ -401,10 +401,16 @@ function setSenpoStates(Gid,id){
       if(s.value !==""){
         DB.senpo.forEach(st=>{
           if(st.id!==s.value) return false
-          const span=document.createElement("span")
-          span.className="label-tag state0"
-          span.textContent="第" + n + "戦法" + st.states.length + "種類"
-          state.appendChild(span)
+          const tcls = "label-tag state"+n
+          const st2 = UnitGroupSenpo.querySelector(tcls);
+          if (!st2){
+            const span=document.createElement("span")
+            span.className=tcls
+            span.textContent="第" + n + "戦法" + st.states.length + "種類"
+            state.appendChild(span)
+          }else{
+            st2.textContent = "第" + n + "戦法" + st.states.length + "種類"
+          }
         })
       } 
       n++;
