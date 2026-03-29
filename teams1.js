@@ -436,7 +436,7 @@ function setupHeigaku(Gid, id){
 
   const b=DB.busho.find(v=>v.id==id)
 
-  const UnitGroup = document.querySelectorAll(`[data-group="${Gid}"]`);
+  const UnitGroup = document.closest(`[data-group="${Gid}"]`);
   const heigaku = UnitGroup.closest("heigaku")
   
   const type = heigaku.querySelector(".heigaku-type").value
