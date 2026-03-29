@@ -424,25 +424,6 @@ function setSenpoStates(Gid,id){
   }
 
 }
-function updateNowCost(){
-
-  let total = 0
-
-  document.querySelectorAll(".busho-name").forEach(select=>{
-
-    const id = select.value
-    if(!id) return
-
-    const b = DB.busho.find(x=>x.id===id)
-    if(!b) return
-
-    total += Number(b.cost)||0
-
-  })
-
-  const now = document.querySelector(".nowcost")
-  now.textContent = total
-}
 
 function setupHeigaku(column, b){
 
@@ -605,6 +586,7 @@ table.addEventListener('focusin', (e) => {
           };
 
           swapByClass('senpo');  // 戦法を入れ替え
+          setBushoData(otherUnitId,"")  //入替後の武将情報セット
 
           flashElement(e.target);  //選択箇所を光らせる
           flashElement(otherSelect);  //入替箇所を光らせる
