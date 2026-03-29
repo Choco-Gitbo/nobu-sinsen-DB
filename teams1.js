@@ -438,25 +438,12 @@ function setupHeigaku(Gid, id){
 
   const UnitGroup = document.querySelectorAll(`[data-group="${Gid}"]`);
   const heigaku = UnitGroup.closest("heigaku")
-  let hei = null;
-  let hki = null;
-  let hsei = null;
-
-  UnitGroup.forEach(u => {
-    const found_h = u.querySelector('.heigaku-type'); //コスト
-    if (found_h){hei=found_h;}
-    const found_hki = u.querySelector('.heigaku-ki'); //凸数
-    if (found_hki){hki=found_hki;}
-    const found_hsei = u.querySelector('.heigaku-sei'); //凸数
-    if (found_hsei){hsei=found_hsei;}
-
-  })
   
-  const type = hei.value
+  const type = heigaku.querySelector(".heigaku-type").value
 
-  const kiSelect  = hki
-  const seiSelect = hsei
-
+  const kiSelect  = heigaku.querySelector(".heigaku-ki")
+  const seiSelect = heigaku.querySelectorAll(".heigaku-sei")
+  
   kiSelect.innerHTML = ""
   seiSelect.innerHTML = ""
 
