@@ -288,111 +288,143 @@ function setBushoData(Gid,id){
 
   const b=DB.busho.find(v=>v.id==id)
 
-  if(!b)return
+  if(b){
 
-  const UnitGroup = document.querySelectorAll(`[data-group="${Gid}"]`);
-  let c = null;
-  let r = null;
-  let t0 = null;
-  let t1 = null;
-  let t3 = null;
-  let t5 = null;
+    const UnitGroup = document.querySelectorAll(`[data-group="${Gid}"]`);
+    let c = null;
+    let r = null;
+    let t0 = null;
+    let t1 = null;
+    let t3 = null;
+    let t5 = null;
 
-  UnitGroup.forEach(u => {
-    const found_c = u.querySelector('.cost'); //コスト
-    if (found_c){c=found_c;}
-    const found_r = u.querySelector('.rank'); //凸数
-    if (found_r){r=found_r;}
-  
-    const found_t0 = u.querySelector('.tokusei0') //固有特性
-    const found_t1 = u.querySelector('.tokusei1') //特性1凸
-    const found_t3 = u.querySelector('.tokusei3') //特性3凸
-    const found_t5 = u.querySelector('.tokusei5') //特性5凸
-    if (found_t0){t0=found_t0;}
-    if (found_t1){t1=found_t1;}
-    if (found_t3){t3=found_t3;}
-    if (found_t5){t5=found_t5;}
+    UnitGroup.forEach(u => {
+      const found_c = u.querySelector('.cost'); //コスト
+      if (found_c){c=found_c;}
+      const found_r = u.querySelector('.rank'); //凸数
+      if (found_r){r=found_r;}
+    
+      const found_t0 = u.querySelector('.tokusei0') //固有特性
+      const found_t1 = u.querySelector('.tokusei1') //特性1凸
+      const found_t3 = u.querySelector('.tokusei3') //特性3凸
+      const found_t5 = u.querySelector('.tokusei5') //特性5凸
+      if (found_t0){t0=found_t0;}
+      if (found_t1){t1=found_t1;}
+      if (found_t3){t3=found_t3;}
+      if (found_t5){t5=found_t5;}
 
-  })
-  //コスト＆凸数
-  const mode = document.querySelector(".own-mode").value
-  let rank=0
-  if (mode==="owned"){
-    rank = b.own[0]?.rank ?? 0
-  }
-  
-  if(c){c.textContent = "C" + b.cost;}
-  if(r){r.textContent = "R" + rank;}
-
-  const on  = "#ffd966"   // 黄色
-  const off = ""          // 既存CSS（薄グレー）に戻す
-
-  // 固有特性
-  const tokusei0 = DB.tokusei.find(t => t.id === b.unique_tokusei)
-  t0.textContent = tokusei0 ? tokusei0.name : ""
-  if(t0) t0.style.background = on
-
-  // 特性1凸
-  const tokusei1 = DB.tokusei.find(t => t.id === b.tokusei_1)
-  t1.textContent = tokusei1 ? tokusei1.name : ""
-  if(t1) t1.style.background = rank >= 1 ? on : off
-
-  // 特性3凸
-  const tokusei3 = DB.tokusei.find(t => t.id === b.tokusei_3)
-  t3.textContent = tokusei3 ? tokusei3.name : ""
-  if(t3) t3.style.background = rank >= 3 ? on : off
-
-  // 特性5凸
-  const tokusei5 = DB.tokusei.find(t => t.id === b.tokusei_5)
-  t5.textContent = tokusei5 ? tokusei5.name : ""
-  if(t5) t5.style.background = rank >= 5 ? on : off
-
-  // 状態
-  const UnitGroupStates = document.querySelector(`[data-group="${Gid}"]`);
-  const state = UnitGroupStates.querySelector('.states0'); //状態
-  const statemore = UnitGroupStates.querySelector('.statesmore'); //状態
-  state.textContent="固有" + b.unique_senpostates.length + "種類"
-  statemore.textContent="more..."
-  //状態の全てのタグを仕込む
-  const stateCell = UnitGroupStates.querySelector('.states'); //状態
-  if(b.unique_senpostates){
-    let fullStates = ""
-    b.unique_senpostates.forEach(s=>{
-      if (fullStates==""){fullStates= s.label}
-      else{fullStates = fullStates + "," + s.label}
-      
     })
-    stateCell.dataset.fullStatesUnique = fullStates
-  } 
+    //コスト＆凸数
+    const mode = document.querySelector(".own-mode").value
+    let rank=0
+    if (mode==="owned"){
+      rank = b.own[0]?.rank ?? 0
+    }
+    
+    if(c){c.textContent = "C" + b.cost;}
+    if(r){r.textContent = "R" + rank;}
 
-  // タグ
-  const UnitGroupTag = document.querySelector(`[data-group="${Gid}"]`);
-  const tag = UnitGroupTag.querySelector('.row-tags'); //タグ
-  if(tag){
-    tag.innerHTML=""
-    if(b.tags){
-      b.tags.split("|").forEach(t=>{
-        const span=document.createElement("span")
-        span.className="label-tag tag0"
-        span.textContent=t
-        tag.appendChild(span)
+    const on  = "#ffd966"   // 黄色
+    const off = ""          // 既存CSS（薄グレー）に戻す
+
+    // 固有特性
+    const tokusei0 = DB.tokusei.find(t => t.id === b.unique_tokusei)
+    t0.textContent = tokusei0 ? tokusei0.name : ""
+    if(t0) t0.style.background = on
+
+    // 特性1凸
+    const tokusei1 = DB.tokusei.find(t => t.id === b.tokusei_1)
+    t1.textContent = tokusei1 ? tokusei1.name : ""
+    if(t1) t1.style.background = rank >= 1 ? on : off
+
+    // 特性3凸
+    const tokusei3 = DB.tokusei.find(t => t.id === b.tokusei_3)
+    t3.textContent = tokusei3 ? tokusei3.name : ""
+    if(t3) t3.style.background = rank >= 3 ? on : off
+
+    // 特性5凸
+    const tokusei5 = DB.tokusei.find(t => t.id === b.tokusei_5)
+    t5.textContent = tokusei5 ? tokusei5.name : ""
+    if(t5) t5.style.background = rank >= 5 ? on : off
+
+    // 状態
+    const UnitGroupStates = document.querySelector(`[data-group="${Gid}"]`);
+    const state = UnitGroupStates.querySelector('.states0'); //状態
+    const statemore = UnitGroupStates.querySelector('.statesmore'); //状態
+    state.textContent="固有" + b.unique_senpostates.length + "種類"
+    statemore.textContent="more..."
+    //状態の全てのタグを仕込む
+    const stateCell = UnitGroupStates.querySelector('.states'); //状態
+    if(b.unique_senpostates){
+      let fullStates = ""
+      b.unique_senpostates.forEach(s=>{
+        if (fullStates==""){fullStates= s.label}
+        else{fullStates = fullStates + "," + s.label}
+        
       })
+      stateCell.dataset.fullStatesUnique = fullStates
     } 
-  }
-  setupHeigaku(Gid, id) //兵学
 
-  //トータルコスト
-  const teamLeaderId = Math.floor((Gid - 1) / 3) * 3 + 1;
-  
-  let total=0;
-  const teamLeaderId2 = teamLeaderId + 2
-  for (let i = teamLeaderId; i<= teamLeaderId2; i++){
-      const unit = document.querySelector(`[data-group="${i}"]`);
-      const c = unit.querySelector('.cost'); //コスト
-      total += Number(c.textContent.replace("C",""))||0
+    // タグ
+    const UnitGroupTag = document.querySelector(`[data-group="${Gid}"]`);
+    const tag = UnitGroupTag.querySelector('.row-tags'); //タグ
+    if(tag){
+      tag.innerHTML=""
+      if(b.tags){
+        b.tags.split("|").forEach(t=>{
+          const span=document.createElement("span")
+          span.className="label-tag tag0"
+          span.textContent=t
+          tag.appendChild(span)
+        })
+      } 
+    }
+    setupHeigaku(Gid, id) //兵学
+
+    //トータルコスト
+    const teamLeaderId = Math.floor((Gid - 1) / 3) * 3 + 1;
+    
+    let total=0;
+    const teamLeaderId2 = teamLeaderId + 2
+    for (let i = teamLeaderId; i<= teamLeaderId2; i++){
+        const unit = document.querySelector(`[data-group="${i}"]`);
+        const c = unit.querySelector('.cost'); //コスト
+        total += Number(c.textContent.replace("C",""))||0
+    }
+    const teamCost = document.querySelector(`[data-group="${teamLeaderId}"]`);
+    teamCost.querySelector('.nowcost').textContent = "C" + total;
+  }else{
+    //武将選択が空の時
+    let Cellsenpo2=""
+    let Cellsenpo3=""
+    let CellheigakuType=""
+    let Cellheigakuki=""
+    let Cellheigakusei1=""
+    let Cellheigakusei2=""
+    let Cellheigakusei3=""
+
+    const u = document.querySelectorAll(`[data-group="${Gid}"]`);
+    if(u.querySelector(".senpo2")){Cellsenpo2 = u.querySelector(".senpo2")}
+    if(u.querySelector(".senpo3")){Cellsenpo3 = u.querySelector(".senpo3")}
+    if(u.querySelector(".heigaku-type")){CellheigakuType = u.querySelector(".heigaku-type")}
+    if(u.querySelector(".heigaku-ki")){Cellheigakuki = u.querySelector(".heigaku-ki")}
+    if(u.querySelector(".heigaku-sei1")){Cellheigakusei1 = u.querySelector(".heigaku-sei1")}
+    if(u.querySelector(".heigaku-sei2")){Cellheigakusei2 = u.querySelector(".heigaku-sei2")}
+    if(u.querySelector(".heigaku-sei3")){Cellheigakusei3 = u.querySelector(".heigaku-sei3")}
+
+    CellheigakuType.value=""
+    Cellsenpo2.value=""
+    Cellsenpo3.value=""
+    
+    Cellheigakuki.value=""
+    Cellheigakusei1.value=""
+    Cellheigakusei2.value=""
+    Cellheigakusei3.value=""
+
+    createBushoSelect()
+    createSenpoSelect()
+
   }
-  const teamCost = document.querySelector(`[data-group="${teamLeaderId}"]`);
-  teamCost.querySelector('.nowcost').textContent = "C" + total;
 }
 
 function setSenpoStates(Gid,id){
@@ -1005,7 +1037,6 @@ function saveTeam(){
 
     for (let i=LeaderUnitNo; i<LeaderUnitNo+3; i++){
 
-      const savedata = document.querySelector(`[data-group="${i}"]`);
       const myUnit = document.querySelectorAll(`[data-group="${i}"]`);
       myUnit.forEach(u=>{
         if(u.querySelector(".busho-name")){Cellbname = u.querySelector(".busho-name")}
