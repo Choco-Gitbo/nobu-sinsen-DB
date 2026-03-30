@@ -916,55 +916,56 @@ function flashElement(el) {
 /* 設定内容の読み出し */
 function loadTeam(){
 
-  let TeamNo = 1
-  const data=JSON.parse(localStorage.getItem("teamData_"+TeamNo)||"{}")
+  
+  for(let TeamNo = 1; TeamNo<=12; TeamNo++){
+    const data=JSON.parse(localStorage.getItem("teamData_"+TeamNo)||"{}")
 
-  const LeaderUnitNo = Math.floor((TeamNo - 1) / 3) * 3 + 1;
-  const LeaderUnit = document.querySelector(`[data-group="${LeaderUnitNo}"]`);
+    const LeaderUnitNo = Math.floor((TeamNo - 1) / 3) * 3 + 1;
+    const LeaderUnit = document.querySelector(`[data-group="${LeaderUnitNo}"]`);
 
-  //格納先を取得
-  let CelluType=""
-  let Cellbname=""
-  let Cellsenpo2=""
-  let Cellsenpo3=""
-  let CellheigakuType=""
-  let Cellheigakuki=""
-  let Cellheigakusei1=""
-  let Cellheigakusei2=""
-  let Cellheigakusei3=""
+    //格納先を取得
+    let CelluType=""
+    let Cellbname=""
+    let Cellsenpo2=""
+    let Cellsenpo3=""
+    let CellheigakuType=""
+    let Cellheigakuki=""
+    let Cellheigakusei1=""
+    let Cellheigakusei2=""
+    let Cellheigakusei3=""
 
-  CelluType = LeaderUnit.querySelector(".unit-type");
-  if(data.unit){
-    CelluType.value = data.unit //兵種
-  }
-
-  for (let i= LeaderUnitNo; i<LeaderUnitNo+3; i++){
-    const myUnit = document.querySelectorAll(`[data-group="${i}"]`);
-    myUnit.forEach(u=>{
-      if(u.querySelector(".busho-name")){Cellbname = u.querySelector(".busho-name")}
-      if(u.querySelector(".senpo2")){Cellsenpo2 = u.querySelector(".senpo2")}
-      if(u.querySelector(".senpo3")){Cellsenpo3 = u.querySelector(".senpo3")}
-      if(u.querySelector(".heigaku-type")){CellheigakuType = u.querySelector(".heigaku-type")}
-      if(u.querySelector(".heigaku-ki")){Cellheigakuki = u.querySelector(".heigaku-ki")}
-      if(u.querySelector(".heigaku-sei1")){Cellheigakusei1 = u.querySelector(".heigaku-sei1")}
-      if(u.querySelector(".heigaku-sei2")){Cellheigakusei2 = u.querySelector(".heigaku-sei2")}
-      if(u.querySelector(".heigaku-sei3")){Cellheigakusei3 = u.querySelector(".heigaku-sei3")}
-    })
-    const t=data.team[i-LeaderUnitNo]
-    Cellbname.value=t.busho||""
-    CellheigakuType.value=t.heigakuType||""
-    if(t.busho){
-      setBushoData(i,t.busho)
+    CelluType = LeaderUnit.querySelector(".unit-type");
+    if(data.unit){
+      CelluType.value = data.unit //兵種
     }
-    Cellsenpo2.value=t.senpo2||""
-    Cellsenpo3.value=t.senpo3||""
-    
-    Cellheigakuki.value=t.heigakuKi||""
-    Cellheigakusei1.value=t.heigakuSei1||""
-    Cellheigakusei2.value=t.heigakuSei2||""
-    Cellheigakusei3.value=t.heigakuSei3||""
-  }
 
+    for (let i= LeaderUnitNo; i<LeaderUnitNo+3; i++){
+      const myUnit = document.querySelectorAll(`[data-group="${i}"]`);
+      myUnit.forEach(u=>{
+        if(u.querySelector(".busho-name")){Cellbname = u.querySelector(".busho-name")}
+        if(u.querySelector(".senpo2")){Cellsenpo2 = u.querySelector(".senpo2")}
+        if(u.querySelector(".senpo3")){Cellsenpo3 = u.querySelector(".senpo3")}
+        if(u.querySelector(".heigaku-type")){CellheigakuType = u.querySelector(".heigaku-type")}
+        if(u.querySelector(".heigaku-ki")){Cellheigakuki = u.querySelector(".heigaku-ki")}
+        if(u.querySelector(".heigaku-sei1")){Cellheigakusei1 = u.querySelector(".heigaku-sei1")}
+        if(u.querySelector(".heigaku-sei2")){Cellheigakusei2 = u.querySelector(".heigaku-sei2")}
+        if(u.querySelector(".heigaku-sei3")){Cellheigakusei3 = u.querySelector(".heigaku-sei3")}
+      })
+      const t=data.team[i-LeaderUnitNo]
+      Cellbname.value=t.busho||""
+      CellheigakuType.value=t.heigakuType||""
+      if(t.busho){
+        setBushoData(i,t.busho)
+      }
+      Cellsenpo2.value=t.senpo2||""
+      Cellsenpo3.value=t.senpo3||""
+      
+      Cellheigakuki.value=t.heigakuKi||""
+      Cellheigakusei1.value=t.heigakuSei1||""
+      Cellheigakusei2.value=t.heigakuSei2||""
+      Cellheigakusei3.value=t.heigakuSei3||""
+    }
+  }
 }
   
 // ボタンにイベントを登録
