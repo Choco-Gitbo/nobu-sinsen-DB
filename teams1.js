@@ -991,7 +991,7 @@ function saveTeam(){
 
     }
 
-    for (let i=1; i<LeaderUnitNo+3; i++){
+    for (let i=LeaderUnitNo; i<LeaderUnitNo+3; i++){
 
       const savedata = document.querySelector(`[data-group="${i}"]`);
 
