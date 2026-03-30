@@ -920,6 +920,8 @@ function loadTeam(){
   for(let TeamNo = 1; TeamNo<=12; TeamNo++){
     const data=JSON.parse(localStorage.getItem("teamData_"+TeamNo)||"{}")
 
+    if(!data.team) return
+    
     const LeaderUnitNo = (TeamNo - 1)  * 3 + 1;
     const LeaderUnit = document.querySelector(`[data-group="${LeaderUnitNo}"]`);
 
