@@ -916,12 +916,14 @@ function flashElement(el) {
 /* 設定内容の読み出し */
 function loadTeam(){
 
-  
+  createBushoSelect()
+  createSenpoSelect()
+
   for(let TeamNo = 1; TeamNo<=12; TeamNo++){
     const data=JSON.parse(localStorage.getItem("teamData_"+TeamNo)||"{}")
 
     if(!data.team) return
-    
+
     const LeaderUnitNo = (TeamNo - 1)  * 3 + 1;
     const LeaderUnit = document.querySelector(`[data-group="${LeaderUnitNo}"]`);
 
@@ -968,6 +970,10 @@ function loadTeam(){
       Cellheigakusei3.value=t.heigakuSei3||""
     }
   }
+  
+  createBushoSelect()
+  createSenpoSelect()
+
 }
   
 // ボタンにイベントを登録
