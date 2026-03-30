@@ -952,7 +952,7 @@ function loadTeam(){
     })
     const t=data.team[i-LeaderUnitNo]
     Cellbname.value=t.busho||""
-    CellhigakuType.value=t.heigakuType||""
+    CellheigakuType.value=t.heigakuType||""
     if(t.busho){
       setBushoData(i,t.busho)
     }
