@@ -435,7 +435,7 @@ function setSenpoStates(Gid,id){
 function setupHeigaku(Gid, id){
 
   const b=DB.busho.find(v=>v.id==id)
-  
+
   if(!b) return
 
   const UnitGroup = document.querySelectorAll(`[data-group="${Gid}"]`);
@@ -996,16 +996,26 @@ function saveTeam(){
     for (let i=LeaderUnitNo; i<LeaderUnitNo+3; i++){
 
       const savedata = document.querySelector(`[data-group="${i}"]`);
-
+      const myUnit = document.querySelectorAll(`[data-group="${i}"]`);
+      myUnit.forEach(u=>{
+        if(u.querySelector(".busho-name")){Cellbname = u.querySelector(".busho-name")}
+        if(u.querySelector(".senpo2")){Cellsenpo2 = u.querySelector(".senpo2")}
+        if(u.querySelector(".senpo3")){Cellsenpo3 = u.querySelector(".senpo3")}
+        if(u.querySelector(".heigaku-type")){CellheigakuType = u.querySelector(".heigaku-type")}
+        if(u.querySelector(".heigaku-ki")){Cellheigakuki = u.querySelector(".heigaku-ki")}
+        if(u.querySelector(".heigaku-sei1")){Cellheigakusei1 = u.querySelector(".heigaku-sei1")}
+        if(u.querySelector(".heigaku-sei2")){Cellheigakusei2 = u.querySelector(".heigaku-sei2")}
+        if(u.querySelector(".heigaku-sei3")){Cellheigakusei3 = u.querySelector(".heigaku-sei3")}
+      })
       data.team.push({
-        busho:savedata.querySelector(".busho-name")?.value || "",
-        senpo2:savedata.querySelector(".senpo2")?.value || "",
-        senpo3:savedata.querySelector(".senpo3")?.value || "",
-        heigakuType:savedata.querySelector(".heigaku-type")?.value || "",
-        heigakuKi:savedata.querySelector(".heigaku-ki")?.value || "",
-        heigakuSei1:savedata.querySelector(".heigaku-sei1")?.value || "",
-        heigakuSei2:savedata.querySelector(".heigaku-sei2")?.value || "",
-        heigakuSei3:savedata.querySelector(".heigaku-sei3")?.value || ""
+        busho:Cellbname?.value || "",
+        senpo2:Cellsenpo2?.value || "",
+        senpo3:Cellsenpo3?.value || "",
+        heigakuType:CellheigakuType?.value || "",
+        heigakuKi:Cellheigakuki?.value || "",
+        heigakuSei1:Cellheigakusei1?.value || "",
+        heigakuSei2:Cellheigakusei2?.value || "",
+        heigakuSei3:Cellheigakusei3?.value || ""
       })
     }
 
