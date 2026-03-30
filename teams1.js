@@ -720,13 +720,15 @@ document.addEventListener("change",e=>{
     createSenpoSelect()
   }
     /* 武将選択の変更処理 */
-  /*if(e.target.classList.contains("busho-name")){
-    createBushoSelect()
-    const b = e.target.closest('[data-group]');
-    const bGId = parseInt(b.getAttribute('data-group'));
-    const bvalue = e.target.value
-    setBushoData(bGId,bvalue)
-  }*/
+  if(e.target.classList.contains("busho-name")){
+    if (e.target.value==""){
+      createBushoSelect()
+      const b = e.target.closest('[data-group]');
+      const bGId = parseInt(b.getAttribute('data-group'));
+      const bvalue = e.target.value
+      setBushoData(bGId,bvalue)
+    }
+  }
     /* 戦法選択の変更処理 */
   if(e.target.classList.contains("senpo")){
     createSenpoSelect()
