@@ -912,8 +912,6 @@ function flashElement(el) {
   }, 600);
 }
 
-// ボタンにイベントを登録
-document.getElementById('teamLoad-btn').addEventListener('click', loadTeam);
 
 /* 設定内容の読み出し */
 function loadTeam(){
@@ -942,3 +940,6 @@ function loadTeam(){
 
 }
   
+// ボタンにイベントを登録
+document.getElementById('teamLoad-btn').addEventListener('click', loadTeam);
+
