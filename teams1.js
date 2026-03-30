@@ -854,7 +854,7 @@ function makeTable(){
           <td class="heigaku">奇</td>
           <td class="heigaku-ki2">
             <select class="select heigaku-ki">
-                <option value="">兵学・奇</option>
+                <option value="">--</option>
             </select>
           </td>
           <td rowspan="2" class="tokusei">
@@ -884,13 +884,13 @@ function makeTable(){
           <td class="heigaku">正</td>
           <td class="heigaku-sei">
             <select class="select heigaku-sei1">
-                <option value="">・正</option>
+                <option value="">--</option>
             </select>
             <select class="select heigaku-sei2">
-                <option value="">・正</option>
+                <option value="">--</option>
             </select>
             <select class="select heigaku-sei3">
-                <option value="">・正</option>
+                <option value="">--</option>
             </select>
           </td>
         </tr>
