@@ -933,15 +933,15 @@ function loadTeam(){
   let Cellheigakusei3=""
 
   myUnit.forEach(u=>{
-    if(myUnit.querySelector(".unit-type")){CelluType = myUnit.querySelector(".unit-type")}
-    if(myUnit.querySelector(".busho-name")){Cellbname = myUnit.querySelector(".busho-name")}
-    if(myUnit.querySelector(".senpo2")){Cellsenpo2 = myUnit.querySelector(".senpo2")}
-    if(myUnit.querySelector(".senpo3")){Cellsenpo3 = myUnit.querySelector(".senpo3")}
-    if(myUnit.querySelector(".heigaku-type")){CellheigakuType = myUnit.querySelector(".heigaku-type")}
-    if(myUnit.querySelector(".heigaku-ki")){Cellheigakuki = myUnit.querySelector(".heigaku-ki")}
-    if(myUnit.querySelector(".heigaku-sei1")){Cellheigakusei1 = myUnit.querySelector(".heigaku-sei1")}
-    if(myUnit.querySelector(".heigaku-sei2")){Cellheigakusei2 = myUnit.querySelector(".heigaku-sei2")}
-    if(myUnit.querySelector(".heigaku-sei3")){Cellheigakusei3 = myUnit.querySelector(".heigaku-sei3")}
+    if(u.querySelector(".unit-type")){CelluType = u.querySelector(".unit-type")}
+    if(u.querySelector(".busho-name")){Cellbname = u.querySelector(".busho-name")}
+    if(u.querySelector(".senpo2")){Cellsenpo2 = u.querySelector(".senpo2")}
+    if(u.querySelector(".senpo3")){Cellsenpo3 = u.querySelector(".senpo3")}
+    if(u.querySelector(".heigaku-type")){CellheigakuType = u.querySelector(".heigaku-type")}
+    if(u.querySelector(".heigaku-ki")){Cellheigakuki = u.querySelector(".heigaku-ki")}
+    if(u.querySelector(".heigaku-sei1")){Cellheigakusei1 = u.querySelector(".heigaku-sei1")}
+    if(u.querySelector(".heigaku-sei2")){Cellheigakusei2 = u.querySelector(".heigaku-sei2")}
+    if(u.querySelector(".heigaku-sei3")){Cellheigakusei3 = u.querySelector(".heigaku-sei3")}
   })
   
   if(data.unit){
