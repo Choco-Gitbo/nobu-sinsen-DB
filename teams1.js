@@ -916,27 +916,72 @@ function flashElement(el) {
 /* 設定内容の読み出し */
 function loadTeam(){
 
-  let TeamNo = 4
+  let TeamNo = 2
   const data=JSON.parse(localStorage.getItem("teamData_"+TeamNo)||"{}")
 
   const myUnit = document.querySelectorAll(`[data-group="${TeamNo}"]`);
 
-    /* グローバル設定 */
+  //格納先を取得
+  let CelluType=""
+  let Cellbname=""
+  let Cellsenpo2=""
+  let Cellsenpo3=""
+  let CellheigakuType=""
+  let Cellheigakuki=""
+  let Cellheigakusei1=""
+  let Cellheigakusei2=""
+  let Cellheigakusei3=""
 
-  myUnit.querySelector(".unit-type").value = data.unit  //兵種
+  myUnit.forEach(u=>{
+    if(myUnit.querySelector(".unit-type")){CelluType = myUnit.querySelector(".unit-type")}
+    if(myUnit.querySelector(".busho-name")){Cellbname = myUnit.querySelector(".busho-name")}
+    if(myUnit.querySelector(".senpo2")){Cellsenpo2 = myUnit.querySelector(".senpo2")}
+    if(myUnit.querySelector(".senpo3")){Cellsenpo3 = myUnit.querySelector(".senpo3")}
+    if(myUnit.querySelector(".heigaku-type")){CellheigakuType = myUnit.querySelector(".heigaku-type")}
+    if(myUnit.querySelector(".heigaku-ki")){Cellheigakuki = myUnit.querySelector(".heigaku-ki")}
+    if(myUnit.querySelector(".heigaku-sei1")){Cellheigakusei1 = myUnit.querySelector(".heigaku-sei1")}
+    if(myUnit.querySelector(".heigaku-sei2")){Cellheigakusei2 = myUnit.querySelector(".heigaku-sei2")}
+    if(myUnit.querySelector(".heigaku-sei3")){Cellheigakusei3 = myUnit.querySelector(".heigaku-sei3")}
+  })
   
-  myUnit.querySelector(".busho-name").value=t.busho||""
-  myUnit.querySelector(".heigaku-type").value=t.heigakuType||""
-  if(t.busho){
-    setBushoData(myUnit,t.busho)
+  if(data.unit){
+    CelluType.value = data.unit
   }
-  myUnit.querySelector(".senpo2").value=t.senpo2||""
-  myUnit.querySelector(".senpo3").value=t.senpo3||""
+
+  //if(data.maxcost){
+  //  document.querySelector(".maxcost").value = data.maxcost
+  //}
+  //if(data.name){
+  //  document.querySelector(".unit-name").value = data.name
+  //}
   
-  myUnit.querySelector(".heigaku-ki").value=t.heigakuKi||""
-  myUnit.querySelector(".heigaku-sei1").value=t.heigakuSei1||""
-  myUnit.querySelector(".heigaku-sei2").value=t.heigakuSei2||""
-  myUnit.querySelector(".heigaku-sei3").value=t.heigakuSei3||""
+  const columns=document.querySelectorAll(".team")
+
+  data.team.forEach((t,i)=>{
+
+    const col=columns[i]
+    if(!col) return
+
+    col.querySelector(".busho-select").value=t.busho||""
+    col.querySelector(".heigaku-type").value=t.heigakuType||""
+    if(t.busho){
+      setBushoData(col,t.busho)
+    }
+    col.querySelector(".input-buyu").value=t.buyu||""
+    col.querySelector(".input-tiryaku").value=t.tiryaku||"0"
+    col.querySelector(".input-tosotsu").value=t.tosotsu||"0"
+    col.querySelector(".input-sokudo").value=t.sokudo||"0"
+    col.querySelector(".input-seimu").value=t.seimu||"0"
+    col.querySelector(".input-miryoku").value=t.miryoku||"0"
+    col.querySelector(".senpo2").value=t.senpo2||""
+    col.querySelector(".senpo3").value=t.senpo3||""
+    
+    col.querySelector(".heigaku-ki").value=t.heigakuKi||""
+    col.querySelector(".heigaku-sei1").value=t.heigakuSei1||""
+    col.querySelector(".heigaku-sei2").value=t.heigakuSei2||""
+    col.querySelector(".heigaku-sei3").value=t.heigakuSei3||""
+
+  })
 
 }
   
