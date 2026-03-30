@@ -403,14 +403,16 @@ function setBushoData(Gid,id){
     let Cellheigakusei2=""
     let Cellheigakusei3=""
 
-    const u = document.querySelectorAll(`[data-group="${Gid}"]`);
-    if(u.querySelector(".senpo2")){Cellsenpo2 = u.querySelector(".senpo2")}
-    if(u.querySelector(".senpo3")){Cellsenpo3 = u.querySelector(".senpo3")}
-    if(u.querySelector(".heigaku-type")){CellheigakuType = u.querySelector(".heigaku-type")}
-    if(u.querySelector(".heigaku-ki")){Cellheigakuki = u.querySelector(".heigaku-ki")}
-    if(u.querySelector(".heigaku-sei1")){Cellheigakusei1 = u.querySelector(".heigaku-sei1")}
-    if(u.querySelector(".heigaku-sei2")){Cellheigakusei2 = u.querySelector(".heigaku-sei2")}
-    if(u.querySelector(".heigaku-sei3")){Cellheigakusei3 = u.querySelector(".heigaku-sei3")}
+    const UnitGroup = document.querySelectorAll(`[data-group="${Gid}"]`);
+    UnitGroup.forEach(u => {
+      if(u.querySelector(".senpo2")){Cellsenpo2 = u.querySelector(".senpo2")}
+      if(u.querySelector(".senpo3")){Cellsenpo3 = u.querySelector(".senpo3")}
+      if(u.querySelector(".heigaku-type")){CellheigakuType = u.querySelector(".heigaku-type")}
+      if(u.querySelector(".heigaku-ki")){Cellheigakuki = u.querySelector(".heigaku-ki")}
+      if(u.querySelector(".heigaku-sei1")){Cellheigakusei1 = u.querySelector(".heigaku-sei1")}
+      if(u.querySelector(".heigaku-sei2")){Cellheigakusei2 = u.querySelector(".heigaku-sei2")}
+      if(u.querySelector(".heigaku-sei3")){Cellheigakusei3 = u.querySelector(".heigaku-sei3")}
+    })
 
     CellheigakuType.value=""
     Cellsenpo2.value=""
