@@ -916,7 +916,7 @@ function flashElement(el) {
 /* 設定内容の読み出し */
 function loadTeam(){
 
-  let TeamNo = 2
+  let TeamNo = 4
   const data=JSON.parse(localStorage.getItem("teamData_"+TeamNo)||"{}")
 
   const myUnit = document.querySelectorAll(`[data-group="${TeamNo}"]`);
