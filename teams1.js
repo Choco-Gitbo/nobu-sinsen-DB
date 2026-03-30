@@ -435,6 +435,8 @@ function setSenpoStates(Gid,id){
 function setupHeigaku(Gid, id){
 
   const b=DB.busho.find(v=>v.id==id)
+  
+  if(!b) return
 
   const UnitGroup = document.querySelectorAll(`[data-group="${Gid}"]`);
   
