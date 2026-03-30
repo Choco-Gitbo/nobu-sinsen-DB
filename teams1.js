@@ -921,7 +921,6 @@ function loadTeam(){
 
   const LeaderUnitNo = Math.floor((TeamNo - 1) / 3) * 3 + 1;
   const LeaderUnit = document.querySelector(`[data-group="${LeaderUnitNo}"]`);
-  const myUnit = document.querySelectorAll(`[data-group="${UnitNo}"]`);
 
   //格納先を取得
   let CelluType=""
