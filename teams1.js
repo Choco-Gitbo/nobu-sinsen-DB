@@ -984,6 +984,16 @@ function saveTeam(){
     const LeaderUnitNo = (TeamNo - 1)  * 3 + 1;
     const saveUnit = document.querySelector(`[data-group="${LeaderUnitNo}"]`);
 
+    //格納先を取得
+    let Cellbname=""
+    let Cellsenpo2=""
+    let Cellsenpo3=""
+    let CellheigakuType=""
+    let Cellheigakuki=""
+    let Cellheigakusei1=""
+    let Cellheigakusei2=""
+    let Cellheigakusei3=""
+
     const data = {
 
       unit: saveUnit.querySelector(".unit-type")?.value || "",
