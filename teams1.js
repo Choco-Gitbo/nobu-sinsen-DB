@@ -938,7 +938,7 @@ function loadTeam(){
     CelluType.value = data.unit //兵種
   }
 
-  for (let i= LeaderUnitNo; i<=LeaderUnitNo+3; i++){
+  for (let i= LeaderUnitNo; i<LeaderUnitNo+3; i++){
     const myUnit = document.querySelectorAll(`[data-group="${i}"]`);
     myUnit.forEach(u=>{
       if(u.querySelector(".busho-name")){Cellbname = u.querySelector(".busho-name")}
