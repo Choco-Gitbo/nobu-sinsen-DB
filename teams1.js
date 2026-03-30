@@ -920,7 +920,7 @@ function loadTeam(){
   for(let TeamNo = 1; TeamNo<=12; TeamNo++){
     const data=JSON.parse(localStorage.getItem("teamData_"+TeamNo)||"{}")
 
-    const LeaderUnitNo = Math.floor((TeamNo - 1) / 3) * 3 + 1;
+    const LeaderUnitNo = (TeamNo - 1)  * 3 + 1;
     const LeaderUnit = document.querySelector(`[data-group="${LeaderUnitNo}"]`);
 
     //格納先を取得
