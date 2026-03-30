@@ -916,10 +916,12 @@ function flashElement(el) {
 /* 設定内容の読み出し */
 function loadTeam(){
 
-  let TeamNo = 4
+  let TeamNo = 1
   const data=JSON.parse(localStorage.getItem("teamData_"+TeamNo)||"{}")
 
-  const myUnit = document.querySelectorAll(`[data-group="${TeamNo}"]`);
+  const LeaderUnitNo = Math.floor((TeamNo - 1) / 3) * 3 + 1;
+  const LeaderUnit = document.querySelector(`[data-group="${LeaderUnitNo}"]`);
+  const myUnit = document.querySelectorAll(`[data-group="${UnitNo}"]`);
 
   //格納先を取得
   let CelluType=""
@@ -932,56 +934,37 @@ function loadTeam(){
   let Cellheigakusei2=""
   let Cellheigakusei3=""
 
-  myUnit.forEach(u=>{
-    if(u.querySelector(".unit-type")){CelluType = u.querySelector(".unit-type")}
-    if(u.querySelector(".busho-name")){Cellbname = u.querySelector(".busho-name")}
-    if(u.querySelector(".senpo2")){Cellsenpo2 = u.querySelector(".senpo2")}
-    if(u.querySelector(".senpo3")){Cellsenpo3 = u.querySelector(".senpo3")}
-    if(u.querySelector(".heigaku-type")){CellheigakuType = u.querySelector(".heigaku-type")}
-    if(u.querySelector(".heigaku-ki")){Cellheigakuki = u.querySelector(".heigaku-ki")}
-    if(u.querySelector(".heigaku-sei1")){Cellheigakusei1 = u.querySelector(".heigaku-sei1")}
-    if(u.querySelector(".heigaku-sei2")){Cellheigakusei2 = u.querySelector(".heigaku-sei2")}
-    if(u.querySelector(".heigaku-sei3")){Cellheigakusei3 = u.querySelector(".heigaku-sei3")}
-  })
-  
+  CelluType = LeaderUnit.querySelector(".unit-type");
   if(data.unit){
-    CelluType.value = data.unit
+    CelluType.value = data.unit //兵種
   }
 
-  //if(data.maxcost){
-  //  document.querySelector(".maxcost").value = data.maxcost
-  //}
-  //if(data.name){
-  //  document.querySelector(".unit-name").value = data.name
-  //}
-  
-  const columns=document.querySelectorAll(".team")
-
-  data.team.forEach((t,i)=>{
-
-    const col=columns[i]
-    if(!col) return
-
-    col.querySelector(".busho-select").value=t.busho||""
-    col.querySelector(".heigaku-type").value=t.heigakuType||""
+  for (let i= LeaderUnitNo; i<=LeaderUnitNo+3; i++){
+    const myUnit = document.querySelectorAll(`[data-group="${i}"]`);
+    myUnit.forEach(u=>{
+      if(u.querySelector(".busho-name")){Cellbname = u.querySelector(".busho-name")}
+      if(u.querySelector(".senpo2")){Cellsenpo2 = u.querySelector(".senpo2")}
+      if(u.querySelector(".senpo3")){Cellsenpo3 = u.querySelector(".senpo3")}
+      if(u.querySelector(".heigaku-type")){CellheigakuType = u.querySelector(".heigaku-type")}
+      if(u.querySelector(".heigaku-ki")){Cellheigakuki = u.querySelector(".heigaku-ki")}
+      if(u.querySelector(".heigaku-sei1")){Cellheigakusei1 = u.querySelector(".heigaku-sei1")}
+      if(u.querySelector(".heigaku-sei2")){Cellheigakusei2 = u.querySelector(".heigaku-sei2")}
+      if(u.querySelector(".heigaku-sei3")){Cellheigakusei3 = u.querySelector(".heigaku-sei3")}
+    })
+    t=data.team[i-LeaderUnitNo]
+    Cellbname.value=t.busho||""
+    CellhigakuType.value=t.heigakuType||""
     if(t.busho){
-      setBushoData(col,t.busho)
+      setBushoData(i,t.busho)
     }
-    col.querySelector(".input-buyu").value=t.buyu||""
-    col.querySelector(".input-tiryaku").value=t.tiryaku||"0"
-    col.querySelector(".input-tosotsu").value=t.tosotsu||"0"
-    col.querySelector(".input-sokudo").value=t.sokudo||"0"
-    col.querySelector(".input-seimu").value=t.seimu||"0"
-    col.querySelector(".input-miryoku").value=t.miryoku||"0"
-    col.querySelector(".senpo2").value=t.senpo2||""
-    col.querySelector(".senpo3").value=t.senpo3||""
+    Cellsenpo2.value=t.senpo2||""
+    Cellsenpo3.value=t.senpo3||""
     
-    col.querySelector(".heigaku-ki").value=t.heigakuKi||""
-    col.querySelector(".heigaku-sei1").value=t.heigakuSei1||""
-    col.querySelector(".heigaku-sei2").value=t.heigakuSei2||""
-    col.querySelector(".heigaku-sei3").value=t.heigakuSei3||""
-
-  })
+    Cellheigakuki.value=t.heigakuKi||""
+    Cellheigakusei1.value=t.heigakuSei1||""
+    Cellheigakusei2.value=t.heigakuSei2||""
+    Cellheigakusei3.value=t.heigakuSei3||""
+  }
 
 }
   
