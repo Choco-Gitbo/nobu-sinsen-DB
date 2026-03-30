@@ -972,9 +972,46 @@ function loadTeam(){
     }
   }
 
+}
+ 
+/* 設定内容の保存 */
+function saveTeam(){
+
+  const TeamNo=1;
+
+  const LeaderUnitNo = (TeamNo - 1)  * 3 + 1;
+  const saveUnit = document.querySelector(`[data-group="${LeaderUnitNo}"]`);
+
+  const data = {
+
+    unit: saveUnit.querySelector(".unit-type")?.value || "",
+    maxcost: "",
+    name: "",
+    team: []
+
+  }
+
+  for (let i=1; i<LeaderUnitNo+3; i++){
+
+    const savedata = document.querySelector(`[data-group="${i}"]`);
+
+    data.team.push({
+      busho:savedata.querySelector(".busho-name")?.value || "",
+      senpo2:savedata.querySelector(".senpo2")?.value || "",
+      senpo3:savedata.querySelector(".senpo3")?.value || "",
+      heigakuType:savedata.querySelector(".heigaku-type")?.value || "",
+      heigakuKi:savedata.querySelector(".heigaku-ki")?.value || "",
+      heigakuSei1:savedata.querySelector(".heigaku-sei1")?.value || "",
+      heigakuSei2:savedata.querySelector(".heigaku-sei2")?.value || "",
+      heigakuSei3:savedata.querySelector(".heigaku-sei3")?.value || ""
+    })
+  }
+
+  //localStorage.setItem("teamData_"+TeamNo,JSON.stringify(data))
 
 }
-  
+
 // ボタンにイベントを登録
 document.getElementById('teamLoad-btn').addEventListener('click', loadTeam);
 
+document.getElementById('teamSave-btn').addEventListener('click', SaveTeam);
