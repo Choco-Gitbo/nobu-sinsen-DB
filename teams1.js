@@ -916,8 +916,6 @@ function flashElement(el) {
 /* 設定内容の読み出し */
 function loadTeam(){
 
-  createBushoSelect()
-  createSenpoSelect()
 
   for(let TeamNo = 1; TeamNo<=12; TeamNo++){
     const data=JSON.parse(localStorage.getItem("teamData_"+TeamNo)||"{}")
@@ -942,6 +940,9 @@ function loadTeam(){
     if(data.unit){
       CelluType.value = data.unit //兵種
     }
+
+    createBushoSelect()
+    createSenpoSelect()
 
     for (let i= LeaderUnitNo; i<LeaderUnitNo+3; i++){
       const myUnit = document.querySelectorAll(`[data-group="${i}"]`);
@@ -970,9 +971,7 @@ function loadTeam(){
       Cellheigakusei3.value=t.heigakuSei3||""
     }
   }
-  
-  createBushoSelect()
-  createSenpoSelect()
+
 
 }
   
