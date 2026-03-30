@@ -624,7 +624,7 @@ table.addEventListener('focusin', (e) => {
           document.querySelector(`[data-group="${otherUnitId}"] .heigaku-sei3`).value = sei3A;
           
         }else{
-          setBushoData(myUnitId,newValue)
+          //setBushoData(myUnitId,newValue)
         }
     });
     beforeBushoValue = newValue;
