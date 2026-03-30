@@ -834,10 +834,10 @@ function makeTable(){
           </td>
           <td rowspan="2">
             <div class="column-senpo">
-                <select class="select senpo">
+                <select class="select senpo senpo2">
                     <option value="">--</option>
                 </select>
-                <select class="select senpo">
+                <select class="select senpo senpo3">
                     <option value="">--</option>
                 </select>
             </div>
@@ -911,3 +911,31 @@ function flashElement(el) {
     el.style.backgroundColor = '';
   }, 600);
 }
+
+/* 設定内容の読み出し */
+function loadTeam(){
+
+  let TeamNo = 2
+  const data=JSON.parse(localStorage.getItem("teamData_"+TeamNo)||"{}")
+
+  const myUnit = document.querySelectorAll(`[data-group="${TeamNo}"]`);
+
+    /* グローバル設定 */
+
+  myUnit.querySelector(".unit-type").value = data.unit  //兵種
+  
+  myUnit.querySelector(".busho-name").value=t.busho||""
+  myUnit.querySelector(".heigaku-type").value=t.heigakuType||""
+  if(t.busho){
+    setBushoData(myUnit,t.busho)
+  }
+  myUnit.querySelector(".senpo2").value=t.senpo2||""
+  myUnit.querySelector(".senpo3").value=t.senpo3||""
+  
+  myUnit.querySelector(".heigaku-ki").value=t.heigakuKi||""
+  myUnit.querySelector(".heigaku-sei1").value=t.heigakuSei1||""
+  myUnit.querySelector(".heigaku-sei2").value=t.heigakuSei2||""
+  myUnit.querySelector(".heigaku-sei3").value=t.heigakuSei3||""
+
+}
+  
