@@ -1014,4 +1014,4 @@ function saveTeam(){
 // ボタンにイベントを登録
 document.getElementById('teamLoad-btn').addEventListener('click', loadTeam);
 
-document.getElementById('teamSave-btn').addEventListener('click', SaveTeam);
+document.getElementById('teamSave-btn').addEventListener('click', saveTeam);
