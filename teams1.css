@@ -152,6 +152,9 @@ body{
   font-size:11px;
 }
 
+.teamLoad-btn{
+  font-size: 11px;
+}
 /* メニューの初期状態：画面の左側に隠す */
 .side-menu {
   position: fixed;
