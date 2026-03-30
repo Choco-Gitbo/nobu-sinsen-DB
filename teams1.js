@@ -950,7 +950,7 @@ function loadTeam(){
       if(u.querySelector(".heigaku-sei2")){Cellheigakusei2 = u.querySelector(".heigaku-sei2")}
       if(u.querySelector(".heigaku-sei3")){Cellheigakusei3 = u.querySelector(".heigaku-sei3")}
     })
-    t=data.team[i-LeaderUnitNo]
+    const t=data.team[i-LeaderUnitNo]
     Cellbname.value=t.busho||""
     CellhigakuType.value=t.heigakuType||""
     if(t.busho){
