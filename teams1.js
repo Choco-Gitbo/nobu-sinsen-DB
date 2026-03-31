@@ -55,7 +55,8 @@ async function init(){
   makeTable() //テーブル作成
   createBushoSelect() //武将プルダウンのオプション作成
   createSenpoSelect() //戦法プルダウンのオプション作成
-
+  setStatesSelect() //戦法状態プルダウンのオプション作成
+  
   const savebtn = document.getElementById("teamSave-btn");
   savebtn.disabled = true;
 }
@@ -160,7 +161,7 @@ function setStatesSelect(){
     
   DB.states.forEach(st=>{      
     const op=document.createElement("option")
-    op.value=st.id
+    op.value=st.label
     op.textContent=st.label
     select1.appendChild(op)
     select2.appendChild(op)
