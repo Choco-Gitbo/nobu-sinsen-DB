@@ -6,6 +6,7 @@ const DB={
   senpoState:[],
   tokusei:[],
   heigaku:[],
+  states:[],
   own_busho:[],
   own_senpo:[]
 }
@@ -46,6 +47,7 @@ async function init(){
   DB.senpoState=await loadCSV("data/senpo_state.csv")
   DB.tokusei=await loadCSV("data/tokusei.csv")
   DB.heigaku=await loadCSV("data/heigaku.csv")
+  DB.states=await loadCSV("data/states.csv")
 
   linkStatesToBusho() /* 武将情報に所有情報を付与 */
   setupSenpoStates()  /* 戦法状態の作成 */
@@ -147,6 +149,22 @@ function createSenpoSelect(){
     select.value = current
   })
 
+}
+
+function setStatesSelect(){
+  //戦法状態フィルターの選択肢
+  const select1 = document.querySelector(".usenpo-states")
+  select1.innerHTML = `<option value="">--</option>` 
+  const select2 = document.querySelector(".senpo-states")
+  select2.innerHTML = `<option value="">--</option>` 
+    
+  DB.states.forEach(st=>{      
+    const op=document.createElement("option")
+    op.value=st.id
+    op.textContent=st.label
+    select1.appendChild(op)
+    select2.appendChild(op)
+  })
 }
 
 function setupSenpoStates(){
