@@ -477,7 +477,11 @@ function setSenpoStates(Gid,id){
   let n=2
   if(senpo){
     state2.textContent = ""
-    state3.textContent = ""           
+    state3.textContent = ""
+    stateCell2.dataset.nameSenpo2 = ""
+    stateCell2.dataset.descSenpo2 = ""
+    stateCell2.dataset.nameSenpo3 = ""
+    stateCell2.dataset.descSenpo3 = ""
     senpo.forEach(s=>{
       if(s.value !==""){
         let fullStates = ""
