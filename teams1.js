@@ -481,19 +481,27 @@ function setSenpoStates(Gid,id){
     senpo.forEach(s=>{
       if(s.value !==""){
         let fullStates = ""
+        let senpo_name = ""
+        let senpo_desc = ""
         DB.senpo.forEach(st=>{
           if(st.id!==s.value) return false
-            st.states.forEach(sst=>{
+          senpo_name = st.name;
+          senpo_desc = st.desc;
+          st.states.forEach(sst=>{
               if (fullStates==""){fullStates= sst.label}
               else{fullStates = fullStates + "," + sst.label}
             })
             if (n==2){
               state2.textContent = "第2:" + st.states.length + "種類"
               stateCell2.dataset.fullStatesSenpo2 = fullStates
+              stateCell2.dataset.nameUnique = senpo_name
+              stateCell2.dataset.descUnique = senpo_desc
             }
             if (n==3){
               state3.textContent = "第3:" + st.states.length + "種類"
               stateCell2.dataset.fullStatesSenpo3 = fullStates
+              stateCell2.dataset.nameUnique = senpo_name
+              stateCell2.dataset.descUnique = senpo_desc
             }            
         })
       } 
@@ -828,7 +836,6 @@ table.addEventListener('click', (e) => {
   nameUnique.textContent = "固有戦法状態:" + targetCell.dataset.nameUnique; // クリア
   const descUnique = document.getElementById('popup-desc-unique');
   descUnique.textContent = targetCell.dataset.descUnique; // クリア
-
   const listContainerUnique = document.getElementById('popup-tags-list-unique');
   listContainerUnique.innerHTML = ''; // クリア
   
@@ -840,9 +847,13 @@ table.addEventListener('click', (e) => {
   });
 
   if(targetCell.dataset.fullStatesSenpo2){
-    const allStatesSenpo2 = targetCell.dataset.fullStatesSenpo2.split(',');
 
     // 2. ポップアップの中身を作成
+    const nameSenpo2 = document.getElementById('popup-name-senpo2');
+    nameSenpo2.textContent = "第2戦法状態:" + targetCell.dataset.nameSenpo2; // クリア
+    const descSenpo2 = document.getElementById('popup-desc-senpo2');
+    descSenpo2.textContent = targetCell.dataset.descSenpo2; // クリア
+    const allStatesSenpo2 = targetCell.dataset.fullStatesSenpo2.split(',');
     const listContainerSenpo2 = document.getElementById('popup-tags-list-senpo2');
     listContainerSenpo2.innerHTML = ''; // クリア
     
@@ -858,6 +869,10 @@ table.addEventListener('click', (e) => {
     const allStatesSenpo3 = targetCell.dataset.fullStatesSenpo3.split(',');
 
     // 2. ポップアップの中身を作成
+    const nameSenpo3 = document.getElementById('popup-name-senpo3');
+    nameSenpo3.textContent = "第3戦法状態:" + targetCell.dataset.nameSenpo3; // クリア
+    const descSenpo3 = document.getElementById('popup-desc-senpo3');
+    descSenpo3.textContent = targetCell.dataset.descSenpo3; // クリア
     const listContainerSenpo3 = document.getElementById('popup-tags-list-senpo3');
     listContainerSenpo3.innerHTML = ''; // クリア
     
