@@ -85,7 +85,7 @@ body{
 }
 .busho-name{
   display: flex;
-  width: 90px;
+  width: auto;
 }
 .column-senpo{
   display: flex;
@@ -97,7 +97,7 @@ body{
 }
 .senpo{
   display: flex;
-  width: 90px;
+  width: auto;
 }
 .heigaku{
   font-size:11px;
