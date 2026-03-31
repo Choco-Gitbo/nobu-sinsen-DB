@@ -196,7 +196,7 @@ body{
 }
 .popup-content {
   background: white; padding: 5px; border-radius: 8px;
-  max-width: 80%; max-height: 70%; overflow-y: auto;
+  max-width: 70%; max-height: 60%; overflow-y: auto;
 }
 
 #popup-tags-list-unique {
