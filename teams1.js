@@ -55,7 +55,7 @@ async function init(){
   createSenpoSelect() //戦法プルダウンのオプション作成
 
   const savebtn = document.getElementById("teamSave-btn");
-  savebtn.disabled = false;
+  savebtn.disabled = true;
 }
 
 /* 所持武将・戦法取得 */
@@ -751,7 +751,7 @@ document.addEventListener("change",e=>{
 
   //編成保存ボタンを有効
   const savebtn = document.getElementById("teamSave-btn");
-  savebtn.disabled = true;
+  savebtn.disabled = false;
 
     /* 選択対象フィルターの変更処理 */
   if(e.target.classList.contains("own-mode")){
