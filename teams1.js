@@ -458,6 +458,7 @@ function setBushoData(Gid,id){
     createBushoSelect()
     createSenpoSelect()
 
+    totalCost(Gid)
   }
 }
 
@@ -569,6 +570,22 @@ function setupHeigaku(Gid, id){
     }
 
   })
+
+}
+
+function totalCost(Gid){
+    //トータルコスト
+  const teamLeaderId = Math.floor((Gid - 1) / 3) * 3 + 1;
+  
+  let total=0;
+  const teamLeaderId2 = teamLeaderId + 2
+  for (let i = teamLeaderId; i<= teamLeaderId2; i++){
+      const unit = document.querySelector(`[data-group="${i}"]`);
+      const c = unit.querySelector('.cost'); //コスト
+      total += Number(c.textContent.replace("C",""))||0
+  }
+  const teamCost = document.querySelector(`[data-group="${teamLeaderId}"]`);
+  teamCost.querySelector('.nowcost').textContent = "C" + total;
 
 }
 
