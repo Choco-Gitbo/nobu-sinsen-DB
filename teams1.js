@@ -383,7 +383,7 @@ function setBushoData(Gid,id){
 
     //トータルコスト
     totalCost(Gid)
-    
+
   }else{
     //武将選択が空の時
     let Cellcost=""
@@ -1042,7 +1042,8 @@ function loadTeam(){
       }
       Cellsenpo2.value=t.senpo2||""
       Cellsenpo3.value=t.senpo3||""
-      
+      setSenpoStates(i,"")
+
       Cellheigakuki.value=t.heigakuKi||""
       Cellheigakusei1.value=t.heigakuSei1||""
       Cellheigakusei2.value=t.heigakuSei2||""
