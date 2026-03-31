@@ -833,7 +833,7 @@ table.addEventListener('click', (e) => {
 
   // 2. ポップアップの中身を作成
   const nameUnique = document.getElementById('popup-name-unique');
-  nameUnique.innerHTML = '・固有戦法状態:"${targetCell.dataset.nameUnique}"'; // クリア
+  nameUnique.textContent = "・固有戦法状態:"+targetCell.dataset.nameUnique; // クリア
   const descUnique = document.getElementById('popup-desc-unique');
   descUnique.textContent = targetCell.dataset.descUnique; // クリア
   const listContainerUnique = document.getElementById('popup-tags-list-unique');
