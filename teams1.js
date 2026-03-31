@@ -436,8 +436,8 @@ function setBushoData(Gid,id){
       if(u.querySelector(".row-tags")){Celltags = u.querySelector(".row-tags")}
     })
 
-    Cellcost.textContent=""
-    Cellrank.textContent=""
+    Cellcost.textContent="C0"
+    Cellrank.textContent="R0"
     Cellsenpo2.value=""
     Cellsenpo3.value=""
     CellheigakuType.value=""
