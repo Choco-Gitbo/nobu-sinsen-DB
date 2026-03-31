@@ -54,6 +54,8 @@ async function init(){
   createBushoSelect() //武将プルダウンのオプション作成
   createSenpoSelect() //戦法プルダウンのオプション作成
 
+  const savebtn = document.getElementById("teamSave-btn");
+  savebtn.disabled = false;
 }
 
 /* 所持武将・戦法取得 */
@@ -746,6 +748,10 @@ table.addEventListener('focusin', (e) => {
 
 /* チェンジイベント処理 */
 document.addEventListener("change",e=>{
+
+  //編成保存ボタンを有効
+  const savebtn = document.getElementById("teamSave-btn");
+  savebtn.disabled = true;
 
     /* 選択対象フィルターの変更処理 */
   if(e.target.classList.contains("own-mode")){
