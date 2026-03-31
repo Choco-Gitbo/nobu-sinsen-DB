@@ -858,6 +858,7 @@ table.addEventListener('click', (e) => {
   if (!targetCell) return;
 
   // 1. その武将が持っている「全ての状態データ」をどこから持ってくるか？
+  if(!targetCell.dataset.fullStatesUnique) return;
   const allStatesUnique = targetCell.dataset.fullStatesUnique.split(',');
 
   // 2. ポップアップの中身を作成
