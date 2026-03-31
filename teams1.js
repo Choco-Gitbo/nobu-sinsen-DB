@@ -833,12 +833,25 @@ document.addEventListener("change",e=>{
 // テーブル全体のイベントに追加
 table.addEventListener('click', (e) => {
   // statesクラスのセル（またはその中の要素）がクリックされたか判定
+  
+  //0.初期化
+  //固有戦法
+  document.getElementById('popup-name-unique').textContent = ""; 
+  document.getElementById('popup-desc-unique').textContent = "";
+  document.getElementById('popup-tags-list-unique').innerHTML = ''; 
+  //第2戦法
+  document.getElementById('popup-name-senpo2').textContent = ""; 
+  document.getElementById('popup-desc-senpo2').textContent = "";
+  document.getElementById('popup-tags-list-senpo2').innerHTML = ''; 
+  //第3戦法
+  document.getElementById('popup-name-senpo3').textContent = ""; 
+  document.getElementById('popup-desc-senpo3').textContent = "";
+  document.getElementById('popup-tags-list-senpo3').innerHTML = ''; 
+
   const targetCell = e.target.closest('.states');
   if (!targetCell) return;
 
   // 1. その武将が持っている「全ての状態データ」をどこから持ってくるか？
-  // おすすめは、表示用に省略する前の「全データ」を一時的に保持しておく方法です
-  // ここでは仮に、セルの中に隠しデータ(dataset)で持たせているとします
   const allStatesUnique = targetCell.dataset.fullStatesUnique.split(',');
 
   // 2. ポップアップの中身を作成
