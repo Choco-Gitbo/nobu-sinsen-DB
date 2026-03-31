@@ -395,6 +395,8 @@ function setBushoData(Gid,id){
     teamCost.querySelector('.nowcost').textContent = "C" + total;
   }else{
     //武将選択が空の時
+    let Cellcost=""
+    let Cellrank=""
     let Cellsenpo2=""
     let Cellsenpo3=""
     let CellheigakuType=""
@@ -402,9 +404,20 @@ function setBushoData(Gid,id){
     let Cellheigakusei1=""
     let Cellheigakusei2=""
     let Cellheigakusei3=""
+    let Celltokusei0=""
+    let Celltokusei1=""
+    let Celltokusei3=""
+    let Celltokusei5=""
+    let Cellstates0=""
+    let Cellstates2=""
+    let Cellstates3=""
+    let Cellstatesmore=""
+    let Celltags=""
 
     const UnitGroup = document.querySelectorAll(`[data-group="${Gid}"]`);
     UnitGroup.forEach(u => {
+      if(u.querySelector(".cost")){Cellcost = u.querySelector(".cost")}
+      if(u.querySelector(".rank")){Cellrank = u.querySelector(".rank")}
       if(u.querySelector(".senpo2")){Cellsenpo2 = u.querySelector(".senpo2")}
       if(u.querySelector(".senpo3")){Cellsenpo3 = u.querySelector(".senpo3")}
       if(u.querySelector(".heigaku-type")){CellheigakuType = u.querySelector(".heigaku-type")}
@@ -412,16 +425,35 @@ function setBushoData(Gid,id){
       if(u.querySelector(".heigaku-sei1")){Cellheigakusei1 = u.querySelector(".heigaku-sei1")}
       if(u.querySelector(".heigaku-sei2")){Cellheigakusei2 = u.querySelector(".heigaku-sei2")}
       if(u.querySelector(".heigaku-sei3")){Cellheigakusei3 = u.querySelector(".heigaku-sei3")}
+      if(u.querySelector(".tokusei0")){Celltokusei0 = u.querySelector(".tokusei0")}
+      if(u.querySelector(".tokusei1")){Celltokusei1 = u.querySelector(".tokusei1")}
+      if(u.querySelector(".tokusei3")){Celltokusei3 = u.querySelector(".tokusei3")}
+      if(u.querySelector(".tokusei5")){Celltokusei5 = u.querySelector(".tokusei5")}
+      if(u.querySelector(".states0")){Cellstates0 = u.querySelector(".states0")}
+      if(u.querySelector(".states2")){Cellstates2 = u.querySelector(".states2")}
+      if(u.querySelector(".states3")){Cellstates3 = u.querySelector(".states3")}
+      if(u.querySelector(".statesmore")){Cellstatesmore = u.querySelector(".statesmore")}
+      if(u.querySelector(".row-tags")){Celltags = u.querySelector(".row-tags")}
     })
 
-    CellheigakuType.value=""
+    Cellcost.textContent=""
+    Cellrank.textContent=""
     Cellsenpo2.value=""
     Cellsenpo3.value=""
-    
+    CellheigakuType.value=""
     Cellheigakuki.value=""
     Cellheigakusei1.value=""
     Cellheigakusei2.value=""
     Cellheigakusei3.value=""
+    Celltokusei0.textContent=""
+    Celltokusei1.textContent=""
+    Celltokusei3.textContent=""
+    Celltokusei5.textContent=""
+    Cellstates0.textContent=""
+    Cellstates2.textContent=""
+    Cellstates3.textContent=""
+    Cellstatesmore.textContent=""
+    Celltags.innerHTML=""
 
     createBushoSelect()
     createSenpoSelect()
