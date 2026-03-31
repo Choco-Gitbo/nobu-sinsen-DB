@@ -494,14 +494,14 @@ function setSenpoStates(Gid,id){
             if (n==2){
               state2.textContent = "第2:" + st.states.length + "種類"
               stateCell2.dataset.fullStatesSenpo2 = fullStates
-              stateCell2.dataset.nameUnique = senpo_name
-              stateCell2.dataset.descUnique = senpo_desc
+              stateCell2.dataset.nameSenpo2 = senpo_name
+              stateCell2.dataset.descSenpo2 = senpo_desc
             }
             if (n==3){
               state3.textContent = "第3:" + st.states.length + "種類"
               stateCell2.dataset.fullStatesSenpo3 = fullStates
-              stateCell2.dataset.nameUnique = senpo_name
-              stateCell2.dataset.descUnique = senpo_desc
+              stateCell2.dataset.nameSenpo3 = senpo_name
+              stateCell2.dataset.descSenpo3 = senpo_desc
             }            
         })
       } 
