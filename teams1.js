@@ -1198,9 +1198,22 @@ function saveTeam(){
 
     localStorage.setItem("teamData_"+TeamNo,JSON.stringify(data))
   }
+
+    //編成保存ボタンを有効
+  const savebtn = document.getElementById("teamSave-btn");
+  savebtn.disabled = true;
+
 }
 
 // ボタンにイベントを登録
 document.getElementById('teamLoad-btn').addEventListener('click', loadTeam);
 document.getElementById('teamSave-btn').addEventListener('click', saveTeam);
-document.getElementById('go-listPage').addEventListener('click', location.href = "index.html");
+document.getElementById('go-listPage').addEventListener('click', () => {
+    // ページを移動させる
+    const msg ="編成は保存されていません。画面移動しますか？"
+    const savebtn = document.getElementById("teamSave-btn");
+
+    if(savebtn.disabled && window.confirm(msg)){
+      window.location.href = 'index.html';
+    }
+});
