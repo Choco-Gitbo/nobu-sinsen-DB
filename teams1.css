@@ -199,24 +199,6 @@ body{
   max-width: 80%; max-height: 70%; overflow-y: auto;
 }
 
-#popup-name-unique {
-  font-size: 11px;
-}
-#popup-name-senpo2 {
-  font-size: 11px;
-}
-#popup-name-senpo3 {
-  font-size: 11px;
-}
-#popup-desc-unique {
-  font-size: 11px;
-}
-#popup-desc-senpo2 {
-  font-size: 11px;
-}
-#popup-desc-senpo3 {
-  font-size: 11px;
-}
 #popup-tags-list-unique {
   display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 5px;
 }
