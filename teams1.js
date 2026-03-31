@@ -463,6 +463,11 @@ function setBushoData(Gid,id){
     Cellstatesmore.textContent=""
     Celltags.innerHTML=""
 
+    const stateCell = UnitGroup.querySelector('.states'); //状態
+    stateCell.dataset.fullStatesUnique = ""
+    stateCell.dataset.nameUnique = ""
+    stateCell.dataset.descUnique = ""
+
     createBushoSelect()
     createSenpoSelect()
 
