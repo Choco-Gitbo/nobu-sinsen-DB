@@ -416,6 +416,7 @@ function setBushoData(Gid,id){
     let Celltokusei1=""
     let Celltokusei3=""
     let Celltokusei5=""
+    let Cellstates=""
     let Cellstates0=""
     let Cellstates2=""
     let Cellstates3=""
@@ -437,6 +438,7 @@ function setBushoData(Gid,id){
       if(u.querySelector(".tokusei1")){Celltokusei1 = u.querySelector(".tokusei1")}
       if(u.querySelector(".tokusei3")){Celltokusei3 = u.querySelector(".tokusei3")}
       if(u.querySelector(".tokusei5")){Celltokusei5 = u.querySelector(".tokusei5")}
+      if(u.querySelector(".states")){Cellstates = u.querySelector(".states")}
       if(u.querySelector(".states0")){Cellstates0 = u.querySelector(".states0")}
       if(u.querySelector(".states2")){Cellstates2 = u.querySelector(".states2")}
       if(u.querySelector(".states3")){Cellstates3 = u.querySelector(".states3")}
@@ -463,10 +465,9 @@ function setBushoData(Gid,id){
     Cellstatesmore.textContent=""
     Celltags.innerHTML=""
 
-    const stateCell = UnitGroup.querySelector('.states'); //状態
-    stateCell.dataset.fullStatesUnique = ""
-    stateCell.dataset.nameUnique = ""
-    stateCell.dataset.descUnique = ""
+    Cellstates.dataset.fullStatesUnique = ""
+    Cellstates.dataset.nameUnique = ""
+    Cellstates.dataset.descUnique = ""
 
     createBushoSelect()
     createSenpoSelect()
