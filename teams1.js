@@ -833,7 +833,7 @@ table.addEventListener('click', (e) => {
 
   // 2. ポップアップの中身を作成
   const nameUnique = document.getElementById('popup-name-unique');
-  nameUnique.textContent = "固有戦法状態:" + targetCell.dataset.nameUnique; // クリア
+  nameUnique.innerHTML = '・固有戦法状態:${targetCell.dataset.nameUnique}'; // クリア
   const descUnique = document.getElementById('popup-desc-unique');
   descUnique.textContent = targetCell.dataset.descUnique; // クリア
   const listContainerUnique = document.getElementById('popup-tags-list-unique');
@@ -850,7 +850,7 @@ table.addEventListener('click', (e) => {
 
     // 2. ポップアップの中身を作成
     const nameSenpo2 = document.getElementById('popup-name-senpo2');
-    nameSenpo2.textContent = "第2戦法状態:" + targetCell.dataset.nameSenpo2; // クリア
+    nameSenpo2.textContent = "・第2戦法状態:" + targetCell.dataset.nameSenpo2; // クリア
     const descSenpo2 = document.getElementById('popup-desc-senpo2');
     descSenpo2.textContent = targetCell.dataset.descSenpo2; // クリア
     const allStatesSenpo2 = targetCell.dataset.fullStatesSenpo2.split(',');
@@ -870,7 +870,7 @@ table.addEventListener('click', (e) => {
 
     // 2. ポップアップの中身を作成
     const nameSenpo3 = document.getElementById('popup-name-senpo3');
-    nameSenpo3.textContent = "第3戦法状態:" + targetCell.dataset.nameSenpo3; // クリア
+    nameSenpo3.textContent = "・第3戦法状態:" + targetCell.dataset.nameSenpo3; // クリア
     const descSenpo3 = document.getElementById('popup-desc-senpo3');
     descSenpo3.textContent = targetCell.dataset.descSenpo3; // クリア
     const listContainerSenpo3 = document.getElementById('popup-tags-list-senpo3');
