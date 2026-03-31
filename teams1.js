@@ -364,7 +364,18 @@ function setBushoData(Gid,id){
         else{fullStates = fullStates + "," + s.label}
         
       })
+
+      let senpo_name = ""
+      let senpo_desc = ""
+      DB.senpo.forEach(s=>{
+        if (s.id==b.unique_senpo){
+          senpo_name = s.name
+          senpo_desc = s.description
+        }
+      })
       stateCell.dataset.fullStatesUnique = fullStates
+      stateCell.dataset.nameUnique = senpo_name
+      stateCell.dataset.descUnique = senpo_desc
     } 
 
     // タグ
@@ -813,6 +824,11 @@ table.addEventListener('click', (e) => {
   const allStatesUnique = targetCell.dataset.fullStatesUnique.split(',');
 
   // 2. ポップアップの中身を作成
+  const nameUnique = document.getElementById('popup-name-unique');
+  nameUnique.innerHTML = '固有戦法状態:${dataset.nameUnique}'; // クリア
+  const descUnique = document.getElementById('popup-desc-unique');
+  descUnique.innerHTML = '${dataset.descUnique}'; // クリア
+
   const listContainerUnique = document.getElementById('popup-tags-list-unique');
   listContainerUnique.innerHTML = ''; // クリア
   
