@@ -223,7 +223,7 @@ body{
   display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 5px;
 }
 
-@media(max-width: 390px) {
+@media screen and (max-width: 560px) and (orientation: portrait) {
   /*スマホ縦モードでの処理*/
   .rank{
     display: none;
