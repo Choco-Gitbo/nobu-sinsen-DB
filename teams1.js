@@ -164,7 +164,12 @@ function setStatesSelect(){
     op.value=st.label
     op.textContent=st.label
     select1.appendChild(op)
-    //select2.appendChild(op)
+  })
+  DB.states.forEach(st=>{      
+    const op=document.createElement("option")
+    op.value=st.label
+    op.textContent=st.label
+    select2.appendChild(op)
   })
 }
 
