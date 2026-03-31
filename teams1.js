@@ -56,7 +56,7 @@ async function init(){
   createBushoSelect() //武将プルダウンのオプション作成
   createSenpoSelect() //戦法プルダウンのオプション作成
   setStatesSelect() //戦法状態プルダウンのオプション作成
-  
+
   const savebtn = document.getElementById("teamSave-btn");
   savebtn.disabled = true;
 }
@@ -155,9 +155,9 @@ function createSenpoSelect(){
 function setStatesSelect(){
   //戦法状態フィルターの選択肢
   const select1 = document.querySelector(".usenpo-states")
-  select1.innerHTML = `<option value="">--</option>` 
+  select1.innerHTML = `<option value="">全て</option>` 
   const select2 = document.querySelector(".senpo-states")
-  select2.innerHTML = `<option value="">--</option>` 
+  select2.innerHTML = `<option value="">全て</option>` 
     
   DB.states.forEach(st=>{      
     const op=document.createElement("option")
