@@ -486,7 +486,7 @@ function setSenpoStates(Gid,id){
         DB.senpo.forEach(st=>{
           if(st.id!==s.value) return false
           senpo_name = st.name;
-          senpo_desc = st.desc;
+          senpo_desc = st.description;
           st.states.forEach(sst=>{
               if (fullStates==""){fullStates= sst.label}
               else{fullStates = fullStates + "," + sst.label}
