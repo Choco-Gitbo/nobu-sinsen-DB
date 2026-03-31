@@ -1202,5 +1202,5 @@ function saveTeam(){
 
 // ボタンにイベントを登録
 document.getElementById('teamLoad-btn').addEventListener('click', loadTeam);
-
 document.getElementById('teamSave-btn').addEventListener('click', saveTeam);
+document.getElementById('go-listPage').addEventListener('click', location.href = "index.html");
