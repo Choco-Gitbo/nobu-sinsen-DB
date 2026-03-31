@@ -1208,7 +1208,7 @@ function saveTeam(){
 // ボタンにイベントを登録
 document.getElementById('teamLoad-btn').addEventListener('click', loadTeam);
 document.getElementById('teamSave-btn').addEventListener('click', saveTeam);
-document.getElementById('.go-listPage').addEventListener('click', (e) => {
+document.getElementById('go-listPage').addEventListener('click', (e) => {
     // ページを移動させる
     const msg ="編成は保存されていません。画面移動しますか？"
     const savebtn = document.getElementById("teamSave-btn");
