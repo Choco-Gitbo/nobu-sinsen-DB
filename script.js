@@ -876,6 +876,6 @@ const goFormationBtn = document.getElementById("goFormation");
 
 if(goFormationBtn){
   goFormationBtn.onclick = () => {
-    location.href = "teams.html";
+    location.href = "teams1.html";
   };
 }
