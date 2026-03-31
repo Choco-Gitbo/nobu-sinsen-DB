@@ -795,8 +795,24 @@ table.addEventListener('focusin', (e) => {
     const allSenpoSelects = document.querySelectorAll('.senpo');
     allSenpoSelects.forEach(otherSelect => {
         if (otherSelect !== e.target && otherSelect.value === newValue) {
+          //入替前に絞込初期化
+          const bakfaction= document.querySelector("busho-faction").value
+          const bakcost= document.querySelector("busho-cost").value
+          const bakustype= document.querySelector("usenpo-type").value
+          const bakusstates= document.querySelector("usenpo-states").value
+          const bakstype= document.querySelector("senpo-type").value
+          const baksstates= document.querySelector("senpo-states").value
+
           otherSelect.value = beforeSenpoValue;
 
+          //入替後に絞込戻す
+          document.querySelector("busho-faction").value = bakfaction
+          document.querySelector("busho-cost").value = bakcost
+          document.querySelector("usenpo-type").value = bakustype
+          document.querySelector("usenpo-states").value = bakusstates
+          document.querySelector("senpo-type").value = bakstype
+          document.querySelector("senpo-states").value = baksstates
+          
           flashElement(e.target);  //選択箇所を光らせる
           flashElement(otherSelect);  //入替箇所を光らせる
         }
