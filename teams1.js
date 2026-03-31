@@ -718,6 +718,25 @@ table.addEventListener('focusin', (e) => {
       allBushoSelects.forEach(otherSelect => {
           if (otherSelect !== e.target && otherSelect.value === newValue) {
             const otherUnitId = otherSelect.closest('[data-group]').getAttribute('data-group');
+            
+            //入替前に絞込初期化
+            const bakfaction= document.querySelector(".busho-faction").value
+            const bakcost= document.querySelector(".busho-cost").value
+            const bakustype= document.querySelector(".usenpo-type").value
+            const bakusstates= document.querySelector(".usenpo-states").value
+            const bakstype= document.querySelector(".senpo-type").value
+            const baksstates= document.querySelector(".senpo-states").value
+            
+            document.querySelector(".busho-faction").value = ""
+            document.querySelector(".busho-cost").value = ""
+            document.querySelector(".usenpo-type").value = ""
+            document.querySelector(".usenpo-states").value = ""
+            document.querySelector(".senpo-type").value = ""
+            document.querySelector(".senpo-states").value = ""
+
+            createBushoSelect()
+            createSenpoSelect()
+            
             // 1. 武将の値をスワップ
             otherSelect.value = beforeBushoValue;
 
@@ -766,7 +785,17 @@ table.addEventListener('focusin', (e) => {
             document.querySelector(`[data-group="${otherUnitId}"] .heigaku-sei1`).value = sei1A;
             document.querySelector(`[data-group="${otherUnitId}"] .heigaku-sei2`).value = sei2A;
             document.querySelector(`[data-group="${otherUnitId}"] .heigaku-sei3`).value = sei3A;
-            
+          
+          //入替後に絞込戻す
+          document.querySelector(".busho-faction").value = bakfaction
+          document.querySelector(".busho-cost").value = bakcost
+          document.querySelector(".usenpo-type").value = bakustype
+          document.querySelector(".usenpo-states").value = bakusstates
+          document.querySelector(".senpo-type").value = bakstype
+          document.querySelector(".senpo-states").value = baksstates
+          
+          createBushoSelect()
+          createSenpoSelect()
           }
       });
     }else{
