@@ -178,13 +178,13 @@ body{
   display: flex;
   justify-content: space-between; /* これで左右両端に分かれる */
   align-items: center;            /* 上下中央揃え */
-  margin-bottom: 10px;           /* テーブルとの隙間 */
+  margin-bottom: 2px;           /* テーブルとの隙間 */
   padding: 0 5px;                /* 画面端との微調整 */
 }
 
 .save-load {
   display: flex;
-  gap: 10px; /* 保存と読出ボタンの間の隙間 */
+  gap: 5px; /* 保存と読出ボタンの間の隙間 */
 }
 
 /* 背景を暗くする設定（初期は非表示） */
