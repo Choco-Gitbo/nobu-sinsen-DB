@@ -802,6 +802,15 @@ table.addEventListener('focusin', (e) => {
           const bakusstates= document.querySelector("usenpo-states").value
           const bakstype= document.querySelector("senpo-type").value
           const baksstates= document.querySelector("senpo-states").value
+          
+          document.querySelector("busho-faction").value = ""
+          document.querySelector("busho-cost").value = ""
+          document.querySelector("usenpo-type").value = ""
+          document.querySelector("usenpo-states").value = ""
+          document.querySelector("senpo-type").value = ""
+          document.querySelector("senpo-states").value = ""
+
+          createSenpoSelect()
 
           otherSelect.value = beforeSenpoValue;
 
@@ -813,6 +822,8 @@ table.addEventListener('focusin', (e) => {
           document.querySelector("senpo-type").value = bakstype
           document.querySelector("senpo-states").value = baksstates
           
+          createSenpoSelect()
+
           flashElement(e.target);  //選択箇所を光らせる
           flashElement(otherSelect);  //入替箇所を光らせる
         }
