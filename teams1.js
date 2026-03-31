@@ -131,7 +131,7 @@ function createSenpoSelect(){
       if(s.get === "固有") return
       if(!usedIds.includes(s.id) || s.id !== current) { /*　現在選択している項目 */
         if(usedIds.includes(s.id)) usedmark = "●"
-        if(mode==="owned" && !s.own.some(o=>o.own === true) ) return false /* 所有確認 */
+        if(mode==="owned" && !s.own[0] ) return false /* 所有確認 */
         if(f.type && s.type!==f.type) return false
         if(f.state && !s.states.some(st=>st.effect===f.state)) return false
         
