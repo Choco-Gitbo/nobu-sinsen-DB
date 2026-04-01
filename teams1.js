@@ -714,19 +714,18 @@ table.addEventListener('focusin', (e) => {
     let swapSelect = false;
     allBushoSelects.forEach(otherSelect => {
       if (otherSelect !== e.target && otherSelect.value === newValue) {
+        const otherGroup = otherSelect.closest('[data-group]').getAttribute('data-group')
+        const otherLeaderUnitNo = Math.floor((otherGroup - 1) / 3) * 3 + 1;
+        const otherchk = document.querySelector(`[data-group="${otherLeaderUnitNo}"] .chain-chk`).checked
+
+        if ((newchk!==otherchk)) return false 
+        if((newchk&&otherchk)&&(newLeaderUnitNo!==otherLeaderUnitNo)) return false 
         swapSelect = true;
       }
     })
     if(swapSelect==true){
       allBushoSelects.forEach(otherSelect => {
           if (otherSelect !== e.target && otherSelect.value === newValue) {
-
-            const otherGroup = otherSelect.closest('[data-group]').getAttribute('data-group')
-            const otherLeaderUnitNo = Math.floor((otherGroup - 1) / 3) * 3 + 1;
-            const otherchk = document.querySelector(`[data-group="${otherLeaderUnitNo}"] .chain-chk`).checked
-
-            if ((newchk!==otherchk)) return false 
-            if((newchk&&otherchk)&&(newLeaderUnitNo!==otherLeaderUnitNo)) return false 
 
             const otherUnitId = otherSelect.closest('[data-group]').getAttribute('data-group');
             
