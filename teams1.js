@@ -10,6 +10,16 @@ const DB={
   own_busho:[],
   own_senpo:[]
 }
+
+const factionColors = {
+  "織田": "#2f6fb6",   // 青
+  "豊臣": "#d4af37",   // 金
+  "徳川": "#2e8b57",   // 緑
+  "武田": "#c0392b",   // 赤
+  "上杉": "#7b3fa1",   // 紫
+  "群":   "#f4a261"    // 薄オレンジ
+};
+
 let currentTeam = 1
 
 async function loadCSV(url){
@@ -314,7 +324,11 @@ function setBushoData(Gid,id){
 
   const b=DB.busho.find(v=>v.id==id)
 
-  if(b){
+    if(b){
+
+      const Unitcellbusho = document.querySelector(`[data-group="${Gid}"]`);
+      const Cellbusho = Unitcellbusho.querySelector('.Cellbusho'); //状態
+      Cellbusho.style.backgroundColor = factionColors[b.faction] || "white"
 
     const UnitGroup = document.querySelectorAll(`[data-group="${Gid}"]`);
     let c = null;
@@ -427,6 +441,7 @@ function setBushoData(Gid,id){
 
   }else{
     //武将選択が空の時
+    let Cellbusho=""
     let Cellcost=""
     let Cellrank=""
     let Cellsenpo2=""
@@ -449,6 +464,7 @@ function setBushoData(Gid,id){
 
     const UnitGroup = document.querySelectorAll(`[data-group="${Gid}"]`);
     UnitGroup.forEach(u => {
+      if(u.querySelector(".Cellbusho")){Cellcost = u.querySelector(".Cellbusho")}
       if(u.querySelector(".cost")){Cellcost = u.querySelector(".cost")}
       if(u.querySelector(".rank")){Cellrank = u.querySelector(".rank")}
       if(u.querySelector(".senpo2")){Cellsenpo2 = u.querySelector(".senpo2")}
@@ -470,6 +486,7 @@ function setBushoData(Gid,id){
       if(u.querySelector(".row-tags")){Celltags = u.querySelector(".row-tags")}
     })
 
+    Cellbusho.style.backgroundColor='white' 
     Cellcost.textContent="C0"
     Cellrank.textContent="R0"
     Cellsenpo2.value=""
@@ -1074,7 +1091,7 @@ function makeTable(){
             </div>
           </td>` : ''}
           <td ><span class="cost">C0</span></td>
-          <td rowspan="2">
+          <td class="Cellbusho" rowspan="2">
             <select class="select busho-name">
                 <option value="">--</option>
             </select>
