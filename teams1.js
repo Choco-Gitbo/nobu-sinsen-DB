@@ -829,7 +829,7 @@ table.addEventListener('focusin', (e) => {
 
       if (otherSelect !== e.target && otherSelect.value === newValue) {
       
-        const otherGroup = e.target.closest('[data-group]').getAttribute('data-group')
+        const otherGroup = otherSelect.closest('[data-group]').getAttribute('data-group')
         const otherLeaderUnitNo = Math.floor((otherGroup - 1) / 3) * 3 + 1;
         const otherchk = document.querySelector(`[data-group="${otherLeaderUnitNo}"] .chain-chk`).checked
 
