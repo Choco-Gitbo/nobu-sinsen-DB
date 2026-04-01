@@ -819,13 +819,19 @@ table.addEventListener('focusin', (e) => {
     if (!e.target.classList.contains('senpo')) return;
       const newValue = e.target.value;  
       const newGroup = e.target.closest('[data-group]').getAttribute('data-group')
-      const LeaderUnitNo = Math.floor((newGroup - 1) / 3) * 3 + 1;
-      const newchk = document.querySelector(`[data-group="${LeaderUnitNo}"] .chain-chk`).checked
+      const newLeaderUnitNo = Math.floor((newGroup - 1) / 3) * 3 + 1;
+      const newchk = document.querySelector(`[data-group="${newLeaderUnitNo}"] .chain-chk`).checked
 
       if (newValue === "") return;  /*未選択時は空にする */
     // 全ての戦法セレクトを取得して重複チェック
     const allSenpoSelects = document.querySelectorAll('.senpo');
     allSenpoSelects.forEach(otherSelect => {
+
+        const otherGroup = e.target.closest('[data-group]').getAttribute('data-group')
+        const otherLeaderUnitNo = Math.floor((otherGroup - 1) / 3) * 3 + 1;
+        const otherchk = document.querySelector(`[data-group="${otherLeaderUnitNo}"] .chain-chk`).checked
+
+        if (!((newchk && otherchk)&&(newLeaderUnitNo==otherLeaderUnitNo))) return false 
 
         if (otherSelect !== e.target && otherSelect.value === newValue) {
           
