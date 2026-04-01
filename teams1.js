@@ -831,9 +831,9 @@ table.addEventListener('focusin', (e) => {
         const otherLeaderUnitNo = Math.floor((otherGroup - 1) / 3) * 3 + 1;
         const otherchk = document.querySelector(`[data-group="${otherLeaderUnitNo}"] .chain-chk`).checked
 
+          //if (!((newchk && otherchk)&&(newLeaderUnitNo==otherLeaderUnitNo))) return false 
 
-        if (otherSelect !== e.target && otherSelect.value === newValue) {
-          if (!((newchk && otherchk)&&(newLeaderUnitNo==otherLeaderUnitNo))) return false 
+          if (otherSelect !== e.target && otherSelect.value === newValue) {
           //入替前に絞込初期化
           const bakfaction= document.querySelector(".busho-faction").value
           const bakcost= document.querySelector(".busho-cost").value
