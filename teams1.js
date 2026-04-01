@@ -736,7 +736,7 @@ table.addEventListener('focusin', (e) => {
 
             createBushoSelect()
             createSenpoSelect()
-            
+
             // 1. 武将の値をスワップ
             otherSelect.value = beforeBushoValue;
 
@@ -818,12 +818,17 @@ table.addEventListener('focusin', (e) => {
   table.addEventListener('change', (e) => {
     if (!e.target.classList.contains('senpo')) return;
       const newValue = e.target.value;  
-  
-    if (newValue === "") return;  /*未選択時は空にする */
+      const newGroup = e.target.closest('[data-group]').getAttribute('data-group')
+      const LeaderUnitNo = (newGroup - 1)  * 3 + 1;
+      const newchk = document.querySelector(`[data-group="${myUnitId}"] .chain-chk`)
+
+      if (newValue === "") return;  /*未選択時は空にする */
     // 全ての戦法セレクトを取得して重複チェック
     const allSenpoSelects = document.querySelectorAll('.senpo');
     allSenpoSelects.forEach(otherSelect => {
+
         if (otherSelect !== e.target && otherSelect.value === newValue) {
+          
           //入替前に絞込初期化
           const bakfaction= document.querySelector(".busho-faction").value
           const bakcost= document.querySelector(".busho-cost").value
