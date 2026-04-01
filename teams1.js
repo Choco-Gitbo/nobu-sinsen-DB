@@ -701,8 +701,11 @@ table.addEventListener('focusin', (e) => {
   /* チェンジイベント後処理 */
   table.addEventListener('change', (e) => {
     if (!e.target.classList.contains('busho-name')) return;
-      const newValue = e.target.value;  
-  
+      const newValue = e.target.value;
+      const newGroup = e.target.closest('[data-group]').getAttribute('data-group')
+      const newLeaderUnitNo = Math.floor((newGroup - 1) / 3) * 3 + 1;
+      const newchk = document.querySelector(`[data-group="${newLeaderUnitNo}"] .chain-chk`).checked
+ 
     if (newValue === ""|| newValue === beforeBushoValue) return;  /*未選択時は空にする */
     // 自分のユニット（データグループ）を取得
     const myUnitId = e.target.closest('[data-group]').getAttribute('data-group');
@@ -717,6 +720,14 @@ table.addEventListener('focusin', (e) => {
     if(swapSelect==true){
       allBushoSelects.forEach(otherSelect => {
           if (otherSelect !== e.target && otherSelect.value === newValue) {
+
+            const otherGroup = otherSelect.closest('[data-group]').getAttribute('data-group')
+            const otherLeaderUnitNo = Math.floor((otherGroup - 1) / 3) * 3 + 1;
+            const otherchk = document.querySelector(`[data-group="${otherLeaderUnitNo}"] .chain-chk`).checked
+
+            if ((newchk!==otherchk)) return false 
+            if((newchk&&otherchk)&&(newLeaderUnitNo!==otherLeaderUnitNo)) return false 
+
             const otherUnitId = otherSelect.closest('[data-group]').getAttribute('data-group');
             
             //入替前に絞込初期化
