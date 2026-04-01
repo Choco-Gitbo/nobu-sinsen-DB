@@ -819,8 +819,8 @@ table.addEventListener('focusin', (e) => {
     if (!e.target.classList.contains('senpo')) return;
       const newValue = e.target.value;  
       const newGroup = e.target.closest('[data-group]').getAttribute('data-group')
-      const LeaderUnitNo = (newGroup - 1)  * 3 + 1;
-      const newchk = document.querySelector(`[data-group="${LeaderUnitNo}"] .chain-chk`)
+      const LeaderUnitNo = Math.floor((newGroup - 1) / 3) * 3 + 1;
+      const newchk = document.querySelector(`[data-group="${LeaderUnitNo}"] .chain-chk`).value
 
       if (newValue === "") return;  /*未選択時は空にする */
     // 全ての戦法セレクトを取得して重複チェック
