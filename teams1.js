@@ -827,45 +827,47 @@ table.addEventListener('focusin', (e) => {
     const allSenpoSelects = document.querySelectorAll('.senpo');
     allSenpoSelects.forEach(otherSelect => {
 
+      if (otherSelect !== e.target && otherSelect.value === newValue) {
+      
         const otherGroup = e.target.closest('[data-group]').getAttribute('data-group')
         const otherLeaderUnitNo = Math.floor((otherGroup - 1) / 3) * 3 + 1;
         const otherchk = document.querySelector(`[data-group="${otherLeaderUnitNo}"] .chain-chk`).checked
 
-          //if ((newchk!==otherchk)) return false 
-          //if((newchk&&otherchk)&&(newLeaderUnitNo!==otherLeaderUnitNo)) return false 
-          if (otherSelect !== e.target && otherSelect.value === newValue) {
-          //入替前に絞込初期化
-          const bakfaction= document.querySelector(".busho-faction").value
-          const bakcost= document.querySelector(".busho-cost").value
-          const bakustype= document.querySelector(".usenpo-type").value
-          const bakusstates= document.querySelector(".usenpo-states").value
-          const bakstype= document.querySelector(".senpo-type").value
-          const baksstates= document.querySelector(".senpo-states").value
-          
-          document.querySelector(".busho-faction").value = ""
-          document.querySelector(".busho-cost").value = ""
-          document.querySelector(".usenpo-type").value = ""
-          document.querySelector(".usenpo-states").value = ""
-          document.querySelector(".senpo-type").value = ""
-          document.querySelector(".senpo-states").value = ""
+        if ((newchk!==otherchk)) return false 
+        if((newchk&&otherchk)&&(newLeaderUnitNo!==otherLeaderUnitNo)) return false 
+      
+        //入替前に絞込初期化
+        const bakfaction= document.querySelector(".busho-faction").value
+        const bakcost= document.querySelector(".busho-cost").value
+        const bakustype= document.querySelector(".usenpo-type").value
+        const bakusstates= document.querySelector(".usenpo-states").value
+        const bakstype= document.querySelector(".senpo-type").value
+        const baksstates= document.querySelector(".senpo-states").value
+        
+        document.querySelector(".busho-faction").value = ""
+        document.querySelector(".busho-cost").value = ""
+        document.querySelector(".usenpo-type").value = ""
+        document.querySelector(".usenpo-states").value = ""
+        document.querySelector(".senpo-type").value = ""
+        document.querySelector(".senpo-states").value = ""
 
-          createSenpoSelect()
+        createSenpoSelect()
 
-          otherSelect.value = beforeSenpoValue;
+        otherSelect.value = beforeSenpoValue;
 
-          //入替後に絞込戻す
-          document.querySelector(".busho-faction").value = bakfaction
-          document.querySelector(".busho-cost").value = bakcost
-          document.querySelector(".usenpo-type").value = bakustype
-          document.querySelector(".usenpo-states").value = bakusstates
-          document.querySelector(".senpo-type").value = bakstype
-          document.querySelector(".senpo-states").value = baksstates
-          
-          createSenpoSelect()
+        //入替後に絞込戻す
+        document.querySelector(".busho-faction").value = bakfaction
+        document.querySelector(".busho-cost").value = bakcost
+        document.querySelector(".usenpo-type").value = bakustype
+        document.querySelector(".usenpo-states").value = bakusstates
+        document.querySelector(".senpo-type").value = bakstype
+        document.querySelector(".senpo-states").value = baksstates
+        
+        createSenpoSelect()
 
-          flashElement(e.target);  //選択箇所を光らせる
-          flashElement(otherSelect);  //入替箇所を光らせる
-        }
+        flashElement(e.target);  //選択箇所を光らせる
+        flashElement(otherSelect);  //入替箇所を光らせる
+      }
     });
     beforeSenpoValue = newValue;
   });
