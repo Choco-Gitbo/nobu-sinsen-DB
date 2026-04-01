@@ -328,7 +328,7 @@ function setBushoData(Gid,id){
 
       const Unitcellbusho = document.querySelector(`[data-group="${Gid}"]`);
       const Cellbusho = Unitcellbusho.querySelector('.Cellbusho'); //状態
-      Cellbusho.style.backgroundColor = factionColors[b.faction] || "white"
+      Cellbusho.style.backgroundColor = factionColors[b.faction] || "#ddd"
 
     const UnitGroup = document.querySelectorAll(`[data-group="${Gid}"]`);
     let c = null;
@@ -486,7 +486,7 @@ function setBushoData(Gid,id){
       if(u.querySelector(".row-tags")){Celltags = u.querySelector(".row-tags")}
     })
 
-    Cellbusho.style.backgroundColor='white' 
+    Cellbusho.style.backgroundColor="#ddd" 
     Cellcost.textContent="C0"
     Cellrank.textContent="R0"
     Cellsenpo2.value=""
