@@ -76,9 +76,8 @@ export class Busho {
     }
 
     get colored_name() {
-        const tag = this.team === "A" ? "[A]" : "[E]";
-        const color = this.team === "A" ? COLOR_ALLY : COLOR_ENEMY;
-        return `${color}${tag}${this.name}${COLOR_RESET}`;
+        const colorClass = this.team === 'A' ? 'team-a' : 'team-b';
+        return `<span class="${colorClass}">[${this.team}]${this.name}</span>`;
     }
 
     #sumStateValues(statName, type) {

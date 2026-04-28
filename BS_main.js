@@ -42,7 +42,7 @@ document.getElementById('start-battle-btn').addEventListener('click', async () =
 
     // 3. 画面にログを出力
     const container = document.getElementById('log-container');
-    container.innerText = bf.get_full_log();
+    container.innerHTML = bf.get_full_log();
     
     // 一番下まで自動スクロール
     container.scrollTop = container.scrollHeight;
