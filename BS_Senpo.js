@@ -13,6 +13,10 @@ export class Senpo {
         // 0:即時, 1:1ターン準備, 2:2ターン準備
         this.prepTurns = prepTurns;
     }
+    get colored_name() {
+        const colorClass = 'senpo-name';
+        return `<span class="${colorClass}">[${this.name}</span>`;
+    }
 
     execute(caster, battlefield) {
         /**
