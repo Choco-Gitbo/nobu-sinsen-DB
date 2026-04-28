@@ -289,36 +289,44 @@ export class Busho {
 
         // 重複ルール：NONE(無効), OVERWRITE(上書き), EXTEND(期間), STACK(共存)
         const rule = newState.conflict_rule || "NONE";
-        const existing = this.states.filter(
-            s => s.name === newState.name && s.source_skill === newState.source_skill
+        // 同一ソース・同一名の状態を探す
+        const existingList = this.states.filter(s => 
+            s.name === newState.name && s.source_skill === newState.source_skill
         );
 
-        if (existing) {
+        const hasExisting = existingList.length > 0;
+        let shouldAdd = false;
+
+        if (!hasExisting) {
+            // 既存がなければ無条件で追加
+            shouldAdd = true;
+        } else {
+            // 既存がある場合のルール判定
+            const firstExisting = existingList[0];
+
             if (rule === "STACK") {
                 const stackMax = parseInt(newState.stack_max || 1);
-                const currentStacks = this.states.filter(s => s.name === newState.name).length;
-                if (currentStacks >= stackMax) {
-                    battleField.add_log(`  !! ${this.colored_name} の【${newState.name}】は最大累積です`);
-                    return false;
-                }
-                // スタック可能な場合は、このまま下の push へ進む
+                shouldAdd = existingList.length < stackMax;
             } else if (rule === "OVERWRITE") {
-                this.states = this.states.filter(s => s !== existing);
-                // 上書きなので古い方を消して下の push へ進む
+                // 古いものを消して新しいのを追加
+                this.states = this.states.filter(s => !existingList.includes(s));
+                shouldAdd = true;
             } else if (rule === "EXTEND") {
-                // 期間延長ロジック
-                existing.duration = Math.max(existing.duration, newState.duration);
+                // 期間延長のみ（追加はしない）
+                firstExisting.duration = Math.max(firstExisting.duration, newState.duration);
                 return true;
-            } else {
-                // NONE（すでに持っているなら付与しない）
-                return false;
             }
         }
 
-        // 5. 状態の追加
-        this.states.push(newState);
-        return false;
+        if (shouldAdd) {
+            this.states.push(newState);
+            return true;
+        } else {
+            battleField.add_log(`  !! ${this.colored_name} に 【${newState.name}】は付与済み`);
+            return false;
+        }
     }
+    
 
     get_total_dmg_up(dmgType, skillType) {
         /**
