@@ -339,7 +339,7 @@ export class BattleField {
         // 3. 回避のチェック（防御側）
         else if (actualTarget.states.some(s => s.name === '回避')) {
             const kaihinState = actualTarget.states.find(s => s.name === '回避');
-            if (Math.random() <= parseInt(kaihinState.rate || 0) /100) {
+            if (Math.random() <= (parseInt(kaihinState.rate || 0) /100)) {
                 hitRate = 0.0;
                 this.add_log(`  !! ${actualTarget.colored_name} は攻撃を回避した`);
             } else {
@@ -455,7 +455,7 @@ export class BattleField {
         const nodefState = caster.states.find(s => s.name === '破陣');
         if (nodefState) {
             const hajinRate = parseInt(nodefState.rate || 100);
-            if (Math.random() <= hajinRate /100) {
+            if (Math.random() <= (hajinRate /100)) {
                 defStat = 0;
                 this.add_log(`   ${caster.colored_name} が 破陣発動！`);
             }
@@ -499,7 +499,7 @@ export class BattleField {
         const H = parseFloat(rate) / 100;
 
         // I: 会心
-        const isCritical = Math.random()  < criticalRate /100;
+        const isCritical = Math.random()  < (criticalRate /100);
         const I = isCritical ? (1.5 + criticalDmg) : 1;
 
         // 最終ダメージ計算
@@ -603,7 +603,7 @@ export class BattleField {
             const isContDmg = CONT_DMG_STATUS.has(state.name);
             if (isContDmg) {
                 const dmgRate = parseInt(state.rate || 100);
-                if (Math.random() <= dmgRate /100) {
+                if (Math.random() <= (dmgRate /100)) {
                     const val = parseInt(state.value);
                     const dmgType = "intel";
                     this.process_attack_event(state.source_busho, actor, val, dmgType, "", state.name);
@@ -615,7 +615,7 @@ export class BattleField {
             const isContHeal = CONT_HEAL_STATUS.has(state.name);
             if (isContHeal) {
                 const healRate = parseInt(state.rate || 100);
-                if (Math.random() <= healRate /100) {
+                if (Math.random() <= (healRate /100)) {
                     const val = parseInt(state.value);
                     this.process_heal_event(state.source_busho, actor, val, "intl", state.source_skill);
                 } else {
@@ -909,7 +909,7 @@ export class BattleField {
         const maxFailRate = Math.max(...restrictionStates.map(s => s.fail_rate));
         const primaryState = restrictionStates.find(s => s.fail_rate === maxFailRate) || restrictionStates[0];
 
-        if (Math.random() <= maxFailRate / 100) {
+        if (Math.random() <= (maxFailRate / 100)) {
             this.add_log(`  !! ${busho.colored_name} は【${primaryState.name}】により行動できない！`);
             return true;
         }
@@ -996,7 +996,7 @@ export class BattleField {
         let attackCount = 1;
         for (const s of busho.states) {
             if (s.type === 'buff_status' && s.name === '連撃') {
-                const isRengeki = Math.random()  <= parseInt(s.rate || 100) /100;
+                const isRengeki = Math.random()  <= (parseInt(s.rate || 100) /100);
                 if (isRengeki) {
                     attackCount = 2;
                 } else {
