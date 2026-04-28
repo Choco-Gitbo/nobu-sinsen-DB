@@ -51,7 +51,7 @@ export function getTeamFromStorage(teamNo,side) {
         if (!t.busho) return null;
 
         // DBからマスタデータを取得
-        const master = DB.busho.find(b => b.id === t.busho);
+        const master = DB.busho.find(b => b.id == t.busho);
         if (!master) {
             console.warn(`武将名「${t.busho}」がDBに見つかりません。`);
             return null;
