@@ -71,7 +71,7 @@ export function getTeamFromStorage(teamNo,side) {
         };
         
         // 戦法マスタからインスタンスを生成
-        const skillObjects = [master.skill_id, t.senpo2, t.senpo3].map(sid => {
+        const skillObjects = ["S000",master.unique_senpo, t.senpo2, t.senpo3].map(sid => {
             const sData = DB.senpo.find(s => s.id === sid);
             if (!sData) return null;
             // Senpoクラスのコンストラクタに合わせてインスタンス化
