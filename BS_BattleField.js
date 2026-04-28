@@ -760,7 +760,24 @@ export class BattleField {
         }
 
         this.add_log("=== 戦闘終了 ===");
-        this.show_result();
+        //this.show_result();
+
+        // 最後に統計に必要なデータをまとめて返す
+        return {
+            result: this.get_battle_result(), // "勝利", "敗北", "引分"
+            armyA: this.army_a.map(b => ({
+                name: b.name,
+                damage: b.total_damage, // 武将クラスに持たせている与ダメ合計
+                heal: b.total_heal,     // 回復合計
+                hp: b.hp                // 残り兵数
+            })),
+            armyB: this.army_b.map(b => ({
+                name: b.name,
+                damage: b.total_damage,
+                heal: b.total_heal,
+                hp: b.hp
+            }))
+        };        
     }
 
     #processPreparationTurn() {
@@ -1068,5 +1085,13 @@ export class BattleField {
             const idx = busho.states.indexOf(s);
             if (idx > -1) busho.states.splice(idx, 1);
         }
+    }
+    get_battle_result() {
+        const leaderA = this.army_a[0]; // 配列の先頭が大将と想定
+        const leaderB = this.army_b[0];
+
+        if (leaderB.hp <= 0) return "勝利";
+        if (leaderA.hp <= 0) return "敗北";
+        return "引分";
     }
 }
