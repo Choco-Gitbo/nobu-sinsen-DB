@@ -53,13 +53,13 @@ setupSelect('select-team-b');
 
 // ボタンクリックイベント
 document.getElementById('start-battle-btn').addEventListener('click', async () => {
-    const idA = document.getElementById('select-team-a').value;
-    const idB = document.getElementById('select-team-b').value;
+    const idA = Number(document.getElementById('select-team-a').value);
+    const idB = Number(document.getElementById('select-team-b').value);
 
     // 1. 指定したIDの部隊をLocalStorage/DBから取得
     // ※ getTeamFromStorage(id) のような形に改修が必要かもしれません
-    const teamA = await getTeamFromStorage(idA);
-    const teamB = await getTeamFromStorage(idB);
+    const teamA = await getTeamFromStorage(idA,"A");
+    const teamB = await getTeamFromStorage(idB,"E");
 
     // 2. 戦闘実行
     const bf = new BattleField(teamA, teamB);
