@@ -953,8 +953,9 @@ export class BattleField {
                 this.add_log(`  ${busho.colored_name} は【${skill.colored_name}】の発動率変更（${skill.rate}％ -> ${sRate}％)`);
             }
             
+            const roll = Math.random()
             const sRate_num = Number(sRate) /100; 
-            if ((Math.random()  <= sRate_num) || isPrep) {
+            if ((roll <= sRate_num) || isPrep) {
                 if (!isPrep) {
                     const prepState = {
                         name: `準備:${skill.name}`,
