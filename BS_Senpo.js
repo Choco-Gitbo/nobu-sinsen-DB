@@ -22,7 +22,7 @@ export class Senpo {
         /**
          * 戦法発動のメイン処理
          */
-        battlefield.add_log(`--- ${caster.colored_name} の戦法 【${COLOR_SKILL}${this.name}${COLOR_RESET}】 発動！ ---`);
+        battlefield.add_log(`--- ${caster.colored_name} の戦法 【${this.colored_name}】 発動！ ---`);
         const contextTargets = { last_target: null };
 
         for (const effect of this.effects_json) {
