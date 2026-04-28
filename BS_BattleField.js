@@ -783,7 +783,7 @@ export class BattleField {
 
     #processSingleBushoAct(busho) {
         /**1人の武将の行動フロー*/
-        this.add_log(`[${busho.colored_name}] の行動`);
+        this.add_log(`${busho.colored_name} の行動`);
 
         // 行動前に継続時間0の状態を消去
         this.#cleanupBushoStates(busho);
