@@ -1,0 +1,7 @@
+﻿team,position,unit_type,unit_type_Lv,hp,Lv,rank,busho_name,senpo0_id,senpo1_id,senpo2_id,senpo3_id
+A,main,騎馬,0,10000,50,0,筒井順慶,S000,S711,,
+A,sub1,騎馬,0,10000,50,0,今川氏真,S000,S712,,
+A,sub2,騎馬,0,10000,50,0,三好長逸,S000,S713,,
+E,main,足軽,3,10000,50,0,色部長実,S000,S714,,
+E,sub1,足軽,3,10000,50,0,井伊直親,S000,S705,,
+E,sub2,足軽,3,10000,50,0,尼子義久,S000,S706,,
