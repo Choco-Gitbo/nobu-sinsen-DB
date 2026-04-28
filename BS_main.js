@@ -1,5 +1,5 @@
 // main.js
-import { Battlefield } from './BS_BattleField.js';
+import { BattleField } from './BS_BattleField.js';
 import { Busho } from './BS_Busho.js'; // 武将クラス
 import { initDB } from './BS_csv_loader.js';
 import { getTeamFromStorage } from './BS_deck.js';
