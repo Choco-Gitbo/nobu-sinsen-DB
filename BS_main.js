@@ -8,34 +8,9 @@ async function startSimulation() {
     // 1. まずCSVデータを全て読み込む
     await initDB();
 
-    // 2. 使用する編成番号を指定（将来的にHTMLのselect等から取得）
-    const allyTeamNo = 1;  // 味方：チーム1
-    const enemyTeamNo = 2; // 敵：チーム2
-
-    // 3. データを展開
-    const army_a = getTeamFromStorage(allyTeamNo,"A");
-    const army_b = getTeamFromStorage(enemyTeamNo,"E");
-
-    if (!army_a || !army_b) {
-        console.error("部隊データの読み込みに失敗しました。編成を確認してください。");
-        return;
-    }   
-
-    console.log("--- シミュレーション準備完了 ---");
-    console.log("味方部隊:", army_a);
-    console.log("敵部隊:", army_b);
-
-    // 3. BattleField の初期化
-    const bf = new BattleField(army_a, army_b);
-
-    // 4. 戦闘実行
-    bf.run_battle(8);
-
-    // 5. ログの出力 (HTMLへの反映)
-    renderLogs(bf.get_full_log());
 }
 
-//startSimulation();
+startSimulation();
 
 // プルダウンの生成（1~12）
 const setupSelect = (id) => {
