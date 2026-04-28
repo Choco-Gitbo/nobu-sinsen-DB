@@ -26,7 +26,7 @@ async function startSimulation() {
     console.log("敵部隊:", army_b);
 
     // 3. BattleField の初期化
-    const bf = new Battlefield(army_a, army_b);
+    const bf = new BattleField(army_a, army_b);
 
     // 4. 戦闘実行
     bf.run_battle(8);
