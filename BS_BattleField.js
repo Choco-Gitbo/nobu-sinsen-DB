@@ -1,6 +1,6 @@
 import { STAT_MAP, GOOD_STATUS, BAD_STATUS, CONT_STATUS, CONT_DMG_STATUS, CONT_HEAL_STATUS, COLOR_SKILL, COLOR_RESET,COLOR_ALLY,COLOR_ENEMY,COLOR_HEAL } from './BS_constants.js';
 
-export class Battlefield {
+export class BattleField {
     constructor(armyA, armyB) {
         /**
          * armyA: 自軍の武勇リスト（最大3人）
