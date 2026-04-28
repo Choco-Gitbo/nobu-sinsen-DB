@@ -549,9 +549,9 @@ export class BattleField {
         caster.stats_log.skill_details[skillName].count += 1;
 
         // 6. ログ出力
-        let logMsg = `    -> ${target.colored_name} の兵数が${COLOR_HEAL} ${actualHeal} ${COLOR_RESET}回復 (現在: ${target.hp})`;
+        let logMsg = `    -> ${target.colored_name} の兵数が<span class="heal">${actualHeal}</span>回復 (現在: ${target.hp})`;
         if (overHeal > 0) {
-            logMsg += ` ※超過回復: ${overHeal}`;
+            logMsg += ` ※超過回復: <span class="heal">${overHeal}</span>`;
         }
         this.add_log(logMsg);
 
