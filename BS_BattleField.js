@@ -950,7 +950,7 @@ export class BattleField {
             }
 
             if (sRate !== skill.rate) {
-                this.add_log(`  ${busho.colored_name} は【${COLOR_SKILL}${skill.name}${COLOR_RESET}】の発動率変更（${skill.rate}％ -> ${sRate}％)`);
+                this.add_log(`  ${busho.colored_name} は【${skill.colored_name}】の発動率変更（${skill.rate}％ -> ${sRate}％)`);
             }
 
             if (Math.random()  <= sRate /100 || isPrep) {
@@ -967,7 +967,7 @@ export class BattleField {
 
                     const success = busho.add_state(prepState, this);
                     if (success && skill.prepTurns > 0) {
-                        this.add_log(`  ${busho.colored_name} が 【${COLOR_SKILL}${skill.name}${COLOR_RESET}】 の準備を開始！`);
+                        this.add_log(`  ${busho.colored_name} が 【${skill.colored_name}】 の準備を開始！`);
                     }
                 }
 
@@ -979,7 +979,7 @@ export class BattleField {
                     }
                 }
             } else {
-                this.add_log(`${busho.colored_name} は戦法 【${COLOR_SKILL}${skill.name}${COLOR_RESET}】発動失敗！`);
+                this.add_log(`${busho.colored_name} は戦法 【${skill.colored_name}】発動失敗！`);
             }
         }
     }

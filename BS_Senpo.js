@@ -15,7 +15,7 @@ export class Senpo {
     }
     get colored_name() {
         const colorClass = 'senpo-name';
-        return `<span class="${colorClass}">[${this.name}</span>`;
+        return `<span class="${colorClass}">${this.name}</span>`;
     }
 
     execute(caster, battlefield) {
