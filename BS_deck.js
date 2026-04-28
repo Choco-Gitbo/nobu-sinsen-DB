@@ -1,7 +1,7 @@
 // deck.js
 import { DB } from './BS_csv_loader.js';
-import { Busho } from './BS_busho.js'; 
-import { Senpo } from './BS_senpo.js';
+import { Busho } from './BS_Busho.js'; 
+import { Senpo } from './BS_Senpo.js';
 
 /**
  * 指定されたチーム番号のデータをLocalStorageから読み込み、DBデータと結合して返す
