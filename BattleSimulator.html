@@ -130,20 +130,20 @@
             </tbody>
         </table>
 
-        <table class="summary-table detail-stats">
-            <thead>
+        <div id="statistics-result">
+            <h3>部隊全体統計</h3>
+            <table class="summary-table">
                 <tr>
-                    <th>陣営</th>
-                    <th>武将名</th>
-                    <th>項目</th>
-                    <th>最大</th>
-                    <th>最小</th>
-                    <th>平均</th>
+                    <th>項目</th><th>最大</th><th>最小</th><th>平均</th>
                 </tr>
-            </thead>
-            <tbody id="busho-stats-body">
-                </tbody>
-        </table>
+                <tr id="team-total-damage"><td>与ダメージ</td><td class="max">-</td><td class="min">-</td><td class="avg">-</td></tr>
+                <tr id="team-total-taken"><td>被ダメージ</td><td class="max">-</td><td class="min">-</td><td class="avg">-</td></tr>
+                <tr id="team-total-heal"><td>回復量</td><td class="max">-</td><td class="min">-</td><td class="avg">-</td></tr>
+            </table>
+
+            <h3>武将・戦法別詳細</h3>
+            <div id="busho-detail-container"></div>
+        </div>
     </div>
 
     <div id="log-container" style="

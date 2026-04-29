@@ -63,12 +63,13 @@ async function runMultipleBattles(count) {
         // 武将ごとのダメージ集計（ここで最大・最小・合計を更新）
         report.armyA.forEach(b => {
             if (!summary.details[b.name]) {
-                summary.details[b.name] = { dmgSum: 0, dmgMax: 0, dmgMin: Infinity };
+                summary.details[b.name] = { dmgSum: 0, dmgMax: 0, dmgMin: Infinity };  
             }
             const s = summary.details[b.name];
             s.dmgSum += b.damage;
             s.dmgMax = Math.max(s.dmgMax, b.damage);
             s.dmgMin = Math.min(s.dmgMin, b.damage);
+
         });
 
         if (i == (count-1)){
@@ -151,45 +152,59 @@ async function updatePreview(side, teamId) {
 }
 
 function displaySummaryTable(summary) {
-    const totalBattles = summary.win + summary.loss + summary.draw;
-    if (totalBattles === 0) return;
+    const total = summary.win + summary.loss + summary.draw;
+    if (total === 0) return;
 
-    // 1. 全体統計の更新
-    document.getElementById('stat-total-count').innerText = totalBattles;
-    document.getElementById('stat-win-rate').innerText = ((summary.win / totalBattles) * 100).toFixed(1) + "%";
-    document.getElementById('stat-win-count').innerText = summary.win;
-    document.getElementById('stat-loss-count').innerText = summary.loss;
-    document.getElementById('stat-draw-count').innerText = summary.draw;
+    // --- 1. 全体数値の表示 ---
+    updateStatRow('team-total-damage', summary.teamDamage, total);
+    updateStatRow('team-total-taken', summary.teamTaken, total);
+    updateStatRow('team-total-heal', summary.teamHeal, total);
 
-    // 2. 武将別詳細の更新
-    const tbody = document.getElementById('busho-stats-body');
-    let row
-    tbody.innerHTML = ""; // 一旦クリア
+    // --- 2. 武将・戦法別の詳細生成 ---
+    const container = document.getElementById('busho-detail-container');
+    container.innerHTML = ""; // 初期化
 
-    Object.keys(summary.details).forEach(name => {
-        const d = summary.details[name];
-        const avg = Math.floor(d.dmgSum / totalBattles);
+    Object.keys(summary.details).forEach(bushoName => {
+        const b = summary.details[bushoName];
+        let html = `
+            <table class="summary-table detail-table">
+                <thead>
+                    <tr><th colspan="6" class="busho-header">${bushoName}</th></tr>
+                    <tr><th>戦法</th><th>項目</th><th>合計</th><th>最大</th><th>最小</th><th>平均</th></tr>
+                </thead>
+                <tbody>`;
 
-        // 新しい行を作成
-        row = `
-            <tr>
-                <td>-</td> <td>${name}</td>
-                <td>与ダメージ</td>
-                <td>${d.dmgMax}</td>
-                <td>${d.dmgMin}</td>
-                <td>${avg}</td>
-            </tr>
-        `;
-        tbody.insertAdjacentHTML('beforeend', row);
-        row = `
-            <tr>
-                <td>-</td> <td>${name}</td>
-                <td>回復量</td>
-                <td>${d.healMax}</td>
-                <td>${d.healMin}</td>
-                <td>${avg}</td>
-            </tr>
-        `;
-        tbody.insertAdjacentHTML('beforeend', row);
+        Object.keys(b.skills).forEach(skillName => {
+            const s = b.skills[skillName];
+            // 各項目の行を生成（与ダメ、回復、回数）
+            html += generateSkillRow(skillName, "与ダメ", s.dmg, total);
+            html += generateSkillRow("", "回復", s.heal, total);
+            html += generateSkillRow("", "発動回数", s.count, total);
+        });
+
+        html += `</tbody></table>`;
+        container.insertAdjacentHTML('beforeend', html);
     });
+}
+
+// 補助関数：1つの統計行を更新
+function updateStatRow(rowId, data, totalBattles) {
+    const row = document.getElementById(rowId);
+    if (!row) return;
+    row.querySelector('.max').innerText = data.max;
+    row.querySelector('.min').innerText = data.min;
+    row.querySelector('.avg').innerText = Math.floor(data.sum / totalBattles);
+}
+
+// 補助関数：戦法ごとのHTML行を作成
+function generateSkillRow(label, type, data, total) {
+    return `
+        <tr>
+            <td style="font-weight:bold">${label}</td>
+            <td>${type}</td>
+            <td>${data.sum}</td>
+            <td>${data.max}</td>
+            <td>${data.min}</td>
+            <td>${(data.sum / total).toFixed(1)}</td>
+        </tr>`;
 }

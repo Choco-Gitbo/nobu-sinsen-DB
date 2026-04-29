@@ -58,9 +58,29 @@
 }
 .summary-table th, .summary-table td {
     border: 1px solid #ccc;
-    padding: 8px;
+    padding: 3px;
     text-align: center;
 }
 .summary-table th {
     background-color: #f2f2f2;
+}
+.busho-header {
+    background-color: #333;
+    color: white;
+    font-size: 1.1em;
+    padding: 10px !important;
+}
+
+.detail-table {
+    margin-bottom: 30px;
+    border: 2px solid #333;
+}
+
+.detail-table tr:nth-child(3n) {
+    border-bottom: 2px solid #eee; /* 戦法ごとの区切りを強調 */
+}
+
+.summary-table td {
+    font-size: 0.5rem; /* スマホで見やすくするために少し小さく */
+    padding: 6px 4px;
 }
