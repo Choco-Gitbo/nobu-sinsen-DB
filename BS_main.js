@@ -188,12 +188,12 @@ function displaySummaryTable(summary) {
     if (total === 0) return;
 
     // 1. 全体統計の更新
-    document.getElementById('stat-total-count').innerText = totalBattles;
-    document.getElementById('stat-win-rate').innerText = ((summary.win / totalBattles) * 100).toFixed(1) + "%";
+    document.getElementById('stat-total-count').innerText = total;
+    document.getElementById('stat-win-rate').innerText = ((summary.win / total) * 100).toFixed(1) + "%";
     document.getElementById('stat-win-count').innerText = summary.win;
     document.getElementById('stat-loss-count').innerText = summary.loss;
     document.getElementById('stat-draw-count').innerText = summary.draw;
-    
+
     // --- 1. 全体数値の表示 ---
     updateStatRow('team-total-damage', summary.teamDamage, total);
     updateStatRow('team-total-taken', summary.teamTaken, total);
