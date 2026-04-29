@@ -1,0 +1,12 @@
+.preview-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.team-a-panel th { background-color: #d1e8ff; color: #000; } /* 自軍のヘッダー色 */
+.team-b-panel th { background-color: #ffd1d1; color: #000; } /* 敵軍のヘッダー色 */
+.preview-table td, .preview-table th {
+    border: 1px solid #444;
+    padding: 4px;
+    text-align: center;
+    font-size: 0.9em;
+}

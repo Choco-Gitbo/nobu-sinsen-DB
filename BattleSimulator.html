@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="BattleSimulator.css">
     <title>戦闘シミュレーター</title>
 </head>
 <style>
@@ -28,6 +29,33 @@
     <button id="start-battle-btn">戦闘開始</button>
     </div>
 
+    <div class="preview-area">
+    <div class="team-panel team-a-panel">
+        <div id="preview-a-unit-type" class="unit-label">騎兵</div>
+        <table class="preview-table">
+        <tr>
+            <th>大将</th>
+            <th>副将</th>
+            <th>副将</th>
+        </tr>
+        <tr>
+            <td id="preview-a-0-name">大将名</td>
+            <td id="preview-a-1-name">副将名</td>
+            <td id="preview-a-2-name">副将名</td>
+        </tr>
+
+        <tr>
+            <td id="preview-a-0-s0">戦法1</td>
+            <td id="preview-a-1-s0">戦法1</td>
+            <td id="preview-a-2-s0">戦法1</td>
+        </tr>
+        </table>
+    </div>
+
+    <div class="vs-icon">⚔️</div>
+
+    </div>
+        
     <div class="simulator-wrapper">
         <section class="stats-panel">
             <div class="team-preview-grid">

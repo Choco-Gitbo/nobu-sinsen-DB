@@ -83,3 +83,35 @@ async function runMultipleBattles(count) {
     // 最後にUI（image_33414e.png の表）に反映
     displaySummaryTable(summary);
 }
+
+// 部隊選択が変更された時のイベント
+document.getElementById('select-team-a').addEventListener('change', (e) => {
+    updatePreview('a', e.target.value);
+});
+
+async function updatePreview(side, teamId) {
+    // LocalStorage等から部隊データを取得
+    const teamData = await getTeamFromStorage(teamId); 
+    if (!teamData) return;
+
+    // 兵種の表示
+    document.getElementById(`preview-${side}-unit-type`).innerText = teamData.unitType;
+
+    // 武将と戦法の流し込み
+    teamData.members.forEach((member, index) => {
+        if (!member) return;
+        
+        // 武将名（例: preview-a-0-name）
+        document.getElementById(`preview-${side}-${index}-name`).innerText = member.name;
+        
+        // 戦法名（例: preview-a-0-s0, s1, s2）
+        member.skills.forEach((skill, sIndex) => {
+            const skillEl = document.getElementById(`preview-${side}-${index}-s${sIndex}`);
+            if (skillEl) {
+                skillEl.innerText = skill.name;
+                // 戦法の色付け（以前作ったCSSクラスを流用）
+                skillEl.className = 'senpo-name'; 
+            }
+        });
+    });
+}
