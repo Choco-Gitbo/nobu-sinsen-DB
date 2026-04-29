@@ -52,6 +52,9 @@
     margin-top: 10px;
     background-color: #fff;
     color: #333;
+    text-align: center;
+    font-size: 0.5em;
+
 }
 .summary-table th, .summary-table td {
     border: 1px solid #ccc;

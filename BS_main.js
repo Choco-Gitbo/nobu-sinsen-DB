@@ -87,17 +87,19 @@ async function runMultipleBattles(count) {
             s.dmgMax = Math.max(s.dmgMax, b.damage);
             s.dmgMin = Math.min(s.dmgMin, b.damage);
         });
+
+        if (i == count){
+            // 3. 画面にログを出力
+            const container = document.getElementById('log-container');
+            container.innerHTML = bf.get_full_log();
+            
+            // 一番下まで自動スクロール
+            container.scrollTop = container.scrollHeight;
+        }
     }
 
     // 最後にUI（image_33414e.png の表）に反映
     displaySummaryTable(summary);
-
-    // 3. 画面にログを出力
-    const container = document.getElementById('log-container');
-    container.innerHTML = bf.get_full_log();
-    
-    // 一番下まで自動スクロール
-    container.scrollTop = container.scrollHeight;
 
 }
 
