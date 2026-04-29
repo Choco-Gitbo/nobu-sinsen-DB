@@ -95,6 +95,7 @@ document.getElementById('select-team-b').addEventListener('change', (e) => {
 
 async function updatePreview(side, teamId) {
     // LocalStorage等から部隊データを取得
+    let side_t;
     if (side=="a"){
         side_t = "A";
     }else{
