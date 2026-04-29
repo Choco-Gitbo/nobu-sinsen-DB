@@ -139,12 +139,11 @@ async function updatePreview(side, teamId) {
     }
 
     const teamData = await getTeamFromStorage(teamId , side_t); 
-    if (!teamData) return;
-
+    if (!teamData || teamData.length === 0 || !teamData[0]) {
+    return;
+}
     // 兵種の表示
-    let u_type = "-"
-    if (teamData[0].unit_type){u_type = teamData[0].unit_type;}
-    const displayLabel = unitIcons[u_type] || u_type;
+    const displayLabel = unitIcons[teamData[0].unit_type] || u_typeteamData[0].unit_type;
     document.getElementById(`preview-${side}-unit-type`).innerText = displayLabel;
 
     // 武将と戦法の流し込み
