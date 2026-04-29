@@ -88,11 +88,15 @@ async function runMultipleBattles(count) {
 document.getElementById('select-team-a').addEventListener('change', (e) => {
     updatePreview('a', e.target.value);
 });
+document.getElementById('select-team-b').addEventListener('change', (e) => {
+    updatePreview('b', e.target.value);
+});
+
 
 async function updatePreview(side, teamId) {
     // LocalStorage等から部隊データを取得
-    side = side=="A" ? "A": "E"
-    const teamData = await getTeamFromStorage(teamId , side); 
+    side_t = side=="a" ? "A": "E"
+    const teamData = await getTeamFromStorage(teamId , side_t); 
     if (!teamData) return;
 
     // 兵種の表示
