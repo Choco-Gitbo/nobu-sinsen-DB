@@ -83,14 +83,6 @@ async function runMultipleBattles(count) {
             sh.max = Math.max(sh.max, b.heal);
             sh.min = Math.min(sh.min, b.heal);
 
-            b.skills.forEach(s => {
-                const ss = summary.details[b.name].skills[s]
-                ss.cntsum += b.details.skills[s].count
-                ss.cntmax = Math.max(ss.cntmax, b.details.skills[s].count);
-                ss.cntmin = Math.min(ss.cntmax, b.details.skills[s].count);
-
-            })
-        
         });
 
         if (i == (count-1)){
