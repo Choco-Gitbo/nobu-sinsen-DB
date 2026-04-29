@@ -507,6 +507,7 @@ export class Busho {
     record_skill_stats(skillName, damage, isHeal = false) {
         if (!(skillName in this.stats_log.skill_details)) {
             this.stats_log.skill_details[skillName] = {
+                name: skillName,
                 dmg: 0,
                 heal: 0,
                 count: 0
