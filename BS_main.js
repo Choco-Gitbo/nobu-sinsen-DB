@@ -91,7 +91,7 @@ document.getElementById('select-team-a').addEventListener('change', (e) => {
 
 async function updatePreview(side, teamId) {
     // LocalStorage等から部隊データを取得
-    side = side ? "A": "E"
+    side = side=="A" ? "A": "E"
     const teamData = await getTeamFromStorage(teamId , side); 
     if (!teamData) return;
 
