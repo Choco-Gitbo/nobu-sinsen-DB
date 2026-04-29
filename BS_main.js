@@ -15,10 +15,14 @@ startSimulation();
 // プルダウンの生成（1~12）
 const setupSelect = (id) => {
     const select = document.getElementById(id);
-    for (let i = 1; i <= 12; i++) {
+    for (let i = 0; i <= 12; i++) {
         const opt = document.createElement('option');
         opt.value = i;
-        opt.textContent = `部隊 ${i}`;
+        if (i === 0){
+            opt.textContent = `---`;
+        }else{
+            opt.textContent = `部隊 ${i}`;
+        }
         select.appendChild(opt);
     }
 };
@@ -141,6 +145,8 @@ async function updatePreview(side, teamId) {
         }
     }
 
+    if (teamId === 0) return
+    
     const teamData = await getTeamFromStorage(teamId , side_t); 
     if (!teamData || teamData.length === 0 || !teamData[0]) {
     return;
