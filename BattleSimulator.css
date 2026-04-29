@@ -1,3 +1,32 @@
+/* 1. 親要素をFlexboxにする */
+.preview-wrapper {
+    display: flex;             /* ★横並びにする魔法の言葉 */
+    justify-content: center;   /* 中央寄せに配置 */
+    align-items: center;       /* 上下方向も中央で揃える（VSボタンが浮かないように） */
+    gap: 20px;                 /* 要素同士の間隔を少し空ける */
+    margin-bottom: 20px;       /* 下の集計エリアとの間隔 */
+}
+.team-panel {
+    flex: 1;                   /* 利用可能なスペースを均等に分ける */
+    max-width: 450px;          /* 広がりすぎないように上限を設ける */
+    min-width: 300px;          /* スマホ等で潰れすぎないように下限を設ける */
+}
+
+.vs-icon {
+    flex: 0 0 auto;            /* ボタンは伸縮させない */
+    text-align: center;
+}
+#start-battle-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+#start-battle-btn h1 {
+    margin: 0;
+    font-size: 3em; /* アイコンの大きさを調整 */
+}
+
 .preview-table {
     border-collapse: collapse;
     width: 100%;
