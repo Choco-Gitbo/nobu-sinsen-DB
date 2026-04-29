@@ -97,7 +97,7 @@ async function updatePreview(side, teamId) {
 
     // 兵種アイコンの定義
     const unitIcons = {
-        "騎馬": "🐎 ",
+        "騎兵": "🐎 ",
         "弓兵": "🏹 ",
         "足軽": "🗡️ ",
         "鉄砲": "🔫 ",
