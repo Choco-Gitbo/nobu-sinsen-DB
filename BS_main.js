@@ -87,9 +87,20 @@ async function runMultipleBattles(count) {
                 summary.details[b.name].skills[ss.name]={dmg:{sum:0,max:0,min:Infinity},
                     heal:{sum:0,max:0,min:Infinity},count:{sum:0,max:0,min:Infinity}};
                 let ss1 = summary.details[b.name].skills[ss.name]
+                //発動回数
                 ss1.count.sum += ss.count
                 ss1.count.max = Math.max(ss1.count.max, ss.count);
                 ss1.count.min = Math.min(ss1.count.min, ss.count);
+
+                //与ダメ
+                ss1.dmg.sum += ss.dmg
+                ss1.dmg.max = Math.max(ss1.dmg.max, ss.dmg);
+                ss1.dmg.min = Math.min(ss1.dmg.min, ss.dmg);
+
+                //回復
+                ss1.heal.sum += ss.heal
+                ss1.heal.max = Math.max(ss1.heal.max, ss.heal);
+                ss1.heal.min = Math.min(ss1.heal.min, ss.heal);
             })
         });
 

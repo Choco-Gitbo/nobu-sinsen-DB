@@ -96,6 +96,18 @@ export class Senpo {
         if (conditionName === "has_麻痺") {
             return target.states.some(s => s.name === "麻痺");
         }
+        if (conditionName === "has_挑発") {
+            return target.states.some(s => s.name === "挑発");
+        }
+        if (conditionName === "not_has_挑発") {
+            return !target.states.some(s => s.name === "挑発");
+        }
+        if (conditionName === "has_牽制") {
+            return target.states.some(s => s.name === "牽制");
+        }
+        if (conditionName === "not_has_牽制") {
+            return !target.states.some(s => s.name === "牽制");
+        }
         if (conditionName.includes("mhp")) {
             // 自身の兵数
             const match = conditionName.match(/\d+/);
@@ -216,7 +228,7 @@ export class Senpo {
             }
 
             caster.record_skill_stats(this.name, 0, false);
-            caster.stats_log.skill_details[this.name].count += 1;
+            //caster.stats_log.skill_details[this.name].count += 1;
         } else if (eType === "dispel_buff" || eType === "dispel_debuff") {
             this.#handleDispel(caster, target, effect, battleField);
         } else if (eType === "special") {
@@ -280,7 +292,7 @@ export class Senpo {
         }
 
         caster.record_skill_stats(this.name, 0, false);
-        caster.stats_log.skill_details[this.name].count += 1;
+        //caster.stats_log.skill_details[this.name].count += 1;
     }
 
     #addBuff(caster, target, effect, battleField) {
@@ -360,7 +372,7 @@ export class Senpo {
         }
 
         caster.record_skill_stats(this.name, 0, false);
-        caster.stats_log.skill_details[this.name].count += 1;
+        //caster.stats_log.skill_details[this.name].count += 1;
     }
 
     #handleIchirokuShobu(caster, target, battleField) {
