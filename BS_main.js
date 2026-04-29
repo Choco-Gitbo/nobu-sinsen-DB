@@ -94,6 +94,23 @@ document.getElementById('select-team-b').addEventListener('change', (e) => {
 
 
 async function updatePreview(side, teamId) {
+
+    for (let s = 0; s < 2; s++){
+        if (s==0){
+            side_0 = "a";
+        }else{
+            side_0 = "b";
+        }
+        document.getElementById(`preview-${side_0}-unit-type`).innerText = "-";
+
+        for (let i_b = 0; i < 3; i++){    
+            document.getElementById(`preview-${side_0}-${i_b}-name`).innerText = "-";
+            for (let i_s = 0; i < 4; i++){
+                document.getElementById(`preview-${side_0}-${i_b}-s${i_s}`).innerText = "-";
+            }
+        }
+    }
+
     // LocalStorage等から部隊データを取得
     let side_t;
     if (side=="a"){
