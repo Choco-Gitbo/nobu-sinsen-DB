@@ -108,7 +108,7 @@ async function updatePreview(side, teamId) {
     document.getElementById(`preview-${side}-unit-type`).innerText = teamData[0].unit_type;
 
     // 武将と戦法の流し込み
-    teamData.members.forEach((member, index) => {
+    teamData.forEach((member, index) => {
         if (!member) return;
         
         // 武将名（例: preview-a-0-name）
