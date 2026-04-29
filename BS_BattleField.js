@@ -360,7 +360,7 @@ export class BattleField {
         totalDmg = Math.floor(totalDmg * hitRate);
         caster.stats_log.damage_dealt += totalDmg;
         caster.record_skill_stats(skillName.name, totalDmg, false);
-        caster.stats_log.skill_details[skillName.name].count += 1;
+        //caster.stats_log.skill_details[skillName.name].count += 1;
 
         // 3. ダメージ適用（肩代わり考慮）
         const actualDmg = this.apply_damage_with_protection(caster, actualTarget, totalDmg);
@@ -546,7 +546,7 @@ export class BattleField {
         target.total_over_heal += overHeal;
         caster.stats_log.healing += actualHeal;
         caster.record_skill_stats(skillName, actualHeal, true);
-        caster.stats_log.skill_details[skillName].count += 1;
+        //caster.stats_log.skill_details[skillName].count += 1;
 
         // 6. ログ出力
         let logMsg = `    -> ${target.colored_name} の兵数が<span class="heal">${actualHeal}</span>回復 (現在: ${target.hp})`;
