@@ -66,12 +66,12 @@
 }
 .busho-header {
     background-color: #333;
-    font-size: 1.1em;
-    padding: 10px !important;
+    font-size: 1.0em;
+    padding: 6px !important;
 }
 
 .detail-table {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     border: 2px solid #333;
 }
 
