@@ -104,7 +104,7 @@ async function updatePreview(side, teamId) {
         }
         document.getElementById(`preview-${side_0}-unit-type`).innerText = "-";
 
-        for (let i_b = 0; i < 3; i++){    
+        for (let i_b = 0; i_b < 3; i_b++){    
             document.getElementById(`preview-${side_0}-${i_b}-name`).innerText = "-";
             for (let i_s = 0; i < 4; i++){
                 document.getElementById(`preview-${side_0}-${i_b}-s${i_s}`).innerText = "-";
