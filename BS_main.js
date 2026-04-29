@@ -142,7 +142,8 @@ async function updatePreview(side, teamId) {
     if (!teamData) return;
 
     // 兵種の表示
-    const u_type = teamData[0].unit_type ? teamData[0].unit_type : "-";
+    let u_type = "-"
+    if (!teamData[0].unit_type){u_type = teamData[0].unit_type;}
     const displayLabel = unitIcons[u_type] || u_type;
     document.getElementById(`preview-${side}-unit-type`).innerText = displayLabel;
 
