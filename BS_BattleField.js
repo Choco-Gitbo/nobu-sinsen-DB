@@ -767,15 +767,15 @@ export class BattleField {
             result: this.get_battle_result(), // "勝利", "敗北", "引分"
             armyA: this.army_a.map(b => ({
                 name: b.name,
-                damage: b.states_log.damage_dealt, // 武将クラスに持たせている与ダメ合計
-                heal:b.states_log.healing,     // 回復合計
+                damage: b.stats_log.damage_dealt, // 武将クラスに持たせている与ダメ合計
+                heal:b.stats_log.healing,     // 回復合計
                 hp: b.hp,                // 残り兵数
                 wounded: b.wounded      //負傷兵
             })),
             armyB: this.army_b.map(b => ({
                 name: b.name,
-                damage: b.states_log.damage_dealt, // 武将クラスに持たせている与ダメ合計
-                heal:b.states_log.healing,     // 回復合計
+                damage: b.stats_log.damage_dealt, // 武将クラスに持たせている与ダメ合計
+                heal:b.stats_log.healing,     // 回復合計
                 hp: b.hp,                // 残り兵数
                 wounded: b.wounded      //負傷兵
             }))
