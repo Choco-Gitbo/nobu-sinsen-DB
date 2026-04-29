@@ -51,8 +51,13 @@ async function runMultipleBattles(count) {
 
     // 1. 指定したIDの部隊をLocalStorage/DBから取得
     const teamA = await getTeamFromStorage(idA,"A");
+    teamA[0].hp = Number(document.getElementById("preview-a-0-hp").textContent);
+    teamA[1].hp = Number(document.getElementById("preview-a-1-hp").textContent);
+    teamA[2].hp = Number(document.getElementById("preview-a-2-hp").textContent);
     const teamB = await getTeamFromStorage(idB,"E");
-
+    teamB[0].hp = Number(document.getElementById("preview-b-0-hp").textContent);
+    teamB[1].hp = Number(document.getElementById("preview-b-1-hp").textContent);
+    teamB[2].hp = Number(document.getElementById("preview-b-2-hp").textContent);
 
     for (let i = 0; i < count; i++) {
         const bf = new BattleField(teamA, teamB);
