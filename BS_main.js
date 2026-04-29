@@ -116,7 +116,7 @@ async function updatePreview(side, teamId) {
     if (!teamData) return;
 
     // 兵種の表示
-    document.getElementById(`preview-${side}-unit-type`).innerText = teamData[0].unit_type;
+    document.getElementById(`preview-${side}-unit-type`).innerText = teamData[0].unit_type ? teamData[0].unit_type : "-";
 
     // 武将と戦法の流し込み
     teamData.forEach((member, index) => {
