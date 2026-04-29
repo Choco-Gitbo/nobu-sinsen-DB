@@ -27,28 +27,28 @@ setupSelect('select-team-a');
 setupSelect('select-team-b');
 
 // ボタンクリックイベント
-document.getElementById('start-battle-btn').addEventListener('click', async () => {
-    const idA = Number(document.getElementById('select-team-a').value);
-    const idB = Number(document.getElementById('select-team-b').value);
-
+//document.getElementById('start-battle-btn').addEventListener('click', async () => {
+//    const idA = Number(document.getElementById('select-team-a').value);
+//    const idB = Number(document.getElementById('select-team-b').value);
+//
     // 1. 指定したIDの部隊をLocalStorage/DBから取得
     // ※ getTeamFromStorage(id) のような形に改修が必要かもしれません
-    const teamA = await getTeamFromStorage(idA,"A");
-    const teamB = await getTeamFromStorage(idB,"E");
+//    const teamA = await getTeamFromStorage(idA,"A");
+//    const teamB = await getTeamFromStorage(idB,"E");
 
     // 2. 戦闘実行
-    const bf = new BattleField(teamA, teamB);
-    const report = bf.run_battle(8);
+//    const bf = new BattleField(teamA, teamB);
+//    const report = bf.run_battle(8);
 
     // 3. 画面にログを出力
-    const container = document.getElementById('log-container');
-    container.innerHTML = bf.get_full_log();
+//    const container = document.getElementById('log-container');
+//    container.innerHTML = bf.get_full_log();
     
     // 一番下まで自動スクロール
-    container.scrollTop = container.scrollHeight;
-});
+//    container.scrollTop = container.scrollHeight;
+//});
 
-document.getElementById('run-multi').addEventListener('click', async () => {
+document.getElementById('start-battle-btn').addEventListener('click', async () => {
     runMultipleBattles(2)
 });
 // 連続戦闘ボタンが押された時
@@ -58,6 +58,15 @@ async function runMultipleBattles(count) {
         win: 0, loss: 0, draw: 0,
         details: {} // 武将ごとの最大・平均などを入れる
     };
+
+    const idA = Number(document.getElementById('select-team-a').value);
+    const idB = Number(document.getElementById('select-team-b').value);
+
+    // 1. 指定したIDの部隊をLocalStorage/DBから取得
+    // ※ getTeamFromStorage(id) のような形に改修が必要かもしれません
+    const teamA = await getTeamFromStorage(idA,"A");
+    const teamB = await getTeamFromStorage(idB,"E");
+
 
     for (let i = 0; i < count; i++) {
         const bf = new BattleField(teamA, teamB);
@@ -82,6 +91,14 @@ async function runMultipleBattles(count) {
 
     // 最後にUI（image_33414e.png の表）に反映
     displaySummaryTable(summary);
+
+    // 3. 画面にログを出力
+    const container = document.getElementById('log-container');
+    container.innerHTML = bf.get_full_log();
+    
+    // 一番下まで自動スクロール
+    container.scrollTop = container.scrollHeight;
+
 }
 
 // 部隊選択が変更された時のイベント
@@ -101,7 +118,7 @@ async function updatePreview(side, teamId) {
         "弓兵": "🏹 ",
         "足軽": "🗡️ ",
         "鉄砲": "🔫 ",
-        "兵器": "🛠️" // ゲーム内の名称に合わせて調整してください
+        "兵器": "🛠️ " // ゲーム内の名称に合わせて調整してください
     };
 
     // LocalStorage等から部隊データを取得
