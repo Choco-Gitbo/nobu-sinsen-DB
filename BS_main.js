@@ -25,7 +25,8 @@ const setupSelect = (id) => {
 
 setupSelect('select-team-a');
 setupSelect('select-team-b');
-
+updatePreview("a", 0);
+updatePreview("b", 0);
 // ボタンクリックイベント
 //document.getElementById('start-battle-btn').addEventListener('click', async () => {
 //    const idA = Number(document.getElementById('select-team-a').value);
@@ -88,7 +89,7 @@ async function runMultipleBattles(count) {
             s.dmgMin = Math.min(s.dmgMin, b.damage);
         });
 
-        if (i == count){
+        if (i == (count-1)){
             // 3. 画面にログを出力
             const container = document.getElementById('log-container');
             container.innerHTML = bf.get_full_log();
