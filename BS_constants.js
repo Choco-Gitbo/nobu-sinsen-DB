@@ -236,6 +236,11 @@ export const STATE_TEMPLATES = {
         trigger_side: "defender",
         conflict_rule: "EXTEND"
     },
+    "再発動不可": {
+        type: "refire",
+        conflict_rule: "NONE"
+    },
+
     "全力戦闘_連撃(予備)": {
         type: "special",
         phase: "before_action",
