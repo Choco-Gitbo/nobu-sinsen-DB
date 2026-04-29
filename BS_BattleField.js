@@ -772,7 +772,10 @@ export class BattleField {
                 heal:b.stats_log.healing,     // 回復合計
                 hp: b.hp,                // 残り兵数
                 wounded: b.wounded,      //負傷兵
-                skill_details:b.stats_log.skill_details
+                skill_details: Object.entries(b.stats_log.skill_details).map(([sName, sData]) => ({
+                    name: sName,
+                    ...sData
+                }))
             })),
             armyB: this.army_b.map(b => ({
                 name: b.name,
@@ -781,7 +784,10 @@ export class BattleField {
                 heal:b.stats_log.healing,     // 回復合計
                 hp: b.hp,                // 残り兵数
                 wounded: b.wounded,      //負傷兵
-                skill_details:b.stats_log.skill_details
+                skill_details: Object.entries(b.stats_log.skill_details).map(([sName, sData]) => ({
+                    name: sName,
+                    ...sData
+                }))
             }))
         };        
     }
