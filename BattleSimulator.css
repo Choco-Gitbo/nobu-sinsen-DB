@@ -40,10 +40,10 @@
     font-size: 0.5em;
 }
 .input{
-    width:3em;
-    max-width: 100% ;
+    width:6ch;
+    font-size: 0.9rem;
     text-align: center;
-    font-size: 0.5em;
+    box-sizing: border-box;
 }
 
 .summary-table {
