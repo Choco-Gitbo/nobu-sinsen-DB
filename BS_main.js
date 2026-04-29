@@ -162,3 +162,36 @@ async function updatePreview(side, teamId) {
         });
     });
 }
+
+function displaySummaryTable(summary) {
+    const totalBattles = summary.win + summary.loss + summary.draw;
+    if (totalBattles === 0) return;
+
+    // 1. 全体統計の更新
+    document.getElementById('stat-total-count').innerText = totalBattles;
+    document.getElementById('stat-win-rate').innerText = ((summary.win / totalBattles) * 100).toFixed(1) + "%";
+    document.getElementById('stat-win-count').innerText = summary.win;
+    document.getElementById('stat-loss-count').innerText = summary.loss;
+    document.getElementById('stat-draw-count').innerText = summary.draw;
+
+    // 2. 武将別詳細の更新
+    const tbody = document.getElementById('busho-stats-body');
+    tbody.innerHTML = ""; // 一旦クリア
+
+    Object.keys(summary.details).forEach(name => {
+        const d = summary.details[name];
+        const avg = Math.floor(d.dmgSum / totalBattles);
+
+        // 新しい行を作成
+        const row = `
+            <tr>
+                <td>-</td> <td>${name}</td>
+                <td>与ダメージ</td>
+                <td>${d.dmgMax}</td>
+                <td>${d.dmgMin}</td>
+                <td>${avg}</td>
+            </tr>
+        `;
+        tbody.insertAdjacentHTML('beforeend', row);
+    });
+}

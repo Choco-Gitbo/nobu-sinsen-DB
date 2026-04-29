@@ -108,20 +108,42 @@
 
     </div>
         
-    <div class="simulator-wrapper">
-        <section class="stats-panel">
-            <div class="team-preview-grid">
-            </div>
-            
-            <div class="summary-table">
-            </div>
-        </section>
+    <div id="statistics-area">
+        <h3>集計結果 (全 <span id="stat-total-count">0</span> 戦)</h3>
+        
+        <table class="summary-table main-stats">
+            <thead>
+                <tr>
+                    <th>勝率</th>
+                    <th>勝利</th>
+                    <th>敗北</th>
+                    <th>引分</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="stat-win-rate">0.0%</td>
+                    <td id="stat-win-count">0</td>
+                    <td id="stat-loss-count">0</td>
+                    <td id="stat-draw-count">0</td>
+                </tr>
+            </tbody>
+        </table>
 
-        <section class="controls">
-            <button id="run-single">1戦実行 (詳細ログあり)</button>
-            <button id="run-multi">100戦連続実行 (統計のみ)</button>
-        </section>
-
+        <table class="summary-table detail-stats">
+            <thead>
+                <tr>
+                    <th>陣営</th>
+                    <th>武将名</th>
+                    <th>項目</th>
+                    <th>最大</th>
+                    <th>最小</th>
+                    <th>平均</th>
+                </tr>
+            </thead>
+            <tbody id="busho-stats-body">
+                </tbody>
+        </table>
     </div>
 
     <div id="log-container" style="
