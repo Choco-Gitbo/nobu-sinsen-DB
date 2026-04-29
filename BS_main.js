@@ -95,6 +95,15 @@ document.getElementById('select-team-b').addEventListener('change', (e) => {
 
 async function updatePreview(side, teamId) {
 
+    // 兵種アイコンの定義
+    const unitIcons = {
+        "騎馬": "🐎 ",
+        "弓兵": "🏹 ",
+        "足軽": "🗡️ ",
+        "鉄砲": "🔫 ",
+        "兵器": "🛠️" // ゲーム内の名称に合わせて調整してください
+    };
+
     // LocalStorage等から部隊データを取得
     let side_t;
     if (side=="a"){
@@ -116,7 +125,8 @@ async function updatePreview(side, teamId) {
     if (!teamData) return;
 
     // 兵種の表示
-    document.getElementById(`preview-${side}-unit-type`).innerText = teamData[0].unit_type ? teamData[0].unit_type : "-";
+    const displayLabel = unitIcons[teamData.unitType] || teamData.unitType;
+    document.getElementById(`preview-${side}-unit-type`).innerText = displayLabel;
 
     // 武将と戦法の流し込み
     teamData.forEach((member, index) => {
