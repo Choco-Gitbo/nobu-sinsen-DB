@@ -31,27 +31,6 @@ setupSelect('select-team-a');
 setupSelect('select-team-b');
 updatePreview("a", 0);
 updatePreview("b", 0);
-// ボタンクリックイベント
-//document.getElementById('start-battle-btn').addEventListener('click', async () => {
-//    const idA = Number(document.getElementById('select-team-a').value);
-//    const idB = Number(document.getElementById('select-team-b').value);
-//
-    // 1. 指定したIDの部隊をLocalStorage/DBから取得
-    // ※ getTeamFromStorage(id) のような形に改修が必要かもしれません
-//    const teamA = await getTeamFromStorage(idA,"A");
-//    const teamB = await getTeamFromStorage(idB,"E");
-
-    // 2. 戦闘実行
-//    const bf = new BattleField(teamA, teamB);
-//    const report = bf.run_battle(8);
-
-    // 3. 画面にログを出力
-//    const container = document.getElementById('log-container');
-//    container.innerHTML = bf.get_full_log();
-    
-    // 一番下まで自動スクロール
-//    container.scrollTop = container.scrollHeight;
-//});
 
 document.getElementById('start-battle-btn').addEventListener('click', async () => {
     runMultipleBattles(2)
@@ -68,7 +47,6 @@ async function runMultipleBattles(count) {
     const idB = Number(document.getElementById('select-team-b').value);
 
     // 1. 指定したIDの部隊をLocalStorage/DBから取得
-    // ※ getTeamFromStorage(id) のような形に改修が必要かもしれません
     const teamA = await getTeamFromStorage(idA,"A");
     const teamB = await getTeamFromStorage(idB,"E");
 
@@ -146,7 +124,7 @@ async function updatePreview(side, teamId) {
     }
 
     if (teamId === 0) return
-    
+
     const teamData = await getTeamFromStorage(teamId , side_t); 
     if (!teamData || teamData.length === 0 || !teamData[0]) {
     return;
@@ -198,6 +176,16 @@ function displaySummaryTable(summary) {
                 <td>与ダメージ</td>
                 <td>${d.dmgMax}</td>
                 <td>${d.dmgMin}</td>
+                <td>${avg}</td>
+            </tr>
+        `;
+        tbody.insertAdjacentHTML('beforeend', row);
+        const row = `
+            <tr>
+                <td>-</td> <td>${name}</td>
+                <td>回復量</td>
+                <td>${d.healMax}</td>
+                <td>${d.healMin}</td>
                 <td>${avg}</td>
             </tr>
         `;

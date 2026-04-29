@@ -770,14 +770,16 @@ export class BattleField {
                 damage: b.stats_log.damage_dealt, // 武将クラスに持たせている与ダメ合計
                 heal:b.stats_log.healing,     // 回復合計
                 hp: b.hp,                // 残り兵数
-                wounded: b.wounded      //負傷兵
+                wounded: b.wounded,      //負傷兵
+                skill_details:b.stats_log.skill_details
             })),
             armyB: this.army_b.map(b => ({
                 name: b.name,
                 damage: b.stats_log.damage_dealt, // 武将クラスに持たせている与ダメ合計
                 heal:b.stats_log.healing,     // 回復合計
                 hp: b.hp,                // 残り兵数
-                wounded: b.wounded      //負傷兵
+                wounded: b.wounded,      //負傷兵
+                skill_details:b.stats_log.skill_details
             }))
         };        
     }
