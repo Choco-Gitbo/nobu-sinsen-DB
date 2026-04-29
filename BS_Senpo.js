@@ -66,6 +66,12 @@ export class Senpo {
         if (conditionName === "is_sub") {
             return !caster.is_main; // 主将でなければTrue
         }
+        if (conditionName === "is_man") {
+            return !caster.sex === "男"; // 男性ならTrue
+        }
+        if (conditionName === "is_woman") {
+            return !caster.sex === "女"; // 女性ならTrue
+        }
         if (conditionName === "武勇>知略") {
             return caster.current_pow >= caster.current_intl;
         }
@@ -86,6 +92,9 @@ export class Senpo {
         }
         if (conditionName === "has_潰走") {
             return target.states.some(s => s.name === "潰走");
+        }
+        if (conditionName === "has_麻痺") {
+            return target.states.some(s => s.name === "麻痺");
         }
         if (conditionName.includes("mhp")) {
             // 自身の兵数
