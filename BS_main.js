@@ -163,6 +163,7 @@ function displaySummaryTable(summary) {
 
     // 2. 武将別詳細の更新
     const tbody = document.getElementById('busho-stats-body');
+    let row
     tbody.innerHTML = ""; // 一旦クリア
 
     Object.keys(summary.details).forEach(name => {
@@ -170,7 +171,7 @@ function displaySummaryTable(summary) {
         const avg = Math.floor(d.dmgSum / totalBattles);
 
         // 新しい行を作成
-        const row = `
+        row = `
             <tr>
                 <td>-</td> <td>${name}</td>
                 <td>与ダメージ</td>
@@ -180,7 +181,7 @@ function displaySummaryTable(summary) {
             </tr>
         `;
         tbody.insertAdjacentHTML('beforeend', row);
-        const row = `
+        row = `
             <tr>
                 <td>-</td> <td>${name}</td>
                 <td>回復量</td>
