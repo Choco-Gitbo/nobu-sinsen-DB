@@ -119,8 +119,6 @@ async function updatePreview(side, teamId) {
             const skillEl = document.getElementById(`preview-${side}-${index}-s${sIndex}`);
             if (skillEl) {
                 skillEl.innerText = skill.name;
-                // 戦法の色付け（以前作ったCSSクラスを流用）
-                skillEl.className = 'senpo-name'; 
             }
         });
     });
