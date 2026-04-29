@@ -950,6 +950,10 @@ export class BattleField {
                 this.add_log(`  ${busho.colored_name} は無策状態で能動戦法発動不可`);
                 return;
             }
+            if (busho.states.some(s => s.type === 'status_effect' && s.name === '再発動不可')) {
+                this.add_log(`  ${busho.colored_name} は再発動不可`);
+                return;
+            }
         }
 
         for (const skill of targetSkills) {
