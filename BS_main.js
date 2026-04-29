@@ -66,7 +66,9 @@ async function runMultipleBattles(count) {
         // 武将ごとのダメージ集計（ここで最大・最小・合計を更新）
         report.armyA.forEach(b => {
             if (!summary.details[b.name]) {
-                summary.details[b.name] = { dmgSum: 0, dmgMax: 0, dmgMin: Infinity,skills:{} };  
+                summary.details[b.name] = { dmgSum: 0, dmgMax: 0, dmgMin: Infinity,
+                    skills:{dmg:{sum:0,max:0,min:Infinity},
+                    heal:{sum:0,max:0,min:Infinity},count:{sum:0,max:0,min:Infinity}} };  
             }
             const sd = summary.teamDamage;
             sd.sum += b.damage;
@@ -83,11 +85,11 @@ async function runMultipleBattles(count) {
             sh.max = Math.max(sh.max, b.heal);
             sh.min = Math.min(sh.min, b.heal);
 
-            b.skill_ditails.forEach(ss => {
+            b.skill_details.forEach(ss => {
                 let ss1 = summary.details[b.name].skills[ss.name]
-                ss1.cntsum += ss.count
-                ss1.cntmax = Math.max(ss1.max, ss.count);
-                ss1.cntmin = Math.min(ss1.min, ss.count);
+                ss1.count.sum += ss.count
+                ss1.count.max = Math.max(ss1.count.max, ss.count);
+                ss1.count.min = Math.min(ss1.count.min, ss.count);
             })
         });
 
