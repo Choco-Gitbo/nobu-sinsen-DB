@@ -40,6 +40,9 @@ async function runMultipleBattles(count) {
     // これが「集計データのひな型」
     let summary = {
         win: 0, loss: 0, draw: 0,
+        teamDamage:{sum:0,max:0,min:Infinity},
+        teamTaken:{sum:0,max:0,min:Infinity},
+        teamHeal:{sum:0,max:0,min:Infinity},
         details: {} // 武将ごとの最大・平均などを入れる
     };
 
@@ -65,11 +68,20 @@ async function runMultipleBattles(count) {
             if (!summary.details[b.name]) {
                 summary.details[b.name] = { dmgSum: 0, dmgMax: 0, dmgMin: Infinity };  
             }
-            const s = summary.details[b.name];
-            s.dmgSum += b.damage;
-            s.dmgMax = Math.max(s.dmgMax, b.damage);
-            s.dmgMin = Math.min(s.dmgMin, b.damage);
+            const sd = summary.teamDamage;
+            sd.sum += b.damage;
+            sd.max = Math.max(sd.max, b.damage);
+            sd.min = Math.min(sd.min, b.damage);
 
+            const st = summary.teamTaken;
+            st.sum += b.taken;
+            st.max = Math.max(st.max, b.taken);
+            st.min = Math.min(st.min, b.taken);
+
+            const sh = summary.teamHeal;
+            sh.sum += b.heal;
+            sh.max = Math.max(sh.max, b.heal);
+            sh.min = Math.min(sh.min, b.heal);
         });
 
         if (i == (count-1)){

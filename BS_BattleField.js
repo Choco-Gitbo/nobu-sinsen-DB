@@ -768,6 +768,7 @@ export class BattleField {
             armyA: this.army_a.map(b => ({
                 name: b.name,
                 damage: b.stats_log.damage_dealt, // 武将クラスに持たせている与ダメ合計
+                taken: b.stats_log.damage_taken,
                 heal:b.stats_log.healing,     // 回復合計
                 hp: b.hp,                // 残り兵数
                 wounded: b.wounded,      //負傷兵
@@ -776,6 +777,7 @@ export class BattleField {
             armyB: this.army_b.map(b => ({
                 name: b.name,
                 damage: b.stats_log.damage_dealt, // 武将クラスに持たせている与ダメ合計
+                taken: b.stats_log.damage_taken,
                 heal:b.stats_log.healing,     // 回復合計
                 hp: b.hp,                // 残り兵数
                 wounded: b.wounded,      //負傷兵
