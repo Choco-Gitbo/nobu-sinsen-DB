@@ -3,7 +3,7 @@
     display: flex;             /* ★横並びにする魔法の言葉 */
     justify-content: center;   /* 中央寄せに配置 */
     align-items: center;       /* 上下方向も中央で揃える（VSボタンが浮かないように） */
-    gap: 20px;                 /* 要素同士の間隔を少し空ける */
+    gap: 10px;                 /* 要素同士の間隔を少し空ける */
     margin-bottom: 20px;       /* 下の集計エリアとの間隔 */
 }
 .team-panel {
@@ -35,7 +35,7 @@
 .team-b-panel th { background-color: #ffd1d1; color: #000; } /* 敵軍のヘッダー色 */
 .preview-table td, .preview-table th {
     border: 1px solid #444;
-    padding: 4px;
+    padding: 2px;
     text-align: center;
     font-size: 0.5em;
 }
