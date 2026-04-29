@@ -94,23 +94,6 @@ document.getElementById('select-team-b').addEventListener('change', (e) => {
 
 
 async function updatePreview(side, teamId) {
-    // 初期化
-    let side_0
-    for (let s = 0; s < 2; s++){
-        if (s==0){
-            side_0 = "a";
-        }else{
-            side_0 = "b";
-        }
-        document.getElementById(`preview-${side_0}-unit-type`).innerText = "-";
-
-        for (let i_b = 0; i_b < 3; i_b++){    
-            document.getElementById(`preview-${side_0}-${i_b}-name`).innerText = "-";
-            for (let i_s = 0; i_s < 4; i_s++){
-                document.getElementById(`preview-${side_0}-${i_b}-s${i_s}`).innerText = "-";
-            }
-        }
-    }
 
     // LocalStorage等から部隊データを取得
     let side_t;
@@ -119,6 +102,16 @@ async function updatePreview(side, teamId) {
     }else{
         side_t = "E";
     }
+
+    document.getElementById(`preview-${side}-unit-type`).innerText = "-";
+
+    for (let i_b = 0; i_b < 3; i_b++){    
+        document.getElementById(`preview-${side}-${i_b}-name`).innerText = "-";
+        for (let i_s = 0; i_s < 4; i_s++){
+            document.getElementById(`preview-${side}-${i_b}-s${i_s}`).innerText = "-";
+        }
+    }
+
     const teamData = await getTeamFromStorage(teamId , side_t); 
     if (!teamData) return;
 
