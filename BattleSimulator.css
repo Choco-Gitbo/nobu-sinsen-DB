@@ -3,7 +3,7 @@
     display: flex;             /* ★横並びにする魔法の言葉 */
     justify-content: center;   /* 中央寄せに配置 */
     align-items: center;       /* 上下方向も中央で揃える（VSボタンが浮かないように） */
-    gap: 10px;                 /* 要素同士の間隔を少し空ける */
+    gap: 5px;                 /* 要素同士の間隔を少し空ける */
     margin-bottom: 20px;       /* 下の集計エリアとの間隔 */
 }
 .team-panel {
