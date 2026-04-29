@@ -94,7 +94,7 @@ document.getElementById('select-team-b').addEventListener('change', (e) => {
 
 
 async function updatePreview(side, teamId) {
-
+    // 初期化
     for (let s = 0; s < 2; s++){
         if (s==0){
             side_0 = "a";
