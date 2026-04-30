@@ -52,6 +52,17 @@
     gap: 5px;                 /* 要素同士の間隔を少し空ける */
 }
 
+.summary-header.team-a {
+    background-color: #569cd6; /* 青系 */
+    color: white;
+}
+
+.summary-header.team-b {
+    background-color: #f44747; /* 赤系 */
+    color: white;
+}
+
+
 .summary-table {
     width: 100%;
     border-collapse: collapse;
