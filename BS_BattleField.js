@@ -360,7 +360,6 @@ export class BattleField {
         totalDmg = Math.floor(totalDmg * hitRate);
         caster.stats_log.damage_dealt += totalDmg;
         caster.record_skill_stats(skillName.name, totalDmg, false);
-        //caster.stats_log.skill_details[skillName.name].count += 1;
 
         // 3. ダメージ適用（肩代わり考慮）
         const actualDmg = this.apply_damage_with_protection(caster, actualTarget, totalDmg);
@@ -546,7 +545,6 @@ export class BattleField {
         target.total_over_heal += overHeal;
         caster.stats_log.healing += actualHeal;
         caster.record_skill_stats(skillName, actualHeal, true);
-        //caster.stats_log.skill_details[skillName].count += 1;
 
         // 6. ログ出力
         let logMsg = `    -> ${target.colored_name} の兵数が<span class="heal">${actualHeal}</span>回復 (現在: ${target.hp})`;
@@ -760,7 +758,6 @@ export class BattleField {
         }
 
         this.add_log("=== 戦闘終了 ===");
-        //this.show_result();
 
         // 最後に統計に必要なデータをまとめて返す
         return {
@@ -865,61 +862,6 @@ export class BattleField {
             return true;
         }
         return false;
-    }
-
-    show_result() {
-        /**戦闘結果の表示*/
-        console.log("\n" + "=".repeat(40));
-        console.log("      ⚔️  戦闘リザルト  ⚔️");
-        console.log("=".repeat(40));
-
-        const allBusho = [...this.army_a, ...this.army_b];
-        const mainA = this.army_a.find(u => u.is_main);
-        const mainB = this.army_b.find(u => u.is_main);
-
-        let winner = { 自軍: "引分", 敵軍: "引分" };
-        if (mainA?.hp <= 0) {
-            winner = { 自軍: "敗北", 敵軍: "勝利" };
-        }
-        if (mainB?.hp <= 0) {
-            winner = { 自軍: "勝利", 敵軍: "敗北" };
-        }
-
-        for (const side of ["自軍", "敵軍"]) {
-            const sideTag = side === "自軍" ? "A" : "E";
-            const members = allBusho.filter(b => b.team === sideTag);
-
-            console.log(`\n【${side}】${winner[side]}`);
-            console.log(`${"武将名".padEnd(10)} | ${"兵数".padEnd(3)}(負傷)/${"最大兵数".padEnd(4)}|${"与ダメ".padStart(4)} | ${"被ダメ".padStart(4)} | ${"回復".padStart(4)}`);
-            console.log("-".repeat(60));
-
-            let sideTotal = 0;
-            for (const b of members) {
-                const s = b.stats_log;
-                sideTotal += s.damage_dealt;
-                console.log(`${b.name.padEnd(10)} |${String(b.hp).padStart(5)} (${b.wounded})/ ${String(b.max_hp).padStart(4)} |${String(s.damage_dealt).padStart(7)} | ${String(s.damage_taken).padStart(7)} | ${String(s.healing).padStart(7)}`);
-            }
-
-            console.log(`--- 陣営合計与ダメ: ${sideTotal} ---`);
-        }
-
-        console.log("\n" + "=".repeat(60));
-        console.log("\n" + "─".repeat(50));
-        console.log("      📜 戦 法 発 動 詳 細 📜");
-        console.log("─".repeat(50));
-
-        for (const b of allBusho) {
-            if (Object.keys(b.stats_log.skill_details).length === 0) continue;
-
-            console.log(`\n【${b.colored_name}】`);
-            console.log(`  ${"戦法名".padEnd(15)} | ${"発動数".padStart(3)} | ${"合計ダメージ".padStart(3)} | ${"平均".padStart(4)}`);
-            console.log("  " + "-".repeat(40));
-
-            for (const [sName, sData] of Object.entries(b.stats_log.skill_details)) {
-                const avg = sData.count > 0 ? Math.floor(sData.dmg / sData.count) : 0;
-                console.log(`  ${sName.padEnd(15)} | ${String(sData.count).padStart(5)} | ${String(sData.dmg).padStart(10)} | ${String(avg).padStart(7)}`);
-            }
-        }
     }
 
     is_action_restricted(busho) {

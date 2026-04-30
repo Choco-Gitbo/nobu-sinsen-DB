@@ -228,7 +228,6 @@ export class Senpo {
             }
 
             caster.record_skill_stats(this.name, 0, false);
-            //caster.stats_log.skill_details[this.name].count += 1;
         } else if (eType === "dispel_buff" || eType === "dispel_debuff") {
             this.#handleDispel(caster, target, effect, battleField);
         } else if (eType === "special") {
@@ -292,7 +291,6 @@ export class Senpo {
         }
 
         caster.record_skill_stats(this.name, 0, false);
-        //caster.stats_log.skill_details[this.name].count += 1;
     }
 
     #addBuff(caster, target, effect, battleField) {
@@ -372,7 +370,6 @@ export class Senpo {
         }
 
         caster.record_skill_stats(this.name, 0, false);
-        //caster.stats_log.skill_details[this.name].count += 1;
     }
 
     #handleIchirokuShobu(caster, target, battleField) {
