@@ -74,46 +74,47 @@ async function runMultipleBattles(count) {
         else summary.draw++;
 
         // 武将ごとのダメージ集計（ここで最大・最小・合計を更新）
-        report.armyA.forEach(b => {
-            if (!summary.details[b.name]) {
-                summary.details[b.name] = { dmgSum: 0, dmgMax: 0, dmgMin: Infinity,skills:{}};  
-            }
-            const sd = summary.teamDamage;
-            sd.sum += b.damage;
-            sd.max = Math.max(sd.max, b.damage);
-            sd.min = Math.min(sd.min, b.damage);
+        ["armyA", "armyB"].forEach(side => {
+            report[side].forEach(b => {
+                if (!summary.details[b.name]) {
+                    summary.details[b.name] = { side: side, dmgSum: 0, dmgMax: 0, dmgMin: Infinity,skills:{}};  
+                }
+                const sd = summary.teamDamage;
+                sd.sum += b.damage;
+                sd.max = Math.max(sd.max, b.damage);
+                sd.min = Math.min(sd.min, b.damage);
 
-            const st = summary.teamTaken;
-            st.sum += b.taken;
-            st.max = Math.max(st.max, b.taken);
-            st.min = Math.min(st.min, b.taken);
+                const st = summary.teamTaken;
+                st.sum += b.taken;
+                st.max = Math.max(st.max, b.taken);
+                st.min = Math.min(st.min, b.taken);
 
-            const sh = summary.teamHeal;
-            sh.sum += b.heal;
-            sh.max = Math.max(sh.max, b.heal);
-            sh.min = Math.min(sh.min, b.heal);
+                const sh = summary.teamHeal;
+                sh.sum += b.heal;
+                sh.max = Math.max(sh.max, b.heal);
+                sh.min = Math.min(sh.min, b.heal);
 
-            b.skill_details.forEach(ss => {
-                summary.details[b.name].skills[ss.name]={dmg:{sum:0,max:0,min:Infinity},
-                    heal:{sum:0,max:0,min:Infinity},count:{sum:0,max:0,min:Infinity}};
-                let ss1 = summary.details[b.name].skills[ss.name]
-                //発動回数
-                ss1.count.sum += ss.count
-                ss1.count.max = Math.max(ss1.count.max, ss.count);
-                ss1.count.min = Math.min(ss1.count.min, ss.count);
+                b.skill_details.forEach(ss => {
+                    summary.details[b.name].skills[ss.name]={dmg:{sum:0,max:0,min:Infinity},
+                        heal:{sum:0,max:0,min:Infinity},count:{sum:0,max:0,min:Infinity}};
+                    let ss1 = summary.details[b.name].skills[ss.name]
+                    //発動回数
+                    ss1.count.sum += ss.count
+                    ss1.count.max = Math.max(ss1.count.max, ss.count);
+                    ss1.count.min = Math.min(ss1.count.min, ss.count);
 
-                //与ダメ
-                ss1.dmg.sum += ss.dmg
-                ss1.dmg.max = Math.max(ss1.dmg.max, ss.dmg);
-                ss1.dmg.min = Math.min(ss1.dmg.min, ss.dmg);
+                    //与ダメ
+                    ss1.dmg.sum += ss.dmg
+                    ss1.dmg.max = Math.max(ss1.dmg.max, ss.dmg);
+                    ss1.dmg.min = Math.min(ss1.dmg.min, ss.dmg);
 
-                //回復
-                ss1.heal.sum += ss.heal
-                ss1.heal.max = Math.max(ss1.heal.max, ss.heal);
-                ss1.heal.min = Math.min(ss1.heal.min, ss.heal);
-            })
+                    //回復
+                    ss1.heal.sum += ss.heal
+                    ss1.heal.max = Math.max(ss1.heal.max, ss.heal);
+                    ss1.heal.min = Math.min(ss1.heal.min, ss.heal);
+                })
+            });
         });
-
         if (i == (count-1)){
             // 3. 画面にログを出力
             const container = document.getElementById('log-container');
@@ -215,10 +216,11 @@ function displaySummaryTable(summary) {
 
     Object.keys(summary.details).forEach(bushoName => {
         const b = summary.details[bushoName];
+        const sideClass = (b.side === "armyA") ? "team-a" : "team-b";
         let html = `
             <table class="summary-table detail-table">
                 <thead>
-                    <tr><th colspan="6" class="busho-header">${bushoName}</th></tr>
+                    <tr><th colspan="6" class="busho-header ${sideClass}">${bushoName}</th></tr>
                     <tr><th>戦法</th><th>項目</th><th>合計</th><th>最大</th><th>最小</th><th>平均</th></tr>
                 </thead>
                 <tbody>`;
