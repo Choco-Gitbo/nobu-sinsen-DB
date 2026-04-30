@@ -359,7 +359,8 @@ export class BattleField {
         // 最終ダメージの適用
         totalDmg = Math.floor(totalDmg * hitRate);
         caster.stats_log.damage_dealt += totalDmg;
-        caster.record_skill_stats(skillName.name, totalDmg, false);
+        if(statusName ==""){log_skill = skillName.name}else{log_skill = statusName} 
+        caster.record_skill_stats(log_skill, totalDmg, false);
 
         // 3. ダメージ適用（肩代わり考慮）
         const actualDmg = this.apply_damage_with_protection(caster, actualTarget, totalDmg);

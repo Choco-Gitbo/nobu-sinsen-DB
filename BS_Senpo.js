@@ -228,6 +228,7 @@ export class Senpo {
             }
 
             caster.record_skill_stats(this.name, 0, false);
+            
         } else if (eType === "dispel_buff" || eType === "dispel_debuff") {
             this.#handleDispel(caster, target, effect, battleField);
         } else if (eType === "special") {
