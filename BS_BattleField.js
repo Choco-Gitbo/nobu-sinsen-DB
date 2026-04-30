@@ -632,12 +632,12 @@ export class BattleField {
             }
 
             if (state.type === "special") {
-                this.#handleSpecialStates(actor, phase, side, target, state);
+                this.handleSpecialStates(actor, phase, side, target, state);
             }
         }
     }
 
-    #handleSpecialStates(actor, phase, side, target, state) {
+    handleSpecialStates(actor, phase, side, target, state) {
         /**特殊状態の処理*/
         if (state.name === "全力戦闘_連撃(予備)") {
             if (this.turn >= parseInt(state.trigger_turn)) {
