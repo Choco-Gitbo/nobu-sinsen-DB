@@ -226,12 +226,12 @@ function displaySummaryTable(summary) {
     document.getElementById('stat-draw-count').innerText = summary.draw;
 
     // --- 1. 全体数値の表示 ---
-    updateStatRow('teamA-total-damage', summary.teamDamage-a, total);
-    updateStatRow('teamA-total-taken', summary.teamTaken-a, total);
-    updateStatRow('teamA-total-heal', summary.teamHeal-a, total);
-    updateStatRow('teamB-total-damage', summary.teamDamage-b, total);
-    updateStatRow('teamB-total-taken', summary.teamTaken-b, total);
-    updateStatRow('teamB-total-heal', summary.teamHeal-b, total);
+    updateStatRow('teamA-total-damage', summary.teamDamage_a, total);
+    updateStatRow('teamA-total-taken', summary.teamTaken_a, total);
+    updateStatRow('teamA-total-heal', summary.teamHeal_a, total);
+    updateStatRow('teamB-total-damage', summary.teamDamage_b, total);
+    updateStatRow('teamB-total-taken', summary.teamTaken_b, total);
+    updateStatRow('teamB-total-heal', summary.teamHeal_b, total);
 
     // --- 2. 武将・戦法別の詳細生成 ---
     const container = document.getElementById('busho-detail-container');
