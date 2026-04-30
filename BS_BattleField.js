@@ -363,7 +363,7 @@ export class BattleField {
         if(statusName === null){
             log_skill = skillName.name;
         }else{
-            caster.states.forEach(s => {
+            target.states.forEach(s => {
                 if (s.name == statusName){
                     log_skill = s.source_skill;
                 }
