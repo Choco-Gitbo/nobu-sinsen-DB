@@ -753,12 +753,12 @@ export class BattleField {
                             statKey = "dmg_up_weapon";
                             statName = STAT_MAP[statKey] || statKey;
                             currentVal = target[`current_${statKey}`];
-                            logMsg = ` -> ${target.colored_name} の ${statName} が 2.0 ${減少} (現在: ${currentVal}) (99ターン)`;
+                            logMsg = ` -> ${target.colored_name} の ${statName} が 2.0 減少 (現在: ${currentVal}) (99ターン)`;
                             this.add_log(logMsg);
                             statKey = "dmg_up_intel";
                             statName = STAT_MAP[statKey] || statKey;
                             currentVal = target[`current_${statKey}`];
-                            logMsg = ` -> ${target.colored_name} の ${statName} が 2.0 ${減少} (現在: ${currentVal}) (99ターン)`;
+                            logMsg = ` -> ${target.colored_name} の ${statName} が 2.0 減少 (現在: ${currentVal}) (99ターン)`;
                             this.add_log(logMsg);
 
                         }
