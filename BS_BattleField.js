@@ -646,6 +646,8 @@ export class BattleField {
         let idx;
         let dmgRate;
         let dmgBorder;
+        let this_skill;
+        let targetKey;
 
         if (state.name === "全力戦闘_連撃(予備)") {
             if (this.turn >= parseInt(state.trigger_turn)) {
@@ -719,8 +721,8 @@ export class BattleField {
         if (state.name === "一念乱志(予備)") {
             if (this.turn >= parseInt(state.trigger_turn)) {
                 if (Math.random() <= (state.rate / 100)){
-                    let this_skill = state.source_skill
-                    let targetKey = "enemy_random_1"
+                    this_skill = state.source_skill
+                    targetKey = "enemy_random_1"
                     target = this.find_targets(actor, targetKey, this_skill.type);
                     // 兵刃ダメージ
                     this.process_attack_event(actor, target, 178, "weapon", this_skill);
@@ -741,7 +743,7 @@ export class BattleField {
         }
         if (state.name === "後方支援(予備)") {
             if (Math.random() <= (40 / 100)){
-                this_skill = state.source_skill
+                let this_skill = state.source_skill
                 targetKey = "friend_random_2"
                 targets = this.find_targets(actor, targetKey, this_skill.type);
                 for (let target of targets) {
