@@ -40,9 +40,12 @@ async function runMultipleBattles(count) {
     // これが「集計データのひな型」
     let summary = {
         win: 0, loss: 0, draw: 0,
-        teamDamage:{sum:0,max:0,min:Infinity},
-        teamTaken:{sum:0,max:0,min:Infinity},
-        teamHeal:{sum:0,max:0,min:Infinity},
+        teamDamage_a:{sum:0,max:0,min:Infinity},
+        teamTaken_a:{sum:0,max:0,min:Infinity},
+        teamHeal_a:{sum:0,max:0,min:Infinity},
+        teamDamage_b:{sum:0,max:0,min:Infinity},
+        teamTaken_b:{sum:0,max:0,min:Infinity},
+        teamHeal_b:{sum:0,max:0,min:Infinity},
         details: {} // 武将ごとの最大・平均などを入れる
     };
 
@@ -79,20 +82,37 @@ async function runMultipleBattles(count) {
                 if (!summary.details[b.name]) {
                     summary.details[b.name] = { side: side, dmgSum: 0, dmgMax: 0, dmgMin: Infinity,skills:{}};  
                 }
-                const sd = summary.teamDamage;
-                sd.sum += b.damage;
-                sd.max = Math.max(sd.max, b.damage);
-                sd.min = Math.min(sd.min, b.damage);
+                if (side == "armyA"){
+                    const sd = summary.teamDamage_a;
+                    sd.sum += b.damage;
+                    sd.max = Math.max(sd.max, b.damage);
+                    sd.min = Math.min(sd.min, b.damage);
 
-                const st = summary.teamTaken;
-                st.sum += b.taken;
-                st.max = Math.max(st.max, b.taken);
-                st.min = Math.min(st.min, b.taken);
+                    const st = summary.teamTaken_a;
+                    st.sum += b.taken;
+                    st.max = Math.max(st.max, b.taken);
+                    st.min = Math.min(st.min, b.taken);
 
-                const sh = summary.teamHeal;
-                sh.sum += b.heal;
-                sh.max = Math.max(sh.max, b.heal);
-                sh.min = Math.min(sh.min, b.heal);
+                    const sh = summary.teamHeal_a;
+                    sh.sum += b.heal;
+                    sh.max = Math.max(sh.max, b.heal);
+                    sh.min = Math.min(sh.min, b.heal);
+                }else{
+                    const sd = summary.teamDamage_b;
+                    sd.sum += b.damage;
+                    sd.max = Math.max(sd.max, b.damage);
+                    sd.min = Math.min(sd.min, b.damage);
+
+                    const st = summary.teamTaken_b;
+                    st.sum += b.taken;
+                    st.max = Math.max(st.max, b.taken);
+                    st.min = Math.min(st.min, b.taken);
+
+                    const sh = summary.teamHeal_b;
+                    sh.sum += b.heal;
+                    sh.max = Math.max(sh.max, b.heal);
+                    sh.min = Math.min(sh.min, b.heal);
+                }
 
                 b.skill_details.forEach(ss => {
                     summary.details[b.name].skills[ss.name]={dmg:{sum:0,max:0,min:Infinity},
@@ -206,9 +226,12 @@ function displaySummaryTable(summary) {
     document.getElementById('stat-draw-count').innerText = summary.draw;
 
     // --- 1. 全体数値の表示 ---
-    updateStatRow('team-total-damage', summary.teamDamage, total);
-    updateStatRow('team-total-taken', summary.teamTaken, total);
-    updateStatRow('team-total-heal', summary.teamHeal, total);
+    updateStatRow('teamA-total-damage', summary.teamDamage-a, total);
+    updateStatRow('teamA-total-taken', summary.teamTaken-a, total);
+    updateStatRow('teamA-total-heal', summary.teamHeal-a, total);
+    updateStatRow('teamB-total-damage', summary.teamDamage-b, total);
+    updateStatRow('teamB-total-taken', summary.teamTaken-b, total);
+    updateStatRow('teamB-total-heal', summary.teamHeal-b, total);
 
     // --- 2. 武将・戦法別の詳細生成 ---
     const container = document.getElementById('busho-detail-container');
