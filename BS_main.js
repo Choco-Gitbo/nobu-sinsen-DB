@@ -46,7 +46,9 @@ async function runMultipleBattles(count) {
         teamDamage_b:{sum:0,max:0,min:Infinity},
         teamTaken_b:{sum:0,max:0,min:Infinity},
         teamHeal_b:{sum:0,max:0,min:Infinity},
-        details: {} // 武将ごとの最大・平均などを入れる
+        details: {
+            armyA:{},armyB:{}
+        } // 武将ごとの最大・平均などを入れる
     };
 
     const idA = Number(document.getElementById('select-team-a').value);
@@ -79,11 +81,11 @@ async function runMultipleBattles(count) {
         // 武将ごとのダメージ集計（ここで最大・最小・合計を更新）
         ["armyA", "armyB"].forEach(side => {
             report[side].forEach(b => {
-                if (!summary.details[b.name]) {
-                    summary.details[b.name] = { side: side, dmgSum: 0, dmgMax: 0, dmgMin: Infinity,skills:{}};  
+                if (!summary.details[side][b.name]) {
+                    summary.details[side][b.name] = { dmgSum: 0, dmgMax: 0, dmgMin: Infinity,skills:{}};  
                 }
                 if (side == "armyA"){
-                    const sd = summary.teamDamage_a;
+                    const sd = summary.teamDamag_a;
                     sd.sum += b.damage;
                     sd.max = Math.max(sd.max, b.damage);
                     sd.min = Math.min(sd.min, b.damage);
@@ -114,8 +116,9 @@ async function runMultipleBattles(count) {
                     sh.min = Math.min(sh.min, b.heal);
                 }
 
-                b.skill_details.forEach(ss => {
-                    summary.details[b.name].skills[ss.name]={dmg:{sum:0,max:0,min:Infinity},
+                const target = summary.details[side][b.name];
+                target.forEach(ss => {
+                    target.skills[ss.name]={dmg:{sum:0,max:0,min:Infinity},
                         heal:{sum:0,max:0,min:Infinity},count:{sum:0,max:0,min:Infinity}};
                     let ss1 = summary.details[b.name].skills[ss.name]
                     //発動回数
@@ -237,27 +240,30 @@ function displaySummaryTable(summary) {
     const container = document.getElementById('busho-detail-container');
     container.innerHTML = ""; // 初期化
 
-    Object.keys(summary.details).forEach(bushoName => {
-        const b = summary.details[bushoName];
-        const sideClass = (b.side === "armyA") ? "team-a" : "team-b";
-        let html = `
-            <table class="summary-table detail-table">
-                <thead>
-                    <tr><th colspan="6" class="busho-header ${sideClass}">${bushoName}</th></tr>
-                    <tr><th>戦法</th><th>項目</th><th>合計</th><th>最大</th><th>最小</th><th>平均</th></tr>
-                </thead>
-                <tbody>`;
+    ["armyA", "armyB"].forEach(side => {
+        const sideClass = (side === "armyA") ? "team-a" : "team-b";
+        Object.keys(summary.details[side]).forEach(bushoName => {
+            const b = summary.details[side][bushoName];
+            
+            let html = `
+                <table class="summary-table detail-table">
+                    <thead>
+                        <tr><th colspan="6" class="busho-header ${sideClass}">${bushoName}</th></tr>
+                        <tr><th>戦法</th><th>項目</th><th>合計</th><th>最大</th><th>最小</th><th>平均</th></tr>
+                    </thead>
+                    <tbody>`;
 
-        Object.keys(b.skills).forEach(skillName => {
-            const s = b.skills[skillName];
-            // 各項目の行を生成（与ダメ、回復、回数）
-            html += generateSkillRow(skillName, "与ダメ", s.dmg, total);
-            html += generateSkillRow("", "回復", s.heal, total);
-            html += generateSkillRow("", "発動回数", s.count, total);
+            Object.keys(b.skills).forEach(skillName => {
+                const s = b.skills[skillName];
+                // 各項目の行を生成（与ダメ、回復、回数）
+                html += generateSkillRow(skillName, "与ダメ", s.dmg, total);
+                html += generateSkillRow("", "回復", s.heal, total);
+                html += generateSkillRow("", "発動回数", s.count, total);
+            });
+
+            html += `</tbody></table>`;
+            container.insertAdjacentHTML('beforeend', html);
         });
-
-        html += `</tbody></table>`;
-        container.insertAdjacentHTML('beforeend', html);
     });
 }
 
