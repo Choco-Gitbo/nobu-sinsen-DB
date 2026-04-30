@@ -239,7 +239,7 @@ function displaySummaryTable(summary) {
 
     Object.keys(summary.details).forEach(bushoName => {
         const b = summary.details[bushoName];
-        const sideClass = (b === "armyA") ? "team-a" : "team-b";
+        const sideClass = (b.side === "armyA") ? "team-a" : "team-b";
         let html = `
             <table class="summary-table detail-table">
                 <thead>
