@@ -116,8 +116,8 @@ async function runMultipleBattles(count) {
                     sh.min = Math.min(sh.min, b.heal);
                 }
 
-                const target = summary.details[side][b.name][skills];
-                target.forEach(ss => {
+                const target = summary.details[side][b.name];
+                target.skill.forEach(ss => {
                     target.skills[ss.name]={dmg:{sum:0,max:0,min:Infinity},
                         heal:{sum:0,max:0,min:Infinity},count:{sum:0,max:0,min:Infinity}};
                     let ss1 = summary.details[b.name].skills[ss.name]
