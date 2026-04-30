@@ -80,6 +80,6 @@
 }
 
 .summary-table td {
-    font-size: 0.5rem; /* スマホで見やすくするために少し小さく */
-    padding: 6px 4px;
+    font-size: 0.6rem; /* スマホで見やすくするために少し小さく */
+    padding: 4px 2px;
 }
