@@ -360,10 +360,12 @@ export class BattleField {
         totalDmg = Math.floor(totalDmg * hitRate);
         caster.stats_log.damage_dealt += totalDmg;
         let log_skill = skillName.name;
-        if(statusName !=""){
+        if(statusName === null){
+            log_skill = skillName.name;
+        }else{
             caster.states.forEach(s => {
                 if (s.name == statusName){
-                    log_skill = s.source_skill
+                    log_skill = s.source_skill;
                 }
             });
         } 
