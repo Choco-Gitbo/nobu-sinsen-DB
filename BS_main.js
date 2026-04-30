@@ -117,10 +117,10 @@ async function runMultipleBattles(count) {
                 }
 
                 const target = summary.details[side][b.name];
-                target.forEach(ss => {
+                b.skill_details.forEach(ss => {
                     target.skills[ss.name]={dmg:{sum:0,max:0,min:Infinity},
                         heal:{sum:0,max:0,min:Infinity},count:{sum:0,max:0,min:Infinity}};
-                    let ss1 = summary.details[b.name].skills[ss.name]
+                    let ss1 = summary.details[side][b.name].skills[ss.name]
                     //発動回数
                     ss1.count.sum += ss.count
                     ss1.count.max = Math.max(ss1.count.max, ss.count);
