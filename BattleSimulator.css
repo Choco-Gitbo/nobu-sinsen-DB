@@ -45,6 +45,12 @@
     text-align: center;
     box-sizing: border-box;
 }
+.summary-table-wrapper {
+    display: flex;             /* ★横並びにする魔法の言葉 */
+    justify-content: center;   /* 中央寄せに配置 */
+    align-items: center;       /* 上下方向も中央で揃える（VSボタンが浮かないように） */
+    gap: 5px;                 /* 要素同士の間隔を少し空ける */
+}
 
 .summary-table {
     width: 100%;

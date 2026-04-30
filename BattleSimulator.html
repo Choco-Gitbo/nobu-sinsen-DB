@@ -132,15 +132,24 @@
 
         <div id="statistics-result">
             <label>部隊全体統計</label>
-            <table class="summary-table">
-                <tr>
-                    <th>項目</th><th>最大</th><th>最小</th><th>平均</th>
-                </tr>
-                <tr id="team-total-damage"><td>与ダメージ</td><td class="max">-</td><td class="min">-</td><td class="avg">-</td></tr>
-                <tr id="team-total-taken"><td>被ダメージ</td><td class="max">-</td><td class="min">-</td><td class="avg">-</td></tr>
-                <tr id="team-total-heal"><td>回復量</td><td class="max">-</td><td class="min">-</td><td class="avg">-</td></tr>
-            </table>
-
+            <div class=" summary-table-wrapper">
+                <table class="summary-table team-a">
+                    <tr>
+                        <th>項目</th><th>最大</th><th>最小</th><th>平均</th>
+                    </tr>
+                    <tr id="teamA-total-damage"><td>与ダメージ</td><td class="max">-</td><td class="min">-</td><td class="avg">-</td></tr>
+                    <tr id="teamA-total-taken"><td>被ダメージ</td><td class="max">-</td><td class="min">-</td><td class="avg">-</td></tr>
+                    <tr id="teamA-total-heal"><td>回復量</td><td class="max">-</td><td class="min">-</td><td class="avg">-</td></tr>
+                </table>
+                <table class="summary-table team-b">
+                    <tr>
+                        <th>項目</th><th>最大</th><th>最小</th><th>平均</th>
+                    </tr>
+                    <tr id="teamB-total-damage"><td>与ダメージ</td><td class="max">-</td><td class="min">-</td><td class="avg">-</td></tr>
+                    <tr id="teamB-total-taken"><td>被ダメージ</td><td class="max">-</td><td class="min">-</td><td class="avg">-</td></tr>
+                    <tr id="teamB-total-heal"><td>回復量</td><td class="max">-</td><td class="min">-</td><td class="avg">-</td></tr>
+                </table>
+            </div>
             <label>武将・戦法別詳細</label>
             <div id="busho-detail-container"></div>
         </div>
