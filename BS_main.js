@@ -51,15 +51,17 @@ async function runMultipleBattles(count) {
 
     // 1. 指定したIDの部隊をLocalStorage/DBから取得
     const teamA = await getTeamFromStorage(idA,"A");
-    teamA[0].hp = Number(document.getElementById("preview-a-0-hp").value);
-    teamA[1].hp = Number(document.getElementById("preview-a-1-hp").value);
-    teamA[2].hp = Number(document.getElementById("preview-a-2-hp").value);
     const teamB = await getTeamFromStorage(idB,"E");
-    teamB[0].hp = Number(document.getElementById("preview-b-0-hp").value);
-    teamB[1].hp = Number(document.getElementById("preview-b-1-hp").value);
-    teamB[2].hp = Number(document.getElementById("preview-b-2-hp").value);
 
     for (let i = 0; i < count; i++) {
+        //兵数リセット
+        teamA[0].hp = Number(document.getElementById("preview-a-0-hp").value);
+        teamA[1].hp = Number(document.getElementById("preview-a-1-hp").value);
+        teamA[2].hp = Number(document.getElementById("preview-a-2-hp").value);
+        teamB[0].hp = Number(document.getElementById("preview-b-0-hp").value);
+        teamB[1].hp = Number(document.getElementById("preview-b-1-hp").value);
+        teamB[2].hp = Number(document.getElementById("preview-b-2-hp").value);
+
         const bf = new BattleField(teamA, teamB);
         const report = bf.run_battle(8); // 上記パターンAの戻り値
 
