@@ -708,6 +708,56 @@ export class BattleField {
                 }
             }
         }
+        if (state.name === "一念乱志(予備)") {
+            if (this.turn >= parseInt(state.trigger_turn)) {
+                if (Math.random() <= (state.rate / 100)){
+                    this_skill = state.source_skill
+                    targetKey = "enemy_random_1"
+                    target = this.find_targets(caster, targetKey, this_skill.type);
+                    // 兵刃ダメージ
+                    this.process_attack_event(actor, target, 178, "weapon", this_skill);
+                    
+                    if (Math.random() <= (state.rate / 100)){
+                        targetKey = "friend_highest_pow"
+                        caster = this.find_targets(actor, targetKey, this_skill.type);
+                        targetKey = "last_target"
+                        target = this.find_targets(actor, targetKey, this_skill.type);
+                        // 兵刃ダメージ
+                        this.process_attack_event(caster, target, 178, "weapon", this_skill);
+                        state.rate -= 5
+                    }
+                }else{
+                    this.add_log(`   ${actor.colored_name} の [一念乱志(予備)] が発動失敗`);
+                }
+            }
+        }
+        if (state.name === "後方支援(予備)") {
+            if (Math.random() <= (40 / 100)){
+                this_skill = state.source_skill
+                targetKey = "friend_random_2"
+                targets = this.find_targets(actor, targetKey, this_skill.type);
+                for (const target of targets) {
+                    target.states.forEach(s =>{
+                        if(s.source_skill == "後方支援"){
+                            s.value -= 2;
+                            const statKey = "dmg_up_weapon";
+                            const statName = STAT_MAP[statKey] || statKey;
+                            const currentVal = target[`current_${statKey}`];
+                            const logMsg = ` -> ${target.colored_name} の ${statName} が 2.0 ${減少} (現在: ${currentVal}) (99ターン)`;
+                            this.add_log(logMsg);
+                            const statKey = "dmg_up_intel";
+                            const statName = STAT_MAP[statKey] || statKey;
+                            const currentVal = target[`current_${statKey}`];
+                            const logMsg = ` -> ${target.colored_name} の ${statName} が 2.0 ${減少} (現在: ${currentVal}) (99ターン)`;
+                            this.add_log(logMsg);
+
+                        }
+                    })
+                }
+            }else{
+                this.add_log(`   ${actor.colored_name} の [後方支援(予備)] が発動失敗`);
+            }
+        }
     }
 
     add_log(message, category = "info") {
@@ -974,6 +1024,11 @@ export class BattleField {
         // 封撃（通常攻撃不可）チェック
         if (busho.states.some(s => s.type === 'status_effect' && s.name === '封撃')) {
             this.add_log(`  ${busho.colored_name} は封撃状態で通常攻撃不可`);
+            return;
+        }
+        // 封撃（通常攻撃不可）チェック
+        if (busho.states.some(s => s.type === 'status_effect' && s.name === '通常攻撃不可')) {
+            this.add_log(`  ${busho.colored_name} は通常攻撃不可状態で通常攻撃不可`);
             return;
         }
 

@@ -160,6 +160,17 @@ export const STATE_TEMPLATES = {
         stat: null,
         conflict_rule: "NONE"
     },
+    "再発動不可": {
+        type: "refire",
+        conflict_rule: "NONE"
+    },
+    "通常攻撃不可": {
+        type: "status_effect",
+        phase: "before_attack",
+        trigger_side: "attacker",
+        stat: null,
+        conflict_rule: "NONE"
+    },
     "挑発": {
         type: "status_effect",
         conflict_rule: "NONE"
@@ -236,10 +247,6 @@ export const STATE_TEMPLATES = {
         trigger_side: "defender",
         conflict_rule: "EXTEND"
     },
-    "再発動不可": {
-        type: "refire",
-        conflict_rule: "NONE"
-    },
 
     "全力戦闘_連撃(予備)": {
         type: "special",
@@ -264,6 +271,23 @@ export const STATE_TEMPLATES = {
         trigger_side: "attacker",
         trigger_turn: 2,
         source_skill: "懐柔",
+        conflict_rule: "NONE"
+    },
+    "一念乱志(予備)": {
+        type: "special",
+        phase: "before_action",
+        trigger_side: "attacker",
+        trigger_turn: 3,
+        duration:99,
+        source_skill: "一念乱志",
+        conflict_rule: "NONE"
+    },
+    "後方支援(予備)": {
+        type: "special",
+        phase: "before_action",
+        trigger_side: "attacker",
+        duration:99,
+        source_skill: "後方支援",
         conflict_rule: "NONE"
     }
 };
