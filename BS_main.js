@@ -79,8 +79,8 @@ async function runMultipleBattles(count) {
         // 武将ごとのダメージ集計（ここで最大・最小・合計を更新）
         ["armyA", "armyB"].forEach(side => {
             report[side].forEach(b => {
-                if (!summary.details[side][b.name]) {
-                    summary.details[side][b.name] = { side: side, dmgSum: 0, dmgMax: 0, dmgMin: Infinity,skills:{}};  
+                if (!summary.details[b.name]) {
+                    summary.details[b.name] = { side: side, dmgSum: 0, dmgMax: 0, dmgMin: Infinity,skills:{}};  
                 }
                 if (side == "armyA"){
                     const sd = summary.teamDamage_a;
@@ -115,9 +115,9 @@ async function runMultipleBattles(count) {
                 }
 
                 b.skill_details.forEach(ss => {
-                    summary.details[side][b.name].skills[ss.name]={dmg:{sum:0,max:0,min:Infinity},
+                    summary.details[b.name].skills[ss.name]={dmg:{sum:0,max:0,min:Infinity},
                         heal:{sum:0,max:0,min:Infinity},count:{sum:0,max:0,min:Infinity}};
-                    let ss1 = summary.details[side][b.name].skills[ss.name]
+                    let ss1 = summary.details[b.name].skills[ss.name]
                     //発動回数
                     ss1.count.sum += ss.count
                     ss1.count.max = Math.max(ss1.count.max, ss.count);
@@ -238,9 +238,8 @@ function displaySummaryTable(summary) {
     container.innerHTML = ""; // 初期化
 
     Object.keys(summary.details).forEach(bushoName => {
-        const side = summary.details["side"]
-        const b = summary.details[side][bushoName];
-        const sideClass = (side === "armyA") ? "team-a" : "team-b";
+        const b = summary.details[bushoName];
+        const sideClass = (b === "armyA") ? "team-a" : "team-b";
         let html = `
             <table class="summary-table detail-table">
                 <thead>
