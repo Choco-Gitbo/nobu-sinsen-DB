@@ -743,9 +743,9 @@ export class BattleField {
         }
         if (state.name === "後方支援(予備)") {
             if (Math.random() <= (40 / 100)){
-                let this_skill = state.source_skill
+                this_skill = state.source_skill
                 targetKey = "friend_random_2"
-                targets = this.find_targets(actor, targetKey, this_skill.type);
+                let targets = this.find_targets(actor, targetKey, this_skill.type);
                 for (let target of targets) {
                     target.states.forEach(s =>{
                         if(s.source_skill == "後方支援"){
