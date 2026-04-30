@@ -162,6 +162,7 @@ export const STATE_TEMPLATES = {
     },
     "再発動不可": {
         type: "refire",
+        phase: "before_attack",
         conflict_rule: "NONE"
     },
     "通常攻撃不可": {
