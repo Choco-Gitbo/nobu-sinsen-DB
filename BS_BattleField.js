@@ -639,6 +639,14 @@ export class BattleField {
 
     handleSpecialStates(actor, phase, side, target, state) {
         /**特殊状態の処理*/
+        let statKey;
+        let statName;
+        let currentVal;
+        let logMsg;
+        let idx;
+        let dmgRate;
+        let dmgBorder;
+
         if (state.name === "全力戦闘_連撃(予備)") {
             if (this.turn >= parseInt(state.trigger_turn)) {
                 const isSuccess = actor.add_state({
@@ -652,9 +660,9 @@ export class BattleField {
                 }, this);
 
                 if (isSuccess) {
-                    const logMsg = ` -> ${actor.colored_name} が 連撃 を付与 (4ターン)`;
+                    logMsg = ` -> ${actor.colored_name} が 連撃 を付与 (4ターン)`;
                     this.add_log(logMsg);
-                    const idx = actor.states.indexOf(state);
+                    idx = actor.states.indexOf(state);
                     if (idx > -1) actor.states.splice(idx, 1);
                     this.add_log(`  (効果終了) ${actor.colored_name} の [全力戦闘_連撃(予備)] が消失`);
                 }
@@ -662,8 +670,8 @@ export class BattleField {
         }
 
         if (state.name === "捨て身の義(予備)") {
-            const dmgRate = (actor.hp / actor.max_hp) * 100;
-            const dmgBorder = parseInt(state.value) - 20;
+            dmgRate = (actor.hp / actor.max_hp) * 100;
+            dmgBorder = parseInt(state.value) - 20;
             if (dmgRate <= dmgBorder) {
                 state.value = Math.floor(dmgRate / 20) * 20 + 20;
                 const skill = actor.skills.find(s => s.name === "捨て身の義");
@@ -699,9 +707,9 @@ export class BattleField {
                 }, this);
 
                 if (isSuccess) {
-                    const logMsg = ` -> ${actor.colored_name} が 休養 を付与 (4ターン)`;
+                    logMsg = ` -> ${actor.colored_name} が 休養 を付与 (4ターン)`;
                     this.add_log(logMsg);
-                    const idx = actor.states.indexOf(state);
+                    idx = actor.states.indexOf(state);
                     if (idx > -1) actor.states.splice(idx, 1);
                     this.add_log(`  (効果終了) ${actor.colored_name} の [懐柔_休養(予備)] が消失`);
                     this.process_heal_event(state.source_busho, actor, 84, "intl", "懐柔");
@@ -736,19 +744,19 @@ export class BattleField {
                 this_skill = state.source_skill
                 targetKey = "friend_random_2"
                 targets = this.find_targets(actor, targetKey, this_skill.type);
-                for (const target of targets) {
+                for (let target of targets) {
                     target.states.forEach(s =>{
                         if(s.source_skill == "後方支援"){
                             s.value -= 2;
-                            const statKey = "dmg_up_weapon";
-                            const statName = STAT_MAP[statKey] || statKey;
-                            const currentVal = target[`current_${statKey}`];
-                            const logMsg = ` -> ${target.colored_name} の ${statName} が 2.0 ${減少} (現在: ${currentVal}) (99ターン)`;
+                            statKey = "dmg_up_weapon";
+                            statName = STAT_MAP[statKey] || statKey;
+                            currentVal = target[`current_${statKey}`];
+                            logMsg = ` -> ${target.colored_name} の ${statName} が 2.0 ${減少} (現在: ${currentVal}) (99ターン)`;
                             this.add_log(logMsg);
-                            const statKey = "dmg_up_intel";
-                            const statName = STAT_MAP[statKey] || statKey;
-                            const currentVal = target[`current_${statKey}`];
-                            const logMsg = ` -> ${target.colored_name} の ${statName} が 2.0 ${減少} (現在: ${currentVal}) (99ターン)`;
+                            statKey = "dmg_up_intel";
+                            statName = STAT_MAP[statKey] || statKey;
+                            currentVal = target[`current_${statKey}`];
+                            logMsg = ` -> ${target.colored_name} の ${statName} が 2.0 ${減少} (現在: ${currentVal}) (99ターン)`;
                             this.add_log(logMsg);
 
                         }
