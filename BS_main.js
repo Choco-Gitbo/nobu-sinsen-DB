@@ -85,7 +85,7 @@ async function runMultipleBattles(count) {
                     summary.details[side][b.name] = { dmgSum: 0, dmgMax: 0, dmgMin: Infinity,skills:{}};  
                 }
                 if (side == "armyA"){
-                    const sd = summary.teamDamag_a;
+                    const sd = summary.teamDamage_a;
                     sd.sum += b.damage;
                     sd.max = Math.max(sd.max, b.damage);
                     sd.min = Math.min(sd.min, b.damage);
