@@ -721,7 +721,7 @@ export class BattleField {
                 if (Math.random() <= (state.rate / 100)){
                     let this_skill = state.source_skill
                     let targetKey = "enemy_random_1"
-                    target = this.find_targets(caster, targetKey, this_skill.type);
+                    target = this.find_targets(actor, targetKey, this_skill.type);
                     // 兵刃ダメージ
                     this.process_attack_event(actor, target, 178, "weapon", this_skill);
                     
