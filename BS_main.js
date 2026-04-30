@@ -49,12 +49,15 @@ async function runMultipleBattles(count) {
     const idA = Number(document.getElementById('select-team-a').value);
     const idB = Number(document.getElementById('select-team-b').value);
 
-    // 1. 指定したIDの部隊をLocalStorage/DBから取得
-    const teamA = await getTeamFromStorage(idA,"A");
-    const teamB = await getTeamFromStorage(idB,"E");
 
     for (let i = 0; i < count; i++) {
-        //兵数リセット
+
+        // 1. 指定したIDの部隊をLocalStorage/DBから取得
+        //前回戦闘を引き継ぐときは実行しない
+        const teamA = await getTeamFromStorage(idA,"A");
+        const teamB = await getTeamFromStorage(idB,"E");
+
+    //兵数リセット
         teamA[0].hp = Number(document.getElementById("preview-a-0-hp").value);
         teamA[1].hp = Number(document.getElementById("preview-a-1-hp").value);
         teamA[2].hp = Number(document.getElementById("preview-a-2-hp").value);
