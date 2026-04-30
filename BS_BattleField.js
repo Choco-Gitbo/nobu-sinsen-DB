@@ -719,15 +719,15 @@ export class BattleField {
         if (state.name === "一念乱志(予備)") {
             if (this.turn >= parseInt(state.trigger_turn)) {
                 if (Math.random() <= (state.rate / 100)){
-                    this_skill = state.source_skill
-                    targetKey = "enemy_random_1"
+                    let this_skill = state.source_skill
+                    let targetKey = "enemy_random_1"
                     target = this.find_targets(caster, targetKey, this_skill.type);
                     // 兵刃ダメージ
                     this.process_attack_event(actor, target, 178, "weapon", this_skill);
                     
                     if (Math.random() <= (state.rate / 100)){
                         targetKey = "friend_highest_pow"
-                        caster = this.find_targets(actor, targetKey, this_skill.type);
+                        let caster = this.find_targets(actor, targetKey, this_skill.type);
                         targetKey = "last_target"
                         target = this.find_targets(actor, targetKey, this_skill.type);
                         // 兵刃ダメージ
