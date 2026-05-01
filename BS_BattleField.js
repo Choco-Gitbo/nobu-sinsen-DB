@@ -754,7 +754,7 @@ export class BattleField {
                     new_target.states.forEach(s =>{
                         if(s.source_skill.name == "後方支援"){
                             s.value -= 2;
-                            statKey = s.name;
+                            statKey = s.stat;
                             statName = STAT_MAP[statKey] || statKey;
                             currentVal = new_target[`current_${statKey}`];
                             logMsg = ` -> ${new_target.colored_name} の ${statName} が 2.0 減少 (現在: ${currentVal}) (99ターン)`;
