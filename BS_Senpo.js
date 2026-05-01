@@ -318,7 +318,7 @@ export class Senpo {
             stat: statKey,
             value: eVal,
             duration: eDuration,
-            source_skill: this.name,
+            source_skill: this,
             source_busho: caster,
             conflict_rule: "STACK",
             stack_max: stackMax
@@ -359,7 +359,7 @@ export class Senpo {
             name: chosenStateBase.name,
             type: chosenStateBase.type,
             duration: duration,
-            source_skill: this.name,
+            source_skill: this,
             source_busho: caster,
             conflict_rule: "NONE"
         };
