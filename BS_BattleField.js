@@ -727,7 +727,7 @@ export class BattleField {
                     targetKey = "enemy_random_1"
                     new_target = this.find_targets(actor, targetKey, this_skill.type);
                     // 兵刃ダメージ
-                    this.process_attack_event(actor, new_target, 178, "weapon", this_skill);
+                    this.process_attack_event(actor, new_target[0], 178, "weapon", this_skill);
                     
                     if (Math.random() <= (state.rate / 100)){
                         targetKey = "friend_highest_pow"
@@ -735,7 +735,7 @@ export class BattleField {
                         targetKey = "last_target"
                         new_target = this.find_targets(actor, targetKey, this_skill.type);
                         // 兵刃ダメージ
-                        this.process_attack_event(caster, new_target, 178, "weapon", this_skill);
+                        this.process_attack_event(caster, new_target[0], 178, "weapon", this_skill);
                         state.rate -= 5
                     }
                 }else{
