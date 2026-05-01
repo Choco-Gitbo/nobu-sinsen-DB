@@ -706,7 +706,7 @@ export class BattleField {
                     value: 84,
                     stat: "intl",
                     duration: 2,
-                    source_skill: "懐柔",
+                    source_skill: state.source_skill,
                     source_busho: state.source_busho,
                     conflict_rule: "EXTEND"
                 }, this);
@@ -751,7 +751,7 @@ export class BattleField {
                 let targets = this.find_targets(actor, targetKey, this_skill.type);
                 for (let target of targets) {
                     target.states.forEach(s =>{
-                        if(s.source_skill == "後方支援"){
+                        if(s.source_skill.name == "後方支援"){
                             s.value -= 2;
                             statKey = "dmg_up_weapon";
                             statName = STAT_MAP[statKey] || statKey;
