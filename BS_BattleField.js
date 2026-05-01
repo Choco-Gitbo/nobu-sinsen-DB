@@ -749,21 +749,16 @@ export class BattleField {
                 this_skill = state.source_skill
                 targetKey = "friend_random_2"
                 let targets = this.find_targets(actor, targetKey, this_skill.type);
-                for (let target of targets) {
-                    target.states.forEach(s =>{
+                
+                for (new_target of targets) {
+                    new_target.states.forEach(s =>{
                         if(s.source_skill.name == "後方支援"){
                             s.value -= 2;
-                            statKey = "dmg_up_weapon";
+                            statKey = s.name;
                             statName = STAT_MAP[statKey] || statKey;
-                            currentVal = target[`current_${statKey}`];
-                            logMsg = ` -> ${target.colored_name} の ${statName} が 2.0 減少 (現在: ${currentVal}) (99ターン)`;
+                            currentVal = new_target[`current_${statKey}`];
+                            logMsg = ` -> ${new_target.colored_name} の ${statName} が 2.0 減少 (現在: ${currentVal}) (99ターン)`;
                             this.add_log(logMsg);
-                            statKey = "dmg_up_intel";
-                            statName = STAT_MAP[statKey] || statKey;
-                            currentVal = target[`current_${statKey}`];
-                            logMsg = ` -> ${target.colored_name} の ${statName} が 2.0 減少 (現在: ${currentVal}) (99ターン)`;
-                            this.add_log(logMsg);
-
                         }
                     })
                 }
