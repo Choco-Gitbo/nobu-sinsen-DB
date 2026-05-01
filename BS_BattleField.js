@@ -649,7 +649,8 @@ export class BattleField {
         let dmgBorder;
         let this_skill;
         let targetKey;
-
+        let new_target;
+        
         if (state.name === "全力戦闘_連撃(予備)") {
             if (this.turn >= parseInt(state.trigger_turn)) {
                 const isSuccess = actor.add_state({
@@ -724,9 +725,9 @@ export class BattleField {
                 if (Math.random() <= (state.rate / 100)){
                     this_skill = state.source_skill
                     targetKey = "enemy_random_1"
-                    target = this.find_targets(actor, targetKey, this_skill.type);
+                    new_target = this.find_targets(actor, targetKey, this_skill.type);
                     // 兵刃ダメージ
-                    this.process_attack_event(actor, target, 178, "weapon", this_skill);
+                    this.process_attack_event(actor, new_target, 178, "weapon", this_skill);
                     
                     if (Math.random() <= (state.rate / 100)){
                         targetKey = "friend_highest_pow"
