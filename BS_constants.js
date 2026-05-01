@@ -256,7 +256,6 @@ export const STATE_TEMPLATES = {
         trigger_side: "attacker",
         trigger_turn: 5,
         rate: 70,
-        source_skill: "全力戦闘",
         conflict_rule: "NONE"
     },
     "捨て身の義(予備)": {
@@ -264,7 +263,6 @@ export const STATE_TEMPLATES = {
         phase: "after_attack",
         trigger_side: "defender",
         value: 100,
-        source_skill: "捨て身の義",
         conflict_rule: "NONE"
     },
     "懐柔_休養(予備)": {
@@ -272,7 +270,6 @@ export const STATE_TEMPLATES = {
         phase: "before_action",
         trigger_side: "attacker",
         trigger_turn: 2,
-        source_skill: "懐柔",
         conflict_rule: "NONE"
     },
     "一念乱志(予備)": {
@@ -281,7 +278,6 @@ export const STATE_TEMPLATES = {
         trigger_side: "attacker",
         trigger_turn: 3,
         duration:99,
-        source_skill: "一念乱志",
         conflict_rule: "NONE"
     },
     "後方支援(予備)": {
@@ -289,7 +285,6 @@ export const STATE_TEMPLATES = {
         phase: "before_action",
         trigger_side: "attacker",
         duration:99,
-        source_skill: "後方支援",
         conflict_rule: "NONE"
     }
 };

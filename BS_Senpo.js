@@ -218,7 +218,7 @@ export class Senpo {
                 }
             }
 
-            ov.source_skill = this.name;
+            ov.source_skill = this;
             ov.source_busho = caster;
             const isSuccess = battleField.add_state_by_name(target, eEffect, ov);
             
