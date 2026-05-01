@@ -47,11 +47,16 @@ export class Senpo {
 
             // 4. 効果の適用（ターゲット全員に対してループ）
             for (const target of targets) {
-                // 1. 条件チェック（例：副将なら追加効果、など）
                 if (effect.condition) {
-                    if (!this.#checkCondition(caster, target, effect.condition, battlefield)) {
-                        continue; // 条件不一致ならこの効果はスキップ
-                    }
+                    // 配列に変換して一括処理
+                    const conditions = Array.isArray(effect.condition) ? effect.condition : [effect.condition];
+                    
+                    // すべての条件を満たすかチェック (AND判定)
+                    const allPassed = conditions.every(cond => 
+                        this.#checkCondition(caster, target, cond, battlefield)
+                    );
+
+                    if (!allPassed) continue; 
                 }
                 this.#applyEffectLogic(caster, target, effect, battlefield);
             }
@@ -67,10 +72,10 @@ export class Senpo {
             return !caster.is_main; // 主将でなければTrue
         }
         if (conditionName === "is_man") {
-            return !caster.sex === "男"; // 男性ならTrue
+            return caster.sex === "男"; // 男性ならTrue
         }
         if (conditionName === "is_woman") {
-            return !caster.sex === "女"; // 女性ならTrue
+            return caster.sex === "女"; // 女性ならTrue
         }
         if (conditionName === "武勇>知略") {
             return caster.current_pow >= caster.current_intl;
@@ -158,7 +163,7 @@ export class Senpo {
             const match = conditionName.match(/\d+/);
             if (match) {
                 const addRate = parseInt(match[0]);
-                return Math.random() * 100 <= addRate;
+                return Math.random() <= (addRate /100);
             }
         }
 
