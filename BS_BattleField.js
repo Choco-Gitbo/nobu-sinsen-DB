@@ -589,6 +589,7 @@ export class BattleField {
 
     process_phase_states(actor, phase, side, target) {
         /**フェーズに応じた状態効果の処理*/
+        console.log(actor.name , phase , side , target )
         const statesToProcess = actor.states.filter(s => s.phase === phase && s.trigger_side === side);
 
         for (const state of statesToProcess) {
