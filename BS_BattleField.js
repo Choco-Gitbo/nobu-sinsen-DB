@@ -650,6 +650,7 @@ export class BattleField {
         let this_skill;
         let targetKey;
         let new_target;
+        let new_caster;
 
         if (state.name === "全力戦闘_連撃(予備)") {
             if (this.turn >= parseInt(state.trigger_turn)) {
@@ -731,11 +732,11 @@ export class BattleField {
                     
                     if (Math.random() <= (state.rate / 100)){
                         targetKey = "friend_highest_pow"
-                        let caster = this.find_targets(actor, targetKey, this_skill.type);
+                        new_caster = this.find_targets(actor, targetKey, this_skill.type);
                         targetKey = "last_target"
                         new_target = this.find_targets(actor, targetKey, this_skill.type);
                         // 兵刃ダメージ
-                        this.process_attack_event(caster, new_target[0], 178, "weapon", this_skill);
+                        this.process_attack_event(new_caster[0], new_target[0], 178, "weapon", this_skill);
                         state.rate -= 5
                     }
                 }else{
