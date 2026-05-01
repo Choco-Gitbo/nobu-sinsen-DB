@@ -659,7 +659,7 @@ export class BattleField {
                     name: "連撃",
                     rate: parseInt(state.rate),
                     duration: 4,
-                    source_skill: "全力戦闘",
+                    source_skill: state.source_skill,
                     source_busho: state.source_busho,
                     conflict_rule: "STACK"
                 }, this);
