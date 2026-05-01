@@ -292,7 +292,7 @@ export class BattleField {
          * 通常攻撃または突撃戦法など、対象が存在する攻撃アクション
          */
         const atkName = statusName === null ? skillName.name : statusName;
-        this.add_log(`${caster.colored_name} の[<span class="senpo-name">${atkName}</span>]攻撃開始（対象: ${target.colored_name}）`);
+        this.add_log(`   ${caster.colored_name} の[<span class="senpo-name">${atkName}</span>]攻撃開始（対象: ${target.colored_name}）`);
 
         // --- 援護の判定 ---
         let engoState = caster.states.find(s => s.name === '援護');
