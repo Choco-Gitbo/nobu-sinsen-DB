@@ -412,22 +412,22 @@ export class BattleField {
 
             // 肩代わり者にダメージ適用
             provider.hp -= providedDmg;
-            this.add_log(`【肩代わり】${provider.name}が${target.colored_name}のダメージを${rate * 100}%分担`);
-            this.add_log(`${provider.colored_name}に${providedDmg}のダメージ（残り${provider.hp}）`);
+            this.add_log(`   【肩代わり】${provider.name}が${target.colored_name}のダメージを${rate * 100}%分担`);
+            this.add_log(`   ${provider.colored_name}に${providedDmg}のダメージ（残り${provider.hp}）`);
             const newProvidedWounded = Math.floor(providedDmg * 0.9);
             provider.wounded += newProvidedWounded;
             provider.stats_log.damage_taken += providedDmg;
 
             // 本来のターゲットにダメージ適用
             target.hp -= originalTargetDmg;
-            this.add_log(`${target.colored_name}に${originalTargetDmg}のダメージ（残り${target.hp}）`);
+            this.add_log(`   ${target.colored_name}に${originalTargetDmg}のダメージ（残り${target.hp}）`);
             const newOriginalTargetWounded = Math.floor(originalTargetDmg * 0.9);
             target.wounded += newOriginalTargetWounded;
             target.stats_log.damage_taken += originalTargetDmg;
         } else {
             // 肩代わりなし
             target.hp -= totalDmg;
-            this.add_log(`${target.colored_name}が${totalDmg}のダメージを受けた（残り${target.hp}）`);
+            this.add_log(`   ${target.colored_name}が${totalDmg}のダメージを受けた（残り${target.hp}）`);
             const newTargetWounded = Math.floor(totalDmg * 0.9);
             target.wounded += newTargetWounded;
             target.stats_log.damage_taken += totalDmg;
@@ -617,7 +617,7 @@ export class BattleField {
                     const dmgType = "intel";
                     this.process_attack_event(state.source_busho, actor, val, dmgType, "", state.name);
                 } else {
-                    this.add_log(`  [${state.name}] ${actor.colored_name} が ${state.name}発動失敗！`);
+                    this.add_log(`   [${state.name}] ${actor.colored_name} が ${state.name}発動失敗！`);
                 }
             }
 
@@ -628,7 +628,7 @@ export class BattleField {
                     const val = parseInt(state.value);
                     this.process_heal_event(state.source_busho, actor, val, "intl", state.source_skill);
                 } else {
-                    this.add_log(`  [${state.name}] ${actor.colored_name} が ${state.name}発動失敗！`);
+                    this.add_log(`   [${state.name}] ${actor.colored_name} が ${state.name}発動失敗！`);
                 }
             }
 
@@ -1022,7 +1022,7 @@ export class BattleField {
                     }
                 }
             } else {
-                this.add_log(`${busho.colored_name} は戦法 【${skill.colored_name}】発動失敗！`);
+                this.add_log(`   ${busho.colored_name} は戦法 【${skill.colored_name}】発動失敗！`);
             }
         }
     }
@@ -1048,7 +1048,7 @@ export class BattleField {
                 if (isRengeki) {
                     attackCount = 2;
                 } else {
-                    this.add_log(`  ${busho.colored_name} は ${s.source_skill} の連撃発動失敗`);
+                    this.add_log(`   ${busho.colored_name} は ${s.source_skill} の連撃発動失敗`);
                 }
             }
         }
