@@ -64,6 +64,7 @@ export class Senpo {
     }
 
     #checkCondition(caster, target, conditionName, battlefield) {
+        const enemies = battlefield.get_enemies(caster);
         /**条件分岐の判定ロジック*/
         if (conditionName === "is_main") {
             return caster.is_main; // 主将ならTrue
@@ -72,10 +73,100 @@ export class Senpo {
             return !caster.is_main; // 主将でなければTrue
         }
         if (conditionName === "is_man") {
-            return caster.sex === "男"; // 男性ならTrue
+            return caster.sex == "男"; // 男性ならTrue
         }
         if (conditionName === "is_woman") {
-            return caster.sex === "女"; // 女性ならTrue
+            return caster.sex == "女"; // 女性ならTrue
+        }
+        if (conditionName === "is_騎兵") {
+            return caster.unit_type == "騎兵"; // 騎馬ならTrue
+        }
+        if (conditionName === "isnot_騎兵") {
+            return caster.unit_type != "騎兵"; // 騎馬でないTrue
+        }
+        if (conditionName === "is_弓兵") {
+            return caster.unit_type == "弓兵"; // 弓兵ならTrue
+        }
+        if (conditionName === "isnot_弓兵") {
+            return caster.unit_type != "弓兵"; // 弓兵でないTrue
+        }
+        if (conditionName === "is_足軽") {
+            return caster.unit_type == "足軽"; // 足軽ならTrue
+        }
+        if (conditionName === "isnot_足軽") {
+            return caster.unit_type != "足軽"; // 足軽でないTrue
+        }
+        if (conditionName === "is_鉄砲") {
+            return caster.unit_type == "鉄砲"; // 鉄砲ならTrue
+        }
+        if (conditionName === "isnot_鉄砲") {
+            return caster.unit_type != "鉄砲"; // 鉄砲でないTrue
+        }
+        if (conditionName === "is_兵器") {
+            return caster.unit_type == "兵器"; // 兵器ならTrue
+        }
+        if (conditionName === "isnot_兵器") {
+            return caster.unit_type != "兵器"; // 兵器でないTrue
+        }
+        if (conditionName === "is_t騎兵") {
+            return target.unit_type == "騎兵"; // 騎馬ならTrue
+        }
+        if (conditionName === "isnot_t騎兵") {
+            return target.unit_type != "騎兵"; // 騎馬でないTrue
+        }
+        if (conditionName === "is_t弓兵") {
+            return target.unit_type == "弓兵"; // 弓兵ならTrue
+        }
+        if (conditionName === "isnot_t弓兵") {
+            return target.unit_type != "弓兵"; // 弓兵でないTrue
+        }
+        if (conditionName === "is_t足軽") {
+            return target.unit_type == "足軽"; // 足軽ならTrue
+        }
+        if (conditionName === "isnot_t足軽") {
+            return target.unit_type != "足軽"; // 足軽でないTrue
+        }
+        if (conditionName === "is_t鉄砲") {
+            return target.unit_type == "鉄砲"; // 鉄砲ならTrue
+        }
+        if (conditionName === "isnot_t鉄砲") {
+            return target.unit_type != "鉄砲"; // 鉄砲でないTrue
+        }
+        if (conditionName === "is_t兵器") {
+            return target.unit_type == "兵器"; // 兵器ならTrue
+        }
+        if (conditionName === "isnot_t兵器") {
+            return target.unit_type != "兵器"; // 兵器でないTrue
+        }
+        if (conditionName === "is_e騎兵") {
+            return enemies[0].unit_type == "騎兵"; // 騎馬ならTrue
+        }
+        if (conditionName === "isnot_e騎兵") {
+            return enemies[0].unit_type != "騎兵"; // 騎馬でないTrue
+        }
+        if (conditionName === "is_e弓兵") {
+            return enemies[0].unit_type == "弓兵"; // 弓兵ならTrue
+        }
+        if (conditionName === "isnot_e弓兵") {
+            return enemies[0].unit_type != "弓兵"; // 弓兵でないTrue
+        }
+        if (conditionName === "is_e足軽") {
+            return enemies[0].unit_type == "足軽"; // 足軽ならTrue
+        }
+        if (conditionName === "isnot_e足軽") {
+            return enemies[0].unit_type != "足軽"; // 足軽でないTrue
+        }
+        if (conditionName === "is_e鉄砲") {
+            return enemies[0].unit_type == "鉄砲"; // 鉄砲ならTrue
+        }
+        if (conditionName === "isnot_e鉄砲") {
+            return enemies[0].unit_type != "鉄砲"; // 鉄砲でないTrue
+        }
+        if (conditionName === "is_e兵器") {
+            return enemies[0].unit_type == "兵器"; // 兵器ならTrue
+        }
+        if (conditionName === "isnot_e兵器") {
+            return enemies[0].unit_type != "兵器"; // 兵器でないTrue
         }
         if (conditionName === "武勇>知略") {
             return caster.current_pow >= caster.current_intl;
@@ -156,6 +247,10 @@ export class Senpo {
                 } else if (conditionName.includes("==")) {
                     return battlefield.turn === targetTurn;
                 }
+            }else if(conditionName.includes("odd")){
+                return battlefield.turn % 2 === 1;
+            }else if(conditionName.includes("even")){
+                return battlefield.turn % 2 === 0;
             }
         }
         if (conditionName.includes("rmd")) {
@@ -201,6 +296,7 @@ export class Senpo {
             battleField.process_heal_event(caster, target, eVal, "intl", this.name);
         } else if (eType === "buff_stat" || eType === "debuff_stat") {
             this.#addBuff(caster, target, effect, battleField);
+            caster.record_skill_stats(this.name, 0, false);
         } else if (eType === "status") {
             const eEffect = effect.effect;
             const isCont = CONT_STATUS.has(eEffect);
@@ -235,14 +331,14 @@ export class Senpo {
             caster.record_skill_stats(this.name, 0, false);
             
         } else if (eType === "dispel_buff" || eType === "dispel_debuff") {
-            this.#handleDispel(caster, target, effect, battleField);
+            this.handleDispel(caster, target, effect, battleField);
         } else if (eType === "special") {
             const specialId = effect.value;
             this.handle_special_effect(specialId, caster, target, battleField);
         }
     }
 
-    #handleDispel(caster, target, effect, battleField) {
+    handleDispel(caster, target, effect, battleField) {
         /**解除処理*/
         let candidates = [];
 
@@ -310,6 +406,11 @@ export class Senpo {
         const isCutStat = statKey.includes("cut");
         const stackMax = effect.stack_max || 1;
         
+        // 対象ステータスの現在の値を取得
+        const currentVal = target[statKey];
+        // 増減する実数値を計算
+        const finalValue = this.calculateEffectValue(eVal, currentVal);
+
         let displayLabel;
         if (eType === "buff_stat") {
             displayLabel = isCutStat ? "減少" : "増加";
@@ -321,7 +422,7 @@ export class Senpo {
             name: `${statName}${displayLabel}`,
             type: eType,
             stat: statKey,
-            value: eVal,
+            value: finalValue,
             duration: eDuration,
             source_skill: this,
             source_busho: caster,
@@ -331,11 +432,23 @@ export class Senpo {
 
         if (isSuccess) {
             const currentVal = target[`current_${statKey}`];
-            const logMsg = ` -> ${target.colored_name} の ${statName} が ${eVal} ${displayLabel} (現在: ${currentVal}) (${eDuration}ターン)`;
+            const logMsg = ` -> ${target.colored_name} の ${statName} が ${finalValue} ${displayLabel} (現在: ${currentVal}) (${eDuration}ターン)`;
             battleField.add_log(logMsg);
         }
     }
-
+    /**
+     * バフの値を計算する（固定値 or 割合）
+     * @param {string|number} rawValue - "10%" や 50 などの値
+     * @param {number} currentStatValue - 対象武将の現在のステータス値
+     */
+    calculateEffectValue(rawValue, currentStatValue) {
+        if (typeof rawValue === 'string' && rawValue.includes('%')) {
+            const percentage = parseFloat(rawValue.replace('%', '')) / 100;
+            return Math.floor(currentStatValue * percentage);
+        }
+        // 数値ならそのまま返す
+        return Number(rawValue);
+    }
     // --- 特殊処理 ---
     handle_special_effect(specialId, caster, target, battleField) {
         /**特殊効果の処理*/

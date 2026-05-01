@@ -365,7 +365,7 @@ export class BattleField {
         }else{
             target.states.forEach(s => {
                 if (s.name == statusName){
-                    log_skill = s.source_skill;
+                    log_skill = s.source_skill.name;
                 }
             });
         } 
@@ -589,7 +589,6 @@ export class BattleField {
 
     process_phase_states(actor, phase, side, target) {
         /**フェーズに応じた状態効果の処理*/
-        console.log(actor.name , phase , side , target )
         const statesToProcess = actor.states.filter(s => s.phase === phase && s.trigger_side === side);
 
         for (const state of statesToProcess) {
@@ -766,6 +765,36 @@ export class BattleField {
                 this.add_log(`   ${actor.colored_name} の [後方支援(予備)] が発動失敗`);
             }
         }
+        if (state.name === "鬼美濃(予備)") {
+            if (Math.random() <= (35 / 100)){
+                //浄化
+                const effect = {"type":"dispel_debuff","target":"self"} 
+                state.source_skill.handleDispel(actor, actor, effect, this);
+                //回復
+                this.process_heal_event(state.source_busho, actor, 112, "ldr", "鬼美濃");
+
+            }else{
+                this.add_log(`   ${actor.colored_name} の [鬼美濃(予備)] が発動失敗`);
+            }
+        }
+        if (state.name === "三楽犬(予備)") {
+            //強化中の武将を探す
+            
+            const enemies = this.get_enemies(actor);
+            for (new_target of enemies) {
+                let atk = false;
+                new_target.states.forEach(s =>{
+                    if(s.source_skill.name == "三楽犬"){
+                      atk = true;  
+                    }
+                });
+                if (atk == true){
+                    // 兵刃ダメージ
+                    this.process_attack_event(new_target, actor, 146, "weapon", state.source_skill);
+                }
+                
+            }
+        }
     }
 
     add_log(message, category = "info") {
@@ -862,6 +891,12 @@ export class BattleField {
         const activeUnits = [...this.army_a, ...this.army_b].filter(u => u.hp > 0);
         const order = activeUnits.sort((a, b) => b.current_spd - a.current_spd);
 
+        //スキル記録のベース作成
+        activeUnits.forEach(b =>{
+            this.record_skill_stats_make(b)
+        })
+        
+
         // 2. 受動戦法（Passive）の発動
         for (const busho of order) {
             this.#executeSpecificTypeSkills(busho, "受動");
@@ -873,6 +908,18 @@ export class BattleField {
         }
 
         this.add_log("=== 戦闘準備完了 ===");
+    }
+
+    record_skill_stats_make(caster){
+        caster.skills.forEach(s =>{
+
+            caster.stats_log.skill_details[s.name] = {
+                name: s.name,
+                dmg: 0,
+                heal: 0,
+                count: 0
+            };
+        })
     }
 
     #processSingleBushoAct(busho) {

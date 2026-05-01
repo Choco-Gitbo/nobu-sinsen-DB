@@ -277,14 +277,24 @@ export const STATE_TEMPLATES = {
         phase: "before_action",
         trigger_side: "attacker",
         trigger_turn: 3,
-        duration:99,
         conflict_rule: "NONE"
     },
     "後方支援(予備)": {
         type: "special",
         phase: "before_action",
         trigger_side: "attacker",
-        duration:99,
+        conflict_rule: "NONE"
+    },
+    "鬼美濃(予備)": {
+        type: "special",
+        phase: "after_attack",
+        trigger_side: "defender",
+        conflict_rule: "NONE"
+    },
+    "三楽犬(予備)": {
+        type: "special",
+        phase: "before_action",
+        trigger_side: "attacker",
         conflict_rule: "NONE"
     }
 };
