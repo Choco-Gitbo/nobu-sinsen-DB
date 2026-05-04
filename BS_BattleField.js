@@ -85,6 +85,11 @@ export class BattleField {
                 forcedTarget = forcedState.source_busho;
                 this.add_log(`  -> ${caster.colored_name} は【挑発】により ${forcedTarget.colored_name} を攻撃！`);
             }
+            const spipeState = caster.states.find(s => s.name === '狙撃');
+            if (spipeState) {
+                rangeType = spipeState.value;
+                this.add_log(`  -> ${caster.colored_name} は【狙撃】を発動！`);
+            }
         } else if (skillType === "能動") {
             // 敵の中に「牽制」状態がいるか確認
             const forcedState = caster.states.find(s => s.name === '牽制');
@@ -295,7 +300,7 @@ export class BattleField {
         this.add_log(`   ${caster.colored_name} の[<span class="senpo-name">${atkName}</span>]攻撃開始（対象: ${target.colored_name}）`);
 
         // --- 援護の判定 ---
-        let engoState = caster.states.find(s => s.name === '援護');
+        let engoState = target.states.find(s => s.name === '援護');
         let actualTarget = target;
 
         if (engoState && skillName.name === "通常攻撃") {
@@ -328,18 +333,17 @@ export class BattleField {
         let hitRate = 1.0; // デフォルトは 100% ダメージ
 
         // 1. 疲弊のチェック（最優先）
-        if (caster.states.some(s => s.name === '疲弊')) {
+        if (isRestricted(caster,"疲弊")){
             hitRate = 0.0;
             this.add_log(`  !! ${caster.colored_name} は【疲弊】によりダメージを与えられない`);
         }
         // 2. 必中のチェック
-        else if (caster.states.some(s => s.name === '必中')) {
+        else if (isRestricted(caster,"必中")){
             hitRate = 1.0;
         }
         // 3. 回避のチェック（防御側）
         else if (actualTarget.states.some(s => s.name === '回避')) {
-            const kaihinState = actualTarget.states.find(s => s.name === '回避');
-            if (Math.random() <= (parseInt(kaihinState.rate || 0) /100)) {
+            if (isRestricted(target,"回避")){
                 hitRate = 0.0;
                 this.add_log(`  !! ${actualTarget.colored_name} は攻撃を回避した`);
             } else {
@@ -359,17 +363,17 @@ export class BattleField {
         // 最終ダメージの適用
         totalDmg = Math.floor(totalDmg * hitRate);
         caster.stats_log.damage_dealt += totalDmg;
-        let log_skill = skillName.name;
+        let log_skill = skillName;
         if(statusName === null){
-            log_skill = skillName.name;
+            log_skill = skillName;
         }else{
             target.states.forEach(s => {
                 if (s.name == statusName){
-                    log_skill = s.source_skill.name;
+                    log_skill = s.source_skill;
                 }
             });
         } 
-        caster.record_skill_stats(log_skill, totalDmg, false);
+        caster.record_skill_stats(log_skill.name, totalDmg, false);
 
         // 3. ダメージ適用（肩代わり考慮）
         const actualDmg = this.apply_damage_with_protection(caster, actualTarget, totalDmg);
@@ -378,20 +382,26 @@ export class BattleField {
         if (attackType === "weapon") {
             const rihanState = caster.states.find(s => s.name === '離反');
             if (rihanState) {
-                this.process_heal_event(caster, caster, rihanState.value, "dmg", "離反", totalDmg);
+                this.process_heal_event(caster, caster, rihanState.value, "dmg", rihanState.source_skill.name, totalDmg);
             }
         } else {
             const sinkoState = caster.states.find(s => s.name === '心攻');
             if (sinkoState) {
-                this.process_heal_event(caster, caster, sinkoState.value, "dmg", "心攻", totalDmg);
+                this.process_heal_event(caster, caster, sinkoState.value, "dmg", rihanState.source_skill.name, totalDmg);
             }
         }
 
         caster.last_target = actualTarget;
 
         // 4. 攻撃後処理
-        this.process_phase_states(caster, "after_attack", "attacker", actualTarget);
-        this.process_phase_states(actualTarget, "after_attack", "defender", caster);
+        let actiontype
+        this.process_phase_states(caster, "after_attack", "attacker", actualTarget, attackType, actiontype = statusName === null ? skillName.type : null);
+        this.process_phase_states(actualTarget, "after_attack", "defender", caster, attackType, actiontype = statusName === null ? skillName.type : null);
+
+        caster.kaishin = false;
+        caster.kisaku = false;
+        if (attackType === "weapon") { caster.weapon_cnt += 1;} 
+        else { caster.intel_cnt += 1;}
 
         return totalDmg;
     }
@@ -412,22 +422,34 @@ export class BattleField {
 
             // 肩代わり者にダメージ適用
             provider.hp -= providedDmg;
+            let damageDisplay = Math.floor(providedDmg);
+            if (caster.kaishin || caster.kisaku) {
+                damageDisplay = `<span class="critical">${damageDisplay}</span>`;
+            }
             this.add_log(`   【肩代わり】${provider.name}が${target.colored_name}のダメージを${rate * 100}%分担`);
-            this.add_log(`   ${provider.colored_name}に${providedDmg}のダメージ（残り${provider.hp}）`);
+            this.add_log(`   ${provider.colored_name}に${damageDisplay}のダメージ（残り${provider.hp}）`);
             const newProvidedWounded = Math.floor(providedDmg * 0.9);
             provider.wounded += newProvidedWounded;
             provider.stats_log.damage_taken += providedDmg;
 
             // 本来のターゲットにダメージ適用
             target.hp -= originalTargetDmg;
-            this.add_log(`   ${target.colored_name}に${originalTargetDmg}のダメージ（残り${target.hp}）`);
+            damageDisplay = Math.floor(originalTargetDmg);
+            if (caster.kaishin || caster.kisaku) {
+                damageDisplay = `<span class="critical">${damageDisplay}</span>`;
+            }
+            this.add_log(`   ${target.colored_name}に${damageDisplay}のダメージを受けた（残り${target.hp}）`);
             const newOriginalTargetWounded = Math.floor(originalTargetDmg * 0.9);
             target.wounded += newOriginalTargetWounded;
             target.stats_log.damage_taken += originalTargetDmg;
         } else {
             // 肩代わりなし
             target.hp -= totalDmg;
-            this.add_log(`   ${target.colored_name}が${totalDmg}のダメージを受けた（残り${target.hp}）`);
+            let damageDisplay = Math.floor(totalDmg);
+            if (caster.kaishin || caster.kisaku) {
+                damageDisplay = `<span class="critical">${damageDisplay}</span>`;
+            }
+            this.add_log(`   ${target.colored_name}が${damageDisplay}のダメージを受けた（残り${target.hp}）`);
             const newTargetWounded = Math.floor(totalDmg * 0.9);
             target.wounded += newTargetWounded;
             target.stats_log.damage_taken += totalDmg;
@@ -461,14 +483,11 @@ export class BattleField {
         }
 
         // 破陣状態時はdefStatを0にする
-        const nodefState = caster.states.find(s => s.name === '破陣');
-        if (nodefState) {
-            const hajinRate = parseInt(nodefState.rate || 100);
-            if (Math.random() <= (hajinRate /100)) {
-                defStat = 0;
-                this.add_log(`   ${caster.colored_name} が 破陣発動！`);
-            }
+        if (isRestricted(caster,"破陣")){
+            defStat = 0;
+            this.add_log(`   ${caster.colored_name} が 破陣発動！`);
         }
+        
 
         // A: ステータス・レベル補正差
         const A = atkStat * (Math.max(caster.Lv - 20.0, 0) / 50 + 1) - 
@@ -509,7 +528,15 @@ export class BattleField {
 
         // I: 会心
         const isCritical = Math.random()  < (criticalRate /100);
-        const I = isCritical ? (1.5 + criticalDmg) : 1;
+        if(isCritical && dmgType == "weapon"){
+            caster.kaishin = true;
+            this.add_log(`    !! ${caster.colored_name} は <span class="critical">会心</span> を発動`);
+        }
+        if(isCritical && dmgType == "intel"){
+            caster.kisaku = true;
+            this.add_log(`    !! ${caster.colored_name} は <span class="critical">奇策</span> を発動`);
+        }
+        const I = isCritical ? (1.5 + (criticalDmg / 100)) : 1;
 
         // 最終ダメージ計算
         const baseDamage = (((A + B) * (C * D) + E) * F * G * H * I);
@@ -527,11 +554,12 @@ export class BattleField {
          * 回復処理のメインロジック
          */
         const calRate = rate / 100;
+        caster.ovHeal = false;
 
         this.add_log(`  [${skillName}] による回復発動：対象 ${target.colored_name}`);
 
         // 1. 回復無効（禁療など）のチェック
-        if (target.states.some(s => s.name === '回復不可')) {
+        if (isRestricted(target,"回復不可")){
             this.add_log(`    !! ${target.colored_name} は回復不可状態のため回復できない`);
             return 0;
         }
@@ -548,7 +576,7 @@ export class BattleField {
         // 4. 負傷兵数による上限判定
         const actualHeal = Math.min(rawHeal, target.wounded);
         const overHeal = Math.max(0, rawHeal - target.wounded);
-
+        if(overHeal > 0){caster.ovHeal = true;}
         // 5. 適用
         target.hp += actualHeal;
         target.wounded -= actualHeal;
@@ -587,14 +615,37 @@ export class BattleField {
         return Math.floor(rawHeal);
     }
 
-    process_phase_states(actor, phase, side, target) {
+    process_phase_states(actor, phase, side, target, attackType = null ,action = null) {
         /**フェーズに応じた状態効果の処理*/
-        const statesToProcess = actor.states.filter(s => s.phase === phase && s.trigger_side === side);
+const statesToProcess = actor.states.filter(s => {
+    // 1. フェーズとサイドの基本一致チェック
+    if (s.phase !== phase || s.trigger_side !== side) return false;
 
+    // 2. attackType の判定（一致していなければ false）
+    // 指定がない(null)場合はチェックをパスさせる
+    if (s.attackType !== null && attackType !== null) {
+        if (s.attackType !== attackType) return false;
+    }
+
+    // 3. action の判定（一致していなければ false）
+    // 配列と単一文字列の両方に対応
+    if (s.action !== null && action !== null) {
+        let actionMatch = false;
+        if (Array.isArray(s.action)) {
+            actionMatch = s.action.includes(action);
+        } else {
+            actionMatch = (s.action === action);
+        }
+        if (!actionMatch) return false;
+    }
+
+    // すべてのチェックを通り抜けたものだけが抽出される
+    return true;
+});
         for (const state of statesToProcess) {
             if (state.name === "反撃") {
                 this.add_log(`  [反撃] ${actor.colored_name} が ${target.colored_name} に反撃！`);
-                this.process_attack_event(actor, target, state.value || 100, "weapon", "", "反撃");
+                this.process_attack_event(actor, target, state.value || 100, "weapon", state.source_skill, "反撃");
             }
 
             if (state.name === "乱舞") {
@@ -603,7 +654,7 @@ export class BattleField {
                     if (enemy.hp > 0 && enemy !== target) {
                         const dmgRate = state.value || 50;
                         this.add_log(`  [乱舞] の効果により ${enemy.colored_name} に波及！`);
-                        this.process_attack_event(actor, enemy, dmgRate, "weapon", "", "乱舞");
+                        this.process_attack_event(actor, enemy, dmgRate, "weapon", state.source_skill, "乱舞");
                     }
                 }
             }
@@ -625,7 +676,7 @@ export class BattleField {
                 const healRate = parseInt(state.rate || 100);
                 if (Math.random() <= (healRate /100)) {
                     const val = parseInt(state.value);
-                    this.process_heal_event(state.source_busho, actor, val, "intl", state.source_skill);
+                    this.process_heal_event(state.source_busho, actor, val, "intl", state.source_skill.name);
                 } else {
                     this.add_log(`   [${state.name}] ${actor.colored_name} が ${state.name}発動失敗！`);
                 }
@@ -680,11 +731,11 @@ export class BattleField {
                 state.value = Math.floor(dmgRate / 20) * 20 + 20;
                 const skill = actor.skills.find(s => s.name === "捨て身の義");
                 if (skill) {
-                    const newTargets = this.find_targets(actor, "self", "指揮");
+                    const newTargets = this.find_targets(actor, "self", state.source_skill.type);
                     const newEffect = { type: "buff_stat", value: 24, stat: "ldr", duration: "99", stack_max: "99" };
                     skill.add_buff(actor, newTargets[0], newEffect, this);
 
-                    const newTargets2 = this.find_targets(actor, "friend_random_2", "指揮");
+                    const newTargets2 = this.find_targets(actor, "friend_random_2", state.source_skill.type);
                     for (const newTarget of newTargets2) {
                         const effect1 = { type: "buff_stat", value: 12, stat: "pow", duration: "99", stack_max: "99" };
                         skill.add_buff(actor, newTarget, effect1, this);
@@ -716,7 +767,7 @@ export class BattleField {
                     idx = actor.states.indexOf(state);
                     if (idx > -1) actor.states.splice(idx, 1);
                     this.add_log(`  (効果終了) ${actor.colored_name} の [懐柔_休養(予備)] が消失`);
-                    this.process_heal_event(state.source_busho, actor, 84, "intl", "懐柔");
+                    this.process_heal_event(state.source_busho, actor, 84, "intl", state.source_skill.name);
                 }
             }
         }
@@ -729,14 +780,16 @@ export class BattleField {
                     // 兵刃ダメージ
                     this.process_attack_event(actor, new_target[0], 178, "weapon", this_skill);
                     
-                    if (Math.random() <= (state.rate / 100)){
-                        targetKey = "friend_highest_pow"
-                        new_caster = this.find_targets(actor, targetKey, this_skill.type);
+                    if (Math.random() <= (35 / 100)){
                         targetKey = "last_target"
                         new_target = this.find_targets(actor, targetKey, this_skill.type);
-                        // 兵刃ダメージ
-                        this.process_attack_event(new_caster[0], new_target[0], 178, "weapon", this_skill);
-                        state.rate -= 5
+                        if (new_target.hp > 0){  //ターゲットが生存しているか
+                            targetKey = "friend_highest_pow"
+                            new_caster = this.find_targets(actor, targetKey, this_skill.type);
+                            // 兵刃ダメージ
+                            this.process_attack_event(new_caster[0], new_target[0], 178, "weapon", this_skill);
+                            state.rate -= 5
+                        }
                     }
                 }else{
                     this.add_log(`   ${actor.colored_name} の [一念乱志(予備)] が発動失敗`);
@@ -771,7 +824,7 @@ export class BattleField {
                 const effect = {"type":"dispel_debuff","target":"self"} 
                 state.source_skill.handleDispel(actor, actor, effect, this);
                 //回復
-                this.process_heal_event(state.source_busho, actor, 112, "ldr", "鬼美濃");
+                this.process_heal_event(state.source_busho, actor, 112, "ldr", state.source_skill.name);
 
             }else{
                 this.add_log(`   ${actor.colored_name} の [鬼美濃(予備)] が発動失敗`);
@@ -789,11 +842,345 @@ export class BattleField {
                     }
                 });
                 if (atk == true){
+                    if (actor.hp <= 0) return; //ターゲットが生存しているか
                     // 兵刃ダメージ
                     this.process_attack_event(new_target, actor, 146, "weapon", state.source_skill);
                 }
                 
             }
+        }
+        if (state.name === "沈魚落雁(予備)") {
+            if (Math.random() <= (36 / 100)){
+                const stsarray =["混乱","無策","疲弊"]
+                const randomIndex = Math.floor(Math.random() * stsarray.length);
+                const isSuccess = target.add_state({
+                    type: "buff_status",
+                    name: stsarray[randomIndex],
+                    duration: 1,
+                    source_skill: state.source_skill,
+                    source_busho: state.source_busho,
+                    conflict_rule: "NONE"
+                }, this);
+                logMsg = ` -> ${actor.colored_name} が ${state.source_skill.name} による ${stsarray[randomIndex]} を付与 (1ターン)`;
+                this.add_log(logMsg);
+                state.source_busho.record_skill_stats(state.source_skill.name, 0, false);
+            }else{
+                this.add_log(`   ${actor.colored_name} の [沈魚楽雁(予備)] が発動失敗`);
+            }
+        }
+
+        if (state.name === "新生(予備)") {
+            const enemies = this.get_enemies(actor);
+            const e_maxhp = enemies[0].max_hp + enemies[1].max_hp + enemies[2].max_hp
+            let e_hp = Math.max(enemies[0]._hp,0) + Math.max(enemies[1]._hp,0) + Math.max(enemies[2]._hp,0)
+            if ((e_hp / e_maxhp) <= 0.7){state.value = true;}
+            //回復
+            this.process_heal_event(actor, actor, 65, "intl", state.source_skill.name);
+        }
+        if(state.name === "千成瓢箪(予備)"){
+            /**千成瓢箪の処理*/
+            let act_rate = 0.35;
+            if(actor.is_main){
+                //大将時
+                act_rate = 0.7
+            }
+            const actType = Math.random() < act_rate;
+            let newTargets
+            if(actType){
+                newTargets = this.find_targets(actor, "ally_random_3", state.source_skill.type);
+            }else{
+                newTargets = this.find_targets(actor, "ally_random_2-3", state.source_skill.type);
+            }
+            for (const newTarget of newTargets) {
+                this.process_heal_event(actor, newTarget, 76, "intl", state.source_skill.name);
+            }
+        }
+
+        if (state.name === "古今独歩(予備)") {
+            if (Math.random() <= (48 / 100)){
+                //反撃(通常攻撃効果 & 突撃戦法)
+                const actualDmg = this.process_attack_event(actor, target, 70, "weapon", state.source_skill);
+                actor.last_normal_attack_damage = actualDmg;
+
+                // 突撃戦法フェーズ
+                this.executeSpecificTypeSkills(actor, "突撃");
+
+                // 範囲攻撃フェーズ
+                this.process_phase_states(actor, "range_attack", "attacker", target);
+                
+                //離反付与
+                const has_rihan = actor.states.find(st => st.name === "離反" && st.source_skill.name === "古今独歩");
+                if (has_rihan){
+                        has_rihan.value += 4;
+                        if(actor.is_main){has_rihan.value = Math.min(has_rihan.value , (4*10))}
+                        else{has_rihan.value = Math.min(has_rihan.value , (4*8))}
+                        state.value = has_rihan.value;
+                        logMsg = ` -> ${actor.colored_name} の 離反 が 4 (${has_rihan.value}) 増加 `;
+                        this.add_log(logMsg);
+                }else{
+                    //離反未付与なら、離反を付与する
+                    const isSuccess = actor.add_state({
+                        phase: "affter_attack",
+                        trigger_side: "attacker",
+                        type: "heal",
+                        name: "離反",
+                        value: 4,
+                        duration: 99,
+                        source_skill: state.source_skill,
+                        source_busho: state.source_busho,
+                        conflict_rule: "STACK"
+                    }, this);
+
+                    if (isSuccess) {
+                        logMsg = ` -> ${actor.colored_name} が 離反 4 を付与 (現在: 4) (99ターン)`;
+                        this.add_log(logMsg);
+                    }
+                }
+            }else{
+                this.add_log(`   ${actor.colored_name} の [古今独歩(予備)] が発動失敗`);
+            }
+        }
+        if(state.name === "破陣乱舞(予備)"){
+            /**破陣乱舞の処理*/
+            // 兵刃ダメージ
+            this.process_attack_event(actor, target, 206, "weapon", state.source_skill);
+
+            if ( actor.is_main && (Math.random() <= 0.35)){
+                //攻撃対象1追加
+                const newTargets = this.find_targets(actor, "enemy_random_1", state.source_skill.type);
+                this.process_attack_event(actor, newTargets[0], 206, "weapon", state.source_skill);
+            }
+        }
+        if(state.name === "三河魂-強化(予備)"){
+            /**三河武士の処理*/
+            //大将の時の処理
+            if (Math.random() <= 0.8){
+                const newTargets = this.find_targets(actor, "ally_highest_pow", state.source_skill.type);
+                const isSuccess = actor.add_state({
+                    phase: "affter_attack",
+                    trigger_side: "attacker",
+                    type: "buff_status",
+                    name: "援護",
+                    duration: 1,
+                    source_skill: state.source_skill,
+                    source_busho: newTargets[0],
+                    conflict_rule: "NONE"
+                }, this);
+
+                if (isSuccess) {
+                    logMsg = ` -> ${actor.colored_name} が 援護 を付与 (1ターン)`;
+                    this.add_log(logMsg);
+                }
+            }
+        }
+
+        if(state.name === "三河魂(予備)"){
+            /**三河武士の処理*/
+            //副将の時の処理
+            const dbuf_val_rate = 2.5;
+            let dbuf_val;
+            let effect1;
+            logMsg = ` -> ${actor.colored_name} が 三河魂(予備) を発動`;
+            this.add_log(logMsg);
+            dbuf_val = Math.round(target.current_pow * (dbuf_val_rate / 100) * 100) /100
+            effect1 = { type: "debuff_stat", value: dbuf_val, stat: "pow", duration: "99", stack_max: "99" };
+            state.source_skill.add_buff(actor, target, effect1, this);
+            dbuf_val = Math.round(target.current_intl * (dbuf_val_rate / 100) * 100) /100
+            effect1 = { type: "debuff_stat", value: dbuf_val, stat: "intl", duration: "99", stack_max: "99" };
+            state.source_skill.add_buff(actor, target, effect1, this);
+            dbuf_val = Math.round(target.current_ldr * (dbuf_val_rate / 100) * 100) /100
+            effect1 = { type: "debuff_stat", value: dbuf_val, stat: "ldr", duration: "99", stack_max: "99" };
+            state.source_skill.add_buff(actor, target, effect1, this);
+            dbuf_val = Math.round(target.current_spd * (dbuf_val_rate / 100) * 100) /100
+            effect1 = { type: "debuff_stat", value: dbuf_val, stat: "spd", duration: "99", stack_max: "99" };
+            state.source_skill.add_buff(actor, target, effect1, this);
+        }
+        if(state.name === "軍神(予備)"){
+            /**軍神の処理*/
+            let effect1
+            const buf_val1 = Math.round((0.0235 * (state.value - 100) + 10) * 100) / 100;
+            const buf_val2 = Math.round((0.0235 * (state.value - 100) + 160) * 100) / 100;
+            const kenshin = state.source_busho;
+            const statName = STAT_MAP["dmg_up_normal"];
+            if (Math.random() <= 0.66){
+                const has_gunshin = kenshin.states.find(st => st.stat === "dmg_up_normal" && st.source_skill.name == "軍神");
+                if(has_gunshin){
+                    if (kenshin.gunshin_tame < 12){
+                        kenshin.gunshin_tame += 1;
+                        has_gunshin.value += buf_val1;
+                        logMsg = ` -> ${kenshin.colored_name} の ${statName} が ${buf_val1} 増加 (現在: ${kenshin.current_dmg_up_normal})  `;
+                        this.add_log(logMsg);
+                    
+                        if (kenshin.gunshin_tame == 12){
+                            has_gunshin.value += buf_val2;
+                            logMsg = ` -> ${kenshin.colored_name} の ${statName} が ${buf_val2} 増加 (現在: ${kenshin.current_dmg_up_normal})  `;
+                            this.add_log(logMsg);
+                        }
+                    }
+                }
+                if (kenshin.gunshin_tame <= 0){
+                    effect1 = { type: "buff_stat", value: buf_val1, stat: "dmg_up_normal", duration: "99", stack_max: "99" };
+                    state.source_skill.add_buff(actor, kenshin, effect1, this);
+                    kenshin.gunshin_tame += 1;
+                }
+                
+            }else{
+                this.add_log(`   ${actor.colored_name} の [軍神(予備)] が発動失敗`);
+            }
+        }
+        if(state.name === "軍神-龍(予備)"){
+            /**軍神-龍の処理*/
+            let effect1
+            const buf_val1 = Math.round((0.0235 * (state.value - 100) + 10) * 100) / 100;
+            const buf_val2 = Math.round((0.0235 * (state.value - 100) + 160) * 100) / 100;
+            const kenshin = state.source_busho;
+            const statName = STAT_MAP["dmg_up_normal"];
+            const has_gunshin = kenshin.states.find(st => st.stat === "dmg_up_normal" && st.source_skill.name == "軍神");
+            if(has_gunshin){
+                if (kenshin.gunshin_tame < 12){
+                    kenshin.gunshin_tame += 1;
+                    has_gunshin.value += buf_val1;
+                    logMsg = ` -> ${kenshin.colored_name} の ${statName} が ${buf_val1} 増加 (現在: ${kenshin.current_dmg_up_normal})  `;
+                    this.add_log(logMsg);
+                
+                    if (kenshin.gunshin_tame == 12){
+                        has_gunshin.value += buf_val2;
+                        logMsg = ` -> ${kenshin.colored_name} の ${statName} が ${buf_val2} 増加 (現在: ${kenshin.current_dmg_up_normal})  `;
+                        this.add_log(logMsg);
+                    }
+                }
+            }
+            if (kenshin.gunshin_tame <= 0){
+                effect1 = { type: "buff_stat", value: buf_val1, stat: "dmg_up_normal", duration: "99", stack_max: "99" };
+                state.source_skill.add_buff(actor, kenshin, effect1, this);
+                kenshin.gunshin_tame += 1;
+            }
+                
+        }
+
+        if(state.name === "軍神-昆(予備)"){
+            /**軍神-昆の処理*/
+            const kenshin = state.source_busho;
+            const now_val =kenshin.current_dmg_up_normal;
+            const statName = STAT_MAP["dmg_up_normal"];
+
+            if (kenshin.gunshin_tame >= 12){
+                actor.states.forEach(s => {
+                    if (s.stat =="dmg_up_normal" && s.source_skill.name == "軍神"){
+                        idx = kenshin.states.indexOf(s);
+                        if (idx > -1) kenshin.states.splice(idx, 1);
+                        logMsg = ` -> ${kenshin.colored_name} の ${statName} が ${now_val} 減少 (現在: ${kenshin.current_dmg_up_normal})  `;
+                        this.add_log(logMsg);
+                    }
+                })
+                kenshin.gunshin_tame = 0;
+            }
+        }
+        if(state.name === "湖水渡り(予備)"){
+            /**湖水渡りの処理*/
+            if(actor.kisaku){
+                let cnt = Number(state.value);
+                if(cnt <=3){
+                    const effect1 = { type: "buff_stat", value: 15, stat: "critical_dmg_intel", duration: "99", stack_max: "4" };
+                    state.source_skill.add_buff(actor, actor, effect1, this);
+                    cnt += 1;
+                    state.value = cnt;
+                } 
+            }
+        }
+
+        if(state.name === "七本槍筆頭(予備)"){
+            /**七本槍筆頭(予備)の処理*/
+            if (Math.random() <= (state.rate /100)){
+                const newTargets = this.find_targets(actor, "self", state.source_skill.type);
+                const isSuccess = actor.add_state({
+                    phase: "before_attack",
+                    trigger_side: "attacker",
+                    type: "status_effect",
+                    value:"enemy_lowest_ldr",   //狙撃対象の条件
+                    name: "狙撃",
+                    duration: 1,
+                    source_skill: state.source_skill,
+                    source_busho: newTargets[0],
+                    conflict_rule: "NONE"
+                }, this);
+
+                if (isSuccess) {
+                    logMsg = ` -> ${actor.colored_name} が 狙撃 を付与 (1ターン)`;
+                    this.add_log(logMsg);
+                }
+            }
+        }
+        if(state.name === "七本槍筆頭-強化(予備)"){
+            /**七本槍筆頭-強化(予備)の処理*/
+            const is_aktcnt_up = actor.weapon_cnt % 5;
+            const cnt_max = actor.is_main ? 5:3;
+            if(is_aktcnt_up == 0){
+                if(Number(state.value) < cnt_max){
+                    state.value = Number(state.value) +1;
+                    const nanahon = actor.states.find(s => s.name === '七本槍筆頭(予備)');
+                    nanahon.rate = Number(nanahon.rate) + 13;
+                    logMsg = ` -> ${actor.colored_name} が 七本槍筆頭を強化！`;
+                    this.add_log(logMsg);
+                }
+            }
+        }
+
+        if(state.name === "破竹の勢い(予備)"){
+            /**破竹の勢いの処理*/
+            const max_cnt = actor.is_main ? 15 : 10;
+            
+            if(actor.kaishin){
+                let cnt = Number(state.value);
+                if(cnt < max_cnt){
+                    const effect1 = { type: "buff_stat", value: 5, stat: "critical_dmg_weapon", duration: "99", stack_max: max_cnt };
+                    state.source_skill.add_buff(actor, actor, effect1, this);
+                    cnt += 1;
+                    state.value = cnt;
+                } 
+            }
+        }
+        if(state.name === "剛の武者(予備)"){
+            /**剛の武者の処理*/
+            const statName = STAT_MAP["dmg_cut_intel"];
+            const now_val = 75
+            actor.states.forEach(s => {
+                if (s.stat =="dmg_cut_intel" && s.source_skill.name == "剛の武者"){
+                    idx = actor.states.indexOf(s);
+                    if (idx > -1) actor.states.splice(idx, 1);
+                    logMsg = ` -> ${actor.colored_name} の ${statName} が ${now_val} 増加 (現在: ${actor.current_dmg_cut_intel})  `;
+                    this.add_log(logMsg);
+                }
+            })
+            actor.states.forEach(s => {
+                if (s.name =="剛の武者(予備)"){
+                    idx = actor.states.indexOf(s);
+                    if (idx > -1) actor.states.splice(idx, 1);
+                    logMsg = ` -> ${actor.colored_name} の 剛の武者(予備) が 消失 `;
+                    this.add_log(logMsg);
+                }
+            })
+        }
+        if(state.name === "先手必勝(予備)"){
+            /**先手必勝の処理*/
+            const statName = STAT_MAP["dmg_cut_active"];
+            const now_val = 52;
+            actor.states.forEach(s => {
+                if (s.stat =="dmg_cut_active" && s.source_skill.name == "先手必勝"){
+                    idx = actor.states.indexOf(s);
+                    if (idx > -1) actor.states.splice(idx, 1);
+                    logMsg = ` -> ${actor.colored_name} の ${statName} が ${now_val} 減少 (現在: ${actor.current_dmg_cut_active})  `;
+                    this.add_log(logMsg);
+                }
+            })
+            actor.states.forEach(s => {
+                if (s.name =="先手必勝(予備)"){
+                    idx = actor.states.indexOf(s);
+                    if (idx > -1) actor.states.splice(idx, 1);
+                    logMsg = ` -> ${actor.colored_name} の 先手必勝(予備) が 消失 `;
+                    this.add_log(logMsg);
+                }
+            })
         }
     }
 
@@ -899,12 +1286,12 @@ export class BattleField {
 
         // 2. 受動戦法（Passive）の発動
         for (const busho of order) {
-            this.#executeSpecificTypeSkills(busho, "受動");
+            this.executeSpecificTypeSkills(busho, "受動");
         }
 
         // 3. 指揮戦法（Command）の発動
         for (const busho of order) {
-            this.#executeSpecificTypeSkills(busho, "指揮");
+            this.executeSpecificTypeSkills(busho, "指揮");
         }
 
         this.add_log("=== 戦闘準備完了 ===");
@@ -940,7 +1327,7 @@ export class BattleField {
         }
 
         // C. 能動戦法フェーズ
-        this.#executeSpecificTypeSkills(busho, "能動");
+        this.executeSpecificTypeSkills(busho, "能動");
 
         // D. 通常攻撃フェーズ
         this.#processNormalAttackLoop(busho);
@@ -1003,17 +1390,17 @@ export class BattleField {
         return false;
     }
 
-    #executeSpecificTypeSkills(busho, skillType) {
+    executeSpecificTypeSkills(busho, skillType) {
         /**指定タイプの戦法を発動*/
         const targetSkills = busho.skills.filter(s => s.type === skillType);
 
         // 無策（能動戦法発動不可）チェック
         if (skillType === "能動") {
-            if (busho.states.some(s => s.type === 'status_effect' && s.name === '無策')) {
+            if (isRestricted(busho,"無策")){
                 this.add_log(`  ${busho.colored_name} は無策状態で能動戦法発動不可`);
                 return;
             }
-            if (busho.states.some(s => s.type === 'status_effect' && s.name === '再発動不可')) {
+            if (isRestricted(busho,"再発動不可")){
                 this.add_log(`  ${busho.colored_name} は再発動不可`);
                 return;
             }
@@ -1077,12 +1464,16 @@ export class BattleField {
     #processNormalAttackLoop(busho) {
         /**通常攻撃ループ*/
         // 封撃（通常攻撃不可）チェック
-        if (busho.states.some(s => s.type === 'status_effect' && s.name === '封撃')) {
+        if (isRestricted(busho,"封撃")){
             this.add_log(`  ${busho.colored_name} は封撃状態で通常攻撃不可`);
             return;
+        }else{
+            this.add_log(`  !!${busho.colored_name} は 封撃発動失敗！`);
         }
-        // 封撃（通常攻撃不可）チェック
-        if (busho.states.some(s => s.type === 'status_effect' && s.name === '通常攻撃不可')) {
+        
+
+        // 通常攻撃不可チェック
+        if (isRestricted(busho,"通常攻撃不可")){
             this.add_log(`  ${busho.colored_name} は通常攻撃不可状態で通常攻撃不可`);
             return;
         }
@@ -1106,9 +1497,10 @@ export class BattleField {
 
             const actualDmg = this.process_attack_event(busho, targets[0], 100, "weapon", busho.skills[0]);
             busho.last_normal_attack_damage = actualDmg;
+            busho.normal_cnt += 1;
 
             // 突撃戦法フェーズ
-            this.#executeSpecificTypeSkills(busho, "突撃");
+            this.executeSpecificTypeSkills(busho, "突撃");
 
             // 範囲攻撃フェーズ
             this.process_phase_states(busho, "range_attack", "attacker", targets[0]);
@@ -1138,7 +1530,10 @@ export class BattleField {
                 const sVal = s.value || 0;
                 const sName = s.name || "効果";
 
-                statesToRemove.push(s);
+                //statesToRemove.push(s);
+                const idx = busho.states.indexOf(s);
+                if (idx > -1) busho.states.splice(idx, 1);
+
 
                 if ((sType === "buff_stat" || sType === "debuff_stat") && sStat in STAT_MAP) {
                     const statName = STAT_MAP[sStat];
@@ -1159,10 +1554,6 @@ export class BattleField {
             }
         }
 
-        for (const s of statesToRemove) {
-            const idx = busho.states.indexOf(s);
-            if (idx > -1) busho.states.splice(idx, 1);
-        }
     }
     get_battle_result() {
         const leaderA = this.army_a[0]; // 配列の先頭が大将と想定
@@ -1173,3 +1564,9 @@ export class BattleField {
         return "引分";
     }
 }
+
+// 共通判定イメージ
+const isRestricted = (busho, statusName) => {
+    const s = busho.states.find(st => st.name === statusName);
+    return s && (Math.random() * 100 <= (s.rate ?? 100));
+};

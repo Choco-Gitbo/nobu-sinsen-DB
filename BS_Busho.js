@@ -32,7 +32,15 @@ export class Busho {
         morale = 100,   // 士気
         states = [],
         last_normal_attack_damage = 0,
-        last_target = null
+        last_target = null,
+        gunshin_tame = 0,
+        kaishin = false,
+        kisaku = false,
+        ovHeal = false,
+        weapon_cnt = 0,
+        intel_cnt = 0,
+        normal_cnt = 0
+
     }) {
         // 基本情報
         this.name = name;
@@ -65,6 +73,13 @@ export class Busho {
         this.states = states;
         this.last_normal_attack_damage = last_normal_attack_damage;
         this.last_target = last_target;
+        this.gunshin_tame = 0;
+        this.kaishin = kaishin;
+        this.kisaku = kisaku;
+        this.ovHeal = ovHeal;
+        this.weapon_cnt = weapon_cnt;
+        this.intel_cnt = intel_cnt;
+        this.normal_cnt = normal_cnt;
         
         // 戦績カウント用
         this.stats_log = {

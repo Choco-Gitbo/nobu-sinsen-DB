@@ -189,6 +189,12 @@ export class Senpo {
         if (conditionName === "has_潰走") {
             return target.states.some(s => s.name === "潰走");
         }
+        if (conditionName === "has_威圧") {
+            return target.states.some(s => s.name === "威圧");
+        }
+        if (conditionName === "not_has_威圧") {
+            return !target.states.some(s => s.name === "威圧");
+        }
         if (conditionName === "has_麻痺") {
             return target.states.some(s => s.name === "麻痺");
         }
@@ -295,7 +301,7 @@ export class Senpo {
             // 回復
             battleField.process_heal_event(caster, target, eVal, "intl", this.name);
         } else if (eType === "buff_stat" || eType === "debuff_stat") {
-            this.#addBuff(caster, target, effect, battleField);
+            this.add_buff(caster, target, effect, battleField);
             caster.record_skill_stats(this.name, 0, false);
         } else if (eType === "status") {
             const eEffect = effect.effect;
@@ -314,7 +320,8 @@ export class Senpo {
                     const stVal = battleField.calculate_heal(caster, target, effect.value, stat, this);
                     ov.value = stVal;
                 } else {
-                    const stVal = battleField.calculate_damage(caster, target, effect.value, effect.stat, this);
+                    let dmgtype;
+                    const stVal = battleField.calculate_damage(caster, target, effect.value, dmgtype = effect.stat==="pow" ? "weapon":"intel", this);
                     ov.value = stVal;
                 }
             }
@@ -369,33 +376,37 @@ export class Senpo {
             const sVal = s.value || 0;
             const sName = s.name || "効果";
 
-            const index = target.states.indexOf(s);
-            if (index > -1) {
-                target.states.splice(index, 1);
-            }
-
-            if ((sType === "buff_stat" || sType === "debuff_stat") && sStat in STAT_MAP) {
-                const statName = STAT_MAP[sStat];
-                const currentVal = target[`current_${sStat}`];
-                
-                const isCutStat = sStat.includes("cut");
-                let displayLabel;
-                if (sType === "buff_stat") {
-                    displayLabel = isCutStat ? "増加" : "減少";
-                } else {
-                    displayLabel = isCutStat ? "減少" : "増加";
+            if (target.states.indexOf(s).clear){    //浄化可
+                const index = target.states.indexOf(s);
+                if (index > -1) {
+                    target.states.splice(index, 1);
                 }
 
-                battleField.add_log(`  (効果終了) ${target.colored_name} の [${sName}] が消失：${statName} が ${sVal} ${displayLabel} (現在: ${currentVal})`);
-            } else {
-                battleField.add_log(`  (効果終了) ${target.colored_name} の [${sName}] が消失`);
+                if ((sType === "buff_stat" || sType === "debuff_stat") && sStat in STAT_MAP) {
+                    const statName = STAT_MAP[sStat];
+                    const currentVal = target[`current_${sStat}`];
+                    
+                    const isCutStat = sStat.includes("cut");
+                    let displayLabel;
+                    if (sType === "buff_stat") {
+                        displayLabel = isCutStat ? "増加" : "減少";
+                    } else {
+                        displayLabel = isCutStat ? "減少" : "増加";
+                    }
+
+                    battleField.add_log(`  (効果終了) ${target.colored_name} の [${sName}] が消失：${statName} が ${sVal} ${displayLabel} (現在: ${currentVal})`);
+                } else {
+                    battleField.add_log(`  (効果終了) ${target.colored_name} の [${sName}] が消失`);
+                }
+            }else{
+                battleField.add_log(`  ${target.colored_name} の [${sName}] は浄化不可`);
             }
         }
 
         caster.record_skill_stats(this.name, 0, false);
     }
 
-    #addBuff(caster, target, effect, battleField) {
+    add_buff(caster, target, effect, battleField) {
         /**バフ/デバフ付与処理*/
         const eType = effect.type;
         const eVal = effect.value;
@@ -452,7 +463,17 @@ export class Senpo {
     // --- 特殊処理 ---
     handle_special_effect(specialId, caster, target, battleField) {
         /**特殊効果の処理*/
-        if (specialId === "不意打ち") {
+        if (specialId === "時は今") {
+            this.#handleTokiwaima(caster, target, battleField);
+        } else if (specialId === "軍神") {
+            this.#handleGunshin(caster, target, battleField);
+        } else if (specialId === "海道一") {
+            this.#handleKaidouichi(caster, target, battleField);
+        } else if (specialId === "梟雄の計") {
+            this.#handleKyoyunokei(caster, target, battleField);
+        } else if (specialId === "死灰復然") {
+            this.#handleShikaifukunen(caster, target, battleField);
+        } else if (specialId === "不意打ち") {
             this.#handleFuichii(caster, target, battleField);
         } else if (specialId === "一六勝負") {
             this.#handleIchirokuShobu(caster, target, battleField);
@@ -460,6 +481,166 @@ export class Senpo {
             this.#handleYasekiHikou(caster, target, battleField);
         } else if (specialId === "岐阜侍従") {
             this.#handleGifuShijuu(caster, target, battleField);
+        }
+    }
+
+    #handleTokiwaima(caster, target, battleField) {
+        /**時は今の処理*/
+
+        const statePool = [
+            { name: "火傷", type: "status_effect" },
+            { name: "水攻め", type: "status_effect" },
+            { name: "中毒", type: "status_effect" },
+            { name: "消沈", type: "status_effect" },
+            { name: "潰走", type: "status_effect" }
+        ];
+
+        const targetStates = ["火傷", "水攻め", "中毒", "消沈", "潰走"];
+
+        // 全て持っているか判定
+        const hasAllStates = targetStates.every(stateName => 
+            target.states.some(s => s.name === stateName)
+        );
+        let st_clr = true;
+        let clr_label ="";
+        if(caster.is_main && hasAllStates){
+            //大将時
+            st_clr = false;
+            clr_label = " (浄化不可)"
+        }
+
+        const chosenStateBase = statePool[Math.floor(Math.random() * statePool.length)];
+
+        const newState = {
+            name: chosenStateBase.name,
+            type: chosenStateBase.type,
+            value:56,
+            duration: 3,
+            source_skill: this,
+            source_busho: caster,
+            clear: st_clr,
+            conflict_rule: "NONE"
+        };
+
+        const isSuccess = target.add_state(newState, battleField);
+        if (isSuccess) {
+            const logMsg = ` -> ${caster.colored_name} が ${target.colored_name} に ${newState.name} を付与${clr_label} (${newState.duration}ターン)`;
+            battleField.add_log(logMsg);
+        }
+
+        caster.record_skill_stats(this.name, 0, false);
+    }
+
+    #handleGunshin(caster, target, battleField) {
+        /**軍神の処理*/
+
+        const stat_val = caster.current_pow;
+
+        if (target === caster){
+            const newState = {
+                name: "軍神-昆(予備)",
+                type: "special",
+                phase: "after_attack",
+                trigger_side: "attacker",
+                duration: 99,
+                source_skill: this,
+                source_busho: caster,
+                action:"通常",
+                conflict_rule: "NONE",
+                clear:true
+            };
+
+            const isSuccess = target.add_state(newState, battleField);
+
+                if (target.is_main){
+                    const newState = {
+                    name: "軍神-龍(予備)",
+                    type: "special",
+                    phase: "before_action",
+                    trigger_side: "attacker",
+                    value: stat_val,
+                    duration: 99,
+                    source_skill: this,
+                    source_busho: caster,
+                    action:null,
+                    conflict_rule: "NONE",
+                    clear:true
+                    };
+                    const isSuccess = target.add_state(newState, battleField);
+                    if (isSuccess) {
+                        const logMsg = ` -> ${caster.colored_name} が ${target.colored_name} に ${newState.name} を付与 (${newState.duration}ターン)`;
+                        battleField.add_log(logMsg);
+                    }
+                }
+        }else{
+                const newState = {
+                name: "軍神(予備)",
+                type: "special",
+                phase: "after_attack",
+                trigger_side: "attacker",
+                value: stat_val,
+                duration: 99,
+                source_skill: this,
+                source_busho: caster,
+                action:["通常","能動","突撃"],
+                conflict_rule: "NONE",
+                clear:true
+            };
+
+            const isSuccess = target.add_state(newState, battleField);
+            if (isSuccess) {
+                const logMsg = ` -> ${caster.colored_name} が ${target.colored_name} に ${newState.name} を付与 (${newState.duration}ターン)`;
+                battleField.add_log(logMsg);
+            }
+        }
+        caster.record_skill_stats(this.name, 0, false);
+    }
+    #handleKaidouichi(caster, target, battleField) {
+        /**海道一の処理*/
+        const ldr_val = Math.round(caster.current_ldr * 6) /100;
+        const effect1 = { type: "debuff_stat", value: ldr_val, stat: "ldr", duration: "99", stack_max: "8",clear:false };
+        this.add_buff(caster, target, effect1, battleField);
+        const effect2 = { type: "buff_stat", value: ldr_val, stat: "pow", duration: "99", stack_max: "8",clear:false };
+        this.add_buff(caster, target, effect2, battleField);
+        const effect3 = { type: "buff_stat", value: ldr_val, stat: "intl", duration: "99", stack_max: "8",clear:false };
+        this.add_buff(caster, target, effect3, battleField);
+
+    }
+    #handleKyoyunokei(caster, target, battleField) {
+        /**梟雄の計の処理*/
+        if(battleField >= 5 && Math.random() <= 0.5){
+            //知略上昇
+            const intl_val = Math.round(caster.current_intl * 25) /100;
+            const effect1 = { type: "buff_stat", value: ldr_val, stat: "intl", duration: "99", stack_max: "1",clear:true };
+            this.add_buff(caster, target, effect1, battleField);
+            //混乱付与
+            if(!caster.is_main){
+                const newState = {
+                    name: "混乱",
+                    type: "status_effect",
+                    duration: 1,
+                    source_skill: this,
+                    source_busho: caster,
+                    conflict_rule: "NONE"
+                };
+
+                const isSuccess = target.add_state(newState, battleField);
+                if (isSuccess) {
+                    const logMsg = ` -> ${caster.colored_name} が ${target.colored_name} に ${newState.name} を付与 (${newState.duration}ターン)`;
+                    battleField.add_log(logMsg);
+                }
+            }
+        }
+    }
+    #handleShikaifukunen(caster, target, battleField) {
+        /**死灰復然の処理*/
+        const val = Math.round(((caster.current_intl -100) * 0.045 + 18) *100) /100;
+        const effect1 = { type: "buff_stat", value: val, stat: "dmg_cut_weapon", duration: "1", clear:true };
+        this.add_buff(caster, target, effect1, battleField);
+        const effect2 = { type: "buff_stat", value: val, stat: "dmg_cut_intel", duration: "1", clear:true };
+        this.add_buff(caster, target, effect2, battleField);
+        if(caster.ovHeal){
+            battleField.process_heal_event(caster, caster, 108, "intl", this.name);
         }
     }
 

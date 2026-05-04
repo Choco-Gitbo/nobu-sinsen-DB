@@ -35,81 +35,137 @@ export const CONT_HEAL_STATUS = new Set(["休養", "回生"]);
 export const STATE_TEMPLATES = {
     "連撃": {
         type: "buff_status",
-        conflict_rule: "NONE"
+        conflict_rule: "NONE",
+        attackType:null,
+        action:"通常",
+        clear:true
     },
     "回避": {
         type: "buff_status",
         phase: "before_attack",
         trigger_side: "defender",
-        conflict_rule: "STACK"
+        attackType:null,
+        conflict_rule: "STACK",
+        action:null,
+        clear:true
     },
     "鉄壁": {
         type: "buff_status",
         phase: "before_attack",
         trigger_side: "defender",
-        conflict_rule: "NONE"
+        attackType:null,
+        conflict_rule: "NONE",
+        action:null,
+        clear:true
     },
     "乱舞": {
         type: "buff_status",
         phase: "range_attack",
         trigger_side: "attacker",
-        conflict_rule: "STACK"
+        attackType:null,
+        conflict_rule: "STACK",
+        action:null,
+        clear:true
     },
     "反撃": {
         type: "buff_status",
         phase: "counter_attack",
         trigger_side: "defender",
-        conflict_rule: "STACK"
+        attackType:null,
+        conflict_rule: "STACK",
+        action:null,
+        clear:true
     },
     "援護": {
         type: "buff_status",
         phase: "before_attack",
         trigger_side: "defender",
-        conflict_rule: "NONE"
+        attackType:null,
+        conflict_rule: "NONE",
+        action:"通常",
+        clear:true
     },
     "肩代り": {
         type: "buff_status",
         phase: "before_attack",
         trigger_side: "defender",
-        conflict_rule: "NONE"
+        attackType:null,
+        conflict_rule: "NONE",
+        action:null,
+        clear:true
+    },
+    "封撃耐性": {
+        type: "buff_status",
+        conflict_rule: "NONE",
+        attackType:null,
+        action:null,
+        clear:true
     },
     "混乱耐性": {
         type: "buff_status",
-        conflict_rule: "NONE"
+        conflict_rule: "NONE",
+        attackType:null,
+        action:null,
+        clear:true
+    },
+    "乱舞耐性": {
+        type: "buff_status",
+        conflict_rule: "NONE",
+        attackType:null,
+        action:null,
+        clear:true
     },
     "洞察": {
         type: "buff_status",
         phase: "after_attack",
         trigger_side: "defender",
-        conflict_rule: "NONE"
+        attackType:null,
+        conflict_rule: "NONE",
+        action:null,
+        clear:true
     },
     "先攻": {
         type: "buff_status",
         phase: "before_turn",
         trigger_side: "attacker",
-        conflict_rule: "NONE"
+        attackType:null,
+        conflict_rule: "NONE",
+        action:null,
+        clear:true
     },
     "必中": {
         type: "buff_status",
-        conflict_rule: "NONE"
+        conflict_rule: "NONE",
+        attackType:null,
+        action:null,
+        clear:true
     },
     "破陣": {
         type: "buff_status",
-        conflict_rule: "NONE"
+        conflict_rule: "NONE",
+        attackType:null,
+        action:null,
+        clear:true
     },
     "離反": {
         type: "heal",
         phase: "after_attack",
         trigger_side: "attacker",
         stat: "dmg",
-        conflict_rule: "STACK"
+        conflict_rule: "STACK",
+        attackType:null,
+        action:null,
+        clear:true
     },
     "心攻": {
         type: "heal",
         phase: "after_attack",
         trigger_side: "attacker",
         stat: "dmg",
-        conflict_rule: "STACK"
+        conflict_rule: "STACK",
+        attackType:null,
+        action:null,
+        clear:true
     },
     "威圧": {
         type: "status_effect",
@@ -117,26 +173,41 @@ export const STATE_TEMPLATES = {
         trigger_side: "attacker",
         rate: 100,
         stat: null,
-        conflict_rule: "NONE"
+        conflict_rule: "NONE",
+        attackType:null,
+        action:null,
+        clear:true
     },
     "無策": {
         type: "status_effect",
-        conflict_rule: "NONE"
+        conflict_rule: "NONE",
+        attackType:null,
+        action:"能動",
+        clear:true
     },
     "封撃": {
         type: "status_effect",
-        conflict_rule: "NONE"
+        conflict_rule: "NONE",
+        attackType:null,
+        action:"通常",
+        clear:true
     },
     "混乱": {
         type: "status_effect",
-        conflict_rule: "NONE"
+        conflict_rule: "NONE",
+        attackType:null,
+        action:null,
+        clear:true
     },
     "疲弊": {
         type: "status_effect",
         phase: "after_attack",
         trigger_side: "attacker",
         stat: null,
-        conflict_rule: "NONE"
+        conflict_rule: "NONE",
+        attackType:null,
+        action:null,
+        clear:true
     },
     "麻痺": {
         type: "status_effect",
@@ -144,157 +215,381 @@ export const STATE_TEMPLATES = {
         trigger_side: "attacker",
         rate: 30,
         stat: null,
-        conflict_rule: "NONE"
+        conflict_rule: "NONE",
+        attackType:null,
+        action:null,
+        clear:true
     },
     "回復不可": {
         type: "status_effect",
         phase: "before_attack",
         trigger_side: "defender",
+        attackType:null,
         stat: null,
-        conflict_rule: "NONE"
+        conflict_rule: "NONE",
+        action:null,
+        clear:true
     },
     "浄化不可": {
         type: "status_effect",
         phase: "before_attack",
         trigger_side: "defender",
+        attackType:null,
         stat: null,
-        conflict_rule: "NONE"
+        conflict_rule: "NONE",
+        action:null,
+        clear:true
     },
     "再発動不可": {
         type: "refire",
         phase: "before_attack",
         trigger_side: "attacker",
-        conflict_rule: "NONE"
+        attackType:null,
+        conflict_rule: "NONE",
+        action:null,
+        clear:true
     },
     "通常攻撃不可": {
         type: "status_effect",
         phase: "before_attack",
         trigger_side: "attacker",
+        attackType:null,
         stat: null,
-        conflict_rule: "NONE"
+        conflict_rule: "NONE",
+        action:"通常",
+        clear:true
     },
     "挑発": {
         type: "status_effect",
-        conflict_rule: "NONE"
+        conflict_rule: "NONE",
+        attackType:null,
+        action:"通常",
+        clear:true
     },
     "牽制": {
         type: "status_effect",
-        conflict_rule: "NONE"
+        conflict_rule: "NONE",
+        attackType:null,
+        action:null,
+        clear:true
+    },
+    "狙撃": {
+        type: "status_effect",
+        conflict_rule: "NONE",
+        attackType:null,
+        action:null,
+        clear:true
     },
     "火傷": {
         type: "continuous_damage",
         phase: "before_action",
         trigger_side: "attacker",
+        attackType:null,
+        action:null,
         stat: "intl",
-        conflict_rule: "EXTEND"
+        conflict_rule: "EXTEND",
+        clear:true
     },
     "水攻め": {
         type: "continuous_damage",
         phase: "before_action",
         trigger_side: "attacker",
+        attackType:null,
+        action:null,
         stat: "intl",
-        conflict_rule: "EXTEND"
+        conflict_rule: "EXTEND",
+        clear:true
     },
     "中毒": {
         type: "continuous_damage",
         phase: "before_action",
         trigger_side: "attacker",
+        attackType:null,
+        action:null,
         stat: "intl",
-        conflict_rule: "EXTEND"
+        conflict_rule: "EXTEND",
+        clear:true
     },
     "潰走": {
         type: "continuous_damage",
         phase: "before_action",
         trigger_side: "attacker",
+        attackType:null,
+        action:null,
         stat: "pow",
-        conflict_rule: "EXTEND"
+        conflict_rule: "EXTEND",
+        clear:true
     },
     "消沈": {
         type: "continuous_damage",
         phase: "before_action",
         trigger_side: "attacker",
+        attackType:null,
+        action:null,
         stat: "intl",
-        conflict_rule: "EXTEND"
+        conflict_rule: "EXTEND",
+        clear:true
     },
     "乱兵": {
         type: "continuous_damage",
         phase: "before_action",
         trigger_side: "attacker",
+        attackType:null,
+        action:null,
         stat: "intl",
-        conflict_rule: "EXTEND"
+        conflict_rule: "EXTEND",
+        clear:true
     },
     "撹乱": {
         type: "continuous_damage",
         phase: "after_attack",
         trigger_side: "attacker",
+        attackType:null,
+        action:null,
         stat: "intl",
-        conflict_rule: "EXTEND"
+        conflict_rule: "EXTEND",
+        clear:true
     },
     "恐慌": {
         type: "continuous_damage",
         phase: "before_action",
         trigger_side: "attacker",
+        attackType:null,
+        action:null,
         stat: "intl",
-        conflict_rule: "EXTEND"
+        conflict_rule: "EXTEND",
+        clear:true
     },
     "休養": {
         type: "heal",
         phase: "before_action",
         trigger_side: "attacker",
-        conflict_rule: "EXTEND"
+        attackType:null,
+        action:null,
+        conflict_rule: "EXTEND",
+        clear:true
     },
     "回生": {
         type: "heal",
         phase: "after_attack",
         trigger_side: "defender",
-        conflict_rule: "EXTEND"
+        attackType:null,
+        action:null,
+        conflict_rule: "EXTEND",
+        clear:true
     },
 
     "全力戦闘_連撃(予備)": {
         type: "special",
         phase: "before_action",
         trigger_side: "attacker",
+        attackType:null,
+        action:null,
         trigger_turn: 5,
         rate: 70,
-        conflict_rule: "NONE"
+        conflict_rule: "NONE",
+        clear:true
     },
     "捨て身の義(予備)": {
         type: "special",
         phase: "after_attack",
         trigger_side: "defender",
+        attackType:null,
+        action:null,
         value: 100,
-        conflict_rule: "NONE"
+        conflict_rule: "NONE",
+        clear:true
     },
     "懐柔_休養(予備)": {
         type: "special",
         phase: "before_action",
         trigger_side: "attacker",
+        attackType:null,
+        action:null,
         trigger_turn: 2,
-        conflict_rule: "NONE"
+        conflict_rule: "NONE",
+        clear:true
     },
     "一念乱志(予備)": {
         type: "special",
         phase: "before_action",
         trigger_side: "attacker",
+        attackType:null,
+        action:null,
         trigger_turn: 3,
-        conflict_rule: "NONE"
+        conflict_rule: "NONE",
+        clear:true
     },
     "後方支援(予備)": {
         type: "special",
         phase: "before_action",
         trigger_side: "attacker",
-        conflict_rule: "NONE"
+        attackType:null,
+        action:null,
+        conflict_rule: "NONE",
+        clear:true
     },
     "鬼美濃(予備)": {
         type: "special",
         phase: "after_attack",
         trigger_side: "defender",
-        conflict_rule: "NONE"
+        attackType:null,
+        action:null,
+        conflict_rule: "NONE",
+        clear:true
     },
     "三楽犬(予備)": {
         type: "special",
         phase: "before_action",
         trigger_side: "attacker",
-        conflict_rule: "NONE"
+        attackType:null,
+        action:null,
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "沈魚落雁(予備)": {
+        type: "special",
+        phase: "after_attack",
+        trigger_side: "defender",
+        attackType:null,
+        action:"通常",
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "新生(予備)": {
+        type: "special",
+        phase: "before_action",
+        trigger_side: "attacker",
+        attackType:null,
+        action:null,
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "千成瓢箪(予備)": {
+        type: "special",
+        phase: "before_action",
+        trigger_side: "attacker",
+        attackType:null,
+        action:null,
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "古今独歩(予備)": {
+        type: "special",
+        phase: "after_attack",
+        trigger_side: "defender",
+        attackType:null,
+        action:"通常",
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "破陣乱舞(予備)": {
+        type: "special",
+        phase: "after_attack",
+        trigger_side: "attacker",
+        attackType:null,
+        action:"通常",
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "三河魂-強化(予備)": {
+        type: "special",
+        phase: "after_attack",
+        trigger_side: "defender",
+        attackType:null,
+        action:"通常",
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "三河魂(予備)": {
+        type: "special",
+        phase: "after_attack",
+        trigger_side: "defender",
+        attackType:null,
+        action:"通常",
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "軍神(予備)": {
+        type: "special",
+        phase: "after_attack",
+        trigger_side: "attacker",
+        action:["通常","能動","突撃"],
+        attackType:null,
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "軍神-龍(予備)": {
+        type: "special",
+        phase: "before_action",
+        trigger_side: "attacker",
+        attackType:null,
+        action:null,
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "軍神-昆(予備)": {
+        type: "special",
+        phase: "after_attack",
+        trigger_side: "attacker",
+        attackType:null,
+        action:"通常",
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "湖水渡り(予備)": {
+        type: "special",
+        phase: "after_attack",
+        trigger_side: "attacker",
+        attackType:null,
+        action:null,
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "七本槍筆頭(予備)": {
+        type: "special",
+        phase: "before_action",
+        trigger_side: "attacker",
+        attackType:null,
+        action:null,
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "七本槍筆頭-強化(予備)": {
+        type: "special",
+        phase: "after_attack",
+        trigger_side: "attacker",
+        attackType:null,
+        action:null,
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "破竹の勢い(予備)": {
+        type: "special",
+        phase: "after_attack",
+        trigger_side: "attacker",
+        attackType:null,
+        action:null,
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "剛の武者(予備)": {
+        type: "special",
+        phase: "after_attack",
+        trigger_side: "defender",
+        attackType:"intel",
+        action:null,
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "先手必勝(予備)": {
+        type: "special",
+        phase: "after_attack",
+        trigger_side: "defender",
+        attackType:null,
+        action:"能動",
+        conflict_rule: "NONE",
+        clear:true
     }
+
 };
