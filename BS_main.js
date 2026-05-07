@@ -33,7 +33,7 @@ updatePreview("a", 0);
 updatePreview("b", 0);
 
 document.getElementById('start-battle-btn').addEventListener('click', async () => {
-    runMultipleBattles(2)
+    runMultipleBattles(1)
 });
 // 連続戦闘ボタンが押された時
 async function runMultipleBattles(count) {

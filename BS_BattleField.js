@@ -93,7 +93,8 @@ export class BattleField {
         } else if (skillType === "能動") {
             // 敵の中に「牽制」状態がいるか確認
             const forcedState = caster.states.find(s => s.name === '牽制');
-            if (forcedState) {
+            const is_enemy = rangeType.includes("enemy")
+            if (forcedState && is_enemy) {
                 forcedTarget = forcedState.source_busho;
                 this.add_log(`  -> ${caster.colored_name} の戦法対象が【牽制】により ${forcedTarget.colored_name} に固定された！`);
             }
@@ -266,6 +267,24 @@ export class BattleField {
             const target = liveEnemies.reduce((min, b) => b.hp < min.hp ? b : min);
             return [target];
         }
+        // 損失系
+        if (rangeType === "ally_highest_wounded") {
+            if (liveAllies.length === 0) return [];
+            const target = liveAllies.reduce((max, b) => b.wounded > max.wounded ? b : max);
+            return [target];
+        } else if (rangeType === "ally_lowest_wounded") {
+            if (liveAllies.length === 0) return [];
+            const target = liveAllies.reduce((min, b) => b.wounded < min.wounded ? b : min);
+            return [target];
+        } else if (rangeType === "enemy_highest_wounded") {
+            if (liveEnemies.length === 0) return [];
+            const target = liveEnemies.reduce((max, b) => b.wounded > max.wounded ? b : max);
+            return [target];
+        } else if (rangeType === "enemy_lowest_wounded") {
+            if (liveEnemies.length === 0) return [];
+            const target = liveEnemies.reduce((min, b) => b.wounded < min.wounded ? b : min);
+            return [target];
+        }
 
         return [];
     }
@@ -296,6 +315,12 @@ export class BattleField {
         /**
          * 通常攻撃または突撃戦法など、対象が存在する攻撃アクション
          */
+        if (!caster) return;
+        if (!target){
+            this.add_log(`   ${caster.colored_name} の攻撃目標がいない`);
+            return;
+        }
+
         const atkName = statusName === null ? skillName.name : statusName;
         this.add_log(`   ${caster.colored_name} の[<span class="senpo-name">${atkName}</span>]攻撃開始（対象: ${target.colored_name}）`);
 
@@ -382,12 +407,12 @@ export class BattleField {
         if (attackType === "weapon") {
             const rihanState = caster.states.find(s => s.name === '離反');
             if (rihanState) {
-                this.process_heal_event(caster, caster, rihanState.value, "dmg", rihanState.source_skill.name, totalDmg);
+                this.process_heal_event(rihanState.source_busho, caster, rihanState.value, "dmg", rihanState.source_skill.name, totalDmg);
             }
         } else {
-            const sinkoState = caster.states.find(s => s.name === '心攻');
-            if (sinkoState) {
-                this.process_heal_event(caster, caster, sinkoState.value, "dmg", rihanState.source_skill.name, totalDmg);
+            const shinkoState = caster.states.find(s => s.name === '心攻');
+            if (shinkoState) {
+                this.process_heal_event(shinkoState.source_busho, caster, shinkoState.value, "dmg", shinkoState.source_skill.name, totalDmg);
             }
         }
 
@@ -617,31 +642,31 @@ export class BattleField {
 
     process_phase_states(actor, phase, side, target, attackType = null ,action = null) {
         /**フェーズに応じた状態効果の処理*/
-const statesToProcess = actor.states.filter(s => {
-    // 1. フェーズとサイドの基本一致チェック
-    if (s.phase !== phase || s.trigger_side !== side) return false;
+        const statesToProcess = actor.states.filter(s => {
+            // 1. フェーズとサイドの基本一致チェック
+            if (s.phase !== phase || s.trigger_side !== side) return false;
 
-    // 2. attackType の判定（一致していなければ false）
-    // 指定がない(null)場合はチェックをパスさせる
-    if (s.attackType !== null && attackType !== null) {
-        if (s.attackType !== attackType) return false;
-    }
+            // 2. attackType の判定（一致していなければ false）
+            // 指定がない(null)場合はチェックをパスさせる
+            if (s.attackType !== null && attackType !== null) {
+                if (s.attackType !== attackType) return false;
+            }
 
-    // 3. action の判定（一致していなければ false）
-    // 配列と単一文字列の両方に対応
-    if (s.action !== null && action !== null) {
-        let actionMatch = false;
-        if (Array.isArray(s.action)) {
-            actionMatch = s.action.includes(action);
-        } else {
-            actionMatch = (s.action === action);
-        }
-        if (!actionMatch) return false;
-    }
+            // 3. action の判定（一致していなければ false）
+            // 配列と単一文字列の両方に対応
+            if (s.action !== null && action !== null) {
+                let actionMatch = false;
+                if (Array.isArray(s.action)) {
+                    actionMatch = s.action.includes(action);
+                } else {
+                    actionMatch = (s.action === action);
+                }
+                if (!actionMatch) return false;
+            }
 
-    // すべてのチェックを通り抜けたものだけが抽出される
-    return true;
-});
+            // すべてのチェックを通り抜けたものだけが抽出される
+            return true;
+        });
         for (const state of statesToProcess) {
             if (state.name === "反撃") {
                 this.add_log(`  [反撃] ${actor.colored_name} が ${target.colored_name} に反撃！`);
@@ -664,7 +689,7 @@ const statesToProcess = actor.states.filter(s => {
                 const dmgRate = parseInt(state.rate || 100);
                 if (Math.random() <= (dmgRate /100)) {
                     const val = parseInt(state.value);
-                    const dmgType = "intel";
+                    const dmgType = STATE_TEMPLATES[state.name].stat == "intl" ? "intel" : "weapon";
                     this.process_attack_event(state.source_busho, actor, val, dmgType, "", state.name);
                 } else {
                     this.add_log(`   [${state.name}] ${actor.colored_name} が ${state.name}発動失敗！`);
@@ -1076,6 +1101,37 @@ const statesToProcess = actor.states.filter(s => {
                 kenshin.gunshin_tame = 0;
             }
         }
+        if(state.name === "帰蝶の舞(予備)"){
+            /**帰蝶の舞の処理*/
+            const turn_odd = this.turn % 2;
+            if (turn_odd == 1){ //奇数ターンの処理
+                if(Math.random() <= 0.4){
+                    const effect1 = { type: "debuff_stat", value: state.value, stat: "intl", duration: 1, clear:true };
+                    state.source_skill.add_buff(state.source_busho, actor, effect1, this);
+                    const effect2 = { type: "debuff_stat", value: state.value, stat: "ldr", duration: 1, clear:true };
+                    state.source_skill.add_buff(state.source_busho, actor, effect2, this);
+                }
+            }
+            if (turn_odd == 0 && this.trun >= 0){ //偶数ターンの処理
+                if(Math.random() <= 0.4){
+                    const newState = {
+                        name: "混乱",
+                        type: "status_effect",
+                        duration: 1,
+                        source_skill: state.source_skill,
+                        source_busho: state.source_busho,
+                        conflict_rule: "NONE"
+                    };
+
+                    const isSuccess = actor.add_state(newState, this);
+                    if (isSuccess) {
+                        const logMsg = ` -> ${state.source_busho.colored_name} が ${actor.colored_name} に ${newState.name} を付与 (${newState.duration}ターン)`;
+                        this.add_log(logMsg);
+                    }
+                }
+            }
+        }
+
         if(state.name === "湖水渡り(予備)"){
             /**湖水渡りの処理*/
             if(actor.kisaku){
@@ -1182,6 +1238,388 @@ const statesToProcess = actor.states.filter(s => {
                 }
             })
         }
+        if(state.name === "尼御台_離反(予備)"){
+            /**尼御台_離反の処理*/
+            if(this.turn == 3){
+                const val = 24;
+                const isSuccess = actor.add_state({
+                    phase: "affter_attack",
+                    trigger_side: "attacker",
+                    type: "heal",
+                    name: "離反",
+                    value: val,
+                    duration: 4,
+                    source_skill: state.source_skill,
+                    source_busho: state.source_busho,
+                    conflict_rule: "STACK"
+                }, this);
+
+                if (isSuccess) {
+                    logMsg = ` -> ${actor.colored_name} が 離反 ${val} を付与 (現在: ${val}) (4ターン)`;
+                    this.add_log(logMsg);
+                }
+            }
+        }
+        if(state.name === "尼御台_心攻(予備)"){
+            /**尼御台_心攻の処理*/
+            if(this.turn == 3){
+                const val = 24;
+                const isSuccess = actor.add_state({
+                    phase: "affter_attack",
+                    trigger_side: "attacker",
+                    type: "heal",
+                    name: "心攻",
+                    value: val,
+                    duration: 4,
+                    source_skill: state.source_skill,
+                    source_busho: state.source_busho,
+                    conflict_rule: "STACK"
+                }, this);
+
+                if (isSuccess) {
+                    logMsg = ` -> ${actor.colored_name} が 心攻 ${val} を付与 (現在: ${val}) (4ターン)`;
+                    this.add_log(logMsg);
+                }
+            }
+        }
+        if(state.name === "怪力無双(予備)"){
+            /**怪力無双(予備)の処理*/
+            if(target.hp <= 0){
+                const isSuccess = actor.add_state({
+                    phase: "affter_attack",
+                    trigger_side: "attacker",
+                    type: "baff_status",
+                    name: "破陣",
+                    duration: 2,
+                    source_skill: state.source_skill,
+                    source_busho: state.source_busho,
+                    conflict_rule: "NONE"
+                }, this);
+
+                if (isSuccess) {
+                    logMsg = ` -> ${actor.colored_name} が 破陣 を付与  (2ターン)`;
+                    this.add_log(logMsg);
+                }
+            }
+        }
+        if(state.name === "越後流軍学(予備)"){
+            /**越後流軍学(予備)の処理*/
+            const statePool = [
+                { name: "封撃耐性", type: "status_effect" },
+                { name: "無策耐性", type: "status_effect" },
+                { name: "威圧耐性", type: "status_effect" },
+                { name: "疲弊耐性", type: "status_effect" }
+            ];
+        
+            const chosenStateBase = statePool[Math.floor(Math.random() * statePool.length)];
+
+            const newState = {
+                name: chosenStateBase.name,
+                type: chosenStateBase.type,
+                duration: actor.is_main ? 3 : 2,
+                source_skill: this,
+                source_busho: actor,
+                clear: true,
+                conflict_rule: "NONE"
+            };
+
+            const isSuccess = actor.add_state(newState, this);
+            if (isSuccess) {
+                const logMsg = ` -> ${actor.colored_name} が ${actor.colored_name} に ${newState.name} を付与 (${newState.duration}ターン)`;
+                this.add_log(logMsg);
+            }
+
+        }
+
+        if(state.name === "仏の高力(予備)"){
+            /**仏の高力の処理*/
+            const statName = STAT_MAP["ldr"];
+            const now_val = "30%"
+            const effect1 = { type: "buff_stat", value: now_val, stat: "ldr", duration: "2" };
+            state.source_skill.add_buff(actor, actor, effect1, this);
+        }
+
+        if(state.name === "百万一心(予備)"){
+            /**百万一心の処理*/
+            if(Math.random() <= 0.3){
+                const newState = {
+                    name: "能動阻止",
+                    type: "special_effect",
+                    duration: 1,
+                    source_skill: state.source_skill,
+                    source_busho: state.source_busho,
+                    clear: true,
+                    conflict_rule: "NONE"
+                };
+
+                actor.add_state(newState, this);
+                
+                const newState1 = {
+                    type: "special",
+                    phase: "after_skill_exe",
+                    trigger_side: "attacker",
+                    name: "百万一心-謀(予備)",
+                    duration: 1,
+                    source_skill: state.source_skill,
+                    source_busho: state.source_busho,
+                    attackType:null,
+                    action:"能動",
+                    clear: true,
+                    conflict_rule: "NONE"
+                };
+
+                actor.add_state(newState1, this);
+            }
+        }
+        if(state.name === "百万一心-謀(予備)"){
+            /**百万一心-謀の処理*/
+            this.process_attack_event(state.source_busho, actor, 100, "intel", state.source_skill);
+
+        }
+
+        if(state.name === "洞察反撃(予備)"){
+            /**洞察反撃の処理*/
+            this.process_attack_event(state.source_busho, target, 304, "intel", state.source_skill);
+            actor.states.forEach(s => {
+                if (s.name =="洞察反撃(予備)"){
+                    idx = actor.states.indexOf(s);
+                    if (idx > -1) actor.states.splice(idx, 1);
+                    logMsg = ` -> ${actor.colored_name} の 洞察反撃(予備) が 消失 `;
+                    this.add_log(logMsg);
+                }
+            })
+        }
+        if(state.name === "不屈の精神(予備)"){
+            /**不屈の精神の処理*/
+            state.value = Number(state.value) +1;
+            let is_atkcnt_up = Number(state.value) % 2;
+            let pow_val = 36;
+            const statName = STAT_MAP["pow"];
+            if(is_atkcnt_up == 0){
+                const has_fukutsu = actor.states.find(st => st.stat === "pow" && st.source_skill.name == "不屈の精神");
+                if(has_fukutsu){
+                    has_fukutsu.value += pow_val;
+                    logMsg = ` -> ${actor.colored_name} の ${statName} が ${pow_val} 増加 (現在: ${actor.current_pow})  `;
+                    this.add_log(logMsg);
+                }else{
+                    const effect1 = { type: "buff_stat", value: pow_val, stat: "pow", duration: "2", stack_max: "99" };
+                    state.source_skill.add_buff(actor, actor, effect1, this);
+                }
+            }
+        }
+        if(state.name === "耐苦鍛錬(予備)"){
+            /**不屈の精神の処理*/
+            state.value = Number(state.value);
+            let pow_val = 14;
+            let ldr_val = 14;
+            const statName1 = STAT_MAP["pow"];
+            const statName2 = STAT_MAP["ldr"];
+            const has_taiku_pow = actor.states.find(st => st.stat === "pow" && st.source_skill.name == "耐苦鍛錬");
+            if(has_taiku_pow){
+                if (state.value < 5){
+                    //state.value += 1;
+                    has_taiku_pow.value += pow_val;
+                    logMsg = ` -> ${actor.colored_name} の ${statName1} が ${pow_val} 増加 (現在: ${actor.current_pow})  `;
+                    this.add_log(logMsg);
+                }
+            //}
+            //if(has_taiku_ldr){
+                if (state.value < 5){
+                    state.value += 1;
+                    has_taiku_pow.value += ldr_val;
+                    logMsg = ` -> ${actor.colored_name} の ${statName2} が ${ldr_val} 増加 (現在: ${actor.current_ldr})  `;
+                    this.add_log(logMsg);
+                }
+            }
+            if (state.value <= 0){
+                const effect1 = { type: "buff_stat", value: pow_val, stat: "pow", duration: "99", stack_max: "5" };
+                state.source_skill.add_buff(actor, actor, effect1, this);
+                const effect2 = { type: "buff_stat", value: pow_val, stat: "ldr", duration: "99", stack_max: "5" };
+                state.source_skill.add_buff(actor, actor, effect2, this);
+                state.value += 1;
+            }
+            if (state.value == 5){
+                const targetKey = "enemy_random_3";
+                const newTargets = this.find_targets(actor, targetKey, state.source_skill.type);
+                for(let newTarget of newTargets){
+                    this.process_attack_event(state.source_busho, newTarget, 160, "weapon", state.source_skill);
+                }
+
+            }
+        }
+
+        if(state.name === "七十二の計(予備)"){
+            /**七十二の計の処理*/
+            state.value = Number(state.value);
+            if(actor.kisaku){state.value += 1;}
+            if(state.value == 7){
+                const targetKey = "enemy_random_3";
+                const newTargets = this.find_targets(actor, targetKey, state.source_skill.type);
+                for (let newTarget of newTargets) {
+                    this.process_attack_event(state.source_busho, newTarget, 120, "intel", state.source_skill);
+                }
+                actor.states.forEach(s => {
+                    if (s.name =="七十二の計(予備)"){
+                        idx = actor.states.indexOf(s);
+                        if (idx > -1) actor.states.splice(idx, 1);
+                        logMsg = ` -> ${actor.colored_name} の 七十二の計(予備) が 消失 `;
+                        this.add_log(logMsg);
+                    }
+                })
+            }
+        }
+
+        if(state.name === "盤石耽々(予備)"){
+            /**盤石耽々の処理*/
+            const statName1 = STAT_MAP["dmg_cut_weapon"];
+            const has_tantan1 = actor.states.find(st => st.stat === "dmg_cut_weapon" && st.source_skill.name == "盤石耽々");
+            if(has_tantan1){
+                has_tantan1.value += state.value;
+                logMsg = ` -> ${actor.colored_name} の ${statName1} が ${state.value} 増加 (現在: ${actor.current_dmg_cut_weapon})  `;
+                this.add_log(logMsg);
+            }
+            const statName2 = STAT_MAP["dmg_cut_intel"];
+            const has_tantan2 = actor.states.find(st => st.stat === "dmg_cut_intel" && st.source_skill.name == "盤石耽々");
+            if(has_tantan2){
+                has_tantan2.value += state.value;
+                logMsg = ` -> ${actor.colored_name} の ${statName2} が ${state.value} 増加 (現在: ${actor.current_dmg_cut_intel})  `;
+                this.add_log(logMsg);
+            }
+        }
+        if(state.name === "死中求活(予備)"){
+            /**死中求活の処理*/
+            if (this.turn == 5){
+                const targetKey = "enemy_random_3";
+                const newTargets = this.find_targets(actor, targetKey, state.source_skill.type);
+                const val = 125 + 12 * state.value;
+                for(let newTarget of newTargets){
+                    this.process_attack_event(state.source_busho, newTarget, val, "weapon", state.source_skill);
+                }
+                actor.states.forEach(s => {
+                    if (s.name =="死中求活(予備)"){
+                        idx = actor.states.indexOf(s);
+                        if (idx > -1) actor.states.splice(idx, 1);
+                        logMsg = ` -> ${actor.colored_name} の 死中求活(予備) が 消失 `;
+                        this.add_log(logMsg);
+                    }
+                })
+            }
+        }
+
+        if(state.name === "死中求活-絶境(予備)"){
+            /**死中求活-絶境の処理*/
+            state.value = Number(state.value);
+            let pow_val = 5;
+            const statName1 = STAT_MAP["pow"];
+            const has_taiku_pow = actor.states.find(st => st.stat === "pow" && st.source_skill.name == "耐苦鍛錬");
+            if(has_taiku_pow){
+                if (state.value < 10){
+                    state.value += 1;
+                    has_taiku_pow.value += pow_val;
+                    logMsg = ` -> ${actor.colored_name} の ${statName1} が ${pow_val} 増加 (現在: ${actor.current_pow})  `;
+                    this.add_log(logMsg);
+                }
+            }
+            if (state.value <= 0){
+                const effect1 = { type: "buff_stat", value: pow_val, stat: "pow", duration: 99, stack_max: 10 };
+                state.source_skill.add_buff(actor, actor, effect1, this);
+                state.value += 1;
+            }
+            actor.states.forEach(s => {
+                if (s.name =="死中求活(予備)"){
+                    s.value = state.value;
+                }
+            })
+            if (state.value == 10){
+                actor.states.forEach(s => {
+                    if (s.name =="死中求活-絶境(予備)"){
+                        idx = actor.states.indexOf(s);
+                        if (idx > -1) actor.states.splice(idx, 1);
+                        logMsg = ` -> ${actor.colored_name} の 死中求活-絶境(予備) が 消失 `;
+                        this.add_log(logMsg);
+                    }
+                })
+            }
+
+        }
+
+        if(state.name === "戦意消沈(予備)"){
+            /**戦意消沈(予備)の処理*/
+            if(this.turn == Number(state.value) ){      
+                const newState = {
+                    name: "威圧",
+                    type: "status_effect",
+                    rate: 50,
+                    duration: 1,
+                    source_skill: this,
+                    source_busho: actor,
+                    clear: true,
+                    conflict_rule: "NONE"
+                };
+
+                const isSuccess = actor.add_state(newState, this);
+                if (isSuccess) {
+                    const logMsg = ` -> ${actor.colored_name} が ${actor.colored_name} に ${newState.name} を付与 (${newState.duration}ターン)`;
+                    this.add_log(logMsg);
+                }
+            }
+        }
+        if(state.name === "母衣武者(予備)"){
+            /**湖水渡りの処理*/
+            let cnt = Number(state.value2);
+            const val = Number(state.value);
+            if(cnt <=5){
+                const effect1 = { type: "debuff_stat", value: val, stat: "dmg_cut_weapon", duration: 99, stack_max: 5};
+                state.source_skill.add_buff(actor, target, effect1, this);
+                const effect2 = { type: "debuff_stat", value: val, stat: "dmg_cut_intel", duration: 99, stack_max: 5};
+                state.source_skill.add_buff(actor, target, effect2, this);
+                cnt += 1;
+                state.value2 = cnt;
+            } 
+        }
+
+        if(state.name === "赤備え隊(予備)"){
+            /**赤備え隊の処理*/
+            state.value = Number(state.value);
+            if(actor.kaishin){state.value += 1;}
+            const actorKey = "ally_random_3";
+            const newActors = this.find_targets(actor, actorKey, state.source_skill.type);
+            let cnt = 0;
+            for(let newActor1 of newActors){
+                const st = newActor1.states.find(s => s.name =="赤備え隊(予備)");
+                if (st){cnt = cnt + st.value;}
+            }
+            if(cnt == 10){
+                for(let newActor2 of newActors){
+                    const targetKey = "enemy_random_1";
+                    const newTargets = this.find_targets(actor, targetKey, state.source_skill.type);
+                    this.process_attack_event(newActor2, newTargets[0], 88, "weapon", state.source_skill);
+                    //状態のクリア
+                    newActor2.states.forEach(s => {
+                        if (s.name =="赤備え隊(予備)"){
+                            idx = newActor2.states.indexOf(s);
+                            if (idx > -1) newActor2.states.splice(idx, 1);
+                            logMsg = ` -> ${newActor2.colored_name} の 赤備え隊(予備) が 消失 `;
+                            this.add_log(logMsg);
+                        }
+                    })
+                }
+            }
+        }
+
+        if(state.name === "城盗り(予備)"){
+            /**城盗りの処理*/
+            actor.states.forEach(s => {
+                if (s.name =="城盗り(予備)"){
+                    idx = actor.states.indexOf(s);
+                    if (idx > -1) actor.states.splice(idx, 1);
+                    logMsg = ` -> ${actor.colored_name} の 城盗り(予備) が 消失 `;
+                    this.add_log(logMsg);
+                }
+            })
+            this.process_attack_event(state.source_busho, actor, 106, "intel", state.source_skill);
+        }
+
     }
 
     add_log(message, category = "info") {
@@ -1289,6 +1727,14 @@ const statesToProcess = actor.states.filter(s => {
             this.executeSpecificTypeSkills(busho, "受動");
         }
 
+        // 3. 陣法戦法（Command）の発動
+        for (const busho of order) {
+            this.executeSpecificTypeSkills(busho, "陣法");
+        }
+        // 3. 兵種戦法（Command）の発動
+        for (const busho of order) {
+            this.executeSpecificTypeSkills(busho, "兵種");
+        }
         // 3. 指揮戦法（Command）の発動
         for (const busho of order) {
             this.executeSpecificTypeSkills(busho, "指揮");
@@ -1372,19 +1818,21 @@ const statesToProcess = actor.states.filter(s => {
          * 行動できない場合は True を返す。
          */
         const restrictionStates = busho.states.filter(
-            s => s.type === "status_effect" && s.fail_rate !== undefined
+            s => s.name == "威圧" || s.name == "麻痺"
         );
 
         if (restrictionStates.length === 0) {
             return false;
         }
 
-        const maxFailRate = Math.max(...restrictionStates.map(s => s.fail_rate));
-        const primaryState = restrictionStates.find(s => s.fail_rate === maxFailRate) || restrictionStates[0];
+        const maxFailRate = Math.max(...restrictionStates.map(s => s.rate));
+        const primaryState = restrictionStates.find(s => s.rate === maxFailRate) || restrictionStates[0];
 
         if (Math.random() <= (maxFailRate / 100)) {
             this.add_log(`  !! ${busho.colored_name} は【${primaryState.name}】により行動できない！`);
             return true;
+        }else{
+            this.add_log(`  !! ${busho.colored_name} は【${primaryState.name}】は不発！`);
         }
 
         return false;
@@ -1432,10 +1880,13 @@ const statesToProcess = actor.states.filter(s => {
             
             if ((Math.random() <= (sRate /100)) || isPrep) {
                 if (!isPrep) {
+                    const has_skip = busho.states.find(s =>{ s.name == "準備ターン省略" && s.source_skill == skill})
+                    let skip_skill = 0;
+                    if (has_skip){skip_skill = 1;} 
                     const prepState = {
                         name: `準備:${skill.name}`,
                         type: "preparation",
-                        duration: skill.prepTurns,
+                        duration: skill.prepTurns - skip_skill,
                         value: skill,
                         conflict_rule: "NONE",
                         source_skill: skill,
@@ -1443,14 +1894,27 @@ const statesToProcess = actor.states.filter(s => {
                     };
 
                     const success = busho.add_state(prepState, this);
-                    if (success && skill.prepTurns > 0) {
+                    if (success && prepState.duration > 0) {
                         this.add_log(`  ${busho.colored_name} が 【${skill.colored_name}】 の準備を開始！`);
                     }
                 }
 
                 for (const s of busho.states) {
                     if (s.type === "preparation" && s.duration === 0 && s.value === skill) {
-                        skill.execute(busho, this);
+                        this.process_phase_states(busho, "before_skill_exe", "attacker",null,null,skillType);
+                        const is_soshi = isRestricted(busho,"能動阻止");
+                        if(!is_soshi || skill.type != "能動"){
+                            skill.execute(busho, this);
+                        }else{
+                            this.add_log(`   ${busho.colored_name} は戦法 【${skill.colored_name}】発動を阻止された！`);
+                            for (const s of busho.states) {
+                                if (s.name === "能動阻止" && s.value === skill) {
+                                    const idx = busho.states.indexOf(s);
+                                    if (idx > -1) busho.states.splice(idx, 1);
+                                }
+                            }
+                        }
+                        this.process_phase_states(busho, "after_skill_exe", "attacker",null,null,skillType);
                         const idx = busho.states.indexOf(s);
                         if (idx > -1) busho.states.splice(idx, 1);
                     }
@@ -1523,7 +1987,8 @@ const statesToProcess = actor.states.filter(s => {
         /**武将の行動前処理時に持続時間0の状態を消去*/
         const statesToRemove = [];
 
-        for (const s of busho.states) {
+        for (let i = busho.states.length - 1; i >= 0; i--) {
+            const s = busho.states[i];
             if (s.duration !== undefined && s.duration === 0) {
                 const sType = s.type;
                 const sStat = s.stat;

@@ -180,11 +180,20 @@ export class Senpo {
         if (conditionName === "t知略>t武勇") {
             return target.current_pow < target.current_intl;
         }
+        if (conditionName === "has_弱体") {
+            return caster.states.includes("status_effect");
+        }
         if (conditionName === "has_封撃") {
             return target.states.some(s => s.name === "封撃");
         }
         if (conditionName === "not_has_封撃") {
             return !target.states.some(s => s.name === "封撃");
+        }
+        if (conditionName === "has_無策") {
+            return target.states.some(s => s.name === "無策");
+        }
+        if (conditionName === "not_has_無策") {
+            return !target.states.some(s => s.name === "無策");
         }
         if (conditionName === "has_潰走") {
             return target.states.some(s => s.name === "潰走");
@@ -209,6 +218,9 @@ export class Senpo {
         }
         if (conditionName === "not_has_牽制") {
             return !target.states.some(s => s.name === "牽制");
+        }
+        if (conditionName === "飯富虎昌") {
+            return caster.name === "飯富虎昌";
         }
         if (conditionName.includes("mhp")) {
             // 自身の兵数
@@ -431,19 +443,23 @@ export class Senpo {
 
         const isSuccess = target.add_state({
             name: `${statName}${displayLabel}`,
+            phase:null,
+            trigger_side:null,
             type: eType,
             stat: statKey,
             value: finalValue,
             duration: eDuration,
             source_skill: this,
             source_busho: caster,
+            attackType:null,
+            action:null,
             conflict_rule: "STACK",
             stack_max: stackMax
         }, battleField);
 
         if (isSuccess) {
             const currentVal = target[`current_${statKey}`];
-            const logMsg = ` -> ${target.colored_name} の ${statName} が ${finalValue} ${displayLabel} (現在: ${currentVal}) (${eDuration}ターン)`;
+            const logMsg = ` -> [${this.colored_name}] により ${target.colored_name} の ${statName} が ${finalValue} ${displayLabel} (現在: ${currentVal}) (${eDuration}ターン)`;
             battleField.add_log(logMsg);
         }
     }
@@ -469,10 +485,36 @@ export class Senpo {
             this.#handleGunshin(caster, target, battleField);
         } else if (specialId === "海道一") {
             this.#handleKaidouichi(caster, target, battleField);
+        } else if (specialId === "百万一心") {
+            this.#handleHyakumanisshin(caster, target, battleField);
         } else if (specialId === "梟雄の計") {
             this.#handleKyoyunokei(caster, target, battleField);
+        } else if (specialId === "形影相弔") {
+            this.#handleKeieisoutyou(caster, target, battleField);
+        } else if (specialId === "帰蝶の舞") {
+            this.#handleKichonoMai(caster, target, battleField);
         } else if (specialId === "死灰復然") {
             this.#handleShikaifukunen(caster, target, battleField);
+        } else if (specialId === "啄木鳥") {
+            this.#handleKitsutsuki(caster, target, battleField);
+        } else if (specialId === "相模の獅子") {
+            this.#handleSagaminoShishi(caster, target, battleField);
+        } else if (specialId === "津田流砲術") {
+            this.#handleTsudaryuHojutsu(caster, target, battleField);
+        } else if (specialId === "笹の才蔵") {
+            this.#handleSasanoSaizo(caster, target, battleField);
+        } else if (specialId === "天下御免") {
+            this.#handleTenkaGomen(caster, target, battleField);
+        } else if (specialId === "豊後の戦神") {
+            this.#handleBungonoSenjin(caster, target, battleField);
+        } else if (specialId === "仁者の沈勇") {
+            this.#handleJinshanoChinyu(caster, target, battleField);
+        } else if (specialId === "盤石耽々") {
+            this.#handleBanjakutantan(caster, target, battleField);
+        } else if (specialId === "戦意消沈") {
+            this.#handleSenishochin(caster, target, battleField);
+        } else if (specialId === "母衣武者") {
+            this.#handleHoromusha(caster, target, battleField);
         } else if (specialId === "不意打ち") {
             this.#handleFuichii(caster, target, battleField);
         } else if (specialId === "一六勝負") {
@@ -598,20 +640,51 @@ export class Senpo {
     #handleKaidouichi(caster, target, battleField) {
         /**海道一の処理*/
         const ldr_val = Math.round(caster.current_ldr * 6) /100;
-        const effect1 = { type: "debuff_stat", value: ldr_val, stat: "ldr", duration: "99", stack_max: "8",clear:false };
+        const effect1 = { type: "debuff_stat", value: ldr_val, stat: "ldr", duration: 99, stack_max: "8",clear:false };
         this.add_buff(caster, target, effect1, battleField);
-        const effect2 = { type: "buff_stat", value: ldr_val, stat: "pow", duration: "99", stack_max: "8",clear:false };
+        const effect2 = { type: "buff_stat", value: ldr_val, stat: "pow", duration: 99, stack_max: "8",clear:false };
         this.add_buff(caster, target, effect2, battleField);
-        const effect3 = { type: "buff_stat", value: ldr_val, stat: "intl", duration: "99", stack_max: "8",clear:false };
+        const effect3 = { type: "buff_stat", value: ldr_val, stat: "intl", duration: 99, stack_max: "8",clear:false };
         this.add_buff(caster, target, effect3, battleField);
 
+    }
+
+    #handleHyakumanisshin(caster, target, battleField) {
+        /**百万一心の処理*/
+        const rate = caster.is_main ? 0.35 : 0.15;
+        let targetKey
+        if(Math.random() <= rate){
+            targetKey = "enemy_random_3";
+        }else{ targetKey = "enemy_random_2";}
+        const newTargets = battleField.find_targets(caster, targetKey, this.type);
+
+        for(let newTarget of newTargets){
+            const newState = {
+                type: "special",
+                phase: "before_skill_exe",
+                trigger_side: "attacker",
+                name: "百万一心(予備)",
+                duration: 99,
+                attackType:null,
+                action:"能動",
+                source_skill: this,
+                source_busho: caster,
+                conflict_rule: "NONE"
+            };
+
+            const isSuccess = newTarget.add_state(newState, battleField);
+            if (isSuccess) {
+                const logMsg = ` -> ${caster.colored_name} が ${newTarget.colored_name} に ${newState.name} を付与 (${newState.duration}ターン)`;
+                battleField.add_log(logMsg);
+            }
+        }
     }
     #handleKyoyunokei(caster, target, battleField) {
         /**梟雄の計の処理*/
         if(battleField >= 5 && Math.random() <= 0.5){
             //知略上昇
             const intl_val = Math.round(caster.current_intl * 25) /100;
-            const effect1 = { type: "buff_stat", value: ldr_val, stat: "intl", duration: "99", stack_max: "1",clear:true };
+            const effect1 = { type: "buff_stat", value: ldr_val, stat: "intl", duration: 99, stack_max: "1",clear:true };
             this.add_buff(caster, target, effect1, battleField);
             //混乱付与
             if(!caster.is_main){
@@ -632,16 +705,363 @@ export class Senpo {
             }
         }
     }
+
+    #handleKeieisoutyou(caster, target, battleField) {
+        /**形影相弔の処理*/
+        battleField.process_attack_event(caster, target, 192, "intel", this);
+        //知略の高い敵軍をcasterとする
+        const targetKey1 = "enemy_highest_intl";
+        const newCasters = battleField.find_targets(caster, targetKey1, this.type);
+        let fainal_Target = target;
+        if(battleField.turn == 6){
+            const targetKey2 = "friend_random_1";
+            const newTargets = battleField.find_targets(caster, targetKey2, this.type);
+            fainal_Target = newTargets[0];
+        }
+        battleField.process_attack_event(newCasters[0], fainal_Target, 192, "intel", this);
+
+    }
+
+    #handleKichonoMai(caster, target, battleField) {
+        /**帰蝶の舞の処理*/
+        const val = Math.round(((caster.current_intl -100) * 0 + 22) *100) /100;
+
+        const newState = {
+            name: "帰蝶の舞(予備)",
+            type: "special",
+            phase: "before_action",
+            trigger_side: "attacker",
+            value: val,
+            duration: 99,
+            attackType:null,
+            action:null,
+            source_skill: this,
+            source_busho: caster,
+            conflict_rule: "NONE"
+        };
+
+        const isSuccess = target.add_state(newState, battleField);
+        if (isSuccess) {
+            const logMsg = ` -> ${caster.colored_name} が ${target.colored_name} に ${newState.name} を付与 (${newState.duration}ターン)`;
+            battleField.add_log(logMsg);
+        }
+        caster.record_skill_stats(this.name, 0, false);
+    }
+
     #handleShikaifukunen(caster, target, battleField) {
         /**死灰復然の処理*/
         const val = Math.round(((caster.current_intl -100) * 0.045 + 18) *100) /100;
-        const effect1 = { type: "buff_stat", value: val, stat: "dmg_cut_weapon", duration: "1", clear:true };
+        const effect1 = { type: "buff_stat", value: val, stat: "dmg_cut_weapon", duration: 1, clear:true };
         this.add_buff(caster, target, effect1, battleField);
-        const effect2 = { type: "buff_stat", value: val, stat: "dmg_cut_intel", duration: "1", clear:true };
+        const effect2 = { type: "buff_stat", value: val, stat: "dmg_cut_intel", duration: 1, clear:true };
         this.add_buff(caster, target, effect2, battleField);
         if(caster.ovHeal){
             battleField.process_heal_event(caster, caster, 108, "intl", this.name);
         }
+    }
+
+    #handleKitsutsuki(caster, target, battleField) {
+        /**啄木鳥の処理*/
+        const skill_cnt = caster.is_main ? 2 :1;
+        for (let i =0; i< skill_cnt; i++){
+            // 知略攻撃
+            battleField.process_attack_event(caster, target, 156, "intel", this);
+            // 自軍武勇高いが兵刃
+            const casterKey = "ally_highest_pow";
+            const newCaster = battleField.find_targets(caster, casterKey, this.type);
+            battleField.process_attack_event(caster, target, 160, "weapon", this);
+            //威圧付与
+            if(Math.random() <= 0.35){
+                const newState = {
+                    name: "威圧",
+                    type: "status_effect",
+                    duration: 1,
+                    source_skill: this,
+                    source_busho: caster,
+                    conflict_rule: "NONE"
+                };
+
+                const isSuccess = target.add_state(newState, battleField);
+                if (isSuccess) {
+                    const logMsg = ` -> ${caster.colored_name} が ${target.colored_name} に ${newState.name} を付与 (${newState.duration}ターン)`;
+                    battleField.add_log(logMsg);
+                }
+            }
+
+        }
+    }
+
+    #handleSagaminoShishi(caster, target, battleField) {
+        /**相模の獅子の処理*/
+        const has_teppeki = target.states.find(st => st.name === "鉄壁");
+        if(has_teppeki){
+            //鉄壁保有なら計略攻撃
+            const targetKey = "enemy_random_1";
+            const newTarget = battleField.find_targets(caster, targetKey, this.type);
+            battleField.process_attack_event(caster, newTarget, 178, "intel", this);
+        }else{
+            if(Math.random() <= 0.85){
+                //鉄壁付与
+                const newState = {
+                    name: "鉄壁",
+                    type: "buff_status",
+                    value:2,
+                    duration: 2,
+                    source_skill: this,
+                    source_busho: caster,
+                    conflict_rule: "NONE"
+                };
+
+                const isSuccess = target.add_state(newState, battleField);
+                if (isSuccess) {
+                    const logMsg = ` -> ${caster.colored_name} が ${target.colored_name} に ${newState.name} を付与 (${newState.duration}ターン)`;
+                    battleField.add_log(logMsg);
+                }
+                caster.record_skill_stats(this.name, 0, false);
+
+            }else if (caster.is_main){
+                battleField.process_heal_event(caster, target, 40, "intl", this.name);
+            }
+        }
+    }
+
+    #handleTsudaryuHojutsu(caster, target, battleField) {
+        /**津田流砲術の処理*/
+
+        const statePool = [
+            { name: "封撃", type: "status_effect" },
+            { name: "無策", type: "status_effect" },
+            { name: "威圧", type: "status_effect" },
+            { name: "混乱", type: "status_effect" }
+        ];
+        const chosenStateBase = statePool[Math.floor(Math.random() * statePool.length)];
+
+        const newState = {
+            name: chosenStateBase.name,
+            type: chosenStateBase.type,
+            duration: 2,
+            source_skill: this,
+            source_busho: caster,
+            conflict_rule: "NONE"
+        };
+
+        const isSuccess = target.add_state(newState, battleField);
+        if (isSuccess) {
+            const logMsg = ` -> ${caster.colored_name} が ${target.colored_name} に ${newState.name} を付与 (${newState.duration}ターン)`;
+            battleField.add_log(logMsg);
+        }
+
+        caster.record_skill_stats(this.name, 0, false);
+    }
+
+    #handleSasanoSaizo(caster, target, battleField) {
+        /**笹の才蔵の処理*/
+        if(target.hp <= 0){
+            //発動確率100%増
+            const effect1 = { type: "buff_stat", value: 100, stat: "rate_unique_active", duration: 2, clear:true };
+            this.add_buff(caster, caster, effect1, battleField);
+
+            const newState = {
+                name: "準備ターン省略",
+                type: "skip",
+                value:1,
+                duration: 2,
+                source_skill: this,
+                source_busho: caster,
+                conflict_rule: "NONE"
+            };
+
+            const isSuccess = target.add_state(newState, battleField);
+            if (isSuccess) {
+                const logMsg = ` -> ${caster.colored_name} が ${caster.colored_name} に ${newState.name} を付与 (${newState.duration}ターン)`;
+                battleField.add_log(logMsg);
+            }
+        }
+    }
+
+    #handleTenkaGomen(caster, target, battleField) {
+        /**天下御免の処理*/
+        battleField.process_attack_event(caster, target, 188, "weapon", this);
+        if(target.is_main){
+            const has_konran = target.states.find(st => st.name === "混乱");
+            if(!has_konran){
+                //大将なら混乱付与
+                const newState = {
+                    name: "混乱",
+                    type: "status_effect",
+                    duration: 2,
+                    source_skill: this,
+                    source_busho: caster,
+                    conflict_rule: "NONE"
+                };
+                const isSuccess = target.add_state(newState, battleField);
+                if (isSuccess) {
+                    const logMsg = ` -> ${caster.colored_name} が ${target.colored_name} に ${newState.name} を付与 (${newState.duration}ターン)`;
+                    battleField.add_log(logMsg);
+                }
+            }else{
+                const stat =[
+                    {name : "pow", value : target.current_pow},
+                    {name : "intl", value : target.current_intl},
+                    {name : "ldr", value : target.current_ldr},
+                    {name : "spd", value : target.current_spd}
+                ];
+                let max_baf = 0;
+                let max_stat = "";
+                stat.forEach(st => {
+                    if (st.value >= max_baf){
+                        max_baf = st.value;
+                        max_stat = st.name;
+                    } 
+                })
+                const val = Math.round(((caster[`current_${max_stat}`] -100) * 0.0848 + 30) *100) /100;
+                const effect1 = { type: "debuff_stat", value: val, stat: max_stat, duration: 99, clear:false };
+                this.add_buff(caster, target, effect1, battleField);
+                
+                const effect2 = { type: "buff_stat", value: val, stat: max_stat, duration: 99, clear:false };
+                this.add_buff(caster, caster, effect2, battleField);
+            }
+        }
+    }
+
+    #handleBungonoSenjin(caster, target, battleField) {
+        /**豊後の戦神の処理*/
+        if(caster.is_main){
+            const val = 20;
+            const effect1 = { type: "buff_stat", value: val, stat: max_stat, duration: 99, clear:false };
+            this.add_buff(caster, target, effect1, battleField);
+        }
+
+        const stat =[
+            {name : "pow", value : caster.current_pow},
+            {name : "intl", value : caster.current_intl},
+            {name : "ldr", value : caster.current_ldr},
+            {name : "spd", value : caster.current_spd}
+        ];
+        let max_baf = 0;
+        let max_stat = "";
+        stat.forEach(st => {
+            if (st.value >= max_baf){
+                max_baf = st.value;
+                max_stat = st.name;
+            } 
+        })
+        if(max_stat == "pow"){
+            const val = Math.round(((caster[`current_${max_stat}`] -100) * 0.028 + 12) *100) /100; 
+            const effect1 = { type: "buff_stat", value: val, stat: "dmg_up_weapon", duration: "99" };
+            this.add_buff(caster, caster, effect1, battleField);
+        }
+        if(max_stat == "intl"){
+            const val = Math.round(((caster[`current_${max_stat}`] -100) * 0.028 + 12) *100) /100; 
+            const effect1 = { type: "buff_stat", value: val, stat: "dmg_up_intel", duration: "99" };
+            this.add_buff(caster, caster, effect1, battleField);
+        }
+        if(max_stat == "ldr"){
+            const val = Math.round(((caster[`current_${max_stat}`] -100) * 0.019 + 8) *100) /100; 
+            const effect1 = { type: "buff_stat", value: val, stat: "rate_active", duration: "99" };
+            this.add_buff(caster, caster, effect1, battleField);
+        }
+    }
+
+    #handleJinshanoChinyu(caster, target, battleField) {
+        /**仁者の沈勇の処理*/
+        battleField.process_attack_event(caster, target, 184, "intel", this);
+        const rate = caster.is_main ? 0.9 : 0.7;
+        if(Math.random() <= rate){
+            const targetKey = "friend_random_1";
+            const newCaster = battleField.find_targets(caster, targetKey, this.type);
+            battleField.process_attack_event(newCaster[0], target, 154, "intel", this);
+        }
+    }
+
+    #handleBanjakutantan(caster, target, battleField) {
+        /**盤石耽々の処理*/
+        const val1 = Math.round(((caster.current_ldr -100) * 0.045 + 9) *100) /100;
+        const effect1 = { type: "buff_stat", value: val1, stat: "dmg_cut_weapon", duration: 99, clear:true };
+        this.add_buff(caster, target, effect1, battleField);
+        const effect2 = { type: "buff_stat", value: val1, stat: "dmg_cut_intel", duration: 99, clear:true };
+        this.add_buff(caster, target, effect2, battleField);
+
+        const val2 = Math.round(((caster.current_ldr -100) * 0.045 + 4) *100) /100;
+        const newState = {
+            type: "special",
+            phase: "before_action",
+            trigger_side: "attacker",
+            name: "盤石耽々(予備)",
+            value:val2,
+            duration: 99,
+            attackType:null,
+            action:null,
+            source_skill: this,
+            source_busho: caster,
+            conflict_rule: "NONE"
+        };
+
+        const isSuccess = caster.add_state(newState, battleField);
+        if (isSuccess) {
+            const logMsg = ` -> ${caster.colored_name} が ${caster.colored_name} に ${newState.name} を付与 (${newState.duration}ターン)`;
+            battleField.add_log(logMsg);
+        }
+        caster.record_skill_stats(this.name, 0, false);
+    }
+
+        #handleSenishochin(caster, target, battleField) {
+        /**戦意消沈の処理*/
+        let flg =0;
+        const newTargets = battleField.find_targets(caster, "enemy_random_2", this.type);
+        for (const newTarget of newTargets) {
+            flg += 1;
+            let val = flg == 1? 1 :3;
+            const newState = {
+                type: "special",
+                phase: "before_action",
+                trigger_side: "attacker",
+                name: "戦意消沈(予備)",
+                value: val,
+                duration: 99,
+                attackType:null,
+                action:null,
+                source_skill: this,
+                source_busho: caster,
+                conflict_rule: "NONE"
+            };
+
+            const isSuccess = newTarget.add_state(newState, battleField);
+            if (isSuccess) {
+                const logMsg = ` -> ${caster.colored_name} が ${newTarget.colored_name} に ${newState.name} を付与 (${newState.duration}ターン)`;
+                battleField.add_log(logMsg);
+            }
+        }
+
+        caster.record_skill_stats(this.name, 0, false);
+    }
+
+    #handleHoromusha(caster, target, battleField) {
+        /**母衣武者の処理*/
+        const base_val = caster.name == "前田利家" ? 3.5 : 3;
+        const val = Math.round(((caster.current_spd -100) * 0.017 + 3) *100) /100;
+
+        const newState = {
+            name: "母衣武者(予備)",
+            type: "special",
+            phase: "after_attack",
+            trigger_side: "attacker",
+            value: val,
+            value2: 0,
+            duration: 99,
+            attackType:null,
+            action:"通常",
+            source_skill: this,
+            source_busho: caster,
+            conflict_rule: "NONE"
+        };
+
+        const isSuccess = target.add_state(newState, battleField);
+        if (isSuccess) {
+            const logMsg = ` -> ${caster.colored_name} が ${target.colored_name} に ${newState.name} を付与 (${newState.duration}ターン)`;
+            battleField.add_log(logMsg);
+        }
+        caster.record_skill_stats(this.name, 0, false);
     }
 
     #handleFuichii(caster, target, battleField) {

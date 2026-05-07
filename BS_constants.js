@@ -101,6 +101,27 @@ export const STATE_TEMPLATES = {
         action:null,
         clear:true
     },
+    "無策耐性": {
+        type: "buff_status",
+        conflict_rule: "NONE",
+        attackType:null,
+        action:null,
+        clear:true
+    },
+    "威圧耐性": {
+        type: "buff_status",
+        conflict_rule: "NONE",
+        attackType:null,
+        action:null,
+        clear:true
+    },
+    "疲弊耐性": {
+        type: "buff_status",
+        conflict_rule: "NONE",
+        attackType:null,
+        action:null,
+        clear:true
+    },
     "混乱耐性": {
         type: "buff_status",
         conflict_rule: "NONE",
@@ -342,10 +363,10 @@ export const STATE_TEMPLATES = {
     },
     "撹乱": {
         type: "continuous_damage",
-        phase: "after_attack",
+        phase: "after_skill_exe",
         trigger_side: "attacker",
         attackType:null,
-        action:null,
+        action:"能動",
         stat: "intl",
         conflict_rule: "EXTEND",
         clear:true
@@ -537,6 +558,15 @@ export const STATE_TEMPLATES = {
         conflict_rule: "NONE",
         clear:true
     },
+    "帰蝶の舞(予備)": {
+        type: "special",
+        phase: "before_action",
+        trigger_side: "attacker",
+        attackType:null,
+        action:null,
+        conflict_rule: "NONE",
+        clear:true
+    },
     "湖水渡り(予備)": {
         type: "special",
         phase: "after_attack",
@@ -588,6 +618,150 @@ export const STATE_TEMPLATES = {
         trigger_side: "defender",
         attackType:null,
         action:"能動",
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "尼御台_離反(予備)": {
+        type: "special",
+        phase: "before_action",
+        trigger_side: "attacker",
+        attackType:null,
+        action:null,
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "尼御台_心攻(予備)": {
+        type: "special",
+        phase: "before_action",
+        trigger_side: "attacker",
+        attackType:null,
+        action:null,
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "怪力無双(予備)": {
+        type: "special",
+        phase: "after_attack",
+        trigger_side: "attacker",
+        attackType:null,
+        action:null,
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "越後流軍学(予備)": {
+        type: "special",
+        phase: "after_skill_exe",
+        trigger_side: "attacker",
+        attackType:null,
+        action:"能動",
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "仏の高力(予備)": {
+        type: "special",
+        phase: "after_skill_exe",
+        trigger_side: "attacker",
+        attackType:null,
+        action:"能動",
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "百万一心(予備)": {
+        type: "special",
+        phase: "before_skill_exe",
+        trigger_side: "attacker",
+        attackType:null,
+        action:"能動",
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "百万一心-謀(予備)": {
+        type: "special",
+        phase: "after_skill_exe",
+        trigger_side: "attacker",
+        attackType:null,
+        action:"能動",
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "洞察反撃(予備)": {
+        type: "special",
+        phase: "after_attack",
+        trigger_side: "defender",
+        attackType:null,
+        action:"通常",
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "不屈の精神(予備)": {
+        type: "special",
+        phase: "after_attack",
+        trigger_side: "defender",
+        attackType:null,
+        action:"通常",
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "耐苦鍛錬(予備)": {
+        type: "special",
+        phase: "after_attack",
+        trigger_side: "defender",
+        attackType:null,
+        action:"通常",
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "死中求活(予備)": {
+        type: "special",
+        phase: "before_action",
+        trigger_side: "attacker",
+        attackType:null,
+        action:null,
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "死中求活-絶境(予備)": {
+        type: "special",
+        phase: "after_attack",
+        trigger_side: "defender",
+        attackType:"weapon",
+        action:null,
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "戦意消沈(予備)": {
+        type: "special",
+        phase: "before_action",
+        trigger_side: "attacker",
+        attackType:null,
+        action:null,
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "七十二の計(予備)": {
+        type: "special",
+        phase: "after_attack",
+        trigger_side: "attacker",
+        attackType:null,
+        action:null,
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "赤備え隊(予備)": {
+        type: "special",
+        phase: "after_attack",
+        trigger_side: "attacker",
+        attackType:null,
+        action:null,
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "城盗り(予備)": {
+        type: "special",
+        phase: "after_attack",
+        trigger_side: "defender",
+        attackType:"intel",
+        action:null,
         conflict_rule: "NONE",
         clear:true
     }
