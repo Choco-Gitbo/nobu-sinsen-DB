@@ -60,12 +60,12 @@ async function runMultipleBattles(count) {
     // これが「集計データのひな型」
     let summary = {
         win: 0, loss: 0, draw: 0, turn: 0,
-        teamDamage_a:{sum:0,max:0,min:Infinity},
-        teamTaken_a:{sum:0,max:0,min:Infinity},
-        teamHeal_a:{sum:0,max:0,min:Infinity},
-        teamDamage_b:{sum:0,max:0,min:Infinity},
-        teamTaken_b:{sum:0,max:0,min:Infinity},
-        teamHeal_b:{sum:0,max:0,min:Infinity},
+        teamDamage_a:{sum1:0,sum:0,max:0,min:Infinity},
+        teamTaken_a:{sum1:0,sum:0,max:0,min:Infinity},
+        teamHeal_a:{sum1:0,sum:0,max:0,min:Infinity},
+        teamDamage_b:{sum1:0,sum:0,max:0,min:Infinity},
+        teamTaken_b:{sum1:0,sum:0,max:0,min:Infinity},
+        teamHeal_b:{sum1:0,sum:0,max:0,min:Infinity},
         details: {
             armyA:{},armyB:{}
         } // 武将ごとの最大・平均などを入れる
@@ -82,13 +82,21 @@ async function runMultipleBattles(count) {
         const teamA = await getTeamFromStorage(idA,"A");
         const teamB = await getTeamFromStorage(idB,"E");
 
-    //兵数リセット
+        //兵数リセット
         teamA[0].hp = Number(document.getElementById("preview-a-0-hp").value);
         teamA[1].hp = Number(document.getElementById("preview-a-1-hp").value);
         teamA[2].hp = Number(document.getElementById("preview-a-2-hp").value);
         teamB[0].hp = Number(document.getElementById("preview-b-0-hp").value);
         teamB[1].hp = Number(document.getElementById("preview-b-1-hp").value);
         teamB[2].hp = Number(document.getElementById("preview-b-2-hp").value);
+
+        //サマリーリセット
+        summary.teamDamage_a.sum1 = 0;
+        summary.teamTaken_a.sum1 = 0;
+        summary.teamHeal_a.sum1 = 0;
+        summary.teamDamage_b.sum1 = 0;
+        summary.teamTaken_b.sum1 = 0;
+        summary.teamHeal_b.sum1 = 0;
 
         const bf = new BattleField(teamA, teamB);
         const report = bf.run_battle(8); // 上記パターンAの戻り値
@@ -110,33 +118,24 @@ async function runMultipleBattles(count) {
                 if (side == "armyA"){
                     const sd = summary.teamDamage_a;
                     sd.sum += b.damage;
-                    sd.max = Math.max(sd.max, b.damage);
-                    sd.min = Math.min(sd.min, b.damage);
-
+                    sd.sum1 += b.damage;
                     const st = summary.teamTaken_a;
                     st.sum += b.taken;
-                    st.max = Math.max(st.max, b.taken);
-                    st.min = Math.min(st.min, b.taken);
-
+                    st.sum1 += b.taken;
                     const sh = summary.teamHeal_a;
                     sh.sum += b.heal;
-                    sh.max = Math.max(sh.max, b.heal);
-                    sh.min = Math.min(sh.min, b.heal);
-                }else{
+                    sh.sum1 += b.heal;
+                }
+                if(side == "armyB"){
                     const sd = summary.teamDamage_b;
                     sd.sum += b.damage;
-                    sd.max = Math.max(sd.max, b.damage);
-                    sd.min = Math.min(sd.min, b.damage);
-
+                    sd.sum1 += b.damage;
                     const st = summary.teamTaken_b;
                     st.sum += b.taken;
-                    st.max = Math.max(st.max, b.taken);
-                    st.min = Math.min(st.min, b.taken);
-
+                    st.sum1 += b.taken;
                     const sh = summary.teamHeal_b;
                     sh.sum += b.heal;
-                    sh.max = Math.max(sh.max, b.heal);
-                    sh.min = Math.min(sh.min, b.heal);
+                    sh.sum1 += b.heal;
                 }
 
                 const target = summary.details[side][b.name];
@@ -160,6 +159,28 @@ async function runMultipleBattles(count) {
                     ss1.heal.min = Math.min(ss1.heal.min, ss.heal);
                 })
             });
+            if (side == "armyA"){
+                const sdA = summary.teamDamage_a;
+                sdA.max = Math.max(sdA.max, sdA.sum1);
+                sdA.min = Math.min(sdA.min, sdA.sum1);
+                const stA = summary.teamTaken_a;
+                stA.max = Math.max(stA.max, stA.sum1);
+                stA.min = Math.min(stA.min, stA.sum1);
+                const shA = summary.teamHeal_a;
+                shA.max = Math.max(shA.max, shA.sum1);
+                shA.min = Math.min(shA.min, shA.sum1);
+            }
+            if (side == "armyB"){
+                const sdB = summary.teamDamage_b;
+                sdB.max = Math.max(sdB.max, sdB.sum1);
+                sdB.min = Math.min(sdB.min, sdB.sum1);
+                const stB = summary.teamTaken_b;
+                stB.max = Math.max(stB.max, stB.sum1);
+                stB.min = Math.min(stB.min, stB.sum1);
+                const shB = summary.teamHeal_b;
+                shB.max = Math.max(shB.max, shB.sum1);
+                shB.min = Math.min(shB.min, shB.sum1);
+            }
         });
         if (i == (count-1)){
             // 3. 画面にログを出力
@@ -170,6 +191,7 @@ async function runMultipleBattles(count) {
             container.scrollTop = container.scrollHeight;
         }
     }
+
 
     // 最後にUI（image_33414e.png の表）に反映
     displaySummaryTable(summary);
@@ -248,7 +270,7 @@ function displaySummaryTable(summary) {
     // 1. 全体統計の更新
     document.getElementById('stat-total-count').innerText = total;
     document.getElementById('stat-win-rate').innerText = ((summary.win / total) * 100).toFixed(1) + "%";
-    document.getElementById('stat-turn').innerText = ((summary.turn / total)) ;
+    document.getElementById('stat-turn').innerText = ((summary.turn / total)).toFixed(0) ;
     document.getElementById('stat-win-count').innerText = summary.win;
     document.getElementById('stat-loss-count').innerText = summary.loss;
     document.getElementById('stat-draw-count').innerText = summary.draw;
