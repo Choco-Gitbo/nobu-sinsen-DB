@@ -1303,7 +1303,7 @@ function saveTeam(){
 // ボタンにイベントを登録
 document.getElementById('teamLoad-btn').addEventListener('click', loadTeam);
 document.getElementById('teamSave-btn').addEventListener('click', saveTeam);
-document.getElementById('go-listPage').addEventListener('click', (e) => {window.location.href = 'BattleSimulator.html';});
+document.getElementById('go-battlePage').addEventListener('click', (e) => {window.location.href = 'BattleSimulator.html';});
 document.getElementById('go-listPage').addEventListener('click', (e) => {
     // ページを移動させる
     const savebtn = document.getElementById("teamSave-btn");
