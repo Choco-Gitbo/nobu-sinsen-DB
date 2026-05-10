@@ -2,6 +2,7 @@
 import { DB } from './BS_csv_loader.js';
 import { Busho } from './BS_Busho.js'; 
 import { Senpo } from './BS_Senpo.js';
+import { Tokusei } from './BS_Tokusei.js';
 
 /**
  * 指定されたチーム番号のデータをLocalStorageから読み込み、DBデータと結合して返す
@@ -28,19 +29,6 @@ export function getTeamFromStorage(teamNo,side) {
     if (!rawData) {
         console.warn(`チーム番号 ${teamNo} のデータがLocalStorageにありません。`);
         return null;
-        //console.warn("LocalStorageが空のため、テスト用データを使用します");
-        //const dummy = {
-        //    unit: "騎兵",
-        //    maxcost:"",
-        //    name:"",
-        //    team: [
-        //        { busho: "B914", senpo2: "S745", senpo3: "", heigakuType: "", heigakuKi: "", heigakuSei1: "", heigakuSei2: "" },
-        //        { busho: "B916", senpo2: "S731", senpo3: "", heigakuType: "", heigakuKi: "", heigakuSei1: "", heigakuSei2: "" },
-        //        { busho: "B918", senpo2: "S738", senpo3: "", heigakuType: "", heigakuKi: "", heigakuSei1: "", heigakuSei2: "" }
-        //    ]
-        //};
-        //rawData = JSON.stringify(dummy);
-        // localStorage.setItem(storageKey, rawData); // 必要なら保存してもOK
     }
 
     const data = JSON.parse(rawData);
@@ -85,6 +73,18 @@ export function getTeamFromStorage(teamNo,side) {
             );
         }).filter(s => s);
 
+        // 特性マスタからインスタンスを生成
+        const tokuseiObjects = [master.unique_tokusei, master.tokusei_1, master.tokusei_3, master.tokusei_5].map(tid => {
+            const tData = DB.tokusei.find(tk => tk.id === tid);
+            if (!tData) return null;
+            // Senpoクラスのコンストラクタに合わせてインスタンス化
+            return new Tokusei(
+                tData.id, 
+                tData.name, 
+                tData.effects_json, // JSONパース済みの想定
+            );
+        }).filter(tk => tk);
+
         // Bushoクラスのインスタンスを生成して返す
         const main = index == 0 ? true : false;
         const bushoInstance =  new Busho({
@@ -94,6 +94,7 @@ export function getTeamFromStorage(teamNo,side) {
             unit_type: unitType,
             is_main: main,
             skills: skillObjects,
+            tokuseis: tokuseiObjects,
             // 他、LvやrankなどもLocalStorageからあれば渡す
             Lv: 50,
             hp: 10000,

@@ -921,3 +921,44 @@ export const STATE_TEMPLATES = {
     }
 
 };
+
+// 特性のひな形定義（マスター）
+export const TOKUSEI_TEMPLATES = {
+    "威勢(予備)": {
+        type: "special",
+        phase: "before_action",
+        trigger_side: "attacker",
+        attackType:null,
+        action:null,
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "奮戦(予備)": {
+        type: "special",
+        phase: "before_action",
+        trigger_side: "attacker",
+        attackType:null,
+        action:null,
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "攻陣(予備)": {
+        type: "special",
+        phase: "before_action",
+        trigger_side: "attacker",
+        attackType:null,
+        action:null,
+        conflict_rule: "NONE",
+        clear:true
+    },
+    "猛闘(予備)": {
+        type: "special",
+        phase: "before_action",
+        trigger_side: "attacker",
+        attackType:null,
+        action:null,
+        conflict_rule: "NONE",
+        clear:true
+    }
+}
+

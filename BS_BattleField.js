@@ -1,4 +1,4 @@
-import { HEISHU_AFFINITY, STAT_MAP, GOOD_STATUS, BAD_STATUS, CONT_STATUS, CONT_DMG_STATUS, CONT_HEAL_STATUS, STATE_TEMPLATES } from './BS_constants.js';
+import { HEISHU_AFFINITY, STAT_MAP, GOOD_STATUS, BAD_STATUS, CONT_STATUS, CONT_DMG_STATUS, CONT_HEAL_STATUS, STATE_TEMPLATES, TOKUSEI_TEMPLATES } from './BS_constants.js';
 
 export class BattleField {
     constructor(armyA, armyB) {
@@ -303,6 +303,28 @@ export class BattleField {
         // 1. ひな形をコピー（元の定義を壊さないため）
         const newState = {
             ...STATE_TEMPLATES[stateName],
+            name: stateName,
+            ...overrides
+        };
+
+        // 2. 実行
+        const success = target.add_state(newState, this);
+        return success;
+    }
+
+    add_tokusei_state_by_name(target, stateName, overrides = {}) {
+        /**
+         * stateName: STATE_TEMPLATES のキー
+         * overrides: value, duration, stat など、戦法ごとに変わる値
+         */
+        if (!(stateName in TOKUSEI_TEMPLATES)) {
+            this.add_log(`エラー: 状態 ${stateName} の定義が見つかりません`);
+            return false;
+        }
+
+        // 1. ひな形をコピー（元の定義を壊さないため）
+        const newState = {
+            ...TOKUSEI_TEMPLATES[stateName],
             name: stateName,
             ...overrides
         };
@@ -1914,6 +1936,35 @@ export class BattleField {
             this.process_attack_event(state.source_busho, actor, 106, "intel", state.source_skill);
         }
 
+        //特性
+        if(state.name === "威勢(予備)"){
+            /**威勢の処理*/
+            if(actor.normal_damage_cnt == 0){
+                const effect = { type: "buff_stat", value: Number(state.value), stat: "rate_unique_active", duration: 99};
+                state.source_tokusei.add_buff(actor, actor, effect, this);
+            }
+        }
+        if(state.name === "奮戦(予備)"){
+            /**奮戦の処理*/
+            if(actor.normal_damage_cnt == 0){
+                const effect = { type: "buff_stat", value: Number(state.value), stat: "rate_active", duration: 99};
+                state.source_tokusei.add_buff(actor, actor, effect, this);
+            }
+        }
+        if(state.name === "攻陣(予備)"){
+            /**攻陣の処理*/
+            if(actor.normal_damage_cnt == 0){
+                const effect = { type: "buff_stat", value: Number(state.value), stat: "rate_unique_assault", duration: 99};
+                state.source_tokusei.add_buff(actor, actor, effect, this);
+            }
+        }
+        if(state.name === "猛闘(予備)"){
+            /**猛闘の処理*/
+            if(actor.normal_damage_cnt == 0){
+                const effect = { type: "buff_stat", value: Number(state.value), stat: "rate_assault", duration: 99};
+                state.source_tokusei.add_buff(actor, actor, effect, this);
+            }
+        }
     }
 
     add_log(message, category = "info") {
@@ -2017,6 +2068,10 @@ export class BattleField {
             this.record_skill_stats_make(b)
         })
         
+        // 特性の発動
+        for (const busho of order) {
+            this.executeSpecificTypeTokuseis(busho);
+        }
 
         // 2. 受動戦法（Passive）の発動
         for (const busho of order) {
@@ -2137,6 +2192,15 @@ export class BattleField {
         }
 
         return false;
+    }
+
+    executeSpecificTypeTokuseis(busho) {
+        /**特性を発動*/
+        const targetTokuseis = busho.tokuseis
+
+        for (const tokusei of targetTokuseis){
+            tokusei.execute(busho, this);
+        }
     }
 
     executeSpecificTypeSkills(busho, skillType) {
@@ -2263,6 +2327,7 @@ export class BattleField {
             const actualDmg = this.process_attack_event(busho, targets[0], 100, "weapon", busho.skills[0]);
             busho.last_normal_attack_damage = actualDmg;
             busho.normal_cnt += 1;
+            targets[0].normal_damage_cnt++;
 
             // 突撃戦法フェーズ
             this.executeSpecificTypeSkills(busho, "突撃");
@@ -2282,6 +2347,8 @@ export class BattleField {
                 s.duration = parseInt(s.duration) - 1;
             }
         }
+        //通常攻撃を受けた回数のリセット
+        busho.normal_damage_cnt = 0;
     }
 
     #cleanupBushoStates(busho) {

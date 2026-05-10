@@ -23,7 +23,7 @@ export class Busho {
         
         // 戦法・装備
         skills = [],
-        
+        tokuseis = [],
         // 戦闘中に変動する値
         max_hp = 0,
         hp = 0,
@@ -39,7 +39,8 @@ export class Busho {
         ovHeal = false,
         weapon_cnt = 0,
         intel_cnt = 0,
-        normal_cnt = 0
+        normal_cnt = 0,
+        normal_damage_cnt = 0
 
     }) {
         // 基本情報
@@ -63,7 +64,8 @@ export class Busho {
         
         // 戦法・装備
         this.skills = skills;
-        
+        this.tokuseis = tokuseis;
+
         // 戦闘中に変動する値
         this.max_hp = max_hp;
         this.hp = hp;
@@ -80,6 +82,7 @@ export class Busho {
         this.weapon_cnt = weapon_cnt;
         this.intel_cnt = intel_cnt;
         this.normal_cnt = normal_cnt;
+        this.normal_damage_cnt = normal_damage_cnt;
         
         // 戦績カウント用
         this.stats_log = {

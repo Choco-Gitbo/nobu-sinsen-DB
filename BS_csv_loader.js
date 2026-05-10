@@ -3,6 +3,7 @@
 export const DB = {
     busho: [],
     senpo: [],
+    tokusei: [],
 };
 
 async function loadCSV(url) {
@@ -90,5 +91,6 @@ function processValue(val) {
 export async function initDB() {
     DB.busho = await loadCSV("data/busho.csv");
     DB.senpo = await loadCSV("data/senpo.csv");
+    DB.tokusei = await loadCSV("data/tokusei.csv");
     console.log("Database initialized:", DB);
 }
