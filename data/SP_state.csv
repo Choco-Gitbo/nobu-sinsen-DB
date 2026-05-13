@@ -1,0 +1,3 @@
+﻿name,type,phase,trigger_side,trigger_turn,value,value2,attackType,action,effects_json,conflict_rule,clear
+全力戦闘_連撃(予備),special,before_action,attacker,5,,,,,"[{""type"":""status"",""target"":""self"",""rate"":""70"",""effect"":""連撃"",""duration"":""99""},{""type"":""dispel_status"",""target"":""self"",""value"":""1"",""effect"":""全力戦闘_連撃(予備)""}]",NONE,FALSE
+懐柔_休養(予備),special,before_action,attacker,2,,,,,"[{""type"":""status"",""target"":""self"",""value"":""84"",""effect"":""休養"",""duration"":""2""},{""type"":""dispel_status"",""target"":""self"",""value"":""1"",""effect"":""懐柔_休養(予備)""},{""type"":""heal"",""target"":""self"",""value"":""84""}]",NONE,TRUE
