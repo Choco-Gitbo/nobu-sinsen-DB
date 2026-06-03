@@ -357,9 +357,9 @@ function setBushoData(Gid,id){
     //コスト＆凸数
     const mode = document.querySelector(".own-mode").value
     let rank=0
-    if (mode==="owned"){
+    //if (mode==="owned"){
       rank = b.own[0]?.rank ?? 0
-    }
+    //}
     
     if(c){c.textContent = "C" + b.cost;}
     if(r){r.textContent = "R" + rank;}
