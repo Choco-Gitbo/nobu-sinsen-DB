@@ -69,6 +69,7 @@ async function init(){
 
   const savebtn = document.getElementById("teamSave-btn");
   savebtn.disabled = true;
+  
 }
 
 /* 所持武将・戦法取得 */
@@ -1058,9 +1059,16 @@ window.addEventListener('DOMContentLoaded', () => {
 function makeTable(){
   const table = document.getElementById('squad-table');
   let html = '';
-
+  const currentURL = window.location.href;
   // 12チーム × 3名 = 36回ループ
-  for (let j=1; j<=12; j++){
+    let min_team =1;
+    let max_team =12;
+  
+  if(currentURL.includes("teamz")){
+    min_team =90;
+    max_team =99;
+  }
+  for (let j=min_team; j<=max_team; j++){
     let html = `<tbody class="member-unit" >`
     for (let i = 1; i <= 3; i++) {
       // チーム番号の計算（1,1,1, 2,2,2... となるように）
@@ -1069,7 +1077,7 @@ function makeTable(){
       
       // 3人ごとの最初の1人だけ rowspan="3" をつけるための判定
       const isTeamStart = (i  === 1);
-      
+      const chainchk = min_team ==90 ? "checked" : "";
       const groupNo = (j-1)*3+i;
       html += `
         <tr class="unit-row-1" data-group="${groupNo}">
@@ -1086,7 +1094,7 @@ function makeTable(){
               </select>
               <div class="team-cost">
                 <span class="nowcost">C0</span>
-                <input class="chain-chk" type="checkbox" >
+                <input class="chain-chk" type="checkbox" ${chainchk}>
               </div>
             </div>
           </td>` : ''}
@@ -1180,8 +1188,16 @@ function flashElement(el) {
 /* 設定内容の読み出し */
 function loadTeam(){
 
-
-  for(let TeamNo = 1; TeamNo<=12; TeamNo++){
+  const currentURL = window.location.href;
+  // 12チーム × 3名 = 36回ループ
+    let min_team =1;
+    let max_team =12;
+  
+  if(currentURL.includes("teamz")){
+    min_team =90;
+    max_team =99;
+  }
+  for(let TeamNo = min_team; TeamNo<=max_team; TeamNo++){
     const data=JSON.parse(localStorage.getItem("teamData_"+TeamNo)||"{}")
 
     if(!data.team) return
@@ -1242,7 +1258,17 @@ function loadTeam(){
 /* 設定内容の保存 */
 function saveTeam(){
 
-  for(let TeamNo = 1; TeamNo<=12; TeamNo++){
+  const currentURL = window.location.href;
+  // 12チーム × 3名 = 36回ループ
+    let min_team =1;
+    let max_team =12;
+  
+  if(currentURL.includes("teamz")){
+    min_team =90;
+    max_team =99;
+  }
+
+  for(let TeamNo = min_team; TeamNo<=max_team; TeamNo++){
 
     const LeaderUnitNo = (TeamNo - 1)  * 3 + 1;
     const saveUnit = document.querySelector(`[data-group="${LeaderUnitNo}"]`);
@@ -1301,19 +1327,207 @@ function saveTeam(){
 }
 
 // ボタンにイベントを登録
+const currentURL = window.location.href;
 document.getElementById('teamLoad-btn').addEventListener('click', loadTeam);
 document.getElementById('teamSave-btn').addEventListener('click', saveTeam);
-document.getElementById('go-battlePage').addEventListener('click', (e) => {window.location.href = 'BattleSimulator.html';});
-document.getElementById('go-listPage').addEventListener('click', (e) => {
-    // ページを移動させる
-    const savebtn = document.getElementById("teamSave-btn");
-    if(!savebtn.disabled) {
-      const msg ="編成は保存されていません。画面移動しますか？"
-      if(window.confirm(msg)){
+//document.getElementById('go-battlePage').addEventListener('click', (e) => {window.location.href = 'BattleSimulator.html';});
+if(!currentURL.includes("teamz")){
+  document.getElementById('go-listPage').addEventListener('click', (e) => {
+      // ページを移動させる
+      const savebtn = document.getElementById("teamSave-btn");
+      if(!savebtn.disabled) {
+        const msg ="編成は保存されていません。画面移動しますか？"
+        if(window.confirm(msg)){
+          window.location.href = 'index.html';
+        }
+      }
+      else{
         window.location.href = 'index.html';
       }
-    }
-    else{
-      window.location.href = 'index.html';
-    }
+  });
+}
+if(currentURL.includes("teamz")){
+  document.getElementById('ATsetting').addEventListener('click', openAutoTuningModal);
+}
+
+const closeATPopup = () => {
+  const checkboxes = document.querySelectorAll('.at-senpo-checkbox:checked');
+  const data = {
+    patternCnt:Number(document.getElementById('at-pattern').innerText),
+    senpo:null,
+    patternTBL:null
+  }
+  data.senpo = Array.from(checkboxes).map(cb => cb.getAttribute('value'));
+  
+  data.patternTBL = generateATPatterns(ATgroup, data.senpo);
+
+  localStorage.setItem("At_Data",JSON.stringify(data));
+  document.getElementById('senpo-popup').style.display = 'none';
+};
+
+// ボタンにイベントを登録
+if(currentURL.includes("teamz")){
+  document.getElementById('close-ATpopup-btn').addEventListener('click', closeATPopup);
+}
+// 背景をタップしても閉じるようにするとさらに使いやすいです
+document.getElementById('senpo-popup').addEventListener('click', (e) => {
+  if (e.target.id === 'senpo-popup') closeATPopup();
 });
+
+const ATpattern =[];
+let ATgroup =[];
+
+// ポップアップを開いて初期化する関数
+function openAutoTuningModal() {
+    const poolList = document.getElementById('at-pool-list');
+    poolList.innerHTML = ''; // リストをクリア
+
+    let Cellsenpo2;
+    let Cellsenpo3;
+    let LeaderUnitNo = 89 * 3 +1;
+    const No90Senpo =[];
+    for (let i=LeaderUnitNo; i<LeaderUnitNo+3; i++){
+      const myUnit = document.querySelectorAll(`[data-group="${i}"]`);
+      myUnit.forEach(u=>{
+        if(u.querySelector(".senpo2")){Cellsenpo2 = u.querySelector(".senpo2")}
+        if(u.querySelector(".senpo3")){Cellsenpo3 = u.querySelector(".senpo3")}
+      });
+      No90Senpo.push (Cellsenpo2.value);
+      No90Senpo.push (Cellsenpo3.value);
+    };
+    ATgroup =No90Senpo;
+
+    const allSenposPool = DB.senpo.filter(s=> s.get != "固有" && s.get != "" && !No90Senpo.includes(s.id));
+
+    const data=JSON.parse(localStorage.getItem("At_Data")||"[]")
+    // 113個の戦法チェックボックスを動的に生成
+    allSenposPool.forEach(senpo => {
+        const div = document.createElement('div');
+        div.className = 'at-item';
+        const isChecked = data.senpo.includes(senpo.id) ? 'checked' : '';
+        div.innerHTML = `
+                <label style="display:flex; width:100%; cursor:pointer;">
+                    <input type="checkbox" value="${senpo.id}" data-name="${senpo.name}" class="at-senpo-checkbox" ${isChecked}>
+                    ${senpo.name}
+                </label>
+            `;
+        poolList.appendChild(div);
+    });
+
+    // イベントリスナーを設置（チェックが変更されたら計算）
+    document.querySelectorAll('.at-senpo-checkbox').forEach(cb => {
+        cb.addEventListener('change', updateATSummary);
+    });
+
+    // モーダルを表示
+    document.getElementById('senpo-popup').style.display = 'flex';
+    updateATSummary();
+}
+
+// 選択数と推定時間を更新するロジック
+function updateATSummary() {
+    const checkboxes = document.querySelectorAll('.at-senpo-checkbox:checked');
+    const selectedNames = Array.from(checkboxes).map(cb => cb.getAttribute('data-name'));
+    
+    // 2. 選択された戦法を「／」区切りで表示
+    const listElement = document.getElementById('at-selected-list');
+    listElement.innerText = selectedNames.length > 0 ? selectedNames.join(' ／ ') : '選択されていません';
+
+    // 1. パターン数と推定時間の計算
+    let No90nullsenpo = ATgroup.filter(s => s == "")
+    let r = No90nullsenpo.length;
+
+    const n = selectedNames.length; // 選ばれた戦法数
+    let patternCount = 0;
+
+    if (n >= r) {
+        patternCount = 1;
+        for (let i = 0; i < r; i++) {
+            patternCount *= (n - i);
+        }
+    }
+
+    // 1パターンあたり「5ms」でシミュレーションした場合の総ミリ秒
+    // ※もし1パターンにつき200戦させるなら、5ms * 200 = 1秒 になるため、システムの検証設計に合わせて掛け算してください
+    const msPerPattern = 5; 
+    const totalMs = patternCount * msPerPattern * 100;
+
+    // 時間表示用に変換（分・秒）
+    const totalSeconds = Math.floor(totalMs / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+
+    // 画面に反映
+    document.getElementById('at-count').innerText = n;
+    
+    if (patternCount === 0 && n < r) {
+        document.getElementById('at-time').innerText = `枠不足（${r}個以上必要）`;
+    } else if (minutes > 999) {
+        document.getElementById('at-time').innerText = "計り知れない時間（選択を減らしてください）";
+    } else {
+        document.getElementById('at-time').innerText = `約${minutes}分${seconds.toString().padStart(2, '0')}秒`;
+    }
+    document.getElementById('at-pattern').innerText = patternCount;
+}
+
+// モーダルを閉じるイベント
+document.getElementById('close-popup-btn').addEventListener('click', () => {
+    document.getElementById('at-modal').style.display = 'none';
+});
+
+/**
+ * 可変空きスロットを、選択された戦法で埋める全パターン（順列）を生成する
+ * @param {string[]} currentGroup - 現在の戦法状態 (例: ["S001", "S010", "S005", "S023", "", ""])
+ * @param {string[]} poolSenpos - チェックされた戦法のID配列 (例: ["S011", "S012", "S013"])
+ * @returns {string[][]} - 生成された全パターンの2次元配列
+ */
+function generateATPatterns(currentGroup, poolSenpos) {
+    const results = [];
+    
+    // currentGroup の中のどこが ""（空きスロット）のインデックスかを探す
+    const emptyIndices = [];
+    currentGroup.forEach((val, idx) => {
+        if (val === "") emptyIndices.push(idx);
+    });
+
+    const totalSlotsToFill = emptyIndices.length; // 埋めるべきスロット数 (r)
+
+    // 再帰的に順列（組み合わせ）を作る内部関数
+    function backtrack(currentPattern, usedSenpos) {
+        // 埋めたいスロット数分だけ戦法を選び終えたら、結果に格納して終了
+        if (currentPattern.length === totalSlotsToFill) {
+            // ベースとなる ATgroup のコピーを作成
+            const completePattern = [...currentGroup];
+            // 空いていたインデックスに、選んだ戦法を順番にハメ込む
+            emptyIndices.forEach((groupIdx, patternIdx) => {
+                completePattern[groupIdx] = currentPattern[patternIdx];
+            });
+            results.push(completePattern);
+            return;
+        }
+
+        // プールにある戦法を1つずつ試していく
+        for (let i = 0; i < poolSenpos.length; i++) {
+            const senpoId = poolSenpos[i];
+
+            // すでにこのパターン内で使用済みの戦法ならスキップ（戦法被り防止）
+            if (usedSenpos.has(senpoId)) continue;
+
+            // 戦法を選択
+            currentPattern.push(senpoId);
+            usedSenpos.add(senpoId);
+
+            // 次のスロットを埋めるために自分自身を呼び出す（再帰）
+            backtrack(currentPattern, usedSenpos);
+
+            // 戻ってきたら、次のループ（別の戦法を試す）のために状態を戻す（バックトラック）
+            currentPattern.pop();
+            usedSenpos.delete(senpoId);
+        }
+    }
+
+    // 初回呼び出し（空の配列と、重複チェック用のSetを渡す）
+    backtrack([], new Set());
+
+    return results;
+}
